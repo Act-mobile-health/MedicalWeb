@@ -37,5 +37,5 @@ def patientDetail(request):
     return render(request,"patientMsg.html")
 
 def patientInfos(request):
-    return render(request,"patientInfos.html")
+    return render(request,"page-patient.html")
 
