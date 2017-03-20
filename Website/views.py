@@ -28,3 +28,14 @@ def addMBQ(request):
 
 def addClinicInfos(request):
     return render(request,"clinicInfos.html")
+
+
+def allPatient(request):
+    return render(request,"page-patient.html")
+
+def patientDetail(request):
+    return render(request,"patientMsg.html")
+
+def patientInfos(request):
+    return render(request,"patientInfos.html")
+
