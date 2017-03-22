@@ -14,30 +14,30 @@
 	    <!-- start: CSS file-->
 		
 		<!-- Vendor CSS-->
-		<link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="static/vendor/skycons/css/skycons.css" rel="stylesheet" />
-		<link href="static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="/static/vendor/skycons/css/skycons.css" rel="stylesheet" />
+		<link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 		
 		<!-- Plugins CSS-->		
-		<link href="static/plugins/bootkit/css/bootkit.css" rel="stylesheet" />	
-		<link href="static/plugins/scrollbar/css/mCustomScrollbar.css" rel="stylesheet" />
-		<link href="static/plugins/fullcalendar/css/fullcalendar.css" rel="stylesheet" />
-		<link href="static/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet" />
-		<link href="static/plugins/xcharts/css/xcharts.min.css" rel="stylesheet" />
-		<link href="static/plugins/morris/css/morris.css" rel="stylesheet" />
+		<link href="/static/plugins/bootkit/css/bootkit.css" rel="stylesheet" />	
+		<link href="/static/plugins/scrollbar/css/mCustomScrollbar.css" rel="stylesheet" />
+		<link href="/static/plugins/fullcalendar/css/fullcalendar.css" rel="stylesheet" />
+		<link href="/static/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet" />
+		<link href="/static/plugins/xcharts/css/xcharts.min.css" rel="stylesheet" />
+		<link href="/static/plugins/morris/css/morris.css" rel="stylesheet" />
 		
 		<!-- Theme CSS -->
-		<link href="static/css/jquery.mmenu.css" rel="stylesheet" />
+		<link href="/static/css/jquery.mmenu.css" rel="stylesheet" />
 		
 		<!-- Page CSS -->		
-		<link href="static/css/style.css" rel="stylesheet" />
-		<link href="static/css/add-ons.min.css" rel="stylesheet" />
+		<link href="/static/css/style.css" rel="stylesheet" />
+		<link href="/static/css/add-ons.min.css" rel="stylesheet" />
 		
 		<!-- end: CSS file-->	
 	    
 		
 		<!-- Head Libs -->
-		<script src="static/plugins/modernizr/js/modernizr.js"></script>
+		<script src="/static/plugins/modernizr/js/modernizr.js"></script>
 		
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -108,35 +108,35 @@
 								</li>
 								<li class="avatar">
 									<a href="page-inbox.html">
-										<img class="avatar" src="static/img/avatar1.jpg" alt="" />
+										<img class="avatar" src="/static/img/avatar1.jpg" alt="" />
 										<div><div class="point point-primary point-lg"></div>New message</div>
 										<span><small>1 minute ago</small></span>							
 									</a>
 								</li>
 								<li class="avatar">
 									<a href="page-inbox.html">
-										<img class="avatar" src="static/img/avatar2.jpg" alt="" />
+										<img class="avatar" src="/static/img/avatar2.jpg" alt="" />
 										<div><div class="point point-primary point-lg"></div>New message</div>
 										<span><small>3 minute ago</small></span>								
 									</a>
 								</li>
 								<li class="avatar">
 									<a href="page-inbox.html">
-										<img class="avatar" src="static/img/avatar3.jpg" alt="" />
+										<img class="avatar" src="/static/img/avatar3.jpg" alt="" />
 										<div><div class="point point-primary point-lg"></div>New message</div>
 										<span><small>4 minute ago</small></span>								
 									</a>
 								</li>
 								<li class="avatar">
 									<a href="page-inbox.html">
-										<img class="avatar" src="static/img/avatar4.jpg" alt="" />
+										<img class="avatar" src="/static/img/avatar4.jpg" alt="" />
 										<div><div class="point point-primary point-lg"></div>New message</div>
 										<span><small>30 minute ago</small></span>
 									</a>
 								</li>
 								<li class="avatar">
 									<a href="page-inbox.html">
-										<img class="avatar" src="static/img/avatar5.jpg" alt="" />
+										<img class="avatar" src="/static/img/avatar5.jpg" alt="" />
 										<div><div class="point point-primary point-lg"></div>New message</div>
 										<span><small>1 hours ago</small></span>
 									</a>
@@ -255,7 +255,7 @@
 					<div class="sidebar-collapse">
 						<!-- Sidebar Header Logo-->
 						<div class="sidebar-header">
-							<img src="static/img/logo.png" class="img-responsive" alt="" />
+							<img src="/static/img/logo.png" class="img-responsive" alt="" />
 						</div>
 						<!-- Sidebar Menu-->
 						<div class="sidebar-menu">						
@@ -263,7 +263,7 @@
 								<ul class="nav nav-sidebar">
 									<div class="panel-body text-center">								
 										<div class="bk-avatar">
-											<img src="static/img/avatar.jpg" class="img-circle bk-img-60" alt="" />
+											<img src="/static/img/avatar.jpg" class="img-circle bk-img-60" alt="" />
 										</div>
 										<div class="bk-padding-top-10">
 											<i class="fa fa-circle text-success"></i> <small>用户所属权限组</small>
@@ -271,15 +271,20 @@
 									</div>
 									<div class="divider2"></div>
 									<li class="active">
-										<a href="">
+										<a href="/">
 											<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 										</a>
 									</li>
-									<li>
-										<a href="/patientInfos/">
-											<!--<span class="pull-right label label-primary">165</span>-->
+									<li class="nav-parent">
+										<a >
 											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
 										</a>
+										<ul class="nav nav-children">
+											<li><a href="/patientInfos/"><span class="text"> 所有患者信息</span></a></li>
+											<li><a href="/group/1/"><span class="text"> 实验组1</span></a></li>
+											<li><a href="/group/2/"><span class="text"> 实验组2</span></a></li>
+											<li><a href="/group/3/"><span class="text"> 实验组3</span></a></li>
+										</ul>
 									</li>
 									<li>
 										<a href="/add/outpatientInfos/">
@@ -296,18 +301,8 @@
 											<i class="fa fa-font" aria-hidden="true"></i><span>添加住院信息</span>
 										</a>
 									</li>
-									<li class="nav-parent">
-										<a>
-											<i class="fa fa-bolt" aria-hidden="true"></i><span>我的实验组</span>
-										</a>
-										<ul class="nav nav-children">
-											<li><a href="/group/1/"><span class="text"> 实验组1</span></a></li>
-											<li><a href="/group/2/"><span class="text"> 实验组2</span></a></li>
-											<li><a href="/group/3/"><span class="text"> 实验组3</span></a></li>
-										</ul>
-									</li>
 									<li>
-										<a href="/padding/">
+										<a href="/pending/">
 											<i class="fa fa-picture-o" aria-hidden="true"></i><span>待处理事项</span>
 										</a>
 									</li>
@@ -403,27 +398,36 @@
 										<div class="col-xs-8 text-left bk-vcenter">
 											<h4 class="bk-margin-off">个人信息</h4>
 										</div>
-										<div class="col-xs-4 bk-vcenter text-right">
-											<i class="fa fa-users"></i>
-										</div>
+                                        <div class="panel-actions">
+                                            <a  id="refresh"><i class="fa fa-rotate-right"></i></a>
+                                            <a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                            <a  data-toggle="modal" href="#DoctorInfoDetails"><i class="fa fa-edit"></i></a>
+                                        </div>
+
 									</div>
 								</div>
 								<div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
 									<div class="row">
-										<div class="col-xs-3 bk-vcenter text-center bk-padding-top-10 bk-padding-bottom-10">
-											<h5 class="bk-fg-primary bk-margin-off-bottom">name</h5>
-										</div>
-										<div class="col-xs-3 bk-vcenter">
-											<h5 class="bk-fg-primary bk-margin-off-bottom">Michael</h5>
-										</div>
-										<div class="col-xs-3 bk-vcenter text-center bk-padding-top-10 bk-padding-bottom-10">
-											<h5 class="bk-fg-primary bk-margin-off-bottom">cellphone</h5>
-										</div>
-										<div class="col-xs-3 bk-vcenter">
-											<h5 class="bk-fg-primary bk-margin-off-bottom">1234689846</h5>
-										</div>
-									</div>
+                                        <table class="table " id="userInfoTable">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>用户名</th>
+                                                <th>手机</th>
+                                                <th>邮箱</th>
+                                                <th>医院</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
 							    </div>
+						    </div>
+					    </div>
+
+                    </div>
 						    </div>
 					    </div>
 
@@ -434,21 +438,137 @@
 
 		</div><!--/container-->
 
+
+		<div class="modal " id="DoctorInfoDetails">
+                <div class="modal-dialog">
+                    <div class="modal-content modal-lg">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">详情/编辑</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" method="post"  role="form" id="DoctorInfo">{% csrf_token %}
+                            <div class="form-group">
+                                <label for="D_id" class="col-md-2">ID</label>
+                                <div class="col-md-10"><input type="text" class="form-control " name="D_id" id="D_id" readonly="true"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-md-2">姓名</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="name" id="name" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2">性别</label>
+                                <div class="col-md-10">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio"  name="sex" id="sex1" value="1" >男
+                                        </label>
+                                        <label>
+                                            <input type="radio"  name="sex" id="sex2" value="2" >女
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="brithday" class="col-md-2">出生日期</label>
+                                <div class="col-md-10"><input type="text" class="form-control" id="brithdayPicker" name="brithday" id="brithday" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="userName" class="col-md-2">用户名</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="userName" id="userName" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cellphone" class="col-md-2" >手机号</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="cellphone" id="cellphone" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="weChat" class="col-md-2">微信</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="weChat" id="weChat" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mail" class="col-md-2">邮箱</label>
+                                <div class="col-md-10"><input type="email" class="form-control" name="mail" id="mail" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="title" class="col-md-2">职称</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="title" id="title" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="hospital" class="col-md-2">就职医院</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="hospital" id="hospital" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="department" class="col-md-2">科室</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="department" id="department" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2">用户组</label>
+                                <div class=" col-sm-10">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio"  name="userGroup" value="1" >用户组1
+                                        </label>
+                                        <label>
+                                            <input type="radio"  name="userGroup" value="2" >用户组2
+                                        </label>
+                                        <label>
+                                            <input type="radio"  name="userGroup" value="3" >用户组3
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group" >
+                                <label for="registerxwDate" class="col-md-2">注册时间</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="registerxwDate" id="registerxwDate" readonly="true" ></div>
+                            </div>
+                                <button  class="btn btn-primary" id="submitUserDetail">保存修改</button>
+                            </form>
+                        </div>
+
+
+
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+         </div><!-- /.modal -->
+
 		<!-- start: JavaScript-->
 		
 		<!-- Vendor JS-->				
-		<script src="static/vendor/js/jquery.min.js"></script>
-		<script src="static/vendor/js/jquery-2.1.1.min.js"></script>
-		<script src="static/vendor/js/jquery-migrate-1.2.1.min.js"></script>
-		<script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
-		<script src="static/vendor/skycons/js/skycons.js"></script>		
+		<script src="/static/vendor/js/jquery.min.js"></script>
+		<script src="/static/vendor/js/jquery-2.1.1.min.js"></script>
+		<script src="/static/vendor/js/jquery-migrate-1.2.1.min.js"></script>
+		<script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/static/vendor/skycons/js/skycons.js"></script>		
 		
 		<!-- Plugins JS-->		
-		<script src="static/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
+		<script src="/static/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
 		
-		<!-- Theme JS -->		
-		<script src="static/js/jquery.mmenu.min.js"></script>
-		<script src="static/js/core.min.js"></script>
+
+		<!-- Theme JS -->
+		<script src="/static/js/jquery.mmenu.min.js"></script>
+		<script src="/static/js/core.min.js"></script>
+
+
+		<script src="/static/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
+		<script src="/static/plugins/moment/js/moment.min.js"></script>
+		<script src="/static/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+		<script src="/static/plugins/chosen/js/chosen.jquery.min.js"></script>
+		<script src="/static/plugins/autosize/jquery.autosize.min.js"></script>
+		<script src="/static/plugins/placeholder/js/jquery.placeholder.min.js"></script>
+		<script src="/static/plugins/wizard/js/jquery.bootstrap.wizard.min.js"></script>
+		<script src="/static/plugins/maskedinput/js/jquery.maskedinput.js"></script>
+		<script src="/static/js/pages/form-wizard.js"></script>
+
+
+
+
+		<script src="/static/js/pages/index.js"></script>
 
 		<!-- end: JavaScript-->
 		

@@ -9,9 +9,8 @@
             if (r != null) return unescape(r[2]); return null;
         }
   })(jQuery);
-var data = new Array();
-$(document).ready(function () {
 
+$(document).ready(function () {
     appendPatientDetail();
     appendPatientRelation();
     $("#refresh").click(function () {
@@ -110,7 +109,6 @@ $(document).ready(function () {
     function appendPatientRelation(){
         $.getJSON('/static/json/patientRelation.json',function (json_data){
             $.each(json_data,function (index,item){
-                data.push(item);
                 $("#RelationInfoShow tbody").append(
                     "<tr>"+
                         "<td>"+item.name+"</td>"+
@@ -120,7 +118,7 @@ $(document).ready(function () {
                         "<td>"+item.weChat+"</td>"+
                         "<td>"+item.mail+"</td>"+
                         "<td>"+item.homeAddr+"</td>"+
-                        '<td><a  data-toggle="modal" onclick = "PatientRelation('+ index +')" href="#RelationInfoDetails"><i class="fa fa-edit"></i></a></td>'+
+                        '<td><a  data-toggle="modal" href="#RelationInfoDetails"><i class="fa fa-edit"></i></a></td>'+
                         '<td><button onclick = "deletePatientRelation('+item.R_id+')"></button></td>'+
                     "</tr>");
             });
@@ -148,7 +146,6 @@ $(document).ready(function () {
     }
     //删除患者家属信息
     function deletePatientRelation(item) {
-    if(confirm("确定删除？")==1){
         $.get("",{"R_id":item},function (result) {
         console.log(item);
             if(result==0)
@@ -156,10 +153,4 @@ $(document).ready(function () {
             else if(result==-1)
                 alert("删除失败");
         })
-    }
-    }
-
-    function PatientRelation(item){
-    console.log(data[item]);
-
     }

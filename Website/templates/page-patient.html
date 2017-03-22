@@ -276,12 +276,19 @@
 											<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 										</a>
 									</li>
-									<li>
-										<a href="/patientInfos/">
-											<!--<span class="pull-right label label-primary">165</span>-->
+
+									<li class="nav-parent">
+										<a >
 											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
 										</a>
+										<ul class="nav nav-children">
+											<li><a href="/patientInfos/"><span class="text"> 所有患者信息</span></a></li>
+											<li><a href="/group/1/"><span class="text"> 实验组1</span></a></li>
+											<li><a href="/group/2/"><span class="text"> 实验组2</span></a></li>
+											<li><a href="/group/3/"><span class="text"> 实验组3</span></a></li>
+										</ul>
 									</li>
+
 									<li>
 										<a href="/add/outpatientInfos/">
 											<i class="fa fa-table" aria-hidden="true"></i><span>添加门诊信息</span>
@@ -297,18 +304,8 @@
 											<i class="fa fa-font" aria-hidden="true"></i><span>添加住院信息</span>
 										</a>
 									</li>
-									<li class="nav-parent">
-										<a>
-											<i class="fa fa-bolt" aria-hidden="true"></i><span>我的实验组</span>
-										</a>
-										<ul class="nav nav-children">
-											<li><a href="/group/1/"><span class="text"> 实验组1</span></a></li>
-											<li><a href="/group/2/"><span class="text"> 实验组2</span></a></li>
-											<li><a href="/group/3/"><span class="text"> 实验组3</span></a></li>
-										</ul>
-									</li>
 									<li>
-										<a href="/padding/">
+										<a href="/pending/">
 											<i class="fa fa-picture-o" aria-hidden="true"></i><span>待处理事项</span>
 										</a>
 									</li>
@@ -337,23 +334,24 @@
 				<div class="main">
                     <!-- Page Header -->
                         <div class="page-header">
-                            <ul id="myTab" class="nav nav-tabs">
-                              <li role="presentation" class="active"><a href="#患者信息">患者信息汇总</a></li>
-                              <li role="presentation"><a href="#2">子女信息</a></li>
-                              <li role="presentation"><a href="#3">门诊记录</a></li>
-                            </ul>
-                        </div>
+							<div class="pull-left">
+								<ol class="breadcrumb visible-sm visible-md visible-lg">
+									<li><a href="/"><i class="icon fa fa-home"></i>Home</a></li>
+									<li class="active"><i class="fa fa-laptop"></i>患者汇总信息</li>
+								</ol>
+							</div>
+						</div>
                         <!-- End Page Header -->
                         <div class="row">
                             <div class="tab-content">
-                            <div class="tab-pane fade in active" id="患者信息">
+                            <div class="tab-pane fade in active" >
                                 <div class="panel">
                                     <div class="panel-heading bk-bg-primary">
                                         <h6><i class="fa fa-table red"></i><span class="break"></span>患者信息</h6>
                                         <div class="panel-actions">
-                                            <a href="table.html#" id="refresh"><i class="fa fa-rotate-right"></i></a>
-                                            <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                            <a  data-toggle="modal" href="/add/patientInfos"><i class="fa fa-edit"></i></a>
+                                            <a href="#" id="refresh"><i class="fa fa-rotate-right"></i></a>
+                                            <a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                            <a  data-toggle="modal" href="#PatientInfoDetails"><i class="fa fa-edit"></i></a>
                                         </div>
                                     </div>
                                     <div class="panel-body">
@@ -376,38 +374,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="2">
-                                <div class="panel">
-                                    <div class="panel-heading bk-bg-primary">
-                                        <h6><i class="fa fa-table red"></i><span class="break"></span>2</h6>
-                                        <div class="panel-actions">
-                                            <a href="table.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
-                                            <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                            <a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="panel-body">
-                                        2
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="3">
-                                <div class="panel">
-                                    <div class="panel-heading bk-bg-primary">
-                                        <h6><i class="fa fa-table red"></i><span class="break"></span>3</h6>
-                                        <div class="panel-actions">
-                                        </div>
-                                    </div>
-                                    <div class="panel-body">
-                                        3
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        </div>
-
-
-                    </div>
                 </div>
             <!-- End Main Page -->
 
@@ -422,124 +390,279 @@
 
 		<!-- Modal Dialog -->
 
-        <div class="modal " id="modifyPatientDetail">
-            <div class="modal-dialog">
+        <div class="modal " id="PatientInfoDetails">
+            <div class="modal-dialog  modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">详情/编辑</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" action="" method="post" role="form" id="patientInfo">
-                            <div class="form-group">
-                                <label for="P_id" class="col-md-2">患者编号</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="P_id" id="P_id" ></div>
+						<div>
+                        <form class="form-horizontal" id = "PatientInfo" method="post" role="form">
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">患者编号</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="P_id"  placeholder="请输入患者编号">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">姓名</label>
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control myinput" id="name" placeholder="请输入患者姓名">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="sign" class="col-md-2">知情同意书</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="sign" id="sign" ></div>
+
+                            <div class="row ">
+								<div class="col-lg-6 col-md-6 myblockposition" style="margin-top:0;">
+									<label class="col-sm-3 control-label mylabel">签署知情同意书</label>
+									<div class="radio col-sm-3">
+									  <label class="mycheckbox">
+										<input type="radio" name="sign" id="sign1" value="1" >是
+									  </label>
+									</div>
+									<div class="radio col-sm-3">
+									  <label class="mycheckbox">
+										<input type="radio" name="sign" id="sign2" value="2">否
+									  </label>
+									</div>
+								</div>
                             </div>
-                            <div class="form-group">
-                                <label for="name" class="col-md-2">姓名</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="name" id="name" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >就医时间</label>
+                                    <div class="col-sm-6">
+                                      <input type="date" class="form-control myinput" id="registerTime" placeholder="请选择">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label  class="col-sm-3  control-label mylabel">出生日期</label>
+                                    <div class="col-sm-6">
+                                      <input type="date" class="form-control myinput" id="birthday" placeholder="请选择">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="sex" class="col-md-2">性别</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="sex" id="sex" ></div>
+
+							<div class="row ">
+								<div class="col-lg-6 col-md-6 myblockposition" style="margin-top:0;">
+									<label class="col-sm-3 control-label mylabel">性别</label>
+									<div class="radio col-sm-3">
+									  <label class="mycheckbox">
+										<input type="radio" name="sex" id="sex1" value="1">男
+									  </label>
+									</div>
+									<div class="radio col-sm-3">
+									  <label class="mycheckbox">
+										<input type="radio" name="sex" id="sex2" value="2">女
+									  </label>
+									</div>
+								</div>
                             </div>
-                            <div class="form-group">
-                                <label for="birthday" class="col-md-2">出生日期</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="birthday" id="birthday" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">年龄</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="age"  placeholder="请输入患者年龄">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">民族</label>
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control myinput" id="nation" placeholder="请输入患者民族">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="age" class="col-md-2">年龄</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="age" id="age" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">身高</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="height">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">体重</label>
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control myinput" id="weight">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nation" class="col-md-2">民族</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="nation" id="nation" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">舒张压</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="diastolicPressure">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">收缩压</label>
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control myinput" id="systolicPressure">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="height" class="col-md-2">身高</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="height" id="height" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">颈围</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="neckCircu">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="weight" class="col-md-2">体重</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="weight" id="weight" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">学历</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="education">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">职业</label>
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control myinput" id="career">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="registerTime" class="col-md-2">注册时间</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="registerTime" id="registerTime" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">婚姻状况</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="marriage">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">家庭住址</label>
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control myinput" id="homeAddr">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="education" class="col-md-2">学历</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="education" id="education" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">籍贯</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="birthAddr">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="career" class="col-md-2">职业</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="career" id="career" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">经常活动地址1</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="activityAddr1">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">经常活动地址2</label>
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control myinput" id="activityAddr2">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="marriage" class="col-md-2">婚姻状况</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="marriage" id="marriage" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">最大活动半径</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="actionAddr" readonly>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="photo" class="col-md-2">照片</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="photo" id="photo" ></div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">固定电话</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="telephone">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">手机</label>
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control myinput" id="cellphone">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="homeAddr" class="col-md-2">家庭地址</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="homeAddr" id="homeAddr" ></div>
+
+
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">同住人联系方式</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" id="partnerPhone">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="birthAddr" class="col-md-2">籍贯</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="birthAddr" id="birthAddr" ></div>
+
+							<div class="row ">
+								<div class="col-lg-12 col-md-12 myblockposition" style="margin-top:0%;">
+									<label class="col-sm-2 control-label mylabel">医疗支付方式</label>
+									<div class="checkbox col-sm-3">
+									  <label class="mycheckbox">
+										<input type="radio" name="payment" id="payment1" value="1">城镇居民基本保险
+									  </label>
+									</div>
+									<div class="checkbox col-sm-3">
+									  <label class="mycheckbox">
+										<input type="radio" name="payment" id="payment2" value="2">城镇职工基本保险
+									  </label>
+									</div>
+									<div class="checkbox col-sm-3">
+									  <label class="mycheckbox">
+										<input type="radio" name="payment" id="payment3" value="3">新型农村合作医疗
+									  </label>
+									</div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="activityAddr1" class="col-md-2">活动地址1</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="activityAddr1" id="activityAddr1" ></div>
+                            <div class="row ">
+                                <div class="col-lg-12 col-md-12 myblockposition" style="margin-top:0;">
+                                    <label class="col-sm-2 control-label mylabel"></label>
+                                    <div class="checkbox col-sm-3">
+                                      <label class="mycheckbox">
+                                        <input type="radio" name="payment" id="payment4" value="4">商业医疗保险
+                                      </label>
+                                    </div>
+                                    <div class="checkbox col-sm-2">
+                                      <label class="mycheckbox">
+                                        <input type="radio" name="payment" id="payment5" value="5">全公费
+                                      </label>
+                                    </div>
+                                    <div class="checkbox col-sm-2">
+                                      <label class="mycheckbox">
+                                        <input type="radio" name="payment" id="payment6" value="6">全自费
+                                      </label>
+                                    </div>
+                                    <div class="checkbox col-sm-2">
+                                      <label class="mycheckbox">
+                                        <input type="radio" name="payment" id="payment7" value="7">其他
+                                      </label>
+                                    </div>
+								</div>
                             </div>
-                            <div class="form-group">
-                                <label for="activityAddr2" class="col-md-2">活动地址2</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="activityAddr2" id="activityAddr2" ></div>
+
+							<div class = "row">
+								<div class="col-md-11 col-lg-11">
+									<div class="pull-right">
+										<button type="submit" class="btn btn-primary">提交</button>
+									</div>
+								</div>
                             </div>
-                            <div class="form-group">
-                                <label for="actionAddr" class="col-md-2">最大活动半径</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="actionAddr" id="actionAddr" ></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="diastolicPressure" class="col-md-2">舒张压</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="diastolicPressure" id="diastolicPressure" ></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="systolicPressure" class="col-md-2">收缩压</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="systolicPressure" id="systolicPressure" ></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="neckCircu" class="col-md-2">颈围</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="neckCircu" id="neckCircu" ></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="payment" class="col-md-2">医疗支付方式</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="payment" id="payment" ></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="telephone" class="col-md-2">固定电话</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="telephone" id="telephone" ></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cellphone" class="col-md-2">手机</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="cellphone" id="cellphone" ></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="partnerPhone" class="col-md-2">同住人联系方式</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="partnerPhone" id="partnerPhone" ></div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">保存修改</button>
                         </form>
                     </div>
+                    </div>
                     <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div>
             </div>
@@ -577,32 +700,6 @@
 		<script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
 		<script src="/static/vendor/skycons/js/skycons.js"></script>
 
-		<!-- Plugins JS-->
-		<script src="/static/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
-		<script src="/static/plugins/scrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
-		<script src="/static/plugins/bootkit/js/bootkit.js"></script>
-		<script src="/static/plugins/moment/js/moment.min.js"></script>
-		<script src="/static/plugins/fullcalendar/js/fullcalendar.min.js"></script>
-		<script src="/static/plugins/touchpunch/js/jquery.ui.touch-punch.min.js"></script>
-		<script src="/static/plugins/flot/js/jquery.flot.min.js"></script>
-		<script src="/static/plugins/flot/js/jquery.flot.pie.min.js"></script>
-		<script src="/static/plugins/flot/js/jquery.flot.resize.min.js"></script>
-		<script src="/static/plugins/flot/js/jquery.flot.stack.min.js"></script>
-		<script src="/static/plugins/flot/js/jquery.flot.time.min.js"></script>
-		<script src="/static/plugins/xcharts/js/xcharts.min.js"></script>
-		<script src="/static/plugins/autosize/jquery.autosize.min.js"></script>
-		<script src="/static/plugins/placeholder/js/jquery.placeholder.min.js"></script>
-		<script src="/static/plugins/datatables/js/dataTables.bootstrap.min.js"></script>
-		<script src="/static/plugins/datatables/js/jquery.dataTables.min.js"></script>
-		<script src="/static/plugins/raphael/js/raphael.min.js"></script>
-		<script src="/static/plugins/morris/js/morris.min.js"></script>
-		<script src="/static/plugins/gauge/js/gauge.min.js"></script>
-		<script src="/static/plugins/d3/js/d3.min.js"></script>
-        <script src="/static/plugins/bootstrap-datetimepicker/js/bootstrap-dateptimeicker.js"></script>
-        <script src="static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
-        <script src="/static/plugins/validation/js/jquery.validate.min.js"></script>
-        <script src="/static/plugins/validation/js/messages_zh.min.js"></script>
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
 		<!-- Theme JS -->
 		<script src="/static/js/jquery.mmenu.min.js"></script>
