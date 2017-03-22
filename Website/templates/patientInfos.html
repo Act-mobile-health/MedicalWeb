@@ -11,21 +11,6 @@
 		<!-- Mobile Metas -->
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-        <!--style by zyc-->
-
-		<!-- Import google fonts -->
-        <!--<link href="http://fonts.useso.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css" />-->
-
-		<!-- Favicon and touch icons -->
-		<link rel="shortcut icon" href="/static/ico/favicon.ico" type="image/x-icon" />
-		<link rel="apple-touch-icon" href="/static/ico/apple-touch-icon.png" />
-		<link rel="apple-touch-icon" sizes="57x57" href="/static/ico/apple-touch-icon-57x57.png" />
-		<link rel="apple-touch-icon" sizes="72x72" href="/static/ico/apple-touch-icon-72x72.png" />
-		<link rel="apple-touch-icon" sizes="76x76" href="/static/ico/apple-touch-icon-76x76.png" />
-		<link rel="apple-touch-icon" sizes="114x114" href="/static/ico/apple-touch-icon-114x114.png" />
-		<link rel="apple-touch-icon" sizes="120x120" href="/static/ico/apple-touch-icon-120x120.png" />
-		<link rel="apple-touch-icon" sizes="144x144" href="/static/ico/apple-touch-icon-144x144.png" />
-		<link rel="apple-touch-icon" sizes="152x152" href="/static/ico/apple-touch-icon-152x152.png" />
 
 	    <!-- start: CSS file-->
 
@@ -53,10 +38,6 @@
 		<!-- end: CSS file-->
 
 
-
-		<!-- Head Libs -->
-		<script src="/static/plugins/modernizr/js/modernizr.js"></script>
-
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -67,9 +48,9 @@
 
 		<!--my css by zyc-->
 
-		<link href="/Website/static/css/mycss.css" rel="stylesheet" />
+		<link href="/static/css/mycss.css" rel="stylesheet" />
 
-		<link href="/Website/static/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+		<link href="/static/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
 
 	</head>
@@ -300,11 +281,16 @@
 											<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 										</a>
 									</li>
-									<li>
-										<a href="/patientInfos/">
-											<!--<span class="pull-right label label-primary">165</span>-->
+									<li class="nav-parent">
+										<a >
 											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
 										</a>
+										<ul class="nav nav-children">
+											<li><a href="/patientInfos/"><span class="text"> 所有患者信息</span></a></li>
+											<li><a href="/group/1/"><span class="text"> 实验组1</span></a></li>
+											<li><a href="/group/2/"><span class="text"> 实验组2</span></a></li>
+											<li><a href="/group/3/"><span class="text"> 实验组3</span></a></li>
+										</ul>
 									</li>
 									<li class="active">
 										<a href="/add/outpatientInfos/">
@@ -321,18 +307,8 @@
 											<i class="fa fa-font" aria-hidden="true"></i><span>添加住院信息</span>
 										</a>
 									</li>
-									<li class="nav-parent">
-										<a>
-											<i class="fa fa-bolt" aria-hidden="true"></i><span>我的实验组</span>
-										</a>
-										<ul class="nav nav-children">
-											<li><a href="/group/1/"><span class="text"> 实验组1</span></a></li>
-											<li><a href="/group/2/"><span class="text"> 实验组2</span></a></li>
-											<li><a href="/group/3/"><span class="text"> 实验组3</span></a></li>
-										</ul>
-									</li>
 									<li>
-										<a href="/padding/">
+										<a href="/pending/">
 											<i class="fa fa-picture-o" aria-hidden="true"></i><span>待处理事项</span>
 										</a>
 									</li>
@@ -372,13 +348,6 @@
                     <div>
                         <form class="form-horizontal" id = "PatientInfo" method="post" role="form">
                             <legend>病人信息表</legend>
-							<!--<div class="panel panel-primary ">&lt;!&ndash;text-center&ndash;&gt;-->
-							<!--<div class="panel-heading">-->
-								<!--<h3 class="panel-title">-->
-									<!--带有 title 的面板标题-->
-								<!--</h3>-->
-							<!--</div>-->
-							<!--<div class="panel-body ">-->
                             <div class="row ">
                                 <div class="form-group col-lg-4 col-md-8 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">患者编号</label>
@@ -396,19 +365,17 @@
 
                             <div class="row ">
 								<div class="col-lg-4 col-md-8 myblockposition">
-                                    <label class="col-sm-3 control-label mylabel">签署知情同意书</label>
-                                    <div class="chechbox" id="sign">
-                                        <div class="radio col-sm-3">
-                                            <label class="mycheckbox">
-                                                <input type="radio" name="sign" id="sign1" value="1" >是
-                                            </label>
-                                        </div>
-                                        <div class="radio col-sm-3">
-                                            <label class="mycheckbox">
-                                                <input type="radio" name="sign" id="sign2" value="2">否
-                                            </label>
-                                        </div>
-                                    </div>
+									<label class="col-sm-3 control-label mylabel">签署知情同意书</label>
+									<div class="radio col-sm-3">
+									  <label class="mycheckbox">
+										<input type="radio" name="sign" id="sign1" value="1" >是
+									  </label>
+									</div>
+									<div class="radio col-sm-3">
+									  <label class="mycheckbox">
+										<input type="radio" name="sign" id="sign2" value="2">否
+									  </label>
+									</div>
 								</div>
                             </div>
 
@@ -655,39 +622,17 @@
 		<script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
 		<script src="/static/vendor/skycons/js/skycons.js"></script>
 
-		<!-- Plugins JS-->
-		<script src="/static/plugins/jquery-ui/js/jquery-ui-1.10.4.min.js"></script>
-		<script src="/static/plugins/scrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
-		<script src="/static/plugins/bootkit/js/bootkit.js"></script>
-		<script src="/static/plugins/moment/js/moment.min.js"></script>
-		<script src="/static/plugins/fullcalendar/js/fullcalendar.min.js"></script>
-		<script src="/static/plugins/touchpunch/js/jquery.ui.touch-punch.min.js"></script>
-		<script src="/static/plugins/flot/js/jquery.flot.min.js"></script>
-		<script src="/static/plugins/flot/js/jquery.flot.pie.min.js"></script>
-		<script src="/static/plugins/flot/js/jquery.flot.resize.min.js"></script>
-		<script src="/static/plugins/flot/js/jquery.flot.stack.min.js"></script>
-		<script src="/static/plugins/flot/js/jquery.flot.time.min.js"></script>
-		<script src="/static/plugins/xcharts/js/xcharts.min.js"></script>
-		<script src="/static/plugins/autosize/jquery.autosize.min.js"></script>
-		<script src="/static/plugins/placeholder/js/jquery.placeholder.min.js"></script>
-		<!--<script src="/static/plugins/datatables/js/dataTables.bootstrap.min.js"></script>-->
-		<!--<script src="/static/plugins/datatables/js/jquery.dataTables.min.js"></script>-->
-		<script src="/static/plugins/raphael/js/raphael.min.js"></script>
-		<script src="/static/plugins/morris/js/morris.min.js"></script>
-		<script src="/static/plugins/gauge/js/gauge.min.js"></script>
-		<!--<script src="/static/plugins/d3/js/d3.min.js"></script>-->
-		<!--<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>-->
 
 		<!-- Theme JS -->
 		<script src="/static/js/jquery.mmenu.min.js"></script>
 		<script src="/static/js/core.min.js"></script>
 
 		<!-- Pages JS -->
-        <script src="/static/js/pages/patientInfos.js"></script>
+		<!--<script src="/static/js/pages/index.js"></script>-->
 
 
-		<script src="/Website/static/js/pages/bootstrap-datetimepicker.min.js"></script>
-		<script src="/Website/static/js/pages/moment.min.js"></script>
+		<script src="/static/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="/static/js/moment.min.js"></script>
 		<!-- end: JavaScript-->
 
 	</body>

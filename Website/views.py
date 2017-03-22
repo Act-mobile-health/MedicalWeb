@@ -1,4 +1,9 @@
 from django.shortcuts import render
+from django.shortcuts import render_to_response
+import MySQLdb
+import datetime,json
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -26,14 +31,34 @@ def addESS(request):
 def addMBQ(request):
     return render(request,"MBQ.html")
 
+def addSGRQ(request):
+    return render(request,"SGRQ.html")
+
 def addClinicInfos(request):
     return render(request,"clinicInfos.html")
 
-def allPatient(request):
-    return render(request,"page-patient.html")
+def patientDetails(request):
+    print request.GET['P_id']
+    print "testtttt"
 
-def patientDetail(request):
-    return render(request,"patientMsg.html")
+    return render(request,"patientDetails.html")
 
 def patientInfos(request):
-    return render(request,"patientInfos.html")
+    return render(request,"page-patient.html")
+
+def login(request):
+    return render(request,"page-login.html")
+
+def register(request):
+    return render(request,"page-register.html")
+
+def pending(request):
+    return render(request,"pending.html")
+
+def table(request):
+    return render(request,"chart-xchart.html")
+
+def temp1(request):
+    print request.GET['P_id']
+    return HttpResponse(json.dumps([{"P_id":request.GET['P_id']}]))
+
