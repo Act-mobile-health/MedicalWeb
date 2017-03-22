@@ -18,14 +18,14 @@ from django.contrib import admin
 
 from Website.views import test,index,addOutpatientInfos,addEmergencyInfos,addHospitalInfos,addPatientInfos,addESS,addMBQ,addClinicInfos
 
-from Website.views import test,index,patientDetail,addOutpatientInfos,addEmergencyInfos,addHospitalInfos,addPatientInfos,addESS,addMBQ,addClinicInfos,patientInfos
-
+from Website.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^test/$', test),
+    url(r'^table/$', table),
     url(r'^$', index),
-    url(r'^patientDetail',patientDetail),
+    url(r'^patientDetails/$',patientDetails),
     url(r'^patientInfos/$',patientInfos),
     url(r'^add/outpatientInfos/$', addOutpatientInfos),
     url(r'^add/emergencyInfos/$', addEmergencyInfos),
@@ -34,4 +34,9 @@ urlpatterns = [
     url(r'^add/clinicInfos/$', addClinicInfos),
     url(r'^add/ESS/$', addESS),
     url(r'^add/MBQ/$', addMBQ),
+    url(r'^add/SGRQ/$', addSGRQ),
+    url(r'^login/$', login),
+    url(r'^register/$', register),
+    url(r'^pending/$', pending),
+    url(r'^p/p/$', temp1),
 ]
