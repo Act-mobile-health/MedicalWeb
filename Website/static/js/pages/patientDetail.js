@@ -10,18 +10,19 @@
         }
   })(jQuery);
 var data = new Array();
+var patientinfo = new Array();
 $(document).ready(function () {
 
-    appendPatientDetail();
+    PatientDetailTable();
     appendPatientRelation();
-    $("#refresh").click(function () {
-        appendPatientDetail();
-    });
+//    $("#refresh").click(function () {
+//        PatientDetailTable();
+//    });
     $("#submitChangePatient").click(function () {
         submitChangePatient();
     })
-    $("#submitPatientRelation").click(function () {
-       submitPatientRelation();
+    $("#postRelation").click(function () {
+       postPatientRelation();
     });
     $("#addPatientRelation").click(function () {
        addPatientRelation();
@@ -31,11 +32,71 @@ $(document).ready(function () {
     });
 })
     //查看患者个人信息
-    function appendPatientDetail() {
-        $.getJSON('',{"P_id":$.getUrlParam("P_id")},function (json_data) {
+    function PatientDetailTable() {
+        $.getJSON('/static/json/patDetail.json',{"P_id":$.getUrlParam("P_id")},function (json_data) {
             $.each(json_data,function (index,item) {
-            console.log(json_data);
-            console.log(item.P_id);
+                patientinfo.push(item);
+                $("#P_id").html(item.P_id);
+                $("#name").html(item.name);
+                if (item.sign==1){
+                    $("sign").html("是");
+                }
+                else if(item.sign==2){
+                    $("sign").html("否");
+                }
+                $("#birthday").html(item.birthday);
+                $("#age").html(item.age);
+                $("#nation").html(item.nation);
+                $("#height").html(item.height);
+                $("#weight").html(item.weight);
+                $("#education").html(item.education);
+                $("#career").html(item.career);
+                $("#marriage").html(item.marriage);
+                $("#homeAddr").html(item.homeAddr);
+                $("#birthAddr").html(item.birthAddr);
+                $("#activityAddr1").html(item.activityAddr1);
+                $("#activityAddr2").html(item.activityAddr2);
+                $("#actionAddr").html(item.actionAddr);
+                $("#diastolicPressure").html(item.diastolicPressure);
+                $("#systolicPressure").html(item.systolicPressure);
+                $("#neckCircu").html(item.neckCircu);
+                $("#telephone").html(item.telephone);
+                $("#cellphone").html(item.cellphone);
+                $("#partnerPhone").html(item.partnerPhone);
+                $("#groupName").html(item.groupName);
+                $("#groupInfo").html(item.groupInfo);
+                if (item.payment==1){
+                    $("#payment").html("城镇居民基本保险");
+                }
+                else if(item.payment==2){
+                    $("#payment").html("城镇职工基本保险");
+                }
+                else if(item.payment==3){
+                    $("#payment").html("新型农村合作医疗");
+                }
+                else if(item.payment==4){
+                    $("#payment").html("商业医疗保险");
+                }
+                else if(item.payment==5){
+                    $("#payment").html("全公费");
+                }
+                else if(item.payment==6){
+                    $("#payment").html("全自费");
+                }
+                else if(item.payment==7){
+                    $("#payment").html("其他");
+                }
+                if(item.sex==1){
+                    $("#sex").html("男");
+                }
+                else if(item.sex==2){
+                    $("#sex").html("女");
+                }
+            });
+        });
+    }
+    function appendPatientDetail() {
+                item = patientinfo[0];
                 $("#PI-P_id").val(item.P_id);
                 $("#PI-name").val(item.name);
                 if (item.sign==1){
@@ -92,12 +153,9 @@ $(document).ready(function () {
                 else if(item.sex==2){
                     $("#PI-sex2").prop('checked',true);
                 }
-            });
-        });
     }
     function submitChangePatient() {
         if(confirm("确定提交？")==1){
-            console.log($("#PatientInfo").serialize())
             $.post("",$("#PatientInfo").serialize(),function (result) {
                 if(result==0)
                     alert("修改成功");
@@ -113,6 +171,7 @@ $(document).ready(function () {
                 data.push(item);
                 $("#RelationInfoShow tbody").append(
                     "<tr>"+
+                        "<td>"+item.R_id+"</td>"+
                         "<td>"+item.name+"</td>"+
                         "<td>"+item.sex+"</td>"+
                         "<td>"+item.telephone+"</td>"+
@@ -120,16 +179,33 @@ $(document).ready(function () {
                         "<td>"+item.weChat+"</td>"+
                         "<td>"+item.mail+"</td>"+
                         "<td>"+item.homeAddr+"</td>"+
-                        '<td><a  data-toggle="modal" onclick = "PatientRelation('+ index +')" href="#RelationInfoDetails"><i class="fa fa-edit"></i></a></td>'+
+                        '<td><a  data-toggle="modal" onclick = "editPatientRelation('+ index +')" href="#RelationInfoDetails"><i class="fa fa-edit"></i></a></td>'+
                         '<td><button onclick = "deletePatientRelation('+item.R_id+')"></button></td>'+
                     "</tr>");
             });
         });
     }
     //修改病人家属信息
-    function submitPatientRelation() {
+
+    function editPatientRelation(index){
+         $("#R_id").val(data[index].R_id);
+         $("#R_weChat").val(data[index].weChat);
+         $("#R_name").val(data[index].name);
+         $("#R_telephone").val(data[index].telephone);
+         $("#R_cellphone").val(data[index].cellphone);
+         $("#R_mail").val(data[index].mail);
+         $("#R_homeAddr").val(data[index].homeAddr);
+        if(data[index].sex==1){
+            $("#R_sex").val("男");
+        }
+        else if(data[index].sex==2){
+            $("R_#sex").val("女");
+        }
+    }
+
+    function postPatientRelation() {
         if(confirm("确定提交？")==1){
-            $.post("",$("#PatientRelationInfo").serialize(),function (result) {
+            $.post("",$("#RelationInfo").serialize(),function (result) {
                 if(result==0)
                     alert("修改成功");
                 else if(result==-1)
@@ -139,7 +215,7 @@ $(document).ready(function () {
     }
     //添加患者家属信息
     function addPatientRelation() {
-        $.post("",$("#addPatientRelationInfo").serialize(),function (result) {
+        $.post("",$("#RelationInfo").serialize(),function (result) {
             if(result==0)
                     alert("添加成功");
             else if(result==-1)
@@ -159,7 +235,3 @@ $(document).ready(function () {
     }
     }
 
-    function PatientRelation(item){
-    console.log(data[item]);
-
-    }

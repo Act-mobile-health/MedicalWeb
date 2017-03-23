@@ -348,8 +348,8 @@
                                     <div class="panel-heading bk-bg-primary">
                                         <h6><i class="fa fa-table red"></i><span class="break"></span>详细信息</h6>
                                         <div class="panel-actions">
-                                            <a href="#" id="refresh"><i class="fa fa-rotate-right"></i></a>
-                                            <a  data-toggle="modal" href="#PatientInfoDetails"><i class="fa fa-edit"></i></a>
+                                            <a href="#" id="refresh" onclick="PatientDetailTable()"><i class="fa fa-rotate-right"></i></a>
+                                            <a  data-toggle="modal" onclick="appendPatientDetail()" href="#PatientInfoDetails"><i class="fa fa-edit"></i></a>
                                             <a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
                                         </div>
                                     </div>
@@ -363,11 +363,11 @@
                                                     <td>受试者编号</td>
                                                     <td id="P_id"></td>
                                                     <td>签署知情同意书</td>
-                                                    <td ></td>
+                                                    <td id="sign"></td>
                                                     <td>注册时间</td>
-                                                    <td></td>
+                                                    <td id="registerTime"></td>
                                                     <td>照片</td>
-                                                    <td></td>
+                                                    <td id="photo"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>姓名</td>
@@ -377,55 +377,55 @@
                                                     <td>出生日期</td>
                                                     <td id="birthday"></td>
                                                     <td>年龄</td>
-                                                    <td></td>
+                                                    <td id="age"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>身高</td>
-                                                    <td></td>
+                                                    <td id="height"></td>
                                                     <td>体重</td>
-                                                    <td></td>
+                                                    <td id="weight"></td>
                                                     <td>民族</td>
-                                                    <td></td>
+                                                    <td id="nation"></td>
                                                     <td>籍贯</td>
-                                                    <td></td>
+                                                    <td id="birthAddr"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>学历</td>
-                                                    <td></td>
+                                                    <td id="education"></td>
                                                     <td>职业</td>
-                                                    <td></td>
+                                                    <td id="career"></td>
                                                     <td>婚姻状况</td>
-                                                    <td></td>
+                                                    <td id="marriage"></td>
                                                     <td>医疗支付方式</td>
-                                                    <td></td>
+                                                    <td id="payment"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>家庭地址</td>
-                                                    <td></td>
+                                                    <td id="homeAddr"></td>
                                                     <td>最大活动半径</td>
-                                                    <td></td>
+                                                    <td id="actionAddr"></td>
                                                     <td>活动地址1</td>
-                                                    <td></td>
+                                                    <td id="activityAddr1"></td>
                                                     <td>活动地址2</td>
-                                                    <td></td>
+                                                    <td id="activityAddr2"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>舒张压</td>
-                                                    <td></td>
+                                                    <td id="diastolicPressure"></td>
                                                     <td>收缩压</td>
-                                                    <td></td>
+                                                    <td id="systolicPressure"></td>
                                                     <td>颈围</td>
-                                                    <td></td>
+                                                    <td id="neckCircu"></td>
                                                     <td></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
                                                     <td>固定电话</td>
-                                                    <td></td>
+                                                    <td id="telephone"></td>
                                                     <td>手机</td>
-                                                    <td></td>
+                                                    <td id="cellphone"></td>
                                                     <td>同住人联系方式</td>
-                                                    <td></td>
+                                                    <td id="partnerPhone"></td>
                                                     <td></td>
                                                     <td></td>
                                                 </tr>
@@ -450,15 +450,16 @@
                                             <table class="table table-bordered table-hover table-entire" id="RelationInfoShow">
                                                 <thead>
                                                 <tr>
+                                                    <th class="table-small" style="text-align:center">编号</th>
                                                     <th class="table-small" style="text-align:center">姓名</th>
-                                                    <th class="table-small" style="text-align:center">性别</th>
-                                                    <th class="table-small" style="text-align:center">固定电话</th>
-                                                    <th class="table-small" style="text-align:center">手机</th>
-                                                    <th class="table-small" style="text-align:center">微信</th>
-                                                    <th class="table-small" style="text-align:center">邮箱</th>
+                                                    <th style="text-align:center;width:5%">性别</th>
+                                                    <th class="table-small" style="text-align:center;">固定电话</th>
+                                                    <th class="table-small" style="text-align:center;">手机</th>
+                                                    <th class="table-small" style="text-align:center;">微信</th>
+                                                    <th class="table-small" style="text-align:center;">邮箱</th>
                                                     <th style="text-align:center">住址</th>
-                                                    <th class="table-small" style="text-align:center">编辑</th>
-                                                    <th class="table-small" style="text-align:center">删除</th>
+                                                    <th style="text-align:center;width:5%;">编辑</th>
+                                                    <th style="text-align:center;width:5%;">删除</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -1555,9 +1556,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
-                                    <label class="col-sm-3 control-label mylabel">性别</label>
+                                    <label class="col-sm-3 control-label mylabel">编号</label>
                                     <div class="col-sm-6">
-                                      <input type="text" class="form-control myinput" id="R_sex">
+                                      <input type="text" class="form-control myinput" id="R_id" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -1590,6 +1591,13 @@
                                 </div>
                             </div>
                             <div class="row ">
+
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">性别</label>
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control myinput" id="R_sex">
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">家庭住址</label>
                                     <div class="col-sm-6" >
@@ -1602,7 +1610,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">保存</button>
+                        <button type="button" id="postRelation" class="btn btn-primary">保存</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
