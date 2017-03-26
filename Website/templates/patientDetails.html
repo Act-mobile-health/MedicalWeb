@@ -447,7 +447,7 @@
                                     </div>
                                     <div class="panel-body">
                                         <div class="row col-lg-10 col-md-10 col-md-offset-1">
-                                            <table class="table table-bordered table-hover table-entire" id="RelationInfoShow">
+                                            <table class="table table-bordered table-hover table-entire" id="RelationInfoTable">
                                                 <thead>
                                                 <tr>
                                                     <th class="table-small" style="text-align:center">编号</th>
@@ -467,7 +467,7 @@
                                             </table>
 
                                             <div class="row col-lg-2 col-md-2 ">
-                                                <a  data-toggle="modal" href="#RelationInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的家属信息</a>
+                                                <a  data-toggle="modal" onclick="addRelationInfo()" href="#RelationInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的家属信息</a>
                                             </div>
                                         </div>
                                     </div>
@@ -476,7 +476,7 @@
                             <div class="tab-pane fade" id="3">
 
                             <div class="row col-lg-2 col-md-2 ">
-                                <a  data-toggle="modal" href="#OutPatientServiceInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的门诊</a>
+                                <a  data-toggle="modal" onclick="addOutPatientServiceInfo()" href="#OutPatientServiceInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的门诊</a>
                             </div>
                             <div id="outpatient">
 
@@ -1194,7 +1194,7 @@
                     </div>
                     <div class="modal-footer">
                          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                         <button type="button" id="submitChangePatient" class="btn btn-default" data-dismiss="modal">提交</button>
+                         <button type="button" id="submitPatientInfobt" class="btn btn-default" data-dismiss="modal">提交</button>
                     </div>
                 </div>
             </div>
@@ -1274,14 +1274,14 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" id="postRelation" class="btn btn-primary">保存</button>
+                        <button type="button" id="submitRelationInfobt" class="btn btn-primary" data-dismiss="modal">保存</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
 
-        <div class="modal fade" id="clinicDetails">
+        <div class="modal fade" id="ClinicDetails">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -1340,6 +1340,10 @@
                                 </h3>
                             </div>
                             <div class="panel-body">
+                            <div class="row">
+                                <h2 class="myquestion">临床编码：<input name="Cli_id" type = "text" style="width:150px;text-align:center;" readonly/></h2>
+
+                            </div>
                             <div>
                             <div class="row">
                                 <h2 class="myquestion">1. 吸烟病史</h2>
@@ -2205,7 +2209,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary">保存 修改</button>
+						<button type="button" id="submitClinicbt" class="btn btn-primary" data-dismiss="modal">保存 修改</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -2300,8 +2304,8 @@
 										<tr>
 											<td>总分</td>
 											<td><input type="text" name="score" class="col-lg-12 col-md-12" readonly style="width:80px;text-align:center"/></td>
-											<td></td>
-											<td></td>
+											<td>编码</td>
+											<td><input name="ESS_id" type = "text" style="width:70px;text-align:center;" readonly/></td>
 											<td></td>
 										</tr>
 										</tbody>
@@ -2314,7 +2318,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary">保存 修改</button>
+						<button type="button" id="submitESSbt" class="btn btn-primary" data-dismiss="modal">保存 修改</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -2347,6 +2351,10 @@
                             </div>
                             <div class="panel-body">
                             <div>
+                            <div class="row">
+                                <h3 class="myquestion">编码：<input name="MBQ_id" type = "text" style="width:150px;text-align:center;" readonly/></h3>
+
+                            </div>
                             <div class="row">
                                 <h4 class="myquestion">1.您睡觉打呼噜吗？（最好问家人或同屋的人)</h4>
                             </div>
@@ -2676,7 +2684,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary">保存 修改</button>
+						<button type="button" id="submitMBQbt" class="btn btn-primary" data-dismiss="modal">保存 修改</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -2708,6 +2716,10 @@
                                         很好(1)   好(2)   一般(3)   不好(4)   很差(5) </p>
                                 </div>
 
+                            <div class="row">
+                                <h2 class="myquestion">编码：<input name="SGRQ_id" type = "text" style="width:150px;text-align:center;" readonly/></h2>
+
+                            </div>
                             <div>
                             <div class="row">
                                 <h4 class="myquestion">1. 在过去三个月内，咳嗽情况。</h4>
@@ -3365,7 +3377,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary">保存 修改</button>
+						<button type="button" id="submitSGRQbt" class="btn btn-primary" data-dismiss="modal">保存 修改</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -3378,11 +3390,15 @@
                 <div class="modal-content modal-lg">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">添加辅助检查</h4>
+                        <h4 class="modal-title">辅助检查</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form" id = "AccessoryExamination" method="post" role="form">
                             <div>
+                                <div class="row">
+                                    <h2 class="myquestion" style="text-indent:2em;">编码：<input name="AE_id" type = "text" style="width:150px;text-align:center;" readonly/></h2>
+
+                                </div>
                                 <div class="row">
                                     <h4 class="mylabel" style = "text-align:left !important;text-indent:2em;">辅助检查类型：</h4>
                                 </div>
@@ -3425,7 +3441,7 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel" >检查时间</label>
                                     <div class="col-sm-6">
-                                      <input type="date" class="form-control myinput" name="AE_date" placeholder="请选择">
+                                      <input type="date" class="form-control myinput" name="date" placeholder="请选择">
                                     </div>
                                 </div>
                             </div>
@@ -3435,7 +3451,7 @@
 									<label class="col-sm-12 control-label mylabel">辅助检查描述：</label>
 								</div>
 								<div class="col-lg-8 col-md-8 myblockposition ">
-									<textarea class="form-control myinput" name="AE_description"></textarea>
+									<textarea class="form-control myinput" name="description"></textarea>
 								</div>
                             </div>
 
@@ -3447,7 +3463,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">提交</button>
+                        <button type="button" id="submitAccessoryExaminationbt" class="btn btn-primary" data-dismiss="modal">提交</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -3458,16 +3474,20 @@
                 <div class="modal-content modal-lg">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">添加附件</h4>
+                        <h4 class="modal-title">附件</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form" id = "AttachInfo" method="post" role="form">
 
+                            <div class="row">
+                                <h2 class="myquestion" style="text-indent:2em;">编码：<input name="A_id" type = "text" style="width:150px;text-align:center;" readonly/></h2>
+
+                            </div>
                             <div class="row ">
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel" >时间</label>
                                     <div class="col-sm-6">
-                                      <input type="date" class="form-control myinput" name="A_date" placeholder="请选择">
+                                      <input type="date" class="form-control myinput" name="date" placeholder="请选择">
                                     </div>
                                 </div>
                             </div>
@@ -3477,7 +3497,7 @@
 									<label class="col-sm-12 control-label mylabel">附件描述：</label>
 								</div>
 								<div class="col-lg-8 col-md-8 myblockposition ">
-									<textarea class="form-control myinput" name="A_description"></textarea>
+									<textarea class="form-control myinput" name="description"></textarea>
 								</div>
                             </div>
                             <div class="row ">
@@ -3488,7 +3508,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">提交</button>
+                        <button type="button" id="submitAttachInfobt" class="btn btn-primary" data-dismiss="modal">提交</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -3540,12 +3560,12 @@
 									<label class="col-sm-3 control-label mylabel">就诊原因</label>
 									<div class="radio col-sm-5" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-isStable" value="1" >稳定期随访
+										<input type="radio" name="isStable" value="1" >稳定期随访
 									  </label>
 									</div>
 									<div class="radio col-sm-4"  style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-isStable"  value="2">急性期加重
+										<input type="radio" name="isStable"  value="2">急性期加重
 									  </label>
 									</div>
 								</div>
@@ -3556,12 +3576,12 @@
 									<label class="col-sm-3 control-label mylabel">是否有症状</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-isSymptom"  value="1">是
+										<input type="radio" name="isSymptom"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3"  style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-isSymptom"  value="2">否
+										<input type="radio" name="isSymptom"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3572,17 +3592,17 @@
 									<label class="col-sm-2 control-label mylabel">症状为</label>
 									<div class="checkbox col-sm-2"  style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="checkbox" name="OI-symptom"  value="1">咳嗽加重
+										<input type="checkbox" name="symptom"  value="1">咳嗽加重
 									  </label>
 									</div>
 									<div class="checkbox col-sm-4"  style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="checkbox" name="OI-symptom"  value="2">咳浓痰并痰量增加
+										<input type="checkbox" name="symptom"  value="2">咳浓痰并痰量增加
 									  </label>
 									</div>
 									<div class="checkbox col-sm-4"  style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="checkbox" name="OI-symptom"  value="3">呼吸困难加重
+										<input type="checkbox" name="symptom"  value="3">呼吸困难加重
 									  </label>
 									</div>
 								</div>
@@ -3593,12 +3613,12 @@
 									<label class="col-sm-3 control-label mylabel">查体是否正常</label>
 									<div class="radio col-sm-3"  style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-physicalExam"  value="1">是
+										<input type="radio" name="physicalExam"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3"  style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-physicalExam"  value="2">否
+										<input type="radio" name="physicalExam"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3618,12 +3638,12 @@
 									<label class="col-sm-3 control-label mylabel">是否为慢阻肺急性加重</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-acuteExac"  value="1">是
+										<input type="radio" name="acuteExac"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-acuteExac"  value="2">否
+										<input type="radio" name="acuteExac"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3643,12 +3663,12 @@
 									<label class="col-sm-3 control-label mylabel">是否使用抗生素</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-useAbt" value="1">是
+										<input type="radio" name="useAbt" value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-useAbt" value="2">否
+										<input type="radio" name="useAbt" value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3670,12 +3690,12 @@
 									<label class="col-sm-3 control-label mylabel">是否使用静脉激素</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-useJmzs" value="1">是
+										<input type="radio" name="useJmzs" value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-useJmzs" value="2">否
+										<input type="radio" name="useJmzs" value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3685,12 +3705,12 @@
 									<label class="col-sm-3 control-label mylabel">是否住院治疗</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-hospital" value="1">是
+										<input type="radio" name="hospital" value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-hospital" value="2">否
+										<input type="radio" name="hospital" value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3701,12 +3721,12 @@
 									<label class="col-sm-3 control-label mylabel">慢阻肺急性加重是否与大气污染有关</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-airRelate"  value="1">是
+										<input type="radio" name="airRelate"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-airRelate"  value="2">否
+										<input type="radio" name="airRelate"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3717,12 +3737,12 @@
 									<label class="col-sm-3 control-label mylabel">是否调整治疗方案</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-treatMethod"  value="1">是
+										<input type="radio" name="treatMethod"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="OI-treatMethod"  value="2">否
+										<input type="radio" name="treatMethod"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3743,7 +3763,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">保存修改</button>
+                        <button type="button" id = "submitOutPatientServiceInfobt" class="btn btn-primary" data-dismiss="modal">保存修改</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -3796,34 +3816,34 @@
                             <div class="row col-sm-offset-1">
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="EI-symptom"  value="1" >咳嗽加重
+                                    <input type="checkbox" name="symptom"  value="1" >咳嗽加重
                                   </label>
                                 </div>
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="EI-symptom"  value="2">咳浓痰并痰量增加
+                                    <input type="checkbox" name="symptom"  value="2">咳浓痰并痰量增加
                                   </label>
                                 </div>
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="EI-symptom"  value="3">呼吸困难加重
+                                    <input type="checkbox" name="symptom"  value="3">呼吸困难加重
                                   </label>
                                 </div>
                             </div>
                             <div class="row col-sm-offset-1">
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="EI-symptom"  value="4">发热
+                                    <input type="checkbox" name="symptom"  value="4">发热
                                   </label>
                                 </div>
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="EI-symptom"  value="5">上呼吸道感染症状
+                                    <input type="checkbox" name="symptom"  value="5">上呼吸道感染症状
                                   </label>
                                 </div>
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="EI-symptom"  value="6">意识障碍
+                                    <input type="checkbox" name="symptom"  value="6">意识障碍
                                   </label>
                                 </div>
                             </div>
@@ -3834,12 +3854,12 @@
 									<label class="col-sm-3 control-label mylabel">是否为慢阻肺急性加重</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-acuteExac"  value="1">是
+										<input type="radio" name="acuteExac"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-acuteExac"  value="2">否
+										<input type="radio" name="acuteExac"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3860,12 +3880,12 @@
 									<label class="col-sm-3 control-label mylabel">病原体检查</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-byxCheck"  value="1">有
+										<input type="radio" name="byxCheck"  value="1">有
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-byxCheck"  value="2">无
+										<input type="radio" name="byxCheck"  value="2">无
 									  </label>
 									</div>
 								</div>
@@ -3885,12 +3905,12 @@
 									<label class="col-sm-3 control-label mylabel">采用有创或无创呼吸治疗</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-ycWcTreat"  value="1" >无创
+										<input type="radio" name="ycWcTreat"  value="1" >无创
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-ycWcTreat"  value="2">有创
+										<input type="radio" name="ycWcTreat"  value="2">有创
 									  </label>
 									</div>
 								</div>
@@ -3901,12 +3921,12 @@
 									<label class="col-sm-3 control-label mylabel">是否使用抗生素</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" class="abt" name="EI-useAbt"  value="1">是
+										<input type="radio" class="abt" name="useAbt"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" class="abt" name="EI-useAbt"  value="2">否
+										<input type="radio" class="abt" name="useAbt"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3928,12 +3948,12 @@
 									<label class="col-sm-3 control-label mylabel">是否使用静脉激素</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-useJmzs"  value="1">是
+										<input type="radio" name="useJmzs"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-useJmzs"  value="2">否
+										<input type="radio" name="useJmzs"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3944,18 +3964,18 @@
 									<label class="col-sm-3 control-label mylabel">急诊方式</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-ecMethod"  value="1">流水
+										<input type="radio" name="ecMethod"  value="1">流水
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-ecMethod"  value="2">留观
+										<input type="radio" name="ecMethod"  value="2">留观
 									  </label>
 									</div>
 
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-ecMethod"  value="2">急诊病房
+										<input type="radio" name="ecMethod"  value="2">急诊病房
 									  </label>
 									</div>
 								</div>
@@ -3976,12 +3996,12 @@
 									<label class="col-sm-3 control-label mylabel">是否住院治疗</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-hospital"  value="1">是
+										<input type="radio" name="hospital"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-hospital"  value="2">否
+										<input type="radio" name="hospital"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -3992,12 +4012,12 @@
 									<label class="col-sm-3 control-label mylabel">慢阻肺急性加重是否与大气污染有关</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-airRelate"  value="1">是
+										<input type="radio" name="airRelate"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-airRelate"  value="2">否
+										<input type="radio" name="airRelate"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -4008,12 +4028,12 @@
 									<label class="col-sm-3 control-label mylabel">是否调整治疗方案</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-treatMethod"  value="1">是
+										<input type="radio" name="treatMethod"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="EI-treatMethod"  value="2">否
+										<input type="radio" name="treatMethod"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -4033,7 +4053,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">保存修改</button>
+                        <button type="button" id = "submitEmergCallInfobt" class="btn btn-primary" data-dismiss="modal">保存修改</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -4083,12 +4103,12 @@
 									<label class="col-sm-3 control-label mylabel">住院病房类型</label>
 									<div class="radio col-sm-3" style = "text-align:left !important;text-indent:2em;">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-commonIcu"  value="1">普通病房
+										<input type="radio" name="commonIcu"  value="1">普通病房
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "text-align:left !important;text-indent:2em;">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-commonIcu"  value="2">ICU
+										<input type="radio" name="commonIcu"  value="2">ICU
 									  </label>
 									</div>
 								</div>
@@ -4101,34 +4121,34 @@
                             <div class="row col-sm-offset-1">
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="II-symptom"  value="1" >咳嗽加重
+                                    <input type="checkbox" name="symptom"  value="1" >咳嗽加重
                                   </label>
                                 </div>
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="II-symptom"  value="2">咳浓痰并痰量增加
+                                    <input type="checkbox" name="symptom"  value="2">咳浓痰并痰量增加
                                   </label>
                                 </div>
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="II-symptom"  value="3">呼吸困难加重
+                                    <input type="checkbox" name="symptom"  value="3">呼吸困难加重
                                   </label>
                                 </div>
                             </div>
                             <div class="row col-sm-offset-1">
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="II-symptom"  value="4">发热
+                                    <input type="checkbox" name="symptom"  value="4">发热
                                   </label>
                                 </div>
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="II-symptom"  value="5">上呼吸道感染症状
+                                    <input type="checkbox" name="symptom"  value="5">上呼吸道感染症状
                                   </label>
                                 </div>
                                 <div class="checkbox col-sm-3">
                                   <label class="mycheckbox">
-                                    <input type="checkbox" name="II-symptom"  value="6">意识障碍
+                                    <input type="checkbox" name="symptom"  value="6">意识障碍
                                   </label>
                                 </div>
                             </div>
@@ -4139,12 +4159,12 @@
 									<label class="col-sm-3 control-label mylabel">是否为慢阻肺急性加重</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-acuteExac"  value="1">是
+										<input type="radio" name="acuteExac"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-acuteExac"  value="2">否
+										<input type="radio" name="acuteExac"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -4165,12 +4185,12 @@
 									<label class="col-sm-3 control-label mylabel">病原体检查</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-byxCheck"  value="1">有
+										<input type="radio" name="byxCheck"  value="1">有
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-byxCheck"  value="2">无
+										<input type="radio" name="byxCheck"  value="2">无
 									  </label>
 									</div>
 								</div>
@@ -4190,12 +4210,12 @@
 									<label class="col-sm-3 control-label mylabel">采用有创或无创呼吸治疗</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-ycWcTreat"  value="1" >无创
+										<input type="radio" name="ycWcTreat"  value="1" >无创
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-ycWcTreat"  value="2">有创
+										<input type="radio" name="ycWcTreat"  value="2">有创
 									  </label>
 									</div>
 								</div>
@@ -4206,12 +4226,12 @@
 									<label class="col-sm-3 control-label mylabel">是否使用抗生素</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" class="abt" name="II-useAbt"  value="1">是
+										<input type="radio" class="abt" name="useAbt"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" class="abt" name="II-useAbt"  value="2">否
+										<input type="radio" class="abt" name="useAbt"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -4233,12 +4253,12 @@
 									<label class="col-sm-3 control-label mylabel">是否使用静脉激素</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-useJmzs"  value="1">是
+										<input type="radio" name="useJmzs"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-useJmzs"  value="2">否
+										<input type="radio" name="useJmzs"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -4259,12 +4279,12 @@
 									<label class="col-sm-3 control-label mylabel">慢阻肺急性加重是否与大气污染有关</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-airRelate"  value="1">是
+										<input type="radio" name="airRelate"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-airRelate"  value="2">否
+										<input type="radio" name="airRelate"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -4275,12 +4295,12 @@
 									<label class="col-sm-3 control-label mylabel">是否调整治疗方案</label>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-treatMethod"  value="1">是
+										<input type="radio" name="treatMethod"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3" style = "margin-top:0px !important">
 									  <label class="mycheckbox">
-										<input type="radio" name="II-treatMethod"  value="2">否
+										<input type="radio" name="treatMethod"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -4309,7 +4329,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary">保存修改</button>
+                        <button type="button" id = "submitInHospitalInfobt" class="btn btn-primary" data-dismiss="modal">保存修改</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

@@ -20,6 +20,12 @@ from Website.views import test,index,addOutpatientInfos,addEmergencyInfos,addHos
 
 from Website.views import *
 
+from django.conf.urls import url
+from django.contrib import admin
+from Website import view
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^test/$', test),
@@ -39,4 +45,30 @@ urlpatterns = [
     url(r'^register/$', register),
     url(r'^pending/$', pending),
     url(r'^p/p/$', temp1),
+
+
+
+
+
+    url(r'^admin/', admin.site.urls),
+    url(r'^get/', view.get_test),
+    url(r'^post/', view.post_test),
+    url(r'^i1/',view.register),
+    url(r'^i2/',view.repeatCheck),
+    url(r'^i3/',view.login),
+    url(r'^i4/',view.retrievePassword),
+    url(r'^i5/',view.getDoctorBasicInfo),
+    url(r'^i6/',view.getDoctorDetailedInfo),
+    url(r'^i7/',view.updateDoctorInfo),
+    url(r'^i8/',view.getExpGroups),
+    url(r'^i9/',view.getExpGroupPatientsInfo),
+    url(r'^i10/',view.addExpGroup),
+    url(r'^i11/',view.deleteExpGroup),
+    url(r'^i12/',view.updateExpGroup),
+    url(r'^i13/',view.addPatientToExpGroup),
+    url(r'^i14/',view.removePatientfromExpGroup),
+    url(r'^i15/',view.getPatientsBasicInfo),
+    url(r'^i16/',view.getPatientDetailedInfo),
+    url(r'^i17/',view.addPatientInfo),
+    url(r'^i18/',view.updatePatientInfo),
 ]
