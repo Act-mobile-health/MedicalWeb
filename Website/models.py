@@ -9,7 +9,7 @@ from django.db import models
 
 
 class PatientInfo(models.Model):
-    P_id = models.CharField(max_length=10, unique=True)
+    P_id = models.CharField(max_length=10, unique=True,null=False)
     sign = models.CharField(max_length=2)
     name = models.CharField(max_length=50)
     sex = models.CharField(max_length=2)
@@ -49,7 +49,7 @@ class RelationInfo(models.Model):
     cellphone = models.CharField(max_length=11)
     weChat = models.CharField(max_length=50)
     mail = models.CharField(max_length=50)
-    honeAddr = models.CharField(max_length=150)
+    homeAddr = models.CharField(max_length=150)
 
 
 # created by JK@buaa, 2017/3/17
@@ -444,7 +444,8 @@ class OutPatientServiceInfo(models.Model):
     breathErr = models.CharField(max_length=50)
     acuteExac = models.CharField(max_length=1)
     disease = models.CharField(max_length=50, null=False)
-    use_abt = models.CharField(max_length=20, null=False)
+    useAbt = models.CharField(max_length=1, null=False)
+    abtType = models.CharField(max_length=20)
     useJmzs = models.CharField(max_length=1, null=False)
     hospital = models.CharField(max_length=1, null=False)
     airRelate = models.CharField(max_length=1, null=False)
@@ -572,6 +573,7 @@ class Clinic(models.Model):
     comp4 = models.CharField(max_length=20, null=False)
     comp5 = models.CharField(max_length=20, null=False)
     comp6 = models.CharField(max_length=20, null=False)
+    detail = models.CharField(max_length=200)
     date = models.DateField(auto_now_add=True)
 
 
@@ -687,12 +689,12 @@ class AccessoryExamination(models.Model):
 # table 24
 
 
-class MedialVisit(models.Model):
+class MedicalVisit(models.Model):
     #MV_id = models.CharField(max_length=32, primary_key=True)
-    o_time = models.CharField(max_length=5)
-    e_time = models.CharField(max_length=5)
-    h_time = models.CharField(max_length=5)
-    P_id = models.CharField(max_length=7)
+    o_time = models.CharField(max_length=5,default="0")
+    e_time = models.CharField(max_length=5,default="0")
+    h_time = models.CharField(max_length=5,default="0")
+    P_id = models.CharField(max_length=10, unique=True, null=False)
 
 
 # created by JK@buaa, 2017/3/17
@@ -724,7 +726,7 @@ class DiseaseType(models.Model):
 class WarningInfo(models.Model):
     #WI_id = models.CharField(max_length=32)
     warning = models.CharField(max_length=50)
-    P_id = models.CharField(max_length=7)
+    P_id = models.CharField(max_length=10)
 
 
 # created by JK@buaa, 2017/3/17
@@ -734,7 +736,7 @@ class WarningInfo(models.Model):
 class AppInfo(models.Model):
     #AI_id = models.CharField(max_length=32, primary_key=True)
     date = models.DateField(blank=True)
-    P_id = models.CharField(max_length=7)
+    P_id = models.CharField(max_length=10)
     type = models.CharField(max_length=5)
 
 
@@ -744,7 +746,7 @@ class AppInfo(models.Model):
 
 class AppAttachment(models.Model):
     name = models.CharField(max_length=10, null=False)
-    P_id = models.CharField(max_length=7, null=False)
+    P_id = models.CharField(max_length=10, null=False)
     AI_id = models.CharField(max_length=32, null=False)
     dir = models.CharField(max_length=50, null=False)
 

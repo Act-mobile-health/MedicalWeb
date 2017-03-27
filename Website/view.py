@@ -5,38 +5,20 @@ from django.views.decorators.csrf import csrf_exempt
 import demjson
 from db_method import insert,select,update,delete
 from control_method import tools
-
-
-def get_test(request):
-    if request.method == 'GET':
-        data = request.GET
-        print data
-        message=[{'state':'success','method':'get','data':data}]
-        js = json.dumps(message)
-        return HttpResponse(js)
-
-@csrf_exempt
-def post_test(request):
-    if request.method == 'POST':
-        data = request.POST
-        print data
-        message=[{'state':'success','method':'post','data':data}]
-        js = json.dumps(message)
-        return HttpResponse(js)
+from django.shortcuts import render
 
 #接口1
 @csrf_exempt
 def register(request):
     if request.method == 'POST':
         data = request.POST
-
         message = {'result': -1}
         if insert.addDoctorInfo(data) == True:
             message['result'] = 0
         else:
             message['result'] = -1
 
-        message = tools.toString(message)
+        # message = tools.toString(message)
         js = json.dumps(message)
         return HttpResponse(js)
 
@@ -51,7 +33,7 @@ def repeatCheck(request):
         else:
             result = 0
 
-        message = tools.toString(message)
+        # message = tools.toString(message)
         js = json.dumps(message)
 
         return HttpResponse(js)
@@ -72,7 +54,7 @@ def login(request):
                 message['result'] = -1
         else:
             message['result'] = -1
-        message = tools.toString(message)
+        # message = tools.toString(message)
         js =  json.dumps(message)
 
         return HttpResponse(js)
@@ -100,7 +82,7 @@ def retrievePassword(request):
                 # TODO
             else:
                 result = -1
-        message = tools.toString(message)
+        # message = tools.toString(message)
         js = json.dumps(message)
         return HttpResponse(js)
 
@@ -113,14 +95,11 @@ def getDoctorBasicInfo(request):
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             message = select.getDoctorBasicInfo(D_id)
-            message['result'] = 0
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-        message = tools.toString(message)
-        js = json.dumps(message)
-
-        return HttpResponse(js)
-
+            return render(request,"page-login.html")
 
 
 #接口6
@@ -132,12 +111,11 @@ def getDoctorDetailedInfo(request):
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             message = select.getDoctorDetailedInfo(D_id)
-            message['result'] = 0
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            return render(request, "page-login.html")
 
 
 #接口7
@@ -152,11 +130,13 @@ def updateDoctorInfo(request):
                 message['result'] = 0
             else:
                 message['result'] = -1
+
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            return render(request, "page-login.html")
+
 
 #接口8
 @csrf_exempt
@@ -167,9 +147,11 @@ def getExpGroups(request):
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             message = select.getExpGroups(D_id)
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 #接口9
 @csrf_exempt
@@ -179,30 +161,37 @@ def getExpGroupPatientsInfo(request):
         message = []
         if 'D_id' in request.session:
             message = select.getExpGroupPatientsInfo(int(data['G_id']))
-
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 
 #接口10
 @csrf_exempt
-def addExpGroup(request):
+def addOrUpdateExpGroup(request):
     if request.method == 'POST':
         data = request.POST
         message = {}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
-            if insert.addExpGroup(D_id,data['name'],data['information']) == True:
-                message['result'] = 0
-            else:
-                message['result'] = -1
-        else:
-            message['result'] = -1
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            if data['G_id'] == '':
+                if insert.addExpGroup(D_id,data['name'],data['information']) == True:
+                    message['result'] = 0
+                else:
+                    message['result'] = -1
+            else:
+                if update.updateExpGroup(int(data['G_id']), data['name'], data['information']) == True:
+                    message['result'] = 0
+                else:
+                    message['result'] = -1
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 #接口11
 @csrf_exempt
@@ -216,30 +205,30 @@ def deleteExpGroup(request):
                 message['result'] = 0
             else:
                 message['result'] = -1
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            return render(request, "page-login.html")
 
 
 
 #接口12
-@csrf_exempt
-def updateExpGroup(request):
-    if request.method == 'POST':
-        message = {}
-        data = request.POST
-        if 'D_id' in request.session:
-            if update.updateExpGroup(int(data['G_id']),data['name'],data['information']) == True:
-                message['result'] = 0
-            else:
-                message['result'] = -1
-        else:
-            message['result'] = -1
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+# @csrf_exempt
+# def updateExpGroup(request):
+#     if request.method == 'POST':
+#         message = {}
+#         data = request.POST
+#         if 'D_id' in request.session:
+#             if update.updateExpGroup(int(data['G_id']),data['name'],data['information']) == True:
+#                 message['result'] = 0
+#             else:
+#                 message['result'] = -1
+#             # message = tools.toString(message)
+#             js = json.dumps(message)
+#             return HttpResponse(js)
+#         else:
+#             return render(request, "page-login.html")
 
 
 
@@ -254,12 +243,11 @@ def addPatientToExpGroup(request):
                 message['result'] = 0
             else:
                 message['result'] = -1
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            return render(request, "page-login.html")
 
 #接口14
 @csrf_exempt
@@ -272,12 +260,11 @@ def removePatientfromExpGroup(request):
                 message['result'] = 0
             else:
                 message['result'] = -1
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            return render(request, "page-login.html")
 
 #接口15
 @csrf_exempt
@@ -287,238 +274,301 @@ def getPatientsBasicInfo(request):
         message = []
         if 'D_id' in request.session:
             D_id = request.session['D_id']
+            print D_id,"IIIIDDDDDDDDDDDDD"
             message = select.getPatientsBasicInfo(D_id)
-        print message
-        print "aaaaaaaaaaaaaaa"
-        message = tools.toString(message)
-        js = json.dumps(message)
-
-        return HttpResponse(js)
+            # # message = tools.toString(message)
+            print "message",message
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 #接口16
 @csrf_exempt
 def getPatientDetailedInfo(request):
     if request.method == 'GET':
         data = request.GET
+        print data
         message = []
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             message = select.getPatientDetailedInfo(data['P_id'])
-
-        message = tools.toString(message)
-        js = json.dumps(message)
-
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 
 #接口17
 @csrf_exempt
-def addPatientInfo(request):
+def addOrUpdatePatientInfo(request):
     if request.method == 'POST':
         message = {}
         data = request.POST
+        print data
         if 'D_id' in request.session:
             D_id = request.session['D_id']
-            if insert.addPatientInfo(data) == True:
-                message['result'] = 0
-            else:
-                message['result'] = -1
-        else:
-            message['result'] = -1
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
-
-#接口18
-@csrf_exempt
-def updatePatientInfo(request):
-    if request.method == 'POST':
-        message = {}
-        data = request.POST
-        if 'D_id' in request.session:
-            D_id = request.session['D_id']
-            G_id = int(data['G_id'])
-            if update.updatePatientInfo(G_id,data) == True:
-                message['result'] = 0
+            if data['P_id'] == '':
+                if insert.addPatientInfo(data) == True:
+                    message['result'] = 0
+                else:
+                    message['result'] = -1
             else:
-                message['result'] = -1
+                if update.updatePatientInfo(data) == True:
+                    message['result'] = 0
+                else:
+                    message['result'] = -1
+            message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            return render(request, "page-login.html")
+
+# #接口18
+# @csrf_exempt
+# def updatePatientInfo(request):
+#     if request.method == 'POST':
+#         message = {}
+#         data = request.POST
+#         if 'D_id' in request.session:
+#             D_id = request.session['D_id']
+#             if update.updatePatientInfo(data) == True:
+#                 message['result'] = 0
+#             else:
+#                 message['result'] = -1
+#             # message = tools.toString(message)
+#             js = json.dumps(message)
+#             return HttpResponse(js)
+#         else:
+#             return render(request, "page-login.html")
 
 #接口19
 @csrf_exempt
 def getRelationsInfo(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
         message = []
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             message = select.getRelationInfos(data['P_id'])
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
-
-#接口20
-@csrf_exempt
-def updateRelationInfo(request):
-    if request.method == 'POST':
-        message = {}
-        data = request.POST
-        if 'D_id' in request.session:
-            D_id = request.session['D_id']
-            R_id = int(data['R_id'])
-            if update.updateRelationInfo(R_id,data) == True:
-                message['result'] = 0
-            else:
-                message['result'] = -1
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            return render(request, "page-login.html")
+
+# #接口20
+# @csrf_exempt
+# def updateRelationInfo(request):
+#     if request.method == 'POST':
+#         message = {}
+#         data = request.POST
+#         if 'D_id' in request.session:
+#             D_id = request.session['D_id']
+#             R_id = int(data['R_id'])
+#             if update.updateRelationInfo(R_id,data) == True:
+#                 message['result'] = 0
+#             else:
+#                 message['result'] = -1
+#             # message = tools.toString(message)
+#             js = json.dumps(message)
+#             return HttpResponse(js)
+#         else:
+#             return render(request, "page-login.html")
 
 #接口21
 @csrf_exempt
-def addRelationInfo(request):
+def addOrUpdateRelationInfo(request):
     if request.method == 'POST':
         message = {}
         data = request.POST
         if 'D_id' in request.session:
             D_id = request.session['D_id']
-            if insert.addRelationInfo(data) == True:
-                message['result'] = 0
+
+            if data['R_id'] == '':
+                if insert.addRelationInfo(data) == True:
+                    message['result'] = 0
+                else:
+                    message['result'] = -1
             else:
-                message['result'] = -1
+                R_id = int(data['R_id'])
+                if update.updateRelationInfo(R_id, data) == True:
+                    message['result'] = 0
+                else:
+                    message['result'] = -1
+
+            message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            return render(request, "page-login.html")
 
 
 #接口22
 @csrf_exempt
 def deleteRelation(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         message = {}
-        data = request.POST
+        data = request.GET
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             if delete.deleteRelation(int(data['R_id'])) == True:
                 message['result'] = 0
             else:
                 message['result'] = -1
+            message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            return render(request, "page-login.html")
+
+
+
+@csrf_exempt
+def getCEHAllInfo(request):
+    if request.method == 'GET':
+        data = request.GET
+        message = []
+        if 'D_id' in request.session:
+            D_id = request.session['D_id']
+            if int(data['type']) == 0:
+                message = select.getPatientAllOutPatientServiceInfos(data['P_id'])
+            elif int(data['type']) == 1:
+                message = select.getPatientAllEmergCallInfos(data['P_id'])
+            elif int(data['type']) == 2:
+                message = select.getPatientAllInHospitalInfos( data['P_id'])
+
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 
 #接口23
 @csrf_exempt
 def getCEHDetailedInfo(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
+        print data
         message = []
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             if int(data['type']) == 0:
-                message = select.getPatientDetailedOutPatientServiceInfos(data['P_id'])
+                message = select.getPatientDetailedOutPatientServiceInfos(data['S_id'])
             elif int(data['type']) == 1:
-                message = select.getPatientDetailedEmergCallInfos(data['P_id'])
+                message = select.getPatientDetailedEmergCallInfos(data['S_id'])
             elif int(data['type']) == 2:
-                message = select.getPatientDetailedInHospitalInfos( data['P_id'])
+                message = select.getPatientDetailedInHospitalInfos( data['S_id'])
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            #message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 
 #接口24
 @csrf_exempt
-def addCEHInfo(request):
+def addOrUpdateCEHInfo(request):
     if request.method == 'POST':
         data = request.POST
         message = {'result':-1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
-            if int(data['type']) == 0:
-                result = insert.addOutPatientServiceInfo(data)
-            elif int(data['type']) == 1:
-                result = insert.addEmergCallInfo(data)
-            elif int(data['type']) == 2:
-                result = insert.addInHospitalInfo(data)
+
+            if data['id'] == '':
+                if int(data['type']) == 0:
+                    result = insert.addOutPatientServiceInfo(data)
+                elif int(data['type']) == 1:
+                    result = insert.addEmergCallInfo(data)
+                elif int(data['type']) == 2:
+                    result = insert.addInHospitalInfo(data)
+                else:
+                    result = False
             else:
-                result = False
+                id = int(data['id'])
+                if int(data['type']) == 0:
+                    result = update.updateOutPatientServiceInfo(id, data)
+                elif int(data['type']) == 1:
+                    result = update.updateEmergCallInfo(id, data)
+                elif int(data['type']) == 2:
+                    result = update.updateInHospitalInfo(id, data)
+                else:
+                    result = False
 
             if result == True:
                 message['result'] = 0
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            message = tools.toString(message)
+            js = json.dumps(message)
+            print js,"########"
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 
 #接口25
 @csrf_exempt
 def deleteCEHInfo(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
+        print  data
         message = {'result':-1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             if int(data['type']) == 0:
-                result = delete.deleteOutPatientServiceInfo(int(data['id']))
+                result = delete.deleteOutPatientServiceInfo(int(data['S_id']))
             elif int(data['type']) == 1:
-                result = delete.deleteEmergCallInfo(int(data['id']))
+                result = delete.deleteEmergCallInfo(int(data['S_id']))
             elif int(data['type']) == 2:
-                result = delete.deleteInHospitalInfo(int(data['id']))
+                result = delete.deleteInHospitalInfo(int(data['S_id']))
             else:
                 result = False
 
             if result == True:
                 message['result'] = 0
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
-#接口26
-@csrf_exempt
-def updateCEHInfo(request):
-    if request.method == 'POST':
-        data = request.POST
-        message = {'result':-1}
-        if 'D_id' in request.session:
-            D_id = request.session['D_id']
-            id = int(data['id'])
-            if int(data['type']) == 0:
-                result = update.updateOutPatientServiceInfo(id,data)
-            elif int(data['type']) == 1:
-                result = update.updateEmergCallInfo(id,data)
-            elif int(data['type']) == 2:
-                result = update.updateInHospitalInfo(id,data)
-            else:
-                result = False
-
-            if result == True:
-                message['result'] = 0
-
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+# #接口26
+# @csrf_exempt
+# def updateCEHInfo(request):
+#     if request.method == 'POST':
+#         data = request.POST
+#         message = {'result':-1}
+#         if 'D_id' in request.session:
+#             D_id = request.session['D_id']
+#             id = int(data['id'])
+#             if int(data['type']) == 0:
+#                 result = update.updateOutPatientServiceInfo(id,data)
+#             elif int(data['type']) == 1:
+#                 result = update.updateEmergCallInfo(id,data)
+#             elif int(data['type']) == 2:
+#                 result = update.updateInHospitalInfo(id,data)
+#             else:
+#                 result = False
+#
+#             if result == True:
+#                 message['result'] = 0
+#
+#             # message = tools.toString(message)
+#             js = json.dumps(message)
+#             return HttpResponse(js)
+#         return render(request, "page-login.html")
 
 
 # 接口27
 @csrf_exempt
 def getCorQBasicInfo(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
         message = []
         if 'D_id' in request.session:
             D_id = request.session['D_id']
@@ -527,118 +577,153 @@ def getCorQBasicInfo(request):
             else:
                 message = select.getBasicQuestionnaireInfos(data['type'],int(data['S_id']))
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 # 接口28
 @csrf_exempt
 def getClinicDetailedInfo(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
         message = {}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             message = select.getDetailedClinicInfo(int(data['Cli_id']))
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
+
 
 # 接口29
 @csrf_exempt
 def getQuestionnaireDetailedInfo(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
         message = {}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             message = select.getDetailedQuestionnaireInfo(int(data['type']),int(data['id']))
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
+
+
 
 # 接口30
 @csrf_exempt
-def addClinicInfo(request):
+def addOrUpdateClinicInfo(request):
     if request.method == 'POST':
         data = request.POST
+        print data
         message = {'result': -1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             S_id = int(data['S_id'])
-            if insert.addClinicInfo(S_id,data):
-                message['result'] = 0
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            if data['Cli_id'] == '':
+                if insert.addClinicInfo(S_id,data):
+                    message['result'] = 0
+            else:
+                if update.updateClinicInfo(S_id, data):
+                    message['result'] = 0
+
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 # 接口31
 @csrf_exempt
-def addQuestionnaireInfo(request):
+def addOrUpdateQuestionnaireInfo(request):
     if request.method == 'POST':
         data = request.POST
         message = {'result': -1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             S_id = int(data['S_id'])
-            q_type = int(data['q_type'])
-            if insert.addQuestionnaireInfo(q_type,S_id,data):
-                message['result'] = 0
+            kind = int(data['kind'])
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            if ('ESS_id' in data and data['ESS_id']=='') or \
+                ('MBQ_id' in data and data['MBQ_id']=='') or \
+                ('SGRO_id' in data and data['SGRO_id']==''):
+
+                if insert.addQuestionnaireInfo(kind,S_id,data):
+                    message['result'] = 0
+
+            else:
+                if update.updateQuestionnaireInfo(kind, S_id, data):
+                    message['result'] = 0
+
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
+
 
 # 接口32
-@csrf_exempt
-def updateClinicInfo(request):
-    if request.method == 'POST':
-        data = request.POST
-        message = {'result': -1}
-        if 'D_id' in request.session:
-            D_id = request.session['D_id']
-            S_id = int(data['S_id'])
-            if update.updateClinicInfo(S_id,data):
-                message['result'] = 0
-
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+# @csrf_exempt
+# def updateClinicInfo(request):
+#     if request.method == 'POST':
+#         data = request.POST
+#         message = {'result': -1}
+#         if 'D_id' in request.session:
+#             D_id = request.session['D_id']
+#             S_id = int(data['S_id'])
+#             if update.updateClinicInfo(S_id,data):
+#                 message['result'] = 0
+#
+#             # message = tools.toString(message)
+#             js = json.dumps(message)
+#             return HttpResponse(js)
+#         else:
+#             return render(request, "page-login.html")
 
 # 接口33
-@csrf_exempt
-def updateQuestionnaireInfo(request):
-    if request.method == 'POST':
-        data = request.POST
-        message = {'result': -1}
-        if 'D_id' in request.session:
-            D_id = request.session['D_id']
-            S_id = int(data['S_id'])
-            q_type = int(data['q_type'])
-            if update.updateQuestionnaireInfo(q_type,S_id,data):
-                message['result'] = 0
-
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+# @csrf_exempt
+# def updateQuestionnaireInfo(request):
+#     if request.method == 'POST':
+#         data = request.POST
+#         message = {'result': -1}
+#         if 'D_id' in request.session:
+#             D_id = request.session['D_id']
+#             S_id = int(data['S_id'])
+#             kind = int(data['kind'])
+#             if update.updateQuestionnaireInfo(kind,S_id,data):
+#                 message['result'] = 0
+#
+#             # message = tools.toString(message)
+#             js = json.dumps(message)
+#             return HttpResponse(js)
+#         else:
+#             return render(request, "page-login.html")
 
 # 接口34
 @csrf_exempt
 def deleteClinicInfo(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
         message = {'result': -1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             if delete.deleteClinicInfo(int(data['Cli_id'])):
                 message['result'] = 0
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 # 接口35
 @csrf_exempt
@@ -648,12 +733,14 @@ def deleteQuestionnaireInfo(request):
         message = {'result': -1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
-            if delete.deleteQuestionnaireInfo(int(data['q_type']),int(data['id'])):
+            if delete.deleteQuestionnaireInfo(int(data['kind']),int(data['id'])):
                 message['result'] = 0
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 
 # 接口36
@@ -669,49 +756,64 @@ def getAorAEDetailedInfo(request):
             else:
                 message = select.getDetailedAttachInfos(data['type'],int(data['S_id']))
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 # 接口37
 @csrf_exempt
-def addAorAEDetailedInfo(request):
+def addOrUpdateAorAEDetailedInfo(request):
     if request.method == 'POST':
         data = request.POST
         message = {'result': -1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
             S_id=int(data['S_id'])
-            if int(data['kind']) == 0:
-                if insert.addAccessoryExamination(D_id,S_id,data):
-                    message['result'] = 0
-            else:
-                if insert.addAttachInfo(D_id,S_id,data):
-                    message['result'] = 0
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            if data['id'] == '':
+                if int(data['kind']) == 0:
+                    if insert.addAccessoryExamination(D_id,S_id,data):
+                        message['result'] = 0
+                else:
+                    if insert.addAttachInfo(D_id,S_id,data):
+                        message['result'] = 0
+            else:
+                if int(data['kind']) == 0:
+                    if update.updateAccessoryExamination(int(data['id']), D_id, S_id, data):
+                        message['result'] = 0
+                else:
+                    if update.updateAttachInfo(int(data['id']), D_id, S_id, data):
+                        message['result'] = 0
+
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 # 接口38
-@csrf_exempt
-def updateAorAEDetailedInfo(request):
-    if request.method == 'POST':
-        data = request.POST
-        message = {'result': -1}
-        if 'D_id' in request.session:
-            D_id = request.session['D_id']
-            S_id = int(data['S_id'])
-            if int(data['kind']) == 0:
-                if update.updateAccessoryExamination(int(data['id']),D_id,S_id,data):
-                    message['result'] = 0
-            else:
-                if update.updateAttachInfo(int(data['id']),D_id,S_id,data):
-                    message['result'] = 0
-
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+# @csrf_exempt
+# def updateAorAEDetailedInfo(request):
+#     if request.method == 'POST':
+#         data = request.POST
+#         message = {'result': -1}
+#         if 'D_id' in request.session:
+#             D_id = request.session['D_id']
+#             S_id = int(data['S_id'])
+#             if int(data['kind']) == 0:
+#                 if update.updateAccessoryExamination(int(data['id']),D_id,S_id,data):
+#                     message['result'] = 0
+#             else:
+#                 if update.updateAttachInfo(int(data['id']),D_id,S_id,data):
+#                     message['result'] = 0
+#
+#             # message = tools.toString(message)
+#             js = json.dumps(message)
+#             return HttpResponse(js)
+#         else:
+#             return render(request, "page-login.html")
 
 # 接口39
 @csrf_exempt
@@ -728,10 +830,11 @@ def deleteAorAEDetailedInfo(request):
                 if delete.deleteAttachInfo(int(data['id'])):
                     message['result'] = 0
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
-
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 # 接口40
 @csrf_exempt
@@ -745,12 +848,11 @@ def updateDocPassword(request):
                 message['result'] = 0
             else:
                 message['result'] = -1
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
         else:
-            message['result'] = -1
-
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            return render(request, "page-login.html")
 
 # 接口41
 # Cat &&MRC 返回近两周的sum
@@ -763,9 +865,11 @@ def getCat_MRCSum2Weeks(request):
             D_id = request.session['D_id']
             message = select.getMsg2Weeks(data['P_id'], 1)
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 # 接口42
 # 近两周暴露水平
@@ -778,9 +882,11 @@ def getExploure2Weeks(request):
             D_id = request.session['D_id']
             message = select.getMsg2Weeks(data['P_id'], 2)
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 # 接口43
 @csrf_exempt
@@ -792,6 +898,8 @@ def getPatientName(request):
             D_id = request.session['D_id']
             message = getPatientName(data['P_id'])
 
-        message = tools.toString(message)
-        js = json.dumps(message)
-        return HttpResponse(js)
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")

@@ -78,72 +78,72 @@ $(document).ready(function () {
 
     //查看患者个人信息
     function PatientDetailTable() {
-        $.getJSON('/static/json/patDetail.json',{P_id:patientId},function (json_data) {
-            $.each(json_data,function (index,item) {
-                patientinfo.push(item);
-                $("#P_id").html(item.P_id);
-                $("#name").html(item.name);
-                if (item.sign==1){
-                    $("sign").html("是");
-                }
-                else if(item.sign==2){
-                    $("sign").html("否");
-                }
-                $("#birthday").html(item.birthday);
-                $("#age").html(item.age);
-                $("#nation").html(item.nation);
-                $("#height").html(item.height);
-                $("#weight").html(item.weight);
-                $("#education").html(item.education);
-                $("#career").html(item.career);
-                $("#marriage").html(item.marriage);
-                $("#homeAddr").html(item.homeAddr);
-                $("#birthAddr").html(item.birthAddr);
-                $("#activityAddr1").html(item.activityAddr1);
-                $("#activityAddr2").html(item.activityAddr2);
-                $("#actionAddr").html(item.actionAddr);
-                $("#diastolicPressure").html(item.diastolicPressure);
-                $("#systolicPressure").html(item.systolicPressure);
-                $("#neckCircu").html(item.neckCircu);
-                $("#telephone").html(item.telephone);
-                $("#cellphone").html(item.cellphone);
-                $("#partnerPhone").html(item.partnerPhone);
-                $("#groupName").html(item.groupName);
-                $("#groupInfo").html(item.groupInfo);
-                if (item.payment==1){
-                    $("#payment").html("城镇居民基本保险");
-                }
-                else if(item.payment==2){
-                    $("#payment").html("城镇职工基本保险");
-                }
-                else if(item.payment==3){
-                    $("#payment").html("新型农村合作医疗");
-                }
-                else if(item.payment==4){
-                    $("#payment").html("商业医疗保险");
-                }
-                else if(item.payment==5){
-                    $("#payment").html("全公费");
-                }
-                else if(item.payment==6){
-                    $("#payment").html("全自费");
-                }
-                else if(item.payment==7){
-                    $("#payment").html("其他");
-                }
-                if(item.sex==1){
-                    $("#sex").html("男");
-                }
-                else if(item.sex==2){
-                    $("#sex").html("女");
-                }
-            });
+        $.getJSON('/i16/',{P_id:patientId},function (json_data) {
+            item = json_data;
+            patientinfo.push(item);
+            $("#P_id").html(item.P_id);
+            $("#name").html(item.name);
+            if (item.sign=="1"){
+                $("#sign").html("是");
+            }
+            else if(item.sign=="2"){
+                $("#sign").html("否");
+            }
+            $("#birthday").html(item.birthday);
+            $("#age").html(item.age);
+            $("#nation").html(item.nation);
+            $("#height").html(item.height);
+            $("#weight").html(item.weight);
+            $("#education").html(item.education);
+            $("#registerTime").html(item.registerTime);
+            $("#career").html(item.career);
+            $("#marriage").html(item.marriage);
+            $("#homeAddr").html(item.homeAddr);
+            $("#birthAddr").html(item.birthAddr);
+            $("#activityAddr1").html(item.activityAddr1);
+            $("#activityAddr2").html(item.activityAddr2);
+            $("#actionAddr").html(item.actionAddr);
+            $("#diastolicPressure").html(item.diastolicPressure);
+            $("#systolicPressure").html(item.systolicPressure);
+            $("#neckCircu").html(item.neckCircu);
+            $("#telephone").html(item.telephone);
+            $("#cellphone").html(item.cellphone);
+            $("#partnerPhone").html(item.partnerPhone);
+            $("#groupName").html(item.groupName);
+            $("#groupInfo").html(item.groupInfo);
+            if (item.payment=="1"){
+                $("#payment").html("城镇居民基本保险");
+            }
+            else if(item.payment=="2"){
+                $("#payment").html("城镇职工基本保险");
+            }
+            else if(item.payment=="3"){
+                $("#payment").html("新型农村合作医疗");
+            }
+            else if(item.payment=="4"){
+                $("#payment").html("商业医疗保险");
+            }
+            else if(item.payment=="5"){
+                $("#payment").html("全公费");
+            }
+            else if(item.payment=="6"){
+                $("#payment").html("全自费");
+            }
+            else if(item.payment=="7"){
+                $("#payment").html("其他");
+            }
+            if(item.sex=="1"){
+                $("#sex").html("男");
+            }
+            else if(item.sex=="2"){
+                $("#sex").html("女");
+            }
         });
     }
 
     function submitChangePatient() {
         if(confirm("确定提交？")==1){
-            $.post("",$("#PatientInfo").serialize(),function (data) {
+            $.post("/i17/",$("#PatientInfo").serialize(),function (data) {
                 var result = JSON.parse(data).result;
                 if(result=="0")
                     alert("修改成功");
@@ -167,6 +167,8 @@ $(document).ready(function () {
                 $("#PatientInfo input[name='education']").val(item.education);
                 $("#PatientInfo input[name='career']").val(item.career);
                 $("#PatientInfo input[name='marriage']").val(item.marriage);
+                $("#PatientInfo input[name='registerTime']").val(item.registerTime);
+                $("#PatientInfo input[name='birthday']").val(item.birthday);
                 $("#PatientInfo input[name='homeAddr']").val(item.homeAddr);
                 $("#PatientInfo input[name='birthAddr']").val(item.birthAddr);
                 $("#PatientInfo input[name='activityAddr1']").val(item.activityAddr1);
@@ -186,7 +188,7 @@ $(document).ready(function () {
     //查看患者家属信息
     function showRelationInfo(){
         $("#RelationInfoTable tbody").empty();
-        $.getJSON('/static/json/patientRelation.json',function (json_data){
+        $.getJSON('/i18/',{"P_id":patientId},function (json_data){
             $.each(json_data,function (index,item){
                 data.push(item);
                 $("#RelationInfoTable tbody").append(
@@ -222,8 +224,9 @@ $(document).ready(function () {
     //删除患者家属信息
     function deleteRelationInfo(id) {
     if(confirm("确定删除？")==1){
-        $.get("",{R_id:id},function (data) {
+        $.get("/i20/",{R_id:id},function (data) {
             var result = JSON.parse(data).result;
+            console.log(result);
             if(result=="0")
                 alert("删除成功");
             else if(result=="-1")
@@ -241,7 +244,7 @@ $(document).ready(function () {
     }
     function submitRelationInfo() {
         if (confirm("确定提交吗？")){
-            $.post("",$("#RelationInfo").serialize()+"&P_id="+patientId,function (data) {
+            $.post("/i19/",$("#RelationInfo").serialize()+"&P_id="+patientId,function (data) {
                 var result = JSON.parse(data).result;
                 if(result=="0")
                     alert("添加成功");
@@ -256,15 +259,15 @@ $(document).ready(function () {
     function GenerateTab1(index){
     var str_edit = "";
     var str_type = "";
-    if(type==1){
+    if(type==0){
         str_edit = "OutPatientServiceInfoDetails";
         str_type = "outpatient-"+index;
     }
-    else if(type == 2){
+    else if(type == 1){
         str_edit = "EmergCallInfoDetails";
         str_type = "emergency-"+index;
     }
-    else if(type == 3){
+    else if(type == 2){
         str_edit = "InHospitalInfoDetails";
         str_type = "hospital-"+index;
     }
@@ -306,13 +309,13 @@ $(document).ready(function () {
 
     function GenerateTab2(index){
     var str_type = "";
-    if(type==1){
+    if(type== 0){
         str_type = "outpatient-"+index;
     }
-    else if(type == 2){
+    else if(type == 1){
         str_type = "emergency-"+index;
     }
-    else if(type == 3){
+    else if(type == 2){
         str_type = "hospital-"+index;
     }
      var str = "";
@@ -343,13 +346,13 @@ $(document).ready(function () {
 
     function GenerateTab3(index){
         var str_type = "";
-        if(type==1){
+        if(type==0){
             str_type = "outpatient-"+index;
         }
-        else if(type == 2){
+        else if(type == 1){
             str_type = "emergency-"+index;
         }
-        else if(type == 3){
+        else if(type ==2){
             str_type = "hospital-"+index;
         }
         var str = "";
@@ -414,13 +417,13 @@ $(document).ready(function () {
 
     function GenerateTab4(index){
         var str_type = "";
-        if(type==1){
+        if(type==0){
             str_type = "outpatient-"+index;
         }
-        else if(type == 2){
+        else if(type == 1){
             str_type = "emergency-"+index;
         }
-        else if(type == 3){
+        else if(type == 2){
             str_type = "hospital-"+index;
         }
         var str = "";
@@ -477,11 +480,13 @@ $(document).ready(function () {
     }
 
     function showOutpatient(){
-        type = 1;
+        type = 0;
+        S_id = [];
         $("#outpatient").empty();
-        $.get("/static/json/AllPatient.json",{"P_id":patientId,"type":str(type)},function(json_data){
+        $.getJSON("/i21/",{"P_id":patientId,"type":type},function(json_data){
              $.each(json_data,function (index,item){
-                S_id.push(item);
+             console.log(item.OPS_id);
+                S_id.push(item.OPS_id);
                 var descDiv = document.createElement('div');
                 $("#outpatient").append(descDiv);
                 descDiv.className = "row";
@@ -496,118 +501,117 @@ $(document).ready(function () {
         else
             return "否";
     }
+
     function showOutPatientServiceInfo(index){
         var name = "outpatient-"+index+"-table";
         var str =  "";
-        $.getJSON('/static/json/patDetail.json',{"S_id":S_id[int(index)],"type":str(type)},function (json_data){
-            $.each(json_data,function (index,item){
-                var isStable = "";
-                var isSymptom = analyseSymptom(item.isSymptom);
-                var symptom = "";
-                for (var i = 0;i<item.symptom.length;i++){
-                    if(item.symptom[i]=="1")
-                        symptom += "咳嗽加重；";
-                    if(item.symptom[i]=="2")
-                        symptom += "咳浓痰并痰量增加；";
-                    if(item.symptom[i]=="3")
-                        symptom += "呼吸困难加重；";
+        $.getJSON('/i23/',{"S_id":S_id[index],"type":type},function (json_data){
+            item = json_data;
+            console.log(S_id);
+            console.log(item);
+            console.log(index);
+            var isStable = "";
+            var isSymptom = analyseSymptom(item.isSymptom);
+            var symptom = "";
+            for (var i = 0;i<item.symptom.length;i++){
+                if(item.symptom[i]=="1")
+                    symptom += "咳嗽加重；";
+                if(item.symptom[i]=="2")
+                    symptom += "咳浓痰并痰量增加；";
+                if(item.symptom[i]=="3")
+                    symptom += "呼吸困难加重；";
 
-                }
-                if(item.isStable=="1")
-                    isStable = "稳定期随访";
-                else if(item.isStable=="2")
-                    isStable = "急性期就诊";
+            }
+            if(item.isStable=="1")
+                isStable = "稳定期随访";
+            else if(item.isStable=="2")
+                isStable = "急性期就诊";
 
-                var physicalExam = analyseSymptom(item.physicalExam);
-                var acuteExac = analyseSymptom(item.acuteExac);
-                var useAbt = analyseSymptom(item.useAbt);
-                var useJmzs = analyseSymptom(item.useJmzs);
-                var hospital =analyseSymptom(item.hospital);
-                var airRelate =analyseSymptom(item.airRelate);
-                var treatMethod = analyseSymptom(item.treatMethod);
-                str = '<tr>'+
-                    '<td class="table-small">编号</td>'+
-                    '<td class="table-small">'+item.OPS_id+'</td>'+
-                    '<td class="table-small">日期</td>'+
-                    '<td class="table-small">'+item.date+'</td>'+
-                    '<td class="table-small">地点</td>'+
-                    '<td class="table-small">'+item.place+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td class="table-small">就诊原因</td>'+
-                    '<td>'+isStable+'</td>'+
-                    '<td>症状有无</td>'+
-                    '<td class="table-small">'+isSymptom+'</td>'+
-                    '<td>症状为</td>'+
-                    '<td>'+symptom+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>是否继续住院治疗</td>'+
-                    '<td>'+hospital+'</td>'+
-                    '<td>查体是否正常</td>'+
-                    '<td>'+physicalExam+'</td>'+
-                    '<td>查体异常表现</td>'+
-                    '<td>'+item.breathErr+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>是否为慢阻肺急性加重</td>'+
-                    '<td>'+acuteExac+'</td>'+
-                    '<td>加重与大气污染是否有关</td>'+
-                    '<td>'+airRelate+'</td>'+
-                    '<td>若为其他疾病，类型为</td>'+
-                    '<td>'+item.disease+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>是否使用静脉激素</td>'+
-                    '<td>'+useJmzs+'</td>'+
-                    '<td>是否使用抗生素</td>'+
-                    '<td>'+useAbt+'</td>'+
-                    '<td>抗生素类型</td>'+
-                    '<td>'+item.abtType+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>是否调整治疗方案</td>'+
-                    '<td>'+treatMethod+'</td>'+
-                    '<td></td>'+
-                    '<td></td>'+
-                    '<td>调整药物为</td>'+
-                    '<td>'+item.medicine+'</td>'+
-                    '</tr>';
-                $("#"+name+" tbody").html(str);
-            });
+            var physicalExam = analyseSymptom(item.physicalExam);
+            var acuteExac = analyseSymptom(item.acuteExac);
+            var useAbt = analyseSymptom(item.useAbt);
+            var useJmzs = analyseSymptom(item.useJmzs);
+            var hospital =analyseSymptom(item.hospital);
+            var airRelate =analyseSymptom(item.airRelate);
+            var treatMethod = analyseSymptom(item.treatMethod);
+            str = '<tr>'+
+                '<td class="table-small">编号</td>'+
+                '<td class="table-small">'+item.OPS_id+'</td>'+
+                '<td class="table-small">日期</td>'+
+                '<td class="table-small">'+item.date+'</td>'+
+                '<td class="table-small">地点</td>'+
+                '<td class="table-small">'+item.place+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td class="table-small">就诊原因</td>'+
+                '<td>'+isStable+'</td>'+
+                '<td>症状有无</td>'+
+                '<td class="table-small">'+isSymptom+'</td>'+
+                '<td>症状为</td>'+
+                '<td>'+symptom+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>是否继续住院治疗</td>'+
+                '<td>'+hospital+'</td>'+
+                '<td>查体是否正常</td>'+
+                '<td>'+physicalExam+'</td>'+
+                '<td>查体异常表现</td>'+
+                '<td>'+item.breathErr+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>是否为慢阻肺急性加重</td>'+
+                '<td>'+acuteExac+'</td>'+
+                '<td>加重与大气污染是否有关</td>'+
+                '<td>'+airRelate+'</td>'+
+                '<td>若为其他疾病，类型为</td>'+
+                '<td>'+item.disease+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>是否使用静脉激素</td>'+
+                '<td>'+useJmzs+'</td>'+
+                '<td>是否使用抗生素</td>'+
+                '<td>'+useAbt+'</td>'+
+                '<td>抗生素类型</td>'+
+                '<td>'+item.abtType+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>是否调整治疗方案</td>'+
+                '<td>'+treatMethod+'</td>'+
+                '<td></td>'+
+                '<td></td>'+
+                '<td>调整药物为</td>'+
+                '<td>'+item.medicine+'</td>'+
+                '</tr>';
+            $("#"+name+" tbody").html(str);
         });
     }
 
     function editOutPatientServiceInfo(index){
-        $.getJSON('/static/json/patDetail.json',{"S_id":S_id[int(index)],"type":str(type)},function (json_data){
-            $.each(json_data,function (index,item){
+        $.getJSON('/i23/',{"S_id":S_id[index],"type":type},function (json_data){
+            var item = json_data;
+            $("#OutPatientServiceInfo input[name='id']").val(item.OPS_id);
+            $("#OutPatientServiceInfo input[name='date']").val(item.date);
+            $("#OutPatientServiceInfo input[name='place']").val(item.place);
 
-                $("#OutPatientServiceInfo input[name='OPS_id']").val(item.OPS_id);
-                $("#OutPatientServiceInfo input[name='date']").val(item.date);
-                $("#OutPatientServiceInfo input[name='place']").val(item.place);
+            $("#OutPatientServiceInfo input[name='isStable'][value='"+item.isStable+"']").attr('checked',true);
+            $("#OutPatientServiceInfo input[name='isSymptom'][value='"+item.isSymptom+"']").attr("checked",true);
+            console.log(item);
+            analyzeCheckBox("OutPatientServiceInfo","symptom",item.symptom);
 
-                $("#OutPatientServiceInfo input[name='isStable'][value='"+item.isStable+"']").attr('checked',true);
-                $("#OutPatientServiceInfo input[name='isSymptom'][value='"+item.isSymptom+"']").attr("checked",true);
-                analyzeCheckBox("OutPatientServiceInfo","symptom",item.symptom);
-                console.log(item.symptom);
+            $("#OutPatientServiceInfo input[name='physicalExam'][value='"+item.physicalExam+"']").attr("checked",true);
+            $("#OutPatientServiceInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
+            $("#OutPatientServiceInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
+            $("#OutPatientServiceInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
 
-                $("#OutPatientServiceInfo input[name='physicalExam'][value='"+item.physicalExam+"']").attr("checked",true);
-                $("#OutPatientServiceInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
-                $("#OutPatientServiceInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
-                $("#OutPatientServiceInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
+            $("#OutPatientServiceInfo textarea[name='breathErr']").val(item.breathErr);
+            $("#OutPatientServiceInfo input[name='disease']").val(item.disease);
+            $("#OutPatientServiceInfo input[name='abtType']").val(item.abtType);
 
-                $("#OutPatientServiceInfo input[name='breathErr']").val(item.breathErr);
-                $("#OutPatientServiceInfo input[name='disease']").val(item.disease);
-                $("#OutPatientServiceInfo input[name='abtType']").val(item.abtType);
+            $("#OutPatientServiceInfo input[name='hospital'][value='"+item.hospital+"']").attr("checked",true);
+            $("#OutPatientServiceInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
+            $("#OutPatientServiceInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
 
-                $("#OutPatientServiceInfo input[name='hospital'][value='"+item.hospital+"']").attr("checked",true);
-                $("#OutPatientServiceInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
-                $("#OutPatientServiceInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
-
-                $("#OutPatientServiceInfo input[name='medicine']").val(item.medicine);
-
-
-            });
+            $("#OutPatientServiceInfo textarea[name='medicine']").val(item.medicine);
         });
     }
 
@@ -615,13 +619,13 @@ $(document).ready(function () {
     function addOutPatientServiceInfo(){
 
         $("#OutPatientServiceInfo :text").val("");
-        $("#OutPatientServiceInfo :radio").attr("checked",false);
-        $("#OutPatientServiceInfo :checkbox").attr("checked",false);
+//        $("#OutPatientServiceInfo :radio").attr("checked",false);
+//        $("#OutPatientServiceInfo :checkbox").attr("checked",false);
     }
 
     function deleteOutPatientServiceInfo(index){
         if(confirm("确定删除吗？"))
-        $.get("delete",{"S_id":S_id[index],"type":str(type)},function (data) {
+        $.get("/i24/",{"S_id":S_id[index],"type":type},function (data) {
             var result = JSON.parse(data).result;
             if(result=="0"){
                 alert("删除成功！")
@@ -634,7 +638,8 @@ $(document).ready(function () {
 
     function submitOutPatientServiceInfo(){
         if (confirm("确定提交吗？")){
-            $.post("",$("#OutPatientServiceInfo").serialize()+"&P_id="+patientId+"&type="+str(type),function (data) {
+        console.log($("#OutPatientServiceInfo").serialize());
+            $.post("/i22/",$("#OutPatientServiceInfo").serialize()+"&P_id="+patientId+"&type="+type,function (data) {
                 var result = JSON.parse(data).result;
                 if(result=="0"){
                     alert("提交成功！")
@@ -671,12 +676,12 @@ $(document).ready(function () {
 
     function showClinic(c_index) {
         $("#outpatient-"+c_index+"-clinictable tbody").empty();
-        $.getJSON("/static/json/Clinic.json",{"P_id":patientId,"type":str(type),"S_id":S_id[int(c_index)]},function (json_data) {
+        $.getJSON("/i25/",{"type":type,"S_id":S_id[c_index],kind:"0"},function (json_data) {
             $.each(json_data,function (i,item) {
 
                 $("#outpatient-"+c_index+"-clinictable tbody").append("<tr>" +
                         "<td>" +item.Cli_id+"</td>"+
-                        "<td>" +item.data+"</td>"+
+                        "<td>" +item.date+"</td>"+
                         "<td>" +item.lung3+"</td>"+
                         "<td>" +item.detail+"</td>"+
                         "<td><a  data-toggle=\"modal\" onclick=\"editClinic("+item.Cli_id+")\" href=\"#ClinicDetails\"><i class=\"fa fa-edit\"></i></td>"+
@@ -690,14 +695,15 @@ $(document).ready(function () {
     //显示详情、编辑临床信息
     function  editClinic(Cli_id) {
 
-        $.getJSON("/static/json/Clinic.json",{"Cli_id":Cli_id},function (json_data) {
+        $.getJSON("/i27/",{"Cli_id":Cli_id},function (json_data) {
 
-            var item = json_data[0];
+            var item = json_data;
+            console.log(item);
             $("#Clinic input[name='Cli_id']").val(item.Cli_id);
             //解析dangerType
             analyzeCheckBox("Clinic","dangerType",item.dangerType);
             $("#Clinic input[name='smoke1'][value='"+item.smoke1+"']").attr('checked',true);
-            $("#Clinic input[name='smoke2'][value='"+item.smoke2+"']").attr('checked',true);
+            $("#Clinic input[name='smoke2']").val(item.smoke2);
             $("#Clinic input[name='smoke3']").val(item.smoke3);
             $("#Clinic input[name='smoke4']").val(item.smoke4);
             $("#Clinic input[name='smoke5']").val(item.smoke5);
@@ -708,6 +714,7 @@ $(document).ready(function () {
             $("#Clinic input[name='smoke10']").val(item.smoke10);
             $("#Clinic input[name='powder1']").val(item.powder1);
             $("#Clinic input[name='powder2']").val(item.powder2);
+            $("#Clinic input[name='powder3']").val(item.powder3);
             $("#Clinic input[name='biology1']").val(item.biology1);
             $("#Clinic input[name='biology2']").val(item.biology2);
             $("#Clinic input[name='hAir1']").val(item.hAir1);
@@ -750,14 +757,16 @@ $(document).ready(function () {
             $("#Clinic input[name='cure23']").val(item.cure23);
             $("#Clinic input[name='cure24']").val(item.cure24);
             $("#Clinic input[name='cure25']").val(item.cure25);
-            analyzeCheckBox("Clinic","cure26",item.cure26);
+            $("#Clinic input[name='cure26'][value='"+item.cure26+"']").attr('checked',true);
+
             analyzeCheckBox("Clinic","comp1",item.comp1);
             analyzeCheckBox("Clinic","comp2",item.comp2);
             analyzeCheckBox("Clinic","comp3",item.comp3);
             analyzeCheckBox("Clinic","comp4",item.comp4);
             analyzeCheckBox("Clinic","comp5",item.comp5);
             analyzeCheckBox("Clinic","comp6",item.comp6);
-            $("#Clinic input[name='detail']").val(item.detail);
+            console.log(item.detail);
+            $("#Clinic textarea[name='detail']").val(item.detail);
 
         });
     }
@@ -766,7 +775,7 @@ $(document).ready(function () {
     //删除临床信息记录
     function deleteClinic(c_index,Cli_id) {
         if(confirm("确定删除吗？"))
-        $.get("delete",{"Cli_id":Cli_id},function (data) {
+        $.get("/i28/",{"Cli_id":Cli_id},function (data) {
             var result = JSON.parse(data).result;
             if(result=="0"){
                 alert("删除成功！")
@@ -781,7 +790,7 @@ $(document).ready(function () {
     function addClinic(c_index) {
 
         $("#Clinic :text").val("");
-        $("#Clinic :radio").attr("checked",false);
+//        $("#Clinic :radio").attr("checked",false);
         $("#Clinic :checkbox").attr("checked",false);
     }
 
@@ -789,7 +798,7 @@ $(document).ready(function () {
 
     function submitClinic(c_index) {
         if (confirm("确定提交吗？")){
-            $.post("",$("#Clinic").serialize()+"&P_id="+patientId+"&type="+str(type)+"&S_id="+S_id[int(c_index)],function (data) {
+            $.post("/i26/",$("#Clinic").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[c_index],function (data) {
                 var result = JSON.parse(data).result;
                 if(result=="0"){
                     alert("提交成功！")
@@ -805,17 +814,17 @@ $(document).ready(function () {
 
 
     function showESS(E_index) {
-         if(type==1){
+         if(type==0){
              temp="outpatient";
          }
-         else if(type==2){
+         else if(type==1){
              temp="emergency";
          }
-         else if(type==3){
+         else if(type==2){
              temp="hospital"
          }
          $("#"+temp+"-"+E_index+"-ESStable tbody").empty();
-        $.getJSON('/static/json/ESSshow.json',{"P_id":patientId,"type":type,"S_id":S_id[E_index],"kind":str(1)},function(json_data){
+        $.getJSON('/static/json/ESSshow.json',{"P_id":patientId,"type":type,"S_id":S_id[E_index],"kind":"1"},function(json_data){
             $.each(json_data,function (index,item) {
                 $("#"+temp+"-"+E_index+"-"+"ESStable").append(
                     "<tr>"+
@@ -880,17 +889,17 @@ $(document).ready(function () {
         }
     }
     function showMBQ(M_index) {
-         if(type==1){
+         if(type==0){
              temp="outpatient";
          }
-         else if(type==2){
+         else if(type==1){
              temp="emergency";
          }
-         else if(type==3){
+         else if(type==2){
              temp="hospital"
          }
          $("#"+temp+"-"+M_index+"-MBQtable tbody").empty();
-        $.getJSON('',{"P_id":patientId,"type":type,"S_id":S_id[M_index],"kind":str(2)},function(json_data){
+        $.getJSON('',{"P_id":patientId,"type":type,"S_id":S_id[M_index],"kind":"2"},function(json_data){
             $.each(json_data,function (index,item) {
                 $("#"+temp+"-"+M_index+"-"+"MBQtable").append(
                     "<tr>"+
@@ -947,7 +956,7 @@ $(document).ready(function () {
     }
     function submitMBQ(MBQ_id,P_id,type,index) {
         if(confirm("确定提交")==1){
-            $.post('',$("#MBQDetails").serialize()+"&MBQ_id="+MBQ_id+"&P_id="+P_id+"&type="+str(type)+"&S_id="+S_id[index],function (result) {
+            $.post('',$("#MBQDetails").serialize()+"&MBQ_id="+MBQ_id+"&P_id="+P_id+"&type="+type+"&S_id="+S_id[index],function (result) {
                 if(result==0)
                     alert("提交成功");
                 else if(result==-1)
@@ -956,17 +965,17 @@ $(document).ready(function () {
         }
     }
     function showSGRQ(S_index) {
-         if(type==1){
+         if(type==0){
              temp="outpatient";
          }
-         else if(type==2){
+         else if(type==1){
              temp="emergency";
          }
-         else if(type==3){
+         else if(type==2){
              temp="hospital"
          }
          $("#"+temp+"-"+S_index+"-SGRQtable tbody").empty();
-        $.getJSON('',{P_id:patientId,type:type,S_id:S_id[S_index],kind:3},function(json_data){
+        $.getJSON('',{P_id:patientId,type:type,S_id:S_id[S_index],kind:"3"},function(json_data){
             $.each(json_data,function (index,item) {
                 $("#"+temp+"-"+S_index+"-"+"SGRQtable").append(
                     "<tr>"+
@@ -1060,13 +1069,13 @@ $(document).ready(function () {
 //    }
 
     function showAE(AE_index){
-        if(type==1){
+        if(type==0){
             temp="outpatient";
         }
-        else if(type==2){
+        else if(type==1){
             temp="emergency";
         }
-        else if(type==3){
+        else if(type==2){
             temp="hospital"
         }
         $("#"+temp+"-"+AE_index+"-"+"ESStable tbody").empty();

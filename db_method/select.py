@@ -1,7 +1,7 @@
 # -*- coding:UTF-8 -*-
 from Website.models import DoctorInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,\
     EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRO,AttachInfo,AccessoryExamination,CATandMRC,PmExposure,\
-    MedialVisit
+    MedicalVisit
 from django.core.exceptions import ObjectDoesNotExist
 from control_method import tools
 
@@ -23,7 +23,8 @@ def checkExist(key,value):
             doc = DoctorInfo.objects.get(D_id=value)
 
         return True
-    except ObjectDoesNotExist:
+    except Exception, e:
+        tools.exceptionRecord('select.py','checkExist',e)
         return False
 
 
@@ -47,7 +48,8 @@ def getUserInfo(userName,key):
             return ""
 
         return result
-    except:
+    except Exception, e:
+        tools.exceptionRecord('select.py','getUserInfo',e)
         return ""
 
 # 获取医生的基本信息
@@ -68,9 +70,8 @@ def getDoctorBasicInfo(D_id):
         value.append(obj.department)
         keys = ['D_id','name','userName','mail','cellphone','hospital','department']
         message = tools.dictPackage(keys,value)
-    except:
-        print D_id
-        print "Error in select.getDoctorBasicInfo"
+    except Exception, e:
+        tools.exceptionRecord('select.py','getDoctorBasicInfo',e)
 
     return message
 
@@ -100,7 +101,8 @@ def getDoctorDetailedInfo(D_id):
         value[3] = value[3].strftime("%Y-%m-%d")
         value[12] = value[12].strftime("%Y-%m-%d")
         message = tools.dictPackage(keys, value)
-    except:
+    except Exception, e:
+        tools.exceptionRecord('select.py','getDoctorDetailedInfo',e)
         pass
 
     return message
@@ -118,9 +120,9 @@ def getExpGroups(D_id):
             value[3] = value[3].strftime("%Y-%m-%d")
             message = tools.dictPackage(keys, value)
             list.append(message)
-            message.clear()
-    except:
-        pass
+
+    except Exception, e:
+        tools.exceptionRecord('select.py','getExpGroups',e)
     return list
 
 #获取指定实验组中所有患者的基本信息
@@ -141,7 +143,7 @@ def getExpGroupPatientsInfo(G_id):
             value.append(obj.cellphone)
             message = tools.dictPackage(keys, value)
 
-            times = MedialVisit.objects.get(P_id=patient_id)
+            times = MedicalVisit.objects.get(P_id=patient_id)
             message['o_time'] = times.o_time
             message['e_time'] = times.e_time
             message['h_time'] = times.h_time
@@ -150,9 +152,9 @@ def getExpGroupPatientsInfo(G_id):
             #healthStatus
 
             list.append(message)
-            message.clear()
-    except:
-        pass
+
+    except Exception, e:
+        tools.exceptionRecord('select.py','getExpGroupPatientsInfo',e)
 
     return list
 
@@ -177,7 +179,7 @@ def getPatientsBasicInfo(D_id):
         #         value.append(obj.cellphone)
         #         message = tools.dictPackage(keys, value)
         #
-        #         times = MedialVisit.objects.get(P_id=patient_id)
+        #         times = MedicalVisit.objects.get(P_id=patient_id)
         #         message['o_time'] = times.o_time
         #         message['e_time'] = times.e_time
         #         message['h_time'] = times.h_time
@@ -186,20 +188,14 @@ def getPatientsBasicInfo(D_id):
         #         # healthStatus
         #
         #         list.append(message)
-        #         message.clear()
+        #
         values = PatientInfo.objects.all().values_list('P_id','name','sex','age','cellphone')
-        print "1111"
-        keys = ['P_id', 'name', 'sex', 'age','cellphone']
+        keys = ['P_id', 'name', 'sex','age','cellphone']
         for value in values:
-            print value
-            print "###########"
             message = tools.dictPackage(keys, value)
             list.append(message)
-            message.clear()
-    except Exception,e:
-        print str(e)+"EXP"
-        pass
-
+    except Exception, e:
+        tools.exceptionRecord('select.py','getPatientsBasicInfo',e)
     return list
 
 def getPatientName(P_id):
@@ -207,8 +203,8 @@ def getPatientName(P_id):
     try:
         name = PatientInfo.objects.get(P_id = P_id).name
         message['name'] = name
-    except:
-        pass
+    except Exception, e:
+        tools.exceptionRecord('select.py','getPatientName',e)
     return message
 
 #获取指定医生管理的所有患者的基本信息
@@ -224,16 +220,15 @@ def getPatientDetailedInfo(P_id):
         value.append(obj.sign)
         value.append(obj.name)
         value.append(obj.sex)
-        value.append(obj.birthday)
+        value.append(str(obj.birthday))
         value.append(obj.age)
         value.append(obj.nation)
         value.append(obj.height)
         value.append(obj.weight)
-        value.append(obj.registerTime)
+        value.append(str(obj.registerTime))
         value.append(obj.education)
         value.append(obj.career)
         value.append(obj.marriage)
-        value.append(obj.photo)
         value.append(obj.homeAddr)
         value.append(obj.birthAddr)
         value.append(obj.activityAddr1)
@@ -247,16 +242,16 @@ def getPatientDetailedInfo(P_id):
         value.append(obj.cellphone)
         value.append(obj.partnerPhone)
         keys = ['P_id','sign','name','sex','birthday','age','nation','height','weight','registerTime','education',
-                'career','marriage','photo','homeAddr','birthAddr','activityAddr1','activityAddr2','actionAddr',
+                'career','marriage','homeAddr','birthAddr','activityAddr1','activityAddr2','actionAddr',
                 'diastolicPressure','systolicPressure','neckCircu','payment','telephone','cellphone','partnerPhone']
         message = tools.dictPackage(keys, value)
 
-        group_id = PatientGroup.objects.get(P_id = P_id).G_id
-        group = GroupInfo.objects.get(id = group_id)
-        message['groupName'] = group.name
-        message['groupInfo'] = group.information
-    except:
-        pass
+        # group_id = PatientGroup.objects.get(P_id = P_id).G_id
+        # group = GroupInfo.objects.get(id = group_id)
+        # message['groupName'] = group.name
+        # message['groupInfo'] = group.information
+    except Exception, e:
+        tools.exceptionRecord('select.py','getPatientDetailedInfo',e)
     return message
 
 
@@ -272,9 +267,9 @@ def getRelationInfos(P_id):
         for value in values:
             message = tools.dictPackage(keys, value)
             list.append(message)
-            message.clear()
-    except:
-        pass
+
+    except Exception, e:
+        tools.exceptionRecord('select.py','getRelationInfos',e)
     return list
 
 
@@ -283,14 +278,20 @@ def getBasicClinicInfos(type,S_id):
     list = []
     message = {}
     try:
-        values = Clinic.objects.filter(type = type, S_id = S_id).values_list('id','lung3','data')
-        keys = ['Cli_id','lung3','data']
+        values = Clinic.objects.filter(type = type, S_id = S_id).values_list('id','lung3','date','detail')
+        keys = ['Cli_id','lung3','date','detail']
         for value in values:
+            print value,"value"
+            print value[1]
+            print "111"
             message = tools.dictPackage(keys, value)
+            print message,"message"
+            print message['date'],"date"
+            message['date'] = str(message['date'])
             list.append(message)
-            message.clear()
-    except:
-        pass
+
+    except Exception, e:
+        tools.exceptionRecord('select.py','getBasicClinicInfos',e)
 
     return list
 
@@ -309,7 +310,7 @@ def getBasicQuestionnaireInfos(type,S_id):
             message = tools.dictPackage(keys, value)
             message['type'] = 0
             list.append(message)
-            message.clear()
+
 
         values = MBQ.objects.filter(type=type, S_id=S_id).values_list('id', 'BMI','data')
         keys = ['MBQ_id', 'BMI','data']
@@ -317,7 +318,7 @@ def getBasicQuestionnaireInfos(type,S_id):
             message = tools.dictPackage(keys, value)
             message['type'] = 1
             list.append(message)
-            message.clear()
+
 
         values = SGRO.objects.filter(type=type, S_id=S_id).values_list('id','data')
         keys = ['SGRO_id','data']
@@ -325,75 +326,162 @@ def getBasicQuestionnaireInfos(type,S_id):
             message = tools.dictPackage(keys, value)
             message['type'] = 2
             list.append(message)
-            message.clear()
-    except:
-        pass
+
+    except Exception, e:
+        tools.exceptionRecord('select.py','getBasicQuestionnaireInfos',e)
 
     return list
 
-
-#获取某个病人所有的门诊的详细信息
-def getPatientDetailedOutPatientServiceInfos(P_id):
+#获取某个病人所有的门诊的个数
+def getPatientAllOutPatientServiceInfos(P_id):
     list = []
     message = {}
     try:
-        values = OutPatientServiceInfo.objects.filter(P_id = P_id).values_list('id','P_id','date','place','isStabel',
-                                                                               'symptom','physicalExam','breathErr',
-                                                                               'acuteExac','disease','use_abt',
-                                                                               'useJmzs','hospital','airRelate',
-                                                                               'treatMetho','medicine')
-        keys = ['OPS_id','P_id','date','place','isStabel','symptom','physicalExam','breathErr','acuteExac','disease',
-                'use_abt','useJmzs','hospital','airRelate','treatMethod','medicine']
+        values=OutPatientServiceInfo.objects.filter(P_id = P_id).values_list('id')
+        keys = ['OPS_id']
         for value in values:
-            message = tools.dictPackage(keys, value)
+            message = tools.dictPackage(keys,value)
             list.append(message)
-            message.clear()
-    except:
-        pass
+    except Exception,e:
+        tools.exceptionRecord('select.py','getPatientAllOutPatientServiceInfos',e)
 
     return list
 
-# 获取某个病人所有的急诊的详细信息
-def getPatientDetailedEmergCallInfos(P_id):
+#获取某个病人某个的门诊的详细信息
+def getPatientDetailedOutPatientServiceInfos(S_id):
+    message = {}
+    try:
+        obj = OutPatientServiceInfo.objects.get(id = S_id)
+        value = []
+        value.append(obj.id)
+        value.append(obj.P_id)
+        value.append(str(obj.date))
+        value.append(obj.place)
+        value.append(obj.isStable)
+        value.append(obj.symptom)
+        value.append(obj.physicalExam)
+        value.append(obj.breathErr)
+        value.append(obj.acuteExac)
+        value.append(obj.disease)
+        value.append(obj.useAbt)
+        value.append(obj.abtType)
+        value.append(obj.useJmzs)
+        value.append(obj.hospital)
+        value.append(obj.airRelate)
+        value.append(obj.treatMethod)
+        value.append(obj.medicine)
+
+        keys = ['OPS_id','P_id','date','place','isStable','symptom','physicalExam','breathErr','acuteExac','disease',
+                'useAbt','abtType','useJmzs','hospital','airRelate','treatMethod','medicine']
+
+        message = tools.dictPackage(keys, value)
+
+    except Exception, e:
+        tools.exceptionRecord('select.py','getPatientDetailedOutPatientServiceInfos',e)
+
+    return message
+
+#获取某个病人所有的急诊的个数
+def getPatientAllEmergCallInfos(P_id):
     list = []
     message = {}
     try:
-        values = EmergCallInfo.objects.filter(P_id=P_id).values_list('id','P_id','date','place','symptom','acuteExac',
-                                                                     'disease','byxCheck','byxResult','ycWcTreat',
-                                                                     'useAbt','abtType','useJmzs','ecMethod','ecDate',
-                                                                     'hospital','treatMethod','airRelate')
+        values=EmergCallInfo.objects.filter(P_id = P_id).values_list('id')
+        keys = ['EC_id']
+        for value in values:
+            message = tools.dictPackage(keys,value)
+            list.append(message)
+    except Exception,e:
+        tools.exceptionRecord('select.py','getPatientAllEmergCallInfos',e)
+
+    return list
+
+# 获取某个病人某个的急诊的详细信息
+def getPatientDetailedEmergCallInfos(S_id):
+    message = {}
+    try:
+        obj = EmergCallInfo.objects.get(id = S_id)
+        value = []
+        value.append(obj.id)
+        value.append(obj.P_id)
+        value.append(str(obj.date))
+        value.append(obj.place)
+        value.append(obj.symptom)
+        value.append(obj.acuteExac)
+        value.append(obj.disease)
+        value.append(obj.byxCheck)
+        value.append(obj.byxResult)
+        value.append(obj.ycWcTreat)
+        value.append(obj.useAbt)
+        value.append(obj.abtType)
+        value.append(obj.useJmzs)
+        value.append(obj.ecMethod)
+        value.append(obj.ecDate)
+        value.append(obj.hospital)
+        value.append(obj.treatMethod)
+        value.append(obj.airRelate)
+
         keys = ['EC_id','P_id','date','place','symptom','acuteExac','disease','byxCheck','byxResult','ycWcTreat',
                 'useAbt','abtType','useJmzs','ecMethod','ecDate','hospital','treatMethod','airRelate']
-        for value in values:
-            message = tools.dictPackage(keys, value)
-            list.append(message)
-            message.clear()
-    except:
-        pass
+        message = tools.dictPackage(keys, value)
 
-    return list
 
-#获取某个病人所有的住院的详细信息
-def getPatientDetailedInHospitalInfos(P_id):
+    except Exception, e:
+        tools.exceptionRecord('select.py','getPatientDetailedEmergCallInfos',e)
+
+    return message
+
+
+#获取某个病人所有的住院的个数
+def getPatientAllInHospitalInfos(P_id):
     list = []
     message = {}
     try:
-        values = InHospitalInfo.objects.filter(P_id = P_id).values_list('id', 'P_id', 'time', 'place', 'commonIcu',
-                                                                        'symptom', 'acuteExac', 'disease', 'byxCheck',
-                                                                        'byxResult', 'ycWcTreat', 'useAbt', 'abtType',
-                                                                        'useJmzs', 'hospitalDays', 'airRelate',
-                                                                        'treatMethod', 'reason', 'docAdvice')
+        values=InHospitalInfo.objects.filter(P_id = P_id).values_list('id')
+        keys = ['IH_id']
+        for value in values:
+            message = tools.dictPackage(keys,value)
+            list.append(message)
+    except Exception,e:
+        tools.exceptionRecord('select.py','getPatientAllInHospitalInfos',e)
+
+    return list
+
+#获取某个病人某个的住院的详细信息
+def getPatientDetailedInHospitalInfos(S_id):
+    message = {}
+    try:
+        obj = InHospitalInfo.objects.get(id = S_id)
+        value = []
+        value.append(obj.id)
+        value.append(obj.P_id)
+        value.append(str(obj.time))
+        value.append(obj.place)
+        value.append(obj.commonIcu)
+        value.append(obj.symptom)
+        value.append(obj.acuteExac)
+        value.append(obj.disease)
+        value.append(obj.byxCheck)
+        value.append(obj.byxResult)
+        value.append(obj.ycWcTreat)
+        value.append(obj.useAbt)
+        value.append(obj.abtType)
+        value.append(obj.useJmzs)
+        value.append(obj.hospitalDays)
+        value.append(obj.airRelate)
+        value.append(obj.treatMethod)
+        value.append(obj.reason)
+        value.append(obj.docAdvice)
+
         keys = ['IH_id', 'P_id', 'time', 'place', 'commonIcu', 'symptom', 'acuteExac', 'disease', 'byxCheck',
                 'byxResult', 'ycWcTreat', 'useAbt', 'abtType', 'useJmzs', 'hospitalDays', 'airRelate',
                 'treatMethod', 'reason', 'docAdvice']
-        for value in values:
-            message = tools.dictPackage(keys, value)
-            list.append(message)
-            message.clear()
-    except:
-        pass
+        message = tools.dictPackage(keys, value)
 
-    return list
+    except Exception, e:
+        tools.exceptionRecord('select.py','getPatientDetailedInHospitalInfos',e)
+
+    return message
 
 
 #获取指定的某个临床的详细信息
@@ -469,17 +557,18 @@ def getDetailedClinicInfo(Cli_id):
         value.append(obj.comp4)
         value.append(obj.comp5)
         value.append(obj.comp6)
+        value.append(str(obj.date))
+        value.append(obj.detail)
         keys = ['Cli_id', 'P_id', 'type', 'S_id', 'dangerType', 'smoke1', 'smoke2', 'smoke3', 'smoke4', 'smoke5',
                 'smoke6', 'smoke7', 'smoke8', 'smoke9', 'smoke10', 'powder1', 'powder2', 'powder3', 'biology1',
                 'biology2', 'hAir1', 'hAir2', 'gm1', 'gm2', 'drink1', 'drink2', 'drink3', 'drink4', 'lung1', 'lung2',
                 'lung3', 'lung4', 'lung5', 'lung6', 'lung7', 'cure1', 'cure2', 'cure3', 'cure4', 'cure5', 'cure6',
                 'cure7', 'cure8', 'cure9', 'cure10', 'cure11', 'cure12', 'cure13', 'cure14', 'cure15', 'cure16',
                 'cure17', 'cure18', 'cure19', 'cure20', 'cure21', 'cure22', 'cure23', 'cure24', 'cure25', 'cure26',
-                'comp1', 'comp2', 'comp3', 'comp4', 'comp5', 'comp6']
+                'comp1', 'comp2', 'comp3', 'comp4', 'comp5', 'comp6' ,'date', 'detail']
         message = tools.dictPackage(keys, value)
-    except:
-        pass
-
+    except Exception, e:
+        tools.exceptionRecord('select.py','getDetailedClinicInfo',e)
     return message
 
 #获取指定的某个问卷的详细信息
@@ -520,8 +609,8 @@ def getDetailedQuestionnaireInfo(type,Q_id):
             message = tools.dictPackage(keys, value)
             message['type'] = 2
 
-    except:
-        pass
+    except Exception, e:
+        tools.exceptionRecord('select.py','getDetailedQuestionnaireInfo',e)
 
     return message
 
@@ -540,9 +629,9 @@ def getDetailedAttachInfos(type,S_id):
         for value in values:
             message = tools.dictPackage(keys, value)
             list.append(message)
-            message.clear()
-    except:
-        pass
+
+    except Exception, e:
+        tools.exceptionRecord('select.py','getDetailedAttachInfos',e)
 
     return list
 
@@ -556,9 +645,9 @@ def getDetailedAccessoryExamination(type,S_id):
         for value in values:
             message = tools.dictPackage(keys, value)
             list.append(message)
-            message.clear()
-    except:
-        pass
+
+    except Exception, e:
+        tools.exceptionRecord('select.py','getDetailedAccessoryExamination',e)
 
     return list
 
@@ -579,6 +668,6 @@ def getMsg2Weeks(P_id, type):
         keys = ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7',
                 'day8', 'day9', 'day10', 'day11', 'day12', 'day13', 'day14']
         message = tools.dictPackage(keys, values)
-    except:
-        pass
+    except Exception, e:
+        tools.exceptionRecord('select.py','getMsg2Weeks',e)
     return message

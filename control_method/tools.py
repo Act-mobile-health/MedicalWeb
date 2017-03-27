@@ -2,6 +2,18 @@
 import hashlib
 from django.core.mail import send_mail
 
+
+def forCheckbox(data, attr):
+    temp = dict(data.iterlists())
+    json_data = temp[attr]
+    tempstr = ''
+    for item in json_data:
+        tempstr = tempstr + str(item)
+    return tempstr
+
+def exceptionRecord(a,b,c):
+    print str(c)+"EXP!!!!!"+b
+
 def md5(str):
     m = hashlib.md5()
     m.update(str)

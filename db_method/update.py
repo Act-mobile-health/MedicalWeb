@@ -23,7 +23,8 @@ def updateDoctorInfo(D_id,data):
         doctor.userGroup = data['userGroup']
         doctor.save()
         return True
-    except:
+    except Exception, e:         
+        tools.exceptionRecord('update.py','updateDoctorInfo',e)
         return False
 
 # update password for doctor
@@ -36,7 +37,8 @@ def updatePassword(D_id,o_pwd, n_pwd):
             return True
         else:
             return False
-    except ObjectDoesNotExist:
+    except Exception, e:
+        tools.exceptionRecord('update.py', 'updatePassword', e)
         return False
 
 #修改指定实验组
@@ -50,7 +52,8 @@ def updateExpGroup(G_id,name,info):
         group.information = info
         group.save()
         return True
-    except :
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateExpGroup',e)
         return False
 
 
@@ -73,7 +76,6 @@ def updatePatientInfo(data):
         patient.education = data['education']
         patient.career = data['career']
         patient.marriage = data['marriage']
-        patient.photo = data['photo']
         patient.homeAddr = data['homeAddr']
         patient.birthAddr = data['birthAddr']
         patient.activityAddr1 = data['activityAddr1']
@@ -88,7 +90,9 @@ def updatePatientInfo(data):
         patient.partnerPhone = data['partnerPhone']
         patient.save()
 
-    except :
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updatePatientInfo',e)
         return False
 
 
@@ -107,7 +111,9 @@ def updateRelationInfo(R_id,data):
         relation.mail=data['mail']
         relation.homeAddr=data['homeAddr']
         relation.save()
-    except :
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateRelationInfo',e)
         return False
 
 #修改门诊信息
@@ -119,13 +125,14 @@ def updateOutPatientServiceInfo(id,data):
         if data['date'] != '':
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.place = data['place']
-        obj.isStabel = data['isStabel']
-        obj.symptom = data['symptom']
+        obj.isStable = data['isStable']
+        obj.symptom = tools.forCheckbox(data,'symptom')
         obj.physicalExam = data['physicalExam']
         obj.breathErr = data['breathErr']
         obj.acuteExac = data['acuteExac']
         obj.disease = data['disease']
-        obj.use_abt = data['use_abt']
+        obj.useAbt = data['useAbt']
+        obj.abtType = data['abtType']
         obj.useJmzs = data['useJmzs']
         obj.hospital = data['hospital']
         obj.airRelate = data['airRelate']
@@ -134,7 +141,8 @@ def updateOutPatientServiceInfo(id,data):
         obj.save()
 
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateOutPatientServiceInfo',e)
         return False
 
 
@@ -164,7 +172,8 @@ def updateEmergCallInfo(id,data):
         obj.airRelate = data['airRelate']
         obj.save()
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateEmergCallInfo',e)
         return False
 
 #修改住院信息
@@ -192,7 +201,8 @@ def updateInHospitalInfo(id,data):
         obj.docAdvice = data['docAdvice']
         obj.save()
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateInHospitalInfo',e)
         return False
 
 #修改临床信息
@@ -202,7 +212,7 @@ def updateClinicInfo(S_id,data):
         obj.P_id = data['P_id']
         obj.type = data['type']
         obj.S_id = S_id
-        obj.dangerType = data['dangerType']
+        obj.dangerType = tools.forCheckbox(data,'dangerType')
         obj.smoke1 = data['smoke1']
         obj.smoke2 = data['smoke2']
         obj.smoke3 = data['smoke3']
@@ -233,9 +243,9 @@ def updateClinicInfo(S_id,data):
         obj.lung5 = data['lung5']
         obj.lung6 = data['lung6']
         obj.lung7 = data['lung7']
-        obj.cure1 = data['cure1']
+        obj.cure1 = tools.forCheckbox(data,'cure1')
         obj.cure2 = data['cure2']
-        obj.cure3 = data['cure3']
+        obj.cure3 = tools.forCheckbox(data,'cure3')
         obj.cure4 = data['cure4']
         obj.cure5 = data['cure5']
         obj.cure6 = data['cure6']
@@ -259,21 +269,23 @@ def updateClinicInfo(S_id,data):
         obj.cure24 = data['cure24']
         obj.cure25 = data['cure25']
         obj.cure26 = data['cure26']
-        obj.comp1 = data['comp1']
-        obj.comp2 = data['comp2']
-        obj.comp3 = data['comp3']
-        obj.comp4 = data['comp4']
-        obj.comp5 = data['comp5']
-        obj.comp6 = data['comp6']
+        obj.comp1 = tools.forCheckbox(data,'comp1')
+        obj.comp2 = tools.forCheckbox(data,'comp2')
+        obj.comp3 = tools.forCheckbox(data,'comp3')
+        obj.comp4 = tools.forCheckbox(data,'comp4')
+        obj.comp5 = tools.forCheckbox(data,'comp5')
+        obj.comp6 = tools.forCheckbox(data,'comp6')
+        obj.detail = data['detail']
         obj.save()
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateClinicInfo',e)
         return False
 
 #修改问卷信息
-def updateQuestionnaireInfo(type,S_id,data):
+def updateQuestionnaireInfo(kind,S_id,data):
     try:
-        if type == 0:
+        if kind == 0:
             obj = ESS.objects.get(id = int(data['ESS_id']))
             obj.P_id = data['P_id']
             obj.type = data['type']
@@ -285,7 +297,7 @@ def updateQuestionnaireInfo(type,S_id,data):
             obj.ess8 = data['ess8']
             obj.score = data['score']
             obj.save()
-        elif type == 1:
+        elif kind == 1:
             obj = MBQ.objects.get(id = int(data['MBQ_id']))
             obj.P_id = data['P_id']
             obj.type = data['type']
@@ -299,7 +311,7 @@ def updateQuestionnaireInfo(type,S_id,data):
             obj.q10 = data['q10']
             obj.BMI = data['BMI']
             obj.save()
-        elif type == 2:
+        elif kind == 2:
             obj = SGRO.objects.get(id = int(data['SGRO_id']))
             obj.P_id = data['P_id']
             obj.type = data['type']
@@ -360,7 +372,8 @@ def updateQuestionnaireInfo(type,S_id,data):
 
 
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateQuestionnaireInfo',e)
         return False
 
 
@@ -379,7 +392,8 @@ def updateAttachInfo(A_id,D_id,S_id,data):
         # img context没有加
         obj.save()
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateAttachInfo',e)
         return False
 
 
@@ -397,5 +411,6 @@ def updateAccessoryExamination(AE_id,D_id,S_id,data):
         obj.D_id = D_id
         obj.save()
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateAccessoryExamination',e)
         return False

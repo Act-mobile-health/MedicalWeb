@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     $("#PatientInfobt").click(function () {
         if(confirm("确定修改吗？")){
-            $.post("/i7/",$("#PatientInfo").serialize(),function (data) {
+            $.post("/i17/",$("#PatientInfo").serialize(),function (data) {
             console.log(data);
             console.log($("#PatientInfo").serialize())
                 var result = JSON.parse(data).result;
@@ -29,8 +29,7 @@ $(document).ready(function () {
     });
 })
     function appendAllPatientTable() {
-        $.getJSON('/i15/',function (json_data) {
-        console.log(json_data);
+        $.getJSON('/i15/',{},function (json_data) {
             $.each(json_data,function (index,item) {
                 $("#patientInfoTable tbody").append(
                     "<tr>"+

@@ -1,6 +1,6 @@
 # -*- coding:UTF-8 -*-
 from Website.models import DoctorInfo,GroupInfo,PatientGroup,PatientInfo,RelationInfo,OutPatientServiceInfo,\
-    EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRO,AttachInfo,AccessoryExamination,MedialVisit
+    EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRO,AttachInfo,AccessoryExamination,MedicalVisit
 import time
 from control_method import tools
 import datetime
@@ -9,22 +9,16 @@ import datetime
 # 成功返回True，失败返回False
 
 def addDoctorInfo(data):
-    #TODO
-    # birthday 需要处理成Date格式
-    if data['birthday'] != '':
-        d = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
-    else:
-        d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+
+    d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
     password = tools.md5(data['password'])
     # registerDate会自动生成
     try:
-        newObj = DoctorInfo(name = data['name'], sex = data['sex'], birthday = d, userName = data['userName'],
-                               password = password, cellphone = data['cellphone'], weChat = data['weChat'],
-                               mail = data['mail'], title = data['title'], hospital = data['hospital'],
-                               department = data['department'], userGroup = data['userGroup'])
+        newObj = DoctorInfo(userName = data['userName'],password = password,mail = data['mail'],birthday=d)
         newObj.save()
         return True
     except Exception, e:
+        tools.exceptionRecord('insert.py','addDoctorInfo',e)
         return False
 
 # 添加新的实验组
@@ -35,7 +29,8 @@ def addExpGroup(D_id,name,info):
         newObj = GroupInfo(D_id=D_id,name=name,information=info)
         newObj.save()
         return True
-    except :
+    except Exception, e:         
+        tools.exceptionRecord('insert.py','addExpGroup',e)
         return False
 
 # 向实验组中添加患者
@@ -47,7 +42,8 @@ def addPatientToExpGroup(G_id,P_id):
         newObj = PatientGroup(G_id=G_id,P_id=P_id)
         newObj.save()
         return True
-    except :
+    except Exception, e:         
+        tools.exceptionRecord('insert.py','addPatientToExpGroup',e)
         return False
 
 # 添加新患者
@@ -62,7 +58,7 @@ def addPatientInfo(data):
         newObj = PatientInfo(P_id = data['P_id'], sign = data['sign'], name = data['name'], sex = data['sex'],
                                  birthday = d, age = data['age'], nation = data['nation'], height = data['height'],
                                  weight = data['weight'], education = data['education'], career = data['career'],
-                                 marriage = data['marriage'], photo = data['photo'], homeAddr = data['homeAddr'],
+                                 marriage = data['marriage'], homeAddr = data['homeAddr'],
                                  birthAddr = data['birthAddr'], activityAddr1 = data['activityAddr1'],
                                  activityAddr2 = data['activityAddr2'], actionAddr = data['actionAddr'],
                                  diastolicPressure = data['diastolicPressure'],
@@ -70,16 +66,15 @@ def addPatientInfo(data):
                                  payment = data['payment'], telephone = data['telephone'],
                                  cellphone = data['cellphone'], partnerPhone = data['partnerPhone'])
         newObj.save()
-
-        newM = MedialVisit(P_id=data['P_id'])
+        newM = MedicalVisit(P_id=data['P_id'],o_time="0",e_time="0",h_time="0")
         newM.save()
-
         #TODO
         #table25~table32
 
 
         return True
-    except :
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addPatientInfo',e)
         return False
 
 # 添加新家属
@@ -92,32 +87,36 @@ def addRelationInfo(data):
                                    weChat = data['weChat'], mail = data['mail'], homeAddr = data['homeAddr'])
         newObj.save()
         return True
-    except :
+    except Exception, e:         
+        tools.exceptionRecord('insert.py','addRelationInfo',e)
         return False
 
 
 #添加门诊信息
 def addOutPatientServiceInfo(data):
     try:
+        print tools.forCheckbox(data,'symptom')
         if data['date'] != '':
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        print data
         newObj = OutPatientServiceInfo(P_id = data['P_id'], date = d, place = data['place'],
-                                       isStabel = data['isStabel'], symptom = data['symptom'],
+                                       isStable = data['isStable'], symptom = tools.forCheckbox(data,'symptom'),
                                        physicalExam = data['physicalExam'], breathErr = data['breathErr'],
                                        acuteExac = data['acuteExac'], disease = data['disease'],
-                                       use_abt = data['use_abt'], useJmzs = data['useJmzs'],
+                                       useAbt = data['useAbt'], abtType=data['abtType'], useJmzs = data['useJmzs'],
                                        hospital = data['hospital'], airRelate = data['airRelate'],
                                        treatMethod = data['treatMethod'], medicine = data['medicine'])
         newObj.save()
 
-        obj = MedialVisit.objects.get(P_id = data['P_id'])
+        obj = MedicalVisit.objects.get(P_id = data['P_id'])
         obj.o_time = str(int(obj.o_time) + 1)
         obj.save()
 
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('insert.py', 'addOutPatientServiceInfo', e)
         return False
 
 
@@ -133,19 +132,20 @@ def addEmergCallInfo(data):
         else:
             ed = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         newObj = EmergCallInfo(P_id = data['P_id'], date = d, place = data['place'],
-                               symptom = data['symptom'], acuteExac = data['acuteExac'],disease = data['disease'],
+                               symptom = tools.forCheckbox(data,'symptom'), acuteExac = data['acuteExac'],disease = data['disease'],
                                byxCheck = data['byxCheck'],byxResult = data['byxResult'], ycWcTreat = data['ycWcTreat'],
                                useAbt = data['useAbt'], abtType = data['abtType'], useJmzs = data['useJmzs'],
                                ecMethod = data['ecMethod'], ecDate = ed,hospital = data['hospital'],
                                treatMethod = data['treatMethod'],airRelate = data['airRelate'])
         newObj.save()
 
-        obj = MedialVisit.objects.get(P_id=data['P_id'])
+        obj = MedicalVisit.objects.get(P_id=data['P_id'])
         obj.e_time = str(int(obj.e_time) + 1)
         obj.save()
 
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addEmergCallInfo',e)
         return False
 
 #添加住院信息
@@ -156,7 +156,7 @@ def addInHospitalInfo(data):
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         newObj = InHospitalInfo(P_id = data['P_id'], date = d, place = data['place'],
-                                commonIcu = data['commonIcu'], symptom = data['symptom'],acuteExac = data['acuteExac'],
+                                commonIcu = data['commonIcu'], symptom = tools.forCheckbox(data,'symptom'),acuteExac = data['acuteExac'],
                                 disease = data['disease'],byxCheck = data['byxCheck'], byxResult = data['byxResult'],
                                 ycWcTreat = data['ycWcTreat'], useAbt = data['useAbt'],abtType = data['abtType'],
                                 useJmzs = data['useJmzs'],hospitalDays = data['hospitalDays'],
@@ -164,18 +164,20 @@ def addInHospitalInfo(data):
                                 reason = data['reason'],docAdvice = data['docAdvice'])
         newObj.save()
 
-        obj = MedialVisit.objects.get(P_id=data['P_id'])
+        obj = MedicalVisit.objects.get(P_id=data['P_id'])
         obj.h_time = str(int(obj.h_time) + 1)
         obj.save()
 
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addInHospitalInfo',e)
         return False
 
 #添加临床信息
 def addClinicInfo(S_id,data):
     try:
-        newObj = Clinic(P_id = data['P_id'], type = data['type'], S_id = S_id,dangerType = data['dangerType'],
+
+        newObj = Clinic(P_id = data['P_id'], type = data['type'], S_id = S_id, dangerType = tools.forCheckbox(data,'dangerType'),
                         smoke1 = data['smoke1'],smoke2 = data['smoke2'], smoke3 = data['smoke3'],
                         smoke4 = data['smoke4'],smoke5 = data['smoke5'], smoke6 = data['smoke6'],
                         smoke7 = data['smoke7'],smoke8 = data['smoke8'], smoke9 = data['smoke9'],
@@ -185,34 +187,36 @@ def addClinicInfo(S_id,data):
                         drink1 = data['drink1'], drink2 = data['drink2'], drink3 = data['drink3'],
                         drink4 = data['drink4'], lung1 = data['lung1'], lung2 = data['lung2'],lung3 = data['lung3'],
                         lung4 = data['lung4'], lung5 = data['lung5'],lung6 = data['lung6'], lung7 = data['lung7'],
-                        cure1 = data['cure1'],cure2 = data['cure2'], cure3 = data['cure3'], cure4 = data['cure4'],
+                        cure1 = tools.forCheckbox(data,'cure1'),cure2 = data['cure2'], cure3 = tools.forCheckbox(data,'cure3'), cure4 = data['cure4'],
                         cure5 = data['cure5'], cure6 = data['cure6'], cure7 = data['cure7'],cure8 = data['cure8'],
                         cure9 = data['cure9'], cure10 = data['cure10'],cure11 = data['cure11'], cure12 = data['cure12'],
                         cure13 = data['cure13'],cure14 = data['cure14'], cure15 = data['cure15'],
                         cure16 = data['cure16'],cure17 = data['cure17'], cure18 = data['cure18'],
                         cure19 = data['cure19'],cure20 = data['cure20'], cure21 = data['cure21'],
                         cure22 = data['cure22'],cure23 = data['cure23'], cure24 = data['cure24'],
-                        cure25 = data['cure25'],cure26 = data['cure26'], comp1 = data['comp1'], comp2 = data['comp2'],
-                        comp3 = data['comp3'], comp4 = data['comp4'], comp5 = data['comp5'],comp6 = data['comp6'])
+                        cure25 = data['cure25'],cure26 = data['cure26'], comp1 = tools.forCheckbox(data,'comp1'), comp2 = tools.forCheckbox(data,'comp2'),
+                        comp3 = tools.forCheckbox(data,'comp3'), comp4 = tools.forCheckbox(data,'comp4'), comp5 = tools.forCheckbox(data,'comp5'),
+                        comp6 = tools.forCheckbox(data,'comp6'),detail = data['detail'])
         newObj.save()
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addClinicInfo',e)
         return False
 
 #添加问卷信息
-def addQuestionnaireInfo(type,S_id,data):
+def addQuestionnaireInfo(kind,S_id,data):
     try:
-        if type == 0:
+        if kind == 0:
             newObj = ESS(P_id = data['P_id'], type = data['type'], S_id = S_id, ess4 = data['ess4'],
                          ess5 = data['ess5'], ess6 = data['ess6'], ess7 = data['ess7'], ess8 = data['ess8'],
                          score = data['score'])
             newObj.save()
-        elif type == 1:
+        elif kind == 1:
             newObj = MBQ(P_id = data['P_id'], type = data['type'], S_id = S_id, q4 = data['q4'],
                          q5 = data['q5'], q6 = data['q6'], q7 = data['q7'], q8 = data['q8'], q9 = data['q9'],
                          q10 = data['q10'], BMI = data['BMI'])
             newObj.save()
-        elif type == 2:
+        elif kind == 2:
             newObj = SGRO(P_id = data['P_id'], type = data['type'], S_id = S_id, q4 = data['q4'],
                           q5 = data['q5'], q6 = data['q6'], q7 = data['q7'], q8 = data['q8'], q9 = data['q9'],
                           q10 = data['q10'], BMI = data['BMI'])
@@ -222,7 +226,8 @@ def addQuestionnaireInfo(type,S_id,data):
 
 
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addQuestionnaireInfo',e)
         return False
 
 
@@ -236,7 +241,8 @@ def addAttachInfo(D_id,S_id,data):
         # img context没有加
         newObj.save()
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addAttachInfo',e)
         return False
 
 #添加附件信息
@@ -252,5 +258,6 @@ def addAccessoryExamination(D_id,S_id,data):
 
         newObj.save()
         return True
-    except:
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addAccessoryExamination',e)
         return False
