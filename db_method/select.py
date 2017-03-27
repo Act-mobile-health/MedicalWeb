@@ -281,12 +281,7 @@ def getBasicClinicInfos(type,S_id):
         values = Clinic.objects.filter(type = type, S_id = S_id).values_list('id','lung3','date','detail')
         keys = ['Cli_id','lung3','date','detail']
         for value in values:
-            print value,"value"
-            print value[1]
-            print "111"
             message = tools.dictPackage(keys, value)
-            print message,"message"
-            print message['date'],"date"
             message['date'] = str(message['date'])
             list.append(message)
 
@@ -304,27 +299,30 @@ def getBasicQuestionnaireInfos(type,S_id):
     list = []
     message = {}
     try:
-        values = ESS.objects.filter(type = type, S_id = S_id).values_list('id','score','data')
-        keys = ['ESS_id','score','data']
+        values = ESS.objects.filter(type = type, S_id = S_id).values_list('id','score','date')
+        keys = ['ESS_id','score','date']
         for value in values:
             message = tools.dictPackage(keys, value)
-            message['type'] = 0
+            message['kind'] = 0
+            message['date'] = str(message['date'])
             list.append(message)
 
 
-        values = MBQ.objects.filter(type=type, S_id=S_id).values_list('id', 'BMI','data')
-        keys = ['MBQ_id', 'BMI','data']
+        values = MBQ.objects.filter(type=type, S_id=S_id).values_list('id', 'BMI','date')
+        keys = ['MBQ_id', 'BMI','date']
         for value in values:
             message = tools.dictPackage(keys, value)
-            message['type'] = 1
+            message['kind'] = 1
+            message['date'] = str(message['date'])
             list.append(message)
 
 
-        values = SGRO.objects.filter(type=type, S_id=S_id).values_list('id','data')
-        keys = ['SGRO_id','data']
+        values = SGRO.objects.filter(type=type, S_id=S_id).values_list('id','date')
+        keys = ['SGRO_id','date']
         for value in values:
             message = tools.dictPackage(keys, value)
-            message['type'] = 2
+            message['kind'] = 2
+            message['date'] = str(message['date'])
             list.append(message)
 
     except Exception, e:
@@ -580,20 +578,32 @@ def getDetailedQuestionnaireInfo(type,Q_id):
     message = {}
     try:
         if type == 0:
-            value = ESS.objects.filter(id=Q_id).values_list('id', 'P_id', 'type', 'S_id', 'ess4', 'ess5', 'ess6',
-                                                            'ess7', 'ess8', 'score')
-            keys = ['ESS_id', 'P_id', 'type', 'S_id', 'ess4', 'ess5', 'ess6', 'ess7', 'ess8', 'score']
+            obj = ESS.objects.get(id = Q_id)
+            value = []
+            value.append(obj.id)
+            value.append(obj.ess1)
+            value.append(obj.ess2)
+            value.append(obj.ess3)
+            value.append(obj.ess4)
+            value.append(obj.ess5)
+            value.append(obj.ess6)
+            value.append(obj.ess7)
+            value.append(obj.ess8)
+            value.append(obj.score)
+
+            keys = ['ESS_id', 'ess1', 'ess2', 'ess3','ess4', 'ess5', 'ess6', 'ess7', 'ess8', 'score']
             message = tools.dictPackage(keys, value)
             message['type'] = 0
+
         elif type == 1:
-            value = MBQ.objects.filter(d=Q_id).values_list('MBQ_id', 'P_id', 'type', 'S_id', 'q4', 'q5', 'q6', 'q7',
-                                                           'q8', 'q9', 'q10', 'BMI')
-            keys = ['MBQ_id', 'P_id', 'type', 'S_id', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'BMI']
+            value = MBQ.objects.filter(d=Q_id).values_list('id', 'q1', 'q2', 'q3', 'q4',
+                                                           'q5', 'q6', 'q7','q8', 'q9', 'q10', 'BMI')
+            keys = ['MBQ_id', 'q1', 'q2', 'q3','q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'BMI']
             message = tools.dictPackage(keys, value)
             message['type'] = 1
         elif type == 2:
-            value = SGRO.objects.filter(d=Q_id).values_list('Sgro_id', 'P_id', 'type', 'S_id', 'H4', 'H5', 'H6', 'H7',
-                                                            'H8', 'H9', 'H10', 'H11_1', 'H11_2', 'H11_3', 'H11_4',
+            value = SGRO.objects.filter(d=Q_id).values_list('id',  'H1', 'H2', 'H3', 'H4',
+                                                            'H5', 'H6', 'H7','H8', 'H9', 'H10', 'H11_1', 'H11_2', 'H11_3', 'H11_4',
                                                             'H11_5', 'H11_6', 'H11_7', 'H12_1', 'H12_2', 'H12_3',
                                                             'H12_4', 'H12_5', 'H12_6', 'H13_1', 'H13_2', 'H13_3',
                                                             'H13_4', 'H13_5', 'H13_6', 'H13_7', 'H13_8', 'H14',
@@ -601,7 +611,7 @@ def getDetailedQuestionnaireInfo(type,Q_id):
                                                             'H16_3', 'H16_4', 'H16_5', 'H16_6', 'H16_7', 'H16_8',
                                                             'H16_9', 'H16_10', 'H17-1', 'H17-2', 'H17-3', 'H17-4',
                                                             'H17-5', 'H18', 'actEff')
-            keys = ['Sgro_id', 'P_id', 'type', 'S_id', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10', 'H11_1', 'H11_2',
+            keys = ['SGRQ_id', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10', 'H11_1', 'H11_2',
                     'H11_3', 'H11_4', 'H11_5', 'H11_6', 'H11_7', 'H12_1', 'H12_2', 'H12_3', 'H12_4', 'H12_5', 'H12_6',
                     'H13_1', 'H13_2', 'H13_3', 'H13_4', 'H13_5', 'H13_6', 'H13_7', 'H13_8', 'H14', 'H15_1', 'H15_2',
                     'H15_3', 'H15_4', 'H16_1', 'H16_2', 'H16_3', 'H16_4', 'H16_5', 'H16_6', 'H16_7', 'H16_8', 'H16_9',

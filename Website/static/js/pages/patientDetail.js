@@ -36,27 +36,27 @@ $(document).ready(function () {
     });
 
     $("#submitClinicbt").click(function () {
-        submitClinic(index);
+        submitClinic();
     })
 
     $("#submitESSbt").click(function () {
-        submitESS(index);
+        submitESS();
     })
 
     $("#submitMBQbt").click(function () {
-       submitMBQ(index);
+       submitMBQ();
     });
 
     $("#submitSGRQbt").click(function () {
-        submitSGRQ(index);
+        submitSGRQ();
     })
 
     $("#submitAccessoryExaminationbt").click(function () {
-        submitAccessoryExamination(index);
+        submitAccessoryExamination();
     })
 
     $("#submitAttachInfobt").click(function () {
-        submitAttachInfo(index);
+        submitAttachInfo();
     })
 
     $("#submitOutPatientServiceInfobt").click(function () {
@@ -662,11 +662,11 @@ $(document).ready(function () {
         showAE(index);
     }
 
-    function showQuestionnaire(index){
-        showESS(index);
-        showMBQ(index);
-        showSGRQ(index);
-    }
+//    function (index){
+//        showESS(index);
+//        showMBQ(index);
+//        showSGRQ(index);
+//    }
 
 
 
@@ -788,7 +788,7 @@ $(document).ready(function () {
 
     //添加临床信息记录
     function addClinic(c_index) {
-
+        index = c_index;
         $("#Clinic :text").val("");
 //        $("#Clinic :radio").attr("checked",false);
         $("#Clinic :checkbox").attr("checked",false);
@@ -796,9 +796,9 @@ $(document).ready(function () {
 
     //提交临床信息记录
 
-    function submitClinic(c_index) {
+    function submitClinic() {
         if (confirm("确定提交吗？")){
-            $.post("/i26/",$("#Clinic").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[c_index],function (data) {
+            $.post("/i26/",$("#Clinic").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index],function (data) {
                 var result = JSON.parse(data).result;
                 if(result=="0"){
                     alert("提交成功！")
@@ -813,7 +813,7 @@ $(document).ready(function () {
     /************************end*****************************临床相关函数********************************end****************************/
 
 
-    function showESS(E_index) {
+    function showQuestionnaire(index) {
          if(type==0){
              temp="outpatient";
          }
@@ -823,69 +823,89 @@ $(document).ready(function () {
          else if(type==2){
              temp="hospital"
          }
-         $("#"+temp+"-"+E_index+"-ESStable tbody").empty();
-        $.getJSON('/static/json/ESSshow.json',{"P_id":patientId,"type":type,"S_id":S_id[E_index],"kind":"1"},function(json_data){
-            $.each(json_data,function (index,item) {
-                $("#"+temp+"-"+E_index+"-"+"ESStable").append(
-                    "<tr>"+
-                        "<td>"+item.ESS_id+"</td>"+
-                        "<td>"+item.date+"</td>"+
-                        "<td>"+item.score+"</td>"+
-                        '<td><a  class="table-small" style="text-align:center" data-toggle="modal" href="#ESSDetails" onclick="editESS('+item.ESS_id+')">编辑</a></td>'+
-                        '<td><a class="table-small" style="text-align:center" data-toggle="modal" onclick="deleateESS('+item.ESS_id+')">删除</a></td>'+
-                    "</tr>"
-                )
-            })
-        })
+         $("#"+temp+"-"+index+"-ESStable tbody").empty();
+         $("#"+temp+"-"+index+"-MBQtable tbody").empty();
+         $("#"+temp+"-"+index+"-SGRQtable tbody").empty();
+        $.getJSON('/i25/',{"P_id":patientId,"type":type,"S_id":S_id[index],"kind":"1"},function(json_data){
+            $.each(json_data,function (i,item) {
+                if(item.kind == "0"){
+                    $("#"+temp+"-"+index+"-"+"ESStable").append(
+                        "<tr>"+
+                            "<td>"+item.ESS_id+"</td>"+
+                            "<td>"+item.date+"</td>"+
+                            "<td>"+item.score+"</td>"+
+                            '<td><a  class="table-small" style="text-align:center" data-toggle="modal" href="#ESSDetails" onclick="editESS('+item.ESS_id+')">编辑</a></td>'+
+                            '<td><a class="table-small" style="text-align:center" data-toggle="modal" onclick="deleteESS('+item.ESS_id+')">删除</a></td>'+
+                        "</tr>");
+                }
+                else if(item.kind == "1"){
+                    $("#"+temp+"-"+index+"-"+"MBQtable").append(
+                        "<tr>"+
+                            "<td>"+item.ESS_id+"</td>"+
+                            "<td>"+item.date+"</td>"+
+                            "<td>"+item.score+"</td>"+
+                            '<td><a  class="table-small" style="text-align:center" data-toggle="modal" href="#ESSDetails" onclick="editESS('+item.ESS_id+')">编辑</a></td>'+
+                            '<td><a class="table-small" style="text-align:center" data-toggle="modal" onclick="deleteESS('+item.ESS_id+')">删除</a></td>'+
+                        "</tr>");
+                }
+                else if(item.kind == "2"){
+                    $("#"+temp+"-"+index+"-"+"SGRQtable").append(
+                        "<tr>"+
+                            "<td>"+item.ESS_id+"</td>"+
+                            "<td>"+item.date+"</td>"+
+                            "<td>"+item.score+"</td>"+
+                            '<td><a  class="table-small" style="text-align:center" data-toggle="modal" href="#ESSDetails" onclick="editESS('+item.ESS_id+')">编辑</a></td>'+
+                            '<td><a class="table-small" style="text-align:center" data-toggle="modal" onclick="deleteESS('+item.ESS_id+')">删除</a></td>'+
+                        "</tr>");
+                }
+            });
+        });
     }
     function editESS(ESS_id) {
-        $.getJSON('/static/json/ESS.json',{"ESS_id":ESS_id},function (json_data) {
-            $.each(json_data,function (index,item) {
-                $("#ESS input[name=ess1][value='"+item.ess1+"']").attr('checked',true);
-                $("#ESS input[name=ess2][value='"+item.ess2+"']").attr('checked',true);
-                $("#ESS input[name=ess3][value='"+item.ess3+"']").attr('checked',true);
-                $("#ESS input[name=ess4][value='"+item.ess4+"']").attr('checked',true);
-                $("#ESS input[name=ess5][value='"+item.ess5+"']").attr('checked',true);
-                $("#ESS input[name=ess6][value='"+item.ess6+"']").attr('checked',true);
-                $("#ESS input[name=ess7][value='"+item.ess7+"']").attr('checked',true);
-                $("#ESS input[name=ess8][value='"+item.ess8+"']").attr('checked',true);
-                $("#ESS input[name='score']").val(item.score);
-                $("#ESS input[name='ESS_id']").val(item.ESS_id);
-                // $("score").val(item.score);
-            })
-        })
+        $.getJSON('/i30/',{"id":ESS_id,type:"0"},function (json_data) {
+            item = json_data;
+            $("#ESS input[name=ess1][value='"+item.ess1+"']").attr('checked',true);
+            $("#ESS input[name=ess2][value='"+item.ess2+"']").attr('checked',true);
+            $("#ESS input[name=ess3][value='"+item.ess3+"']").attr('checked',true);
+            $("#ESS input[name=ess4][value='"+item.ess4+"']").attr('checked',true);
+            $("#ESS input[name=ess5][value='"+item.ess5+"']").attr('checked',true);
+            $("#ESS input[name=ess6][value='"+item.ess6+"']").attr('checked',true);
+            $("#ESS input[name=ess7][value='"+item.ess7+"']").attr('checked',true);
+            $("#ESS input[name=ess8][value='"+item.ess8+"']").attr('checked',true);
+            $("#ESS input[name='score']").val(item.score);
+            $("#ESS input[name='ESS_id']").val(item.ESS_id);
+
+        });
     }
-    function addESS(){
-        $("#ESS [name='ess1']").attr('checked',false);
-        $("#ESS [name='ess2']").attr('checked',false);
-        $("#ESS [name='ess3']").attr('checked',false);
-        $("#ESS [name='ess4']").attr('checked',false);
-        $("#ESS [name='ess5']").attr('checked',false);
-        $("#ESS [name='ess6']").attr('checked',false);
-        $("#ESS [name='ess7']").attr('checked',false);
-        $("#ESS [name='ess8']").attr('checked',false);
-        $("#ESS input[name='score']").val(item.score);
+    function addESS(E_index){
+        index = E_index;
+        $("#ESS :text").val("");
+        $("#ESS :radio").attr("checked",false);
+//        $("#ESS :checkbox").attr("checked",false);
     }
-    function deleateESS(ESS_id) {
+    function deleteESS(ESS_id) {
         if(confirm("确定删除")==1) {
-            $.get('', {"ESS_id": ESS_id}, function (data) {
+            $.get('/i31/', {"id": ESS_id,kind:"0"}, function (data) {
                 var result = JSON.parse(data).result;
                 if(result=="0")
                     alert("删除成功");
                 else if(result=="-1")
                     alert("删除失败");
-            })
+            });
+            showQuestionnaire(index);
         }
     }
-    function submitESS(ESS_id,P_id,type,source) {
+    function submitESS() {
+        console.log(index);
         if(confirm("确定提交")==1){
-            $.post('',$("#ESSDetails").serialize()+"&ESS_id="+ESS_id+"&P_id="+P_id+"&type="+type+"&source="+source,function (data) {
+            $.post('/i29/',$("#ESS").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index]+"&kind="+"0",function (data) {
                 var result = JSON.parse(data).result;
                 if(result=="0")
                     alert("提交成功");
                 else if(result=="-1")
                     alert("提交失败");
-            })
+            });
+            showQuestionnaire(index);
         }
     }
     function showMBQ(M_index) {

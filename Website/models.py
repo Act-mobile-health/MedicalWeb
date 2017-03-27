@@ -585,6 +585,9 @@ class ESS(models.Model):
     P_id = models.CharField(max_length=10, null=False)
     type = models.CharField(max_length=5)  # 0 OutPatientService   1 Emerg   2 InHospital   3 AccessoryExamination
     S_id = models.IntegerField(null=False)
+    ess1 = models.CharField(max_length=5)
+    ess2 = models.CharField(max_length=5)
+    ess3 = models.CharField(max_length=5)
     ess4 = models.CharField(max_length=5)
     ess5 = models.CharField(max_length=5)
     ess6 = models.CharField(max_length=5)
@@ -602,6 +605,9 @@ class MBQ(models.Model):
     P_id = models.CharField(max_length=10, null=False)
     type = models.CharField(max_length=5)  # 0 OutPatientService   1 Emerg   2 InHospital   3 AccessoryExamination
     S_id = models.IntegerField(null=False)
+    q1 = models.CharField(max_length=5)
+    q2 = models.CharField(max_length=5)
+    q3 = models.CharField(max_length=5)
     q4 = models.CharField(max_length=5)
     q5 = models.CharField(max_length=5)
     q6 = models.CharField(max_length=5)
@@ -621,6 +627,9 @@ class SGRO(models.Model):
     P_id = models.CharField(max_length=10, null=False)
     type = models.CharField(max_length=5)  # 0 OutPatientService   1 Emerg   2 InHospital   3 AccessoryExamination
     S_id = models.IntegerField(null=False)
+    H1 = models.CharField(max_length=5)
+    H2 = models.CharField(max_length=5)
+    H3 = models.CharField(max_length=5)
     H4 = models.CharField(max_length=5)
     H5 = models.CharField(max_length=5)
     H6 = models.CharField(max_length=5)

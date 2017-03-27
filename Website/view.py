@@ -605,6 +605,7 @@ def getClinicDetailedInfo(request):
 def getQuestionnaireDetailedInfo(request):
     if request.method == 'GET':
         data = request.GET
+        print data
         message = {}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
@@ -612,6 +613,7 @@ def getQuestionnaireDetailedInfo(request):
 
             # message = tools.toString(message)
             js = json.dumps(message)
+            print js
             return HttpResponse(js)
         else:
             return render(request, "page-login.html")
@@ -633,7 +635,7 @@ def addOrUpdateClinicInfo(request):
                 if insert.addClinicInfo(S_id,data):
                     message['result'] = 0
             else:
-                if update.updateClinicInfo(S_id, data):
+                if update.updateClinicInfo(data):
                     message['result'] = 0
 
             # message = tools.toString(message)
@@ -647,6 +649,7 @@ def addOrUpdateClinicInfo(request):
 def addOrUpdateQuestionnaireInfo(request):
     if request.method == 'POST':
         data = request.POST
+        print data
         message = {'result': -1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
@@ -664,7 +667,7 @@ def addOrUpdateQuestionnaireInfo(request):
                 if update.updateQuestionnaireInfo(kind, S_id, data):
                     message['result'] = 0
 
-            # message = tools.toString(message)
+            message = tools.toString(message)
             js = json.dumps(message)
             return HttpResponse(js)
         else:
@@ -728,8 +731,9 @@ def deleteClinicInfo(request):
 # 接口35
 @csrf_exempt
 def deleteQuestionnaireInfo(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
+        print data
         message = {'result': -1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
@@ -738,6 +742,7 @@ def deleteQuestionnaireInfo(request):
 
             # message = tools.toString(message)
             js = json.dumps(message)
+            print js
             return HttpResponse(js)
         else:
             return render(request, "page-login.html")

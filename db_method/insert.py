@@ -207,17 +207,20 @@ def addClinicInfo(S_id,data):
 def addQuestionnaireInfo(kind,S_id,data):
     try:
         if kind == 0:
-            newObj = ESS(P_id = data['P_id'], type = data['type'], S_id = S_id, ess4 = data['ess4'],
+            newObj = ESS(P_id = data['P_id'], type = data['type'], S_id = S_id, ess1 = data['ess1'],
+                         ess2 = data['ess2'], ess3 = data['ess3'], ess4 = data['ess4'],
                          ess5 = data['ess5'], ess6 = data['ess6'], ess7 = data['ess7'], ess8 = data['ess8'],
                          score = data['score'])
             newObj.save()
         elif kind == 1:
-            newObj = MBQ(P_id = data['P_id'], type = data['type'], S_id = S_id, q4 = data['q4'],
+            newObj = MBQ(P_id = data['P_id'], type = data['type'], S_id = S_id, q1 = data['q1'],
+                         q2 = data['q2'], q3 = data['q3'], q4 = data['q4'],
                          q5 = data['q5'], q6 = data['q6'], q7 = data['q7'], q8 = data['q8'], q9 = data['q9'],
                          q10 = data['q10'], BMI = data['BMI'])
             newObj.save()
         elif kind == 2:
-            newObj = SGRO(P_id = data['P_id'], type = data['type'], S_id = S_id, q4 = data['q4'],
+            newObj = SGRO(P_id = data['P_id'], type = data['type'], S_id = S_id, q1 = data['q1'],
+                          q2 = data['q2'], q3 = data['q3'],q4 = data['q4'],
                           q5 = data['q5'], q6 = data['q6'], q7 = data['q7'], q8 = data['q8'], q9 = data['q9'],
                           q10 = data['q10'], BMI = data['BMI'])
             newObj.save()

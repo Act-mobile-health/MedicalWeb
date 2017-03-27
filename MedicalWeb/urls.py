@@ -80,6 +80,9 @@ urlpatterns = [
     url(r'^i26/',view.addOrUpdateClinicInfo),
     url(r'^i27/',view.getClinicDetailedInfo),
     url(r'^i28/',view.deleteClinicInfo),
+    url(r'^i29/',view.addOrUpdateQuestionnaireInfo),
+    url(r'^i30/',view.getQuestionnaireDetailedInfo),
+    url(r'^i31/',view.deleteQuestionnaireInfo),
 
     # url(r'^i18/',view.updatePatientInfo),
 ]

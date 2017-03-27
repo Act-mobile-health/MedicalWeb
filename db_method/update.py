@@ -206,12 +206,11 @@ def updateInHospitalInfo(id,data):
         return False
 
 #修改临床信息
-def updateClinicInfo(S_id,data):
+def updateClinicInfo(data):
     try:
         obj = Clinic.objects.get(id = data['Cli_id'])
         obj.P_id = data['P_id']
         obj.type = data['type']
-        obj.S_id = S_id
         obj.dangerType = tools.forCheckbox(data,'dangerType')
         obj.smoke1 = data['smoke1']
         obj.smoke2 = data['smoke2']
