@@ -40,23 +40,23 @@ $(document).ready(function () {
     })
 
     $("#submitESSbt").click(function () {
-        submitESS();
+        submitQuestionnaire("0");
     })
 
     $("#submitMBQbt").click(function () {
-       submitMBQ();
+       submitQuestionnaire("1");
     });
 
     $("#submitSGRQbt").click(function () {
-        submitSGRQ();
+        submitQuestionnaire("2");
     })
 
     $("#submitAccessoryExaminationbt").click(function () {
-        submitAccessoryExamination();
+        submitAorAE("0");
     })
 
     $("#submitAttachInfobt").click(function () {
-        submitAttachInfo();
+        submitAorAE("1");
     })
 
     $("#submitOutPatientServiceInfobt").click(function () {
@@ -289,7 +289,7 @@ $(document).ready(function () {
 				'<li><a href="#'+str_type+'-tab1" onclick = "showOutPatientServiceInfo('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-star"></i></span> 详细信息</a></li>'+
 				'<li><a href="#'+str_type+'-tab2" onclick = "showClinic('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-credit-card"></i></span> 临床信息</a></li>'+
 				'<li><a href="#'+str_type+'-tab3" onclick = "showQuestionnaire('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-building"></i></span> 问卷信息</a></li>'+
-				'<li><a href="#'+str_type+'-tab4" onclick = "showAttachment('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-check"></i></span> 辅助检查和附件</a></li>'+
+				'<li><a href="#'+str_type+'-tab4" onclick = "showAandAE('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-check"></i></span> 辅助检查和附件</a></li>'+
 				'</ul>'+
 				'<div class="tab-content">'+
 				'<div class="tab-pane" id="'+str_type+'-tab1">'+
@@ -373,7 +373,7 @@ $(document).ready(function () {
 			  '</tbody>'+
 			  '</table>'+
               '<div class="row col-lg-2 col-md-2 ">'+
-              '<a  data-toggle="modal" href="#ESSDetails" onclick = "addESS('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的ESS</a>'+
+              '<a  data-toggle="modal" href="#ESSDetails" onclick = "addQuestionnaire('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的ESS</a>'+
               '</div>'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-MBQtable">'+
 			  '<caption class="mylabel">改良柏林问卷（MBQ）</caption>'+
@@ -390,7 +390,7 @@ $(document).ready(function () {
 			  '</tbody>'+
 			  '</table>'+
               '<div class="row col-lg-2 col-md-2 ">'+
-              '<a  data-toggle="modal" href="#MBQDetails" onclick = "addMBQ('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的MBQ</a>'+
+              '<a  data-toggle="modal" href="#MBQDetails" onclick = "addQuestionnaire('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的MBQ</a>'+
               '</div>'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-SGRQtable">'+
 			  '<caption class="mylabel">SGRQ生活质量问卷</caption>'+
@@ -407,7 +407,7 @@ $(document).ready(function () {
               '</tbody>'+
               '</table>'+
               '<div class="row col-lg-2 col-md-2 ">'+
-              '<a  data-toggle="modal" href="#SGRQDetails" onclick = "addSGRQ('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的SGRQ</a>'+
+              '<a  data-toggle="modal" href="#SGRQDetails" onclick = "addQuestionnaire('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的SGRQ</a>'+
               '</div>'+
               '</div>'+
               '</div>';
@@ -429,7 +429,7 @@ $(document).ready(function () {
         var str = "";
         str = '<div class="tab-pane" id="'+str_type+'-tab4">'+
 			  '<div class="row col-lg-10 col-md-10 col-md-offset-1">'+
-			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-assittable">'+
+			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-AEtable">'+
 			  '<caption class="mylabel">辅助检查</caption>'+
 			  '<thead>'+
 			  '<tr>'+
@@ -447,9 +447,9 @@ $(document).ready(function () {
 			  '</tbody>'+
 			  '</table>'+
 			  '<div class="row col-lg-2 col-md-2 ">'+
-              '<a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick = "addAccessoryExamination('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的辅助检查</a>'+
+              '<a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick = "addAorAE('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的辅助检查</a>'+
               '</div>'+
-			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-attachtable">'+
+			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-Atable">'+
 			  '<caption class="mylabel">附件</caption>'+
 			  '<thead>'+
 			  '<tr>'+
@@ -466,7 +466,7 @@ $(document).ready(function () {
 			  '</tbody>'+
 			  '</table>'+
               '<div class="row col-lg-2 col-md-2 ">'+
-              '<a  data-toggle="modal" href="#AttachInfoDetails" onclick = "addAttachInfo('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的附件</a>'+
+              '<a  data-toggle="modal" href="#AttachInfoDetails" onclick = "addAorAE('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的附件</a>'+
               '</div>'+
 			  '</div>'+
 			  '</div>'+
@@ -651,23 +651,12 @@ $(document).ready(function () {
         }
     }
 
+
     function showEmergency(index){
     }
 
     function showHospital(index){
     }
-
-
-    function showAttachment(index){
-        showAE(index);
-    }
-
-//    function (index){
-//        showESS(index);
-//        showMBQ(index);
-//        showSGRQ(index);
-//    }
-
 
 
     /********************************begin*********************临床相关函数******************************begin******************************/
@@ -834,33 +823,83 @@ $(document).ready(function () {
                             "<td>"+item.ESS_id+"</td>"+
                             "<td>"+item.date+"</td>"+
                             "<td>"+item.score+"</td>"+
-                            '<td><a  class="table-small" style="text-align:center" data-toggle="modal" href="#ESSDetails" onclick="editESS('+item.ESS_id+')">编辑</a></td>'+
-                            '<td><a class="table-small" style="text-align:center" data-toggle="modal" onclick="deleteESS('+item.ESS_id+')">删除</a></td>'+
+                            '<td><a data-toggle="modal" href="#ESSDetails" onclick="editESS('+item.ESS_id+')"><i class=\"fa fa-edit\"></i></td>'+
+                            '<td><a onclick="deleteQuestionnaire('+item.ESS_id+',0'+')"><i class=\"fa fa-times\"></i></td>'+
                         "</tr>");
                 }
                 else if(item.kind == "1"){
                     $("#"+temp+"-"+index+"-"+"MBQtable").append(
                         "<tr>"+
-                            "<td>"+item.ESS_id+"</td>"+
+                            "<td>"+item.MBQ_id+"</td>"+
                             "<td>"+item.date+"</td>"+
-                            "<td>"+item.score+"</td>"+
-                            '<td><a  class="table-small" style="text-align:center" data-toggle="modal" href="#ESSDetails" onclick="editESS('+item.ESS_id+')">编辑</a></td>'+
-                            '<td><a class="table-small" style="text-align:center" data-toggle="modal" onclick="deleteESS('+item.ESS_id+')">删除</a></td>'+
+                            "<td>"+item.BMI+"</td>"+
+                            '<td><a data-toggle="modal" href="#MBQDetails" onclick="editMBQ('+item.MBQ_id+')"><i class=\"fa fa-edit\"></i></td>'+
+                            '<td><a onclick="deleteQuestionnaire('+item.MBQ_id+',1'+')"><i class=\"fa fa-times\"></i></td>'+
                         "</tr>");
                 }
                 else if(item.kind == "2"){
                     $("#"+temp+"-"+index+"-"+"SGRQtable").append(
                         "<tr>"+
-                            "<td>"+item.ESS_id+"</td>"+
+                            "<td>"+item.SGRQ_id+"</td>"+
                             "<td>"+item.date+"</td>"+
                             "<td>"+item.score+"</td>"+
-                            '<td><a  class="table-small" style="text-align:center" data-toggle="modal" href="#ESSDetails" onclick="editESS('+item.ESS_id+')">编辑</a></td>'+
-                            '<td><a class="table-small" style="text-align:center" data-toggle="modal" onclick="deleteESS('+item.ESS_id+')">删除</a></td>'+
+                            '<td><a data-toggle="modal" href="#SGRQDetails" onclick="editSGRQ('+item.SGRQ_id+')"><i class=\"fa fa-edit\"></i></td>'+
+                            '<td><a onclick="deleteQuestionnaire('+item.SGRQ_id+',2'+')"><i class=\"fa fa-times\"></i></td>'+
                         "</tr>");
                 }
             });
         });
     }
+    function addQuestionnaire(Q_index){
+        index = Q_index;
+        $("#ESS :text").val("");
+        $("#ESS :radio").attr("checked",false);
+//        $("#ESS :checkbox").attr("checked",false);
+        $("#MBQ :text").val("");
+        $("#MBQ :radio").attr("checked",false);
+//        $("#MBQ :checkbox").attr("checked",false);
+        $("#SGRQ :text").val("");
+        $("#SGRQ :radio").attr("checked",false);
+        $("#SGRQ :checkbox").attr("checked",false);
+    }
+    function deleteQuestionnaire(id, kind) {
+        if(confirm("确定删除")==1) {
+            $.get('/i31/', {"id": id, kind: kind}, function (data) {
+                var result = JSON.parse(data).result;
+                if(result=="0")
+                    alert("删除成功");
+                else if(result=="-1")
+                    alert("删除失败");
+            });
+            showQuestionnaire(index);
+        }
+    }
+
+    function submitQuestionnaire(kind) {
+        console.log(index);
+        var str = "";
+        if(kind =="0"){
+            str = $("#ESS").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index]+"&kind="+"0";
+        }
+        else if(kind == "1"){
+            str = $("#MBQ").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index]+"&kind="+"1";
+        }
+        else{
+            str = $("#SGRQ").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index]+"&kind="+"2";
+        }
+
+        if(confirm("确定提交")==1){
+            $.post('/i29/', str, function (data) {
+                var result = JSON.parse(data).result;
+                if(result=="0")
+                    alert("提交成功");
+                else if(result=="-1")
+                    alert("提交失败");
+            });
+            showQuestionnaire(index);
+        }
+    }
+
     function editESS(ESS_id) {
         $.getJSON('/i30/',{"id":ESS_id,type:"0"},function (json_data) {
             item = json_data;
@@ -877,218 +916,58 @@ $(document).ready(function () {
 
         });
     }
-    function addESS(E_index){
-        index = E_index;
-        $("#ESS :text").val("");
-        $("#ESS :radio").attr("checked",false);
-//        $("#ESS :checkbox").attr("checked",false);
-    }
-    function deleteESS(ESS_id) {
-        if(confirm("确定删除")==1) {
-            $.get('/i31/', {"id": ESS_id,kind:"0"}, function (data) {
-                var result = JSON.parse(data).result;
-                if(result=="0")
-                    alert("删除成功");
-                else if(result=="-1")
-                    alert("删除失败");
-            });
-            showQuestionnaire(index);
-        }
-    }
-    function submitESS() {
-        console.log(index);
-        if(confirm("确定提交")==1){
-            $.post('/i29/',$("#ESS").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index]+"&kind="+"0",function (data) {
-                var result = JSON.parse(data).result;
-                if(result=="0")
-                    alert("提交成功");
-                else if(result=="-1")
-                    alert("提交失败");
-            });
-            showQuestionnaire(index);
-        }
-    }
-    function showMBQ(M_index) {
-         if(type==0){
-             temp="outpatient";
-         }
-         else if(type==1){
-             temp="emergency";
-         }
-         else if(type==2){
-             temp="hospital"
-         }
-         $("#"+temp+"-"+M_index+"-MBQtable tbody").empty();
-        $.getJSON('',{"P_id":patientId,"type":type,"S_id":S_id[M_index],"kind":"2"},function(json_data){
-            $.each(json_data,function (index,item) {
-                $("#"+temp+"-"+M_index+"-"+"MBQtable").append(
-                    "<tr>"+
-                        "<td>"+item.MBQ_id+"</td>"+
-                        "<td>"+item.date+"</td>"+
-                        "<td>"+item.score+"</td>"+
-                        '<td><a  data-toggle="modal" href="#MBQDetails" onclick="editMBQ('+item.MBQ_id+')"></td>'+
-                    "</tr>"
-                )
-            })
-        })
-    }
+
     function editMBQ(MBQ_id) {
-        $.getJSON('/static/json/MBQ.json',{"MBQ_id":MBQ_id},function (json_data) {
-            $.each(json_data,function (index,item) {
-                $("#MBQ input[name=q1][value='"+item.q1+"']").attr('checked',true);
-                $("#MBQ input[name=q2][value='"+item.q2+"']").attr('checked',true);
-                $("#MBQ input[name=q3][value='"+item.q3+"']").attr('checked',true);
-                $("#MBQ input[name=q4][value='"+item.q4+"']").attr('checked',true);
-                $("#MBQ input[name=q5][value='"+item.q5+"']").attr('checked',true);
-                $("#MBQ input[name=q6][value='"+item.q6+"']").attr('checked',true);
-                $("#MBQ input[name=q7][value='"+item.q7+"']").attr('checked',true);
-                $("#MBQ input[name=q8][value='"+item.q8+"']").attr('checked',true);
-                $("#MBQ input[name=q9][value='"+item.q9+"']").attr('checked',true);
-                $("#MBQ input[name=q10][value='"+item.q10+"']").attr('checked',true);
-                $("#MBQ input[name='BMI']").val(item.BMI);
-                $("#MBQ input[name='MBQ_id']").val(item.MBQ_id);
-            })
-        })
+        $.getJSON('/i30/',{"id":MBQ_id,type:"1"},function (json_data) {
+            item = json_data;
+            $("#MBQ input[name=q1][value='"+item.q1+"']").attr('checked',true);
+            $("#MBQ input[name=q2][value='"+item.q2+"']").attr('checked',true);
+            $("#MBQ input[name=q3][value='"+item.q3+"']").attr('checked',true);
+            $("#MBQ input[name=q4][value='"+item.q4+"']").attr('checked',true);
+            $("#MBQ input[name=q5][value='"+item.q5+"']").attr('checked',true);
+            $("#MBQ input[name=q6][value='"+item.q6+"']").attr('checked',true);
+            $("#MBQ input[name=q7][value='"+item.q7+"']").attr('checked',true);
+            $("#MBQ input[name=q8][value='"+item.q8+"']").attr('checked',true);
+            $("#MBQ input[name=q9][value='"+item.q9+"']").attr('checked',true);
+            $("#MBQ input[name=q10][value='"+item.q10+"']").attr('checked',true);
+            $("#MBQ input[name='BMI']").val(item.BMI);
+            $("#MBQ input[name='MBQ_id']").val(item.MBQ_id);
+        });
     }
-    function addMBQ(){
-        $("#MBQ [name='q1']").attr('checked',false);
-        $("#MBQ [name='q2']").attr('checked',false);
-        $("#MBQ [name='q3']").attr('checked',false);
-        $("#MBQ [name='q4']").attr('checked',false);
-        $("#MBQ [name='q5']").attr('checked',false);
-        $("#MBQ [name='q6']").attr('checked',false);
-        $("#MBQ [name='q7']").attr('checked',false);
-        $("#MBQ [name='q8']").attr('checked',false);
-        $("#MBQ [name='q9']").attr('checked',false);
-        $("#MBQ [name='q10']").attr('checked',false);
-        $("#MBQ").find("input[name=BMI]").val("");
-    }
-    function deleateMBQ(MBQ_id) {
-        if(confirm("确定删除")==1) {
-            $.get('', {"MBQ_id": MBQ_id}, function (data) {
-                var result = JSON.parse(data).result;
-                if(result=="0")
-                    alert("删除成功");
-                else if(result=="-1")
-                    alert("删除失败");
-            })
-        }
-    }
-    function submitMBQ(MBQ_id,P_id,type,index) {
-        if(confirm("确定提交")==1){
-            $.post('',$("#MBQDetails").serialize()+"&MBQ_id="+MBQ_id+"&P_id="+P_id+"&type="+type+"&S_id="+S_id[index],function (result) {
-                if(result==0)
-                    alert("提交成功");
-                else if(result==-1)
-                    alert("提交失败");
-            })
-        }
-    }
-    function showSGRQ(S_index) {
-         if(type==0){
-             temp="outpatient";
-         }
-         else if(type==1){
-             temp="emergency";
-         }
-         else if(type==2){
-             temp="hospital"
-         }
-         $("#"+temp+"-"+S_index+"-SGRQtable tbody").empty();
-        $.getJSON('',{P_id:patientId,type:type,S_id:S_id[S_index],kind:"3"},function(json_data){
-            $.each(json_data,function (index,item) {
-                $("#"+temp+"-"+S_index+"-"+"SGRQtable").append(
-                    "<tr>"+
-                        "<td>"+item.SGRQ_id+"</td>"+
-                        "<td>"+item.date+"</td>"+
-                        "<td>"+item.score+"</td>"+
-                        '<td><a  data-toggle="modal" href="#SGRQDetails" onclick="editSGRQ('+item.SGRQ_id+')"></td>'+
-                    "</tr>"
-                )
-            })
-        })
-    }
+
     function editSGRQ(SGRQ_id) {
-        $.getJSON('/static/json/SGRQ.json',{SGRQ_id:SGRQ_id},function (json_data) {
-            $.each(json_data,function (index,item) {
-                $("#SGRQ input[name=H1][value='"+item.H1+"']").attr('checked',true);
-                $("#SGRQ input[name=H2][value='"+item.H2+"']").attr('checked',true);
-                $("#SGRQ input[name=H3][value='"+item.H3+"']").attr('checked',true);
-                $("#SGRQ input[name=H4][value='"+item.H4+"']").attr('checked',true);
-                $("#SGRQ input[name=H5][value='"+item.H5+"']").attr('checked',true);
-                $("#SGRQ input[name=H6][value='"+item.H6+"']").attr('checked',true);
-                $("#SGRQ input[name=H7][value='"+item.H7+"']").attr('checked',true);
-                $("#SGRQ input[name=H8][value='"+item.H8+"']").attr('checked',true);
-                $("#SGRQ input[name=H9][value='"+item.H9+"']").attr('checked',true);
-                $("#SGRQ input[name=H10][value='"+item.H10+"']").attr('checked',true);
-                analyzeCheckBox("SGRQ","H11",item.H11);
-                analyzeCheckBox("SGRQ","H12",item.H12);
-                analyzeCheckBox("SGRQ","H13",item.H13);
-                $("#SGRQ input[name=H14][value='"+item.H14+"']").attr('checked',true);
-                analyzeCheckBox("SGRQ","H15",item.H15);
-                analyzeCheckBox("SGRQ","H16",item.H16);
-                analyzeCheckBox("SGRQ","H17",item.H17);
-                $("#SGRQ input[name=H18][value='"+item.H18+"']").attr('checked',true);
-                $("#SGRQ textarea[name=actEFF]").text(item.actEFF);
-                $("#SGRQ input[name='SGRQ_id']").val(item.SGRQ_id);
-            })
-        })
+        $.getJSON('/i30/',{"id":SGRQ_id,type:"2"},function (json_data) {
+            item = json_data;
+            $("#SGRQ input[name=H1][value='"+item.H1+"']").attr('checked',true);
+            $("#SGRQ input[name=H2][value='"+item.H2+"']").attr('checked',true);
+            $("#SGRQ input[name=H3][value='"+item.H3+"']").attr('checked',true);
+            $("#SGRQ input[name=H4][value='"+item.H4+"']").attr('checked',true);
+            $("#SGRQ input[name=H5][value='"+item.H5+"']").attr('checked',true);
+            $("#SGRQ input[name=H6][value='"+item.H6+"']").attr('checked',true);
+            $("#SGRQ input[name=H7][value='"+item.H7+"']").attr('checked',true);
+            $("#SGRQ input[name=H8][value='"+item.H8+"']").attr('checked',true);
+            $("#SGRQ input[name=H9][value='"+item.H9+"']").attr('checked',true);
+            $("#SGRQ input[name=H10][value='"+item.H10+"']").attr('checked',true);
+            analyzeCheckBox("SGRQ","H11",item.H11);
+            analyzeCheckBox("SGRQ","H12",item.H12);
+            analyzeCheckBox("SGRQ","H13",item.H13);
+            $("#SGRQ input[name=H14][value='"+item.H14+"']").attr('checked',true);
+            analyzeCheckBox("SGRQ","H15",item.H15);
+            analyzeCheckBox("SGRQ","H16",item.H16);
+            analyzeCheckBox("SGRQ","H17",item.H17);
+            $("#SGRQ input[name=H18][value='"+item.H18+"']").attr('checked',true);
+            $("#SGRQ textarea[name=actEff]").val(item.actEff);
+            $("#SGRQ input[name='SGRQ_id']").val(item.SGRQ_id);
+        });
     }
-    function addSGRQ(){
-        $("#SGRQ [name='H1']").attr('checked',false);
-        $("#SGRQ [name='H2']").attr('checked',false);
-        $("#SGRQ [name='H3']").attr('checked',false);
-        $("#SGRQ [name='H4']").attr('checked',false);
-        $("#SGRQ [name='H5']").attr('checked',false);
-        $("#SGRQ [name='H6']").attr('checked',false);
-        $("#SGRQ [name='H7']").attr('checked',false);
-        $("#SGRQ [name='H8']").attr('checked',false);
-        $("#SGRQ [name='H9']").attr('checked',false);
-        $("#SGRQ [name='H10']").attr('checked',false);
-        $("#SGRQ [name='H11']").attr('checked',false);
-        $("#SGRQ [name='H12']").attr('checked',false);
-        $("#SGRQ [name='H13']").attr('checked',false);
-        $("#SGRQ [name='H14']").attr('checked',false);
-        $("#SGRQ [name='H15']").attr('checked',false);
-        $("#SGRQ [name='H16']").attr('checked',false);
-        $("#SGRQ [name='H17']").attr('checked',false);
-        $("#SGRQ [name='H18']").attr('checked',false);
-        $("#SGRQ textarea[name=actEFF]").text("");
-    }
-    function deleateSGRQ(SGRQ_id) {
-        if(confirm("确定删除")==1) {
-            $.get('', {SGRQ_id: SGRQ_id}, function (result) {
-                if(result==0)
-                    alert("删除成功");
-                else if(result==-1)
-                    alert("删除失败");
-            })
-        }
-    }
-    function submitSGRQ(SGRQ_id,P_id,type,source) {
-        if(confirm("确定提交")==1){
-            $.post('',$("#SGRQDetails").serialize()+"&SGRQ_id="+SGRS_id+"&P_id="+P_id+"&type="+type+"&source="+source,function (result) {
-                if(result==0)
-                    alert("提交成功");
-                else if(result==-1)
-                    alert("提交失败");
-            })
-        }
-    }
+
     function analyzeCheckBox(modal,name,item) {
         for (var i = 0;i<item.length;i++){
                 $("#"+modal+" input[name='"+name+"'][value='"+item[i]+"']").attr('checked',true);
         }
     }
 
-
-//    function analyzeCheckBox(name,item) {
-//        for (var i = 0;i<item.length;i++){
-//                $("#Clinic input[name='"+name+"'][value='"+item[i]+"']").attr("checked",true);
-//        }
-//    }
-
-    function showAE(AE_index){
+    function showAandAE(A_index){
         if(type==0){
             temp="outpatient";
         }
@@ -1098,58 +977,115 @@ $(document).ready(function () {
         else if(type==2){
             temp="hospital"
         }
-        $("#"+temp+"-"+AE_index+"-"+"ESStable tbody").empty();
-        $.getJSON('/static/json/AE.json',{P_id:patientId,type:type,S_id:S_id[AE_index]},function(json_data){
+        $("#"+temp+"-"+A_index+"-"+"AEtable tbody").empty();
+        $.getJSON('/i32/',{P_id:patientId,type:type,S_id:S_id[A_index],kind:"0"},function(json_data){
             $.each(json_data,function (index,item) {
-                $("#"+temp+"-"+AE_index+"-"+"ESStable").append(
+                $("#"+temp+"-"+A_index+"-"+"AEtable tbody").append(
                     "<tr>"+
                         "<td>"+item.AE_id+"</td>"+
                         "<td>"+item.date+"</td>"+
                         "<td>"+item.AE_type+"</td>"+
                         "<td>"+item.D_id+"</td>"+
                         "<td>"+item.description+"</td>"+
-                        '<td><a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick="editAE('+item.AE_id+')"></td>'+
+                        "<td>"+item.name+"</td>"+
+                        '<td><a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick="editAE('+item.AE_id+')"><i class=\"fa fa-edit\"></i></td>'+
+                        '<td><a  data-toggle="modal" onclick="deleteAorAE('+item.AE_id+',0'+')"><i class=\"fa fa-times\"></td>'+
                     "</tr>"
                 )
-            })
-        })
+            });
+        });
+
+        $("#"+temp+"-"+A_index+"-"+"Atable tbody").empty();
+        $.getJSON('/i32/',{P_id:patientId,type:type,S_id:S_id[A_index],kind:"1"},function(json_data){
+            $.each(json_data,function (index,item) {
+                $("#"+temp+"-"+A_index+"-"+"Atable tbody").append(
+                    "<tr>"+
+                        "<td>"+item.A_id+"</td>"+
+                        "<td>"+item.date+"</td>"+
+                        "<td>"+item.D_id+"</td>"+
+                        "<td>"+item.description+"</td>"+
+                        "<td>"+item.name+"</td>"+
+                        '<td><a  data-toggle="modal" href="#AttachInfoDetails" onclick="editA('+item.A_id+')"><i class=\"fa fa-edit\"></i></td>'+
+                        '<td><a  data-toggle="modal" onclick="deleteAorAE('+item.A_id+',1'+')"><i class=\"fa fa-times\"></td>'+
+                    "</tr>"
+                )
+            });
+        });
+
+    }
+
+    function addAorAE(A_index){
+        console.log(index);
+        index = A_index;
+        console.log("index");
+        console.log(index);
+        $("#AccessoryExamination :text").val("");
+        $("#AccessoryExamination :input").val("");
+        $("#AccessoryExamination :radio").attr("checked",false);
+//        $("#AccessoryExamination :checkbox").attr("checked",false);
+
+        $("#AttachInfo :text").val("");
+        $("#AttachInfo :radio").attr("checked",false);
+        $("#AttachInfo :input").val("");
+//        $("#AttachInfo :checkbox").attr("checked",false);
+    }
+
+
+    function submitAorAE(kind){
+        var str = "";
+        if(kind=="0"){
+            str = $("#AccessoryExamination").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index]+"&kind="+"0";
+            console.log("000");
+        }
+        else{
+        console.log("111");
+            str = $("#AttachInfo").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index]+"&kind="+"1";
+        }
+        if(confirm("确定提交")==1){
+            $.post('/i33/', str, function (data) {
+            console.log($("#AccessoryExamination").serialize());
+            var result = JSON.parse(data).result;
+                if(result=="0")
+                    alert("提交成功");
+                else if(result=="-1")
+                    alert("提交失败");
+            });
+            showAandAE(index);
+        }
     }
 
     function editAE(AE_id) {
-        // ,{AE_id:AE_id}
-        $.getJSON('/static/json/AE.json',function (json_data) {
-            $.each(json_data,function (index,item) {
-                $("#AccessoryExamination [name='AE_type'][value='"+item.AE_type+"']").attr('checked',true);
-                $("#AccessoryExamination [name='AE_date']").val(item.date);
-                $("#AccessoryExamination textarea[name=AE_description]").text(item.AE_description);
-                $("#AccessoryExamination input[name='AccessoryExamination_id']").val(item.AccessoryExamination_id);
-                // $("score").val(item.score);
-            })
-        })
-    }
-    function addAE(){
-        $("#AccessoryExamination [name='AE_type']").attr('checked',false);
-        $("#AccessoryExamination [name='AE_date']").val("");
-        $("#AccessoryExamination textarea[name=AE_description]").text("");
+        $.getJSON('/i35/',{AE_id: AE_id, kind: "0"}, function (json_data) {
+            item = json_data;
+            console.log(item)
+            $("#AccessoryExamination input[name='AE_type'][value='"+item.AE_type+"']").attr('checked',true);
+            $("#AccessoryExamination input[name='date']").val(item.date);
+            console.log(item.AE_type);
+            $("#AccessoryExamination textarea[name='description']").val(item.description);
+            $("#AccessoryExamination input[name='AE_id']").val(item.AE_id);
+
+        });
     }
 
-    function deleateAE() {
-        if(confirm("确定删除")==1) {
-            $.get('', {AE_id: AE_id}, function (result) {
-                if(result==0)
-                    alert("删除成功");
-                else if(result==-1)
-                    alert("删除失败");
-            })
-        }
+    function editA(A_id) {
+        $.getJSON('/i35/',{A_id: A_id, kind: "1"}, function (json_data) {
+            item = json_data;
+            $("#AttachInfo input[name='date']").val(item.date);
+            $("#AttachInfo textarea[name='description']").val(item.description);
+            $("#AttachInfo input[name='A_id']").val(item.A_id);
+
+        });
     }
-    function submitAE() {
-        if(confirm("确定提交")==1){
-            $.post('',$("#AccessoryExaminationDetails").serialize()+"&AE_id="+AE_id+"&P_id="+P_id+"&type="+type+"&source="+source,function (result) {
-                if(result==0)
-                    alert("提交成功");
-                else if(result==-1)
-                    alert("提交失败");
-            })
+
+    function deleteAorAE(id, kind) {
+        if(confirm("确定删除")==1) {
+            $.get('/i34/', {id: id, kind: kind}, function (data) {
+                var result = JSON.parse(data).result;
+                if(result=="0")
+                    alert("删除成功");
+                else if(result=="-1")
+                    alert("删除失败");
+            });
+            showAandAE(index);
         }
     }

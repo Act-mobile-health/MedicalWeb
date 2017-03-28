@@ -1,6 +1,6 @@
 # -*- coding:UTF-8 -*-
 from Website.models import GroupInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,EmergCallInfo,\
-    InHospitalInfo,Clinic,ESS,MBQ,SGRO,AttachInfo,AccessoryExamination, MedicalVisit
+    InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination, MedicalVisit
 from control_method import tools
 #删除指定实验组
 #注意判断一下D_id与G_id是否正确，删除时注意一下删除患者与实验组对应关系那张表中的内容
@@ -57,8 +57,9 @@ def deleteOutPatientServiceInfo(OPS_id):
         Clinic.objects.filter(type = 0, S_id=OPS_id).delete()
         ESS.objects.filter(type = 0, S_id=OPS_id).delete()
         MBQ.objects.filter(type = 0, S_id=OPS_id).delete()
-        SGRO.objects.filter(type = 0, S_id=OPS_id).delete()
+        SGRQ.objects.filter(type = 0, S_id=OPS_id).delete()
         AttachInfo.objects.filter(type = 0, S_id=OPS_id).delete()
+        AccessoryExamination.objects.filter(type = 0, S_id=OPS_id).delete()
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
         obj.o_time = str(int(obj.o_time) - 1)
@@ -79,8 +80,9 @@ def deleteEmergCallInfo(EC_id):
         Clinic.objects.filter(type = 1, S_id=EC_id).delete()
         ESS.objects.filter(type = 1, S_id=EC_id).delete()
         MBQ.objects.filter(type = 1, S_id=EC_id).delete()
-        SGRO.objects.filter(type = 1, S_id=EC_id).delete()
+        SGRQ.objects.filter(type = 1, S_id=EC_id).delete()
         AttachInfo.objects.filter(type = 1, S_id=EC_id).delete()
+        AccessoryExamination.objects.filter(type = 1, S_id=EC_id).delete()
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
         obj.o_time = str(int(obj.e_time) - 1)
@@ -102,8 +104,9 @@ def deleteInHospitalInfo(IH_id):
         Clinic.objects.filter(type = 2, S_id=IH_id).delete()
         ESS.objects.filter(type = 2, S_id=IH_id).delete()
         MBQ.objects.filter(type = 2, S_id=IH_id).delete()
-        SGRO.objects.filter(type = 2, S_id=IH_id).delete()
+        SGRQ.objects.filter(type = 2, S_id=IH_id).delete()
         AttachInfo.objects.filter(type = 2, S_id=IH_id).delete()
+        AccessoryExamination.objects.filter(type = 2, S_id=IH_id).delete()
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
         obj.o_time = str(int(obj.h_time) - 1)
@@ -153,7 +156,7 @@ def deleteQuestionnaireInfo(kind, Q_id):
         elif kind == 1:
             MBQ.objects.get(id=Q_id).delete()
         elif kind == 2:
-            SGRO.objects.get(id=Q_id).delete()
+            SGRQ.objects.get(id=Q_id).delete()
         else:
             return False
         return True

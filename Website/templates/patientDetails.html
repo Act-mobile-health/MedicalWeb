@@ -1203,8 +1203,8 @@
 
 
         <div class="modal fade" id="RelationInfoDetails">
-            <div class="modal-dialog">
-                <div class="modal-content modal-lg">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">家属信息</h4>
@@ -2218,8 +2218,8 @@
 
 
 		<div class="modal fade" id="ESSDetails">
-			<div class="modal-dialog">
-				<div class="modal-content modal-lg">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content ">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">详情/编辑</h4>
@@ -2327,8 +2327,8 @@
 
 
 		<div class="modal fade" id="MBQDetails">
-			<div class="modal-dialog">
-				<div class="modal-content modal-lg">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content ">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h4 class="modal-title">详情/编辑</h4>
@@ -2659,7 +2659,7 @@
                                     <div>
                                     <div class="row">
                                         <h8 class="myquestion">11.BMI = 体重/(身高*身高) = </h8>
-                                        <input type="text" class="myinput">
+                                        <input type="text" name ="BMI" class="myinput">
                                     </div>
                                     </div>
 
@@ -2693,8 +2693,8 @@
 
 
 		<div class="modal fade" id="SGRQDetails">
-			<div class="modal-dialog">
-				<div class="modal-content modal-lg">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content ">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h4 class="modal-title">详情/编辑</h4>
@@ -3387,57 +3387,57 @@
 
 
         <div class="modal fade" id="AccessoryExaminationDetails">
-            <div class="modal-dialog">
-                <div class="modal-content modal-lg">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">辅助检查</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form" id = "AccessoryExamination" method="post" role="form">
-                            <div>
-                                <div class="row">
-                                    <h2 class="myquestion" style="text-indent:2em;">编码：<input name="AE_id" type = "text" style="width:150px;text-align:center;" readonly/></h2>
-
-                                </div>
-                                <div class="row">
-                                    <h4 class="mylabel" style = "text-align:left !important;text-indent:2em;">辅助检查类型：</h4>
-                                </div>
-                                <div class="row col-sm-offset-1">
-                                    <div class="radio col-sm-3">
-                                      <label class="mycheckbox">
-                                        <input type="radio" name="AE_type"  value="1" >肺功能
-                                      </label>
-                                    </div>
-                                    <div class="radio col-sm-3">
-                                      <label class="mycheckbox">
-                                        <input type="radio" name="AE_type"  value="2">血气分析
-                                      </label>
-                                    </div>
-                                    <div class="radio col-sm-3">
-                                      <label class="mycheckbox">
-                                        <input type="radio" name="AE_type"  value="3">肺CT
-                                      </label>
-                                    </div>
-                                </div>
-                                <div class="row col-sm-offset-1">
-                                    <div class="radio col-sm-3">
-                                      <label class="mycheckbox">
-                                        <input type="radio" name="AE_type"  value="4">睡眠监测结果
-                                      </label>
-                                    </div>
-                                    <div class="radio col-sm-3">
-                                      <label class="mycheckbox">
-                                        <input type="radio" name="AE_type"  value="5">心脏彩超
-                                      </label>
-                                    </div>
-                                    <div class="radio col-sm-3">
-                                      <label class="mycheckbox">
-                                        <input type="radio" name="AE_type"  value="6">心电图
-                                      </label>
-                                    </div>
-                                </div>
-                            </div>
+                           	{% csrf_token %}
+							<div class="row">
+								<h2 class="myquestion" style="text-indent:2em;">编码：<input name="AE_id" type = "text" style="width:150px;text-align:center;" readonly/></h2>
+							</div>
+							<div class="row">
+								<h4 class="mylabel" style = "text-align:left !important;text-indent:2em;">辅助检查类型：</h4>
+							</div>
+							<div class="row">
+							<div class="row col-sm-offset-1">
+								<div class="radio col-sm-3">
+								  <label class="mycheckbox">
+									<input type="radio" name="AE_type"  value="1">肺功能
+								  </label>
+								</div>
+								<div class="radio col-sm-3">
+								  <label class="mycheckbox">
+									<input type="radio" name="AE_type"  value="2">血气分析
+								  </label>
+								</div>
+								<div class="radio col-sm-3">
+								  <label class="mycheckbox">
+									<input type="radio" name="AE_type"  value="3">肺CT
+								  </label>
+								</div>
+							</div>
+							<div class="row col-sm-offset-1">
+								<div class="radio col-sm-3">
+								  <label class="mycheckbox">
+									<input type="radio" name="AE_type"  value="4">睡眠监测结果
+								  </label>
+								</div>
+								<div class="radio col-sm-3">
+								  <label class="mycheckbox">
+									<input type="radio" name="AE_type"  value="5">心脏彩超
+								  </label>
+								</div>
+								<div class="radio col-sm-3">
+								  <label class="mycheckbox">
+									<input type="radio" name="AE_type"  value="6">心电图
+								  </label>
+								</div>
+							</div>
+							</div>
                             <div class="row ">
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel" >检查时间</label>
@@ -3459,6 +3459,7 @@
                             <div class="row ">
 								<div class="col-lg-2 col-md-2 myblockposition">
 									<label class="col-sm-12 control-label mylabel">上传</label>
+									<input name = "image" type="file">
 								</div>
                             </div>
                         </form>
@@ -3471,8 +3472,8 @@
         </div><!-- /.modal -->
 
         <div class="modal fade" id="AttachInfoDetails">
-            <div class="modal-dialog">
-                <div class="modal-content modal-lg">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">附件</h4>
@@ -3518,8 +3519,8 @@
 
 
         <div class="modal fade" id="OutPatientServiceInfoDetails">
-            <div class="modal-dialog">
-                <div class="modal-content modal-lg">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">详情/编辑</h4>
@@ -3772,8 +3773,8 @@
         <!-- End Modal Dialog -->
 
         <div class="modal fade" id="EmergCallInfoDetails">
-            <div class="modal-dialog">
-                <div class="modal-content modal-lg">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">详情/编辑</h4>
@@ -4061,8 +4062,8 @@
         </div><!-- /.modal -->
         
         <div class="modal fade" id="InHospitalInfoDetails">
-            <div class="modal-dialog">
-                <div class="modal-content modal-lg">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">详情/编辑</h4>

@@ -1,9 +1,9 @@
 # -*- coding:UTF-8 -*-
 from Website.models import DoctorInfo,GroupInfo,PatientGroup,PatientInfo,RelationInfo,OutPatientServiceInfo,\
-    EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRO,AttachInfo,AccessoryExamination,MedicalVisit
+    EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination,MedicalVisit
 import time
 from control_method import tools
-import datetime
+import datetime, random
 # 添加新用户
 # 参数是一个字典，包含医生的所有信息
 # 成功返回True，失败返回False
@@ -26,7 +26,7 @@ def addDoctorInfo(data):
 def addExpGroup(D_id,name,info):
     # TODO
     try:
-        newObj = GroupInfo(D_id=D_id,name=name,information=info)
+        newObj = GroupInfo(D_id=D_id,name=name,description=info)
         newObj.save()
         return True
     except Exception, e:         
@@ -212,17 +212,21 @@ def addQuestionnaireInfo(kind,S_id,data):
                          ess5 = data['ess5'], ess6 = data['ess6'], ess7 = data['ess7'], ess8 = data['ess8'],
                          score = data['score'])
             newObj.save()
+
         elif kind == 1:
             newObj = MBQ(P_id = data['P_id'], type = data['type'], S_id = S_id, q1 = data['q1'],
                          q2 = data['q2'], q3 = data['q3'], q4 = data['q4'],
                          q5 = data['q5'], q6 = data['q6'], q7 = data['q7'], q8 = data['q8'], q9 = data['q9'],
                          q10 = data['q10'], BMI = data['BMI'])
             newObj.save()
+
         elif kind == 2:
-            newObj = SGRO(P_id = data['P_id'], type = data['type'], S_id = S_id, q1 = data['q1'],
-                          q2 = data['q2'], q3 = data['q3'],q4 = data['q4'],
-                          q5 = data['q5'], q6 = data['q6'], q7 = data['q7'], q8 = data['q8'], q9 = data['q9'],
-                          q10 = data['q10'], BMI = data['BMI'])
+            newObj = SGRQ(P_id = data['P_id'], type = data['type'], S_id = S_id, H1 = data['H1'],
+                          H2 = data['H2'], H3 = data['H3'], H4 = data['H4'], H5 = data['H5'],
+                          H6 = data['H6'], H7 = data['H7'], H8 = data['H8'], H9 = data['H9'],
+                          H10 = data['H10'], H11 = tools.forCheckbox(data,'H11'), H12 = tools.forCheckbox(data,'H12'),
+                          H13 = tools.forCheckbox(data,'H13'), H14 = data['H14'],  H15 = tools.forCheckbox(data,'H15'),
+                          H16 = tools.forCheckbox(data,'H16'), H17 = tools.forCheckbox(data,'H17'), H18 = data['H18'], actEff = data['actEff'])
             newObj.save()
         else:
             return False
@@ -237,8 +241,13 @@ def addQuestionnaireInfo(kind,S_id,data):
 #添加附件信息
 def addAttachInfo(D_id,S_id,data):
     try:
-        newObj = AttachInfo(P_id = data['P_id'], type = data['type'], S_id = S_id,D_id = D_id,
-                            name = data['name'], information = data['information'],dir = data['dir'])
+        if data['date'] != '':
+            d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        else:
+            d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        newObj = AttachInfo(P_id = data['P_id'], type = data['type'],  date = d, S_id = S_id, D_id = D_id,
+                            name = tools.md5(str(random.randint(0,9))+str(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))),
+                            description = data['description'])
 
         #TODO
         # img context没有加
@@ -255,8 +264,8 @@ def addAccessoryExamination(D_id,S_id,data):
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = AccessoryExamination(S_id = S_id, type = data['type'], date = d,
-                                      AE_type = data['AE_type'], name = data['name'],
+        newObj = AccessoryExamination(P_id = data['P_id'], S_id = S_id, type = data['type'], date = d, AE_type = data['AE_type'],
+                                      name = tools.md5(str(random.randint(0,9))+str(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))),
                                       description = data['description'], D_id = D_id)
 
         newObj.save()

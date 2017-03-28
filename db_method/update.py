@@ -1,5 +1,5 @@
 # -*- coding:UTF-8 -*-
-from Website.models import DoctorInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRO,AttachInfo,AccessoryExamination
+from Website.models import DoctorInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from control_method import tools
@@ -49,7 +49,7 @@ def updateExpGroup(G_id,name,info):
     try:
         group = GroupInfo.objects.get(id = G_id)
         group.name = name
-        group.information = info
+        group.description = info
         group.save()
         return True
     except Exception, e:
@@ -287,8 +287,11 @@ def updateQuestionnaireInfo(kind,S_id,data):
         if kind == 0:
             obj = ESS.objects.get(id = int(data['ESS_id']))
             obj.P_id = data['P_id']
-            obj.type = data['type']
-            obj.S_id = S_id
+            # obj.type = data['type']
+            # obj.S_id = S_id
+            obj.ess1 = data['ess1']
+            obj.ess2 = data['ess2']
+            obj.ess3 = data['ess3']
             obj.ess4 = data['ess4']
             obj.ess5 = data['ess5']
             obj.ess6 = data['ess6']
@@ -299,8 +302,11 @@ def updateQuestionnaireInfo(kind,S_id,data):
         elif kind == 1:
             obj = MBQ.objects.get(id = int(data['MBQ_id']))
             obj.P_id = data['P_id']
-            obj.type = data['type']
-            obj.S_id = S_id
+            # obj.type = data['type']
+            # obj.S_id = S_id
+            obj.q1 = data['q1']
+            obj.q2 = data['q2']
+            obj.q2 = data['q3']
             obj.q4 = data['q4']
             obj.q5 = data['q5']
             obj.q6 = data['q6']
@@ -311,10 +317,13 @@ def updateQuestionnaireInfo(kind,S_id,data):
             obj.BMI = data['BMI']
             obj.save()
         elif kind == 2:
-            obj = SGRO.objects.get(id = int(data['SGRO_id']))
+            obj = SGRQ.objects.get(id = int(data['SGRQ_id']))
             obj.P_id = data['P_id']
-            obj.type = data['type']
-            obj.S_id = S_id
+            # obj.type = data['type']
+            # obj.S_id = S_id
+            obj.H1 = data['H1']
+            obj.H2 = data['H2']
+            obj.H3 = data['H3']
             obj.H4 = data['H4']
             obj.H5 = data['H5']
             obj.H6 = data['H6']
@@ -322,47 +331,13 @@ def updateQuestionnaireInfo(kind,S_id,data):
             obj.H8 = data['H8']
             obj.H9 = data['H9']
             obj.H10 = data['H10']
-            obj.H11_1 = data['H11_1']
-            obj.H11_2 = data['H11_2']
-            obj.H11_3 = data['H11_3']
-            obj.H11_4 = data['H11_4']
-            obj.H11_5 = data['H11_5']
-            obj.H11_6 = data['H11_6']
-            obj.H11_7 = data['H11_7']
-            obj.H12_1 = data['H12_1']
-            obj.H12_2 = data['H12_2']
-            obj.H12_3 = data['H12_3']
-            obj.H12_4 = data['H12_4']
-            obj.H12_5 = data['H12_5']
-            obj.H12_6 = data['H12_6']
-            obj.H13_1 = data['H13_1']
-            obj.H13_2 = data['H13_2']
-            obj.H13_3 = data['H13_3']
-            obj.H13_4 = data['H13_4']
-            obj.H13_5 = data['H13_5']
-            obj.H13_6 = data['H13_6']
-            obj.H13_7 = data['H13_7']
-            obj.H13_8 = data['H13_8']
+            obj.H11 = tools.forCheckbox(data,'H11')
+            obj.H12 = tools.forCheckbox(data,'H12')
+            obj.H13 = tools.forCheckbox(data,'H13')
             obj.H14 = data['H14']
-            obj.H15_1 = data['H15_1']
-            obj.H15_2 = data['H15_2']
-            obj.H15_3 = data['H15_3']
-            obj.H15_4 = data['H15_4']
-            obj.H16_1 = data['H16_1']
-            obj.H16_2 = data['H16_2']
-            obj.H16_3 = data['H16_3']
-            obj.H16_4 = data['H16_4']
-            obj.H16_5 = data['H16_5']
-            obj.H16_6 = data['H16_6']
-            obj.H16_7 = data['H16_7']
-            obj.H16_8 = data['H16_8']
-            obj.H16_9 = data['H16_9']
-            obj.H16_10 = data['H16_10']
-            obj.H17_1 = data['H17_1']
-            obj.H17_2 = data['H17_2']
-            obj.H17_3 = data['H17_3']
-            obj.H17_4 = data['H17_4']
-            obj.H17_5 = data['H17_5']
+            obj.H15 = tools.forCheckbox(data,'H15')
+            obj.H16 = tools.forCheckbox(data,'H16')
+            obj.H17 = tools.forCheckbox(data,'H17')
             obj.H18 = data['H18']
             obj.actEff = data['actEff']
             obj.save()
@@ -377,16 +352,16 @@ def updateQuestionnaireInfo(kind,S_id,data):
 
 
 #修改附件信息
-def updateAttachInfo(A_id,D_id,S_id,data):
+def updateAttachInfo(A_id, D_id, S_id, data):
     try:
         obj = AttachInfo.objects.get(id = A_id)
-        obj.P_id = data['P_id']
-        obj.type = data['type']
-        obj.S_id = S_id
-        obj.D_id = D_id
-        obj.name = data['name']
-        obj.information = data['information']
-        obj.dir = data['dir']
+        # obj.P_id = data['P_id']
+        # obj.type = data['type']
+        if data['date'] != '':
+            obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        # obj.S_id = S_id
+        # obj.D_id = D_id
+        obj.description = data['description']
         #TODO
         # img context没有加
         obj.save()
@@ -397,17 +372,16 @@ def updateAttachInfo(A_id,D_id,S_id,data):
 
 
 #修改附件信息
-def updateAccessoryExamination(AE_id,D_id,S_id,data):
+def updateAccessoryExamination(AE_id, D_id, S_id, data):
     try:
         obj = AccessoryExamination.objects.get(id = AE_id)
-        obj.S_id = S_id
-        obj.type = data['type']
+        # obj.S_id = S_id
+        # obj.type = data['type']
         if data['date'] != '':
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.AE_type = data['AE_type']
-        obj.name = data['name']
         obj.description = data['description']
-        obj.D_id = D_id
+        # obj.D_id = D_id
         obj.save()
         return True
     except Exception, e:

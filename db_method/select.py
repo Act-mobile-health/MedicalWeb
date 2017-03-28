@@ -1,6 +1,6 @@
 # -*- coding:UTF-8 -*-
 from Website.models import DoctorInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,\
-    EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRO,AttachInfo,AccessoryExamination,CATandMRC,PmExposure,\
+    EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination,CATandMRC,PmExposure,\
     MedicalVisit
 from django.core.exceptions import ObjectDoesNotExist
 from control_method import tools
@@ -114,8 +114,8 @@ def getExpGroups(D_id):
     # TODO
     try:
         message = {}
-        values = GroupInfo.objects.filter(D_id = D_id).values_list('id','name','information','data')
-        keys = ['G_id','name','information','data']
+        values = GroupInfo.objects.filter(D_id = D_id).values_list('id','name','description','data')
+        keys = ['G_id','name','description','data']
         for value in values:
             value[3] = value[3].strftime("%Y-%m-%d")
             message = tools.dictPackage(keys, value)
@@ -249,7 +249,7 @@ def getPatientDetailedInfo(P_id):
         # group_id = PatientGroup.objects.get(P_id = P_id).G_id
         # group = GroupInfo.objects.get(id = group_id)
         # message['groupName'] = group.name
-        # message['groupInfo'] = group.information
+        # message['groupInfo'] = group.description
     except Exception, e:
         tools.exceptionRecord('select.py','getPatientDetailedInfo',e)
     return message
@@ -294,7 +294,7 @@ def getBasicClinicInfos(type,S_id):
 #返回值type:
 #ESS   0
 #MBQ   1
-#SGRO  2
+#SGRQ  2
 def getBasicQuestionnaireInfos(type,S_id):
     list = []
     message = {}
@@ -317,8 +317,8 @@ def getBasicQuestionnaireInfos(type,S_id):
             list.append(message)
 
 
-        values = SGRO.objects.filter(type=type, S_id=S_id).values_list('id','date')
-        keys = ['SGRO_id','date']
+        values = SGRQ.objects.filter(type=type, S_id=S_id).values_list('id','date')
+        keys = ['SGRQ_id','date']
         for value in values:
             message = tools.dictPackage(keys, value)
             message['kind'] = 2
@@ -573,7 +573,7 @@ def getDetailedClinicInfo(Cli_id):
 #type:
 #ESS   0
 #MBQ   1
-#SGRO  2
+#SGRQ  2
 def getDetailedQuestionnaireInfo(type,Q_id):
     message = {}
     try:
@@ -596,26 +596,53 @@ def getDetailedQuestionnaireInfo(type,Q_id):
             message['type'] = 0
 
         elif type == 1:
-            value = MBQ.objects.filter(d=Q_id).values_list('id', 'q1', 'q2', 'q3', 'q4',
-                                                           'q5', 'q6', 'q7','q8', 'q9', 'q10', 'BMI')
+            
+            obj = MBQ.objects.get(id = Q_id)
+            value = []
+            value.append(obj.id)
+            value.append(obj.q1)
+            value.append(obj.q2)
+            value.append(obj.q3)
+            value.append(obj.q4)
+            value.append(obj.q5)
+            value.append(obj.q6)
+            value.append(obj.q7)
+            value.append(obj.q8)
+            value.append(obj.q9)
+            value.append(obj.q10)
+            value.append(obj.BMI)
+            
             keys = ['MBQ_id', 'q1', 'q2', 'q3','q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'BMI']
             message = tools.dictPackage(keys, value)
             message['type'] = 1
+            
         elif type == 2:
-            value = SGRO.objects.filter(d=Q_id).values_list('id',  'H1', 'H2', 'H3', 'H4',
-                                                            'H5', 'H6', 'H7','H8', 'H9', 'H10', 'H11_1', 'H11_2', 'H11_3', 'H11_4',
-                                                            'H11_5', 'H11_6', 'H11_7', 'H12_1', 'H12_2', 'H12_3',
-                                                            'H12_4', 'H12_5', 'H12_6', 'H13_1', 'H13_2', 'H13_3',
-                                                            'H13_4', 'H13_5', 'H13_6', 'H13_7', 'H13_8', 'H14',
-                                                            'H15_1', 'H15_2', 'H15_3', 'H15_4', 'H16_1', 'H16_2',
-                                                            'H16_3', 'H16_4', 'H16_5', 'H16_6', 'H16_7', 'H16_8',
-                                                            'H16_9', 'H16_10', 'H17-1', 'H17-2', 'H17-3', 'H17-4',
-                                                            'H17-5', 'H18', 'actEff')
-            keys = ['SGRQ_id', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10', 'H11_1', 'H11_2',
-                    'H11_3', 'H11_4', 'H11_5', 'H11_6', 'H11_7', 'H12_1', 'H12_2', 'H12_3', 'H12_4', 'H12_5', 'H12_6',
-                    'H13_1', 'H13_2', 'H13_3', 'H13_4', 'H13_5', 'H13_6', 'H13_7', 'H13_8', 'H14', 'H15_1', 'H15_2',
-                    'H15_3', 'H15_4', 'H16_1', 'H16_2', 'H16_3', 'H16_4', 'H16_5', 'H16_6', 'H16_7', 'H16_8', 'H16_9',
-                    'H16_10', 'H17-1', 'H17-2', 'H17-3', 'H17-4', 'H17-5', 'H18', 'actEff']
+            
+            obj = SGRQ.objects.get(id = Q_id)
+            value = []
+            value.append(obj.id)
+            value.append(obj.H1)
+            value.append(obj.H2)
+            value.append(obj.H3)
+            value.append(obj.H4)
+            value.append(obj.H5)
+            value.append(obj.H6)
+            value.append(obj.H7)
+            value.append(obj.H8)
+            value.append(obj.H9)
+            value.append(obj.H10)
+            value.append(obj.H11)
+            value.append(obj.H12)
+            value.append(obj.H13)
+            value.append(obj.H14)
+            value.append(obj.H15)
+            value.append(obj.H16)
+            value.append(obj.H17)
+            value.append(obj.H18)
+            value.append(obj.actEff)
+
+            keys = ['SGRQ_id', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10', 'H11',
+                    'H12', 'H13', 'H14', 'H15', 'H16', 'H17', 'H18', 'actEff']
             message = tools.dictPackage(keys, value)
             message['type'] = 2
 
@@ -625,19 +652,35 @@ def getDetailedQuestionnaireInfo(type,Q_id):
     return message
 
 
+#获取某个附件信息
+def getOneDetailedAttachInfos(A_id):
+    message = {}
+    try:
+        obj = AttachInfo.objects.get(id = A_id)
+        value = []
+        value.append(obj.id)
+        value.append(str(obj.date))
+        value.append(obj.description)
+        keys = ['A_id', 'date', 'description']
 
+        message = tools.dictPackage(keys, value)
 
+    except Exception, e:
+        tools.exceptionRecord('select.py','getOneDetailedAttachInfos',e)
 
-#获取某个 门诊/急诊/住院/辅助检查 对应的所有附件信息
-# type: 0 OutPatientService   1 Emerg   2 InHospital   3 AccessoryExamination
-def getDetailedAttachInfos(type,S_id):
+    return message
+
+#获取某个 门诊/急诊/住院对应的所有附件信息
+# type: 0 OutPatientService   1 Emerg   2 InHospital
+def getDetailedAttachInfos(type, S_id):
     list = []
     message = {}
     try:
-        values = AttachInfo.objects.filter(type = type, S_id = S_id).values_list('id', 'P_id', 'type', 'S_id', 'D_id', 'name', 'information', 'dir')
-        keys = ['A_id', 'P_id', 'type', 'S_id', 'D_id', 'name', 'information', 'dir']
+        values = AttachInfo.objects.filter(type = type, S_id = S_id).values_list('id', 'date', 'D_id', 'name', 'description')
+        keys = ['A_id', 'date', 'D_id', 'name', 'description']
         for value in values:
             message = tools.dictPackage(keys, value)
+            message['date'] = str(message['date'])
             list.append(message)
 
     except Exception, e:
@@ -650,10 +693,11 @@ def getDetailedAccessoryExamination(type,S_id):
     list = []
     message = {}
     try:
-        values = AccessoryExamination.objects.filter(type = type, S_id = S_id).values_list('id', 'S_id', 'type', 'date', 'AE_type', 'name', 'description', 'D_id')
-        keys = ['AE_id', 'S_id', 'type', 'date', 'AE_type', 'name', 'description', 'D_id']
+        values = AccessoryExamination.objects.filter(type = type, S_id = S_id).values_list('id', 'date', 'AE_type', 'name', 'description', 'D_id')
+        keys = ['AE_id', 'date', 'AE_type', 'name', 'description', 'D_id']
         for value in values:
             message = tools.dictPackage(keys, value)
+            message['date'] = str(message['date'])
             list.append(message)
 
     except Exception, e:
@@ -661,6 +705,24 @@ def getDetailedAccessoryExamination(type,S_id):
 
     return list
 
+#获取某个辅助检查信息
+def getOneDetailedAccessoryExamination(AE_id):
+    message = {}
+    try:
+        obj = AccessoryExamination.objects.get(id = AE_id)
+        value = []
+        value.append(obj.id)
+        value.append(str(obj.date))
+        value.append(obj.AE_type)
+        value.append(obj.description)
+        keys = ['AE_id', 'date', 'AE_type', 'description']
+
+        message = tools.dictPackage(keys, value)
+
+    except Exception, e:
+        tools.exceptionRecord('select.py','getOneDetailedAccessoryExamination',e)
+
+    return message
 # get the message of a patient for the last 2 weeks
 # type = 1 is CAT and MRC sum, type = 2 is explosure
 def getMsg2Weeks(P_id, type):

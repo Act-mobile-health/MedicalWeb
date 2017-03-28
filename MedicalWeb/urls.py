@@ -57,32 +57,46 @@ urlpatterns = [
     url(r'^i2/',view.repeatCheck),
     url(r'^i3/',view.login),
     url(r'^i4/',view.retrievePassword),
+
     url(r'^i5/',view.getDoctorBasicInfo),
     url(r'^i6/',view.getDoctorDetailedInfo),
     url(r'^i7/',view.updateDoctorInfo),
+
     url(r'^i8/',view.getExpGroups),
     url(r'^i9/',view.getExpGroupPatientsInfo),
     # url(r'^i10/',view.addExpGroup),
     url(r'^i11/',view.deleteExpGroup),
     url(r'^i13/',view.addPatientToExpGroup),
     url(r'^i14/',view.removePatientfromExpGroup),
+
     url(r'^i15/',view.getPatientsBasicInfo),
     url(r'^i16/',view.getPatientDetailedInfo),
     url(r'^i17/',view.addOrUpdatePatientInfo),
+
     url(r'^i18/',view.getRelationsInfo),
     url(r'^i19/',view.addOrUpdateRelationInfo),
     url(r'^i20/',view.deleteRelation),
+
     url(r'^i21/',view.getCEHAllInfo),
     url(r'^i22/',view.addOrUpdateCEHInfo),
     url(r'^i23/',view.getCEHDetailedInfo),
     url(r'^i24/',view.deleteCEHInfo),
+
     url(r'^i25/',view.getCorQBasicInfo),
     url(r'^i26/',view.addOrUpdateClinicInfo),
     url(r'^i27/',view.getClinicDetailedInfo),
     url(r'^i28/',view.deleteClinicInfo),
+
     url(r'^i29/',view.addOrUpdateQuestionnaireInfo),
     url(r'^i30/',view.getQuestionnaireDetailedInfo),
     url(r'^i31/',view.deleteQuestionnaireInfo),
+
+    url(r'^i32/',view.getAorAEDetailedInfo),
+    url(r'^i33/',view.addOrUpdateAorAEDetailedInfo),
+    url(r'^i34/',view.deleteAorAEDetailedInfo),
+    url(r'^i35/',view.getOneAorAEDetailedInfo),
+    url(r'^test2/',view.test2),
+    url(r'^test1/',view.test),
 
     # url(r'^i18/',view.updatePatientInfo),
 ]

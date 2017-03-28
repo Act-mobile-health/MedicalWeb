@@ -178,12 +178,12 @@ def addOrUpdateExpGroup(request):
             D_id = request.session['D_id']
 
             if data['G_id'] == '':
-                if insert.addExpGroup(D_id,data['name'],data['information']) == True:
+                if insert.addExpGroup(D_id,data['name'],data['description']) == True:
                     message['result'] = 0
                 else:
                     message['result'] = -1
             else:
-                if update.updateExpGroup(int(data['G_id']), data['name'], data['information']) == True:
+                if update.updateExpGroup(int(data['G_id']), data['name'], data['description']) == True:
                     message['result'] = 0
                 else:
                     message['result'] = -1
@@ -220,7 +220,7 @@ def deleteExpGroup(request):
 #         message = {}
 #         data = request.POST
 #         if 'D_id' in request.session:
-#             if update.updateExpGroup(int(data['G_id']),data['name'],data['information']) == True:
+#             if update.updateExpGroup(int(data['G_id']),data['name'],data['description']) == True:
 #                 message['result'] = 0
 #             else:
 #                 message['result'] = -1
@@ -274,10 +274,7 @@ def getPatientsBasicInfo(request):
         message = []
         if 'D_id' in request.session:
             D_id = request.session['D_id']
-            print D_id,"IIIIDDDDDDDDDDDDD"
             message = select.getPatientsBasicInfo(D_id)
-            # # message = tools.toString(message)
-            print "message",message
             js = json.dumps(message)
             return HttpResponse(js)
         else:
@@ -658,7 +655,7 @@ def addOrUpdateQuestionnaireInfo(request):
 
             if ('ESS_id' in data and data['ESS_id']=='') or \
                 ('MBQ_id' in data and data['MBQ_id']=='') or \
-                ('SGRO_id' in data and data['SGRO_id']==''):
+                ('SGRQ_id' in data and data['SGRQ_id']==''):
 
                 if insert.addQuestionnaireInfo(kind,S_id,data):
                     message['result'] = 0
@@ -751,8 +748,8 @@ def deleteQuestionnaireInfo(request):
 # 接口36
 @csrf_exempt
 def getAorAEDetailedInfo(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
         message = []
         if 'D_id' in request.session:
             D_id = request.session['D_id']
@@ -767,17 +764,39 @@ def getAorAEDetailedInfo(request):
         else:
             return render(request, "page-login.html")
 
+
+@csrf_exempt
+def getOneAorAEDetailedInfo(request):
+    if request.method == 'GET':
+        data = request.GET
+        message = []
+        if 'D_id' in request.session:
+            D_id = request.session['D_id']
+            if int(data['kind']) == 0:
+                message = select.getOneDetailedAccessoryExamination(int(data['AE_id']))
+            else:
+                message = select.getOneDetailedAttachInfos(int(data['A_id']))
+
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            print js
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
+
 # 接口37
 @csrf_exempt
 def addOrUpdateAorAEDetailedInfo(request):
     if request.method == 'POST':
         data = request.POST
+        print data
         message = {'result': -1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
-            S_id=int(data['S_id'])
+            S_id = int(data['S_id'])
 
-            if data['id'] == '':
+            if ('A_id' in data and data['A_id']=='') or \
+                ('AE_id' in data and data['AE_id']=='') :
                 if int(data['kind']) == 0:
                     if insert.addAccessoryExamination(D_id,S_id,data):
                         message['result'] = 0
@@ -786,13 +805,13 @@ def addOrUpdateAorAEDetailedInfo(request):
                         message['result'] = 0
             else:
                 if int(data['kind']) == 0:
-                    if update.updateAccessoryExamination(int(data['id']), D_id, S_id, data):
+                    if update.updateAccessoryExamination(int(data['AE_id']), D_id, S_id, data):
                         message['result'] = 0
                 else:
-                    if update.updateAttachInfo(int(data['id']), D_id, S_id, data):
+                    if update.updateAttachInfo(int(data['A_id']), D_id, S_id, data):
                         message['result'] = 0
 
-            # message = tools.toString(message)
+            #message = tools.toString(message)
             js = json.dumps(message)
             return HttpResponse(js)
         else:
@@ -823,8 +842,8 @@ def addOrUpdateAorAEDetailedInfo(request):
 # 接口39
 @csrf_exempt
 def deleteAorAEDetailedInfo(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
         message = {'result': -1}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
@@ -835,7 +854,7 @@ def deleteAorAEDetailedInfo(request):
                 if delete.deleteAttachInfo(int(data['id'])):
                     message['result'] = 0
 
-            # message = tools.toString(message)
+            message = tools.toString(message)
             js = json.dumps(message)
             return HttpResponse(js)
         else:
@@ -853,7 +872,7 @@ def updateDocPassword(request):
                 message['result'] = 0
             else:
                 message['result'] = -1
-            # message = tools.toString(message)
+            message = tools.toString(message)
             js = json.dumps(message)
             return HttpResponse(js)
         else:
@@ -908,3 +927,24 @@ def getPatientName(request):
             return HttpResponse(js)
         else:
             return render(request, "page-login.html")
+
+
+# 接口43
+@csrf_exempt
+def test(request):
+    print "test-inside"
+
+    if request.method == 'POST':
+        data = request.POST
+        message = {'result':'1'}
+        print data
+        return HttpResponse(json.dumps(message))
+    else:
+        data = request.GET
+        message = {'result':'-1'}
+        print data
+        return HttpResponse(json.dumps(message))
+
+def test2(request):
+
+    return render(request,"form-dropzone.html")

@@ -87,7 +87,7 @@ class PatientGroup(models.Model):
 class GroupInfo(models.Model):
     name = models.CharField(max_length=100, null=False)
     D_id = models.IntegerField()
-    information = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
     date = models.DateField(auto_now_add=True)
 
 
@@ -129,7 +129,7 @@ class PmExposure(models.Model):
 class TrackInfo(models.Model):
     P_id = models.CharField(max_length=10)
     date = models.DateField(blank=True)
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=50)
     dir = models.CharField(max_length=50)
 
 
@@ -138,15 +138,15 @@ class TrackInfo(models.Model):
 
 
 class AttachInfo(models.Model):
-    P_id = models.CharField(max_length=10)
-    date = models.DateField(auto_now_add=True)
-    type = models.CharField(max_length=2)                # 0 OutPatientService   1 Emerg   2 InHospital   3 AccessoryExamination
-    S_id = models.IntegerField()
-    D_id = models.CharField(max_length=10)
-    name = models.CharField(max_length=32)
-    information = models.CharField(max_length=255)
-    source = models.CharField(max_length=32)
-    dir = models.CharField(max_length=50)
+    P_id = models.CharField(max_length=10,null=False)
+    date = models.DateField(blank=True)
+    type = models.CharField(max_length=2)                # 0 OutPatientService   1 Emerg   2 InHospital
+    S_id = models.IntegerField(null=False)
+    D_id = models.IntegerField(null=False)
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=255)
+    # source = models.CharField(max_length=32)
+    # dir = models.CharField(max_length=50)
     #context = models.ImageField(upload_to)
 
 
@@ -623,7 +623,7 @@ class MBQ(models.Model):
 # table23
 
 
-class SGRO(models.Model):
+class SGRQ(models.Model):
     P_id = models.CharField(max_length=10, null=False)
     type = models.CharField(max_length=5)  # 0 OutPatientService   1 Emerg   2 InHospital   3 AccessoryExamination
     S_id = models.IntegerField(null=False)
@@ -637,60 +637,31 @@ class SGRO(models.Model):
     H8 = models.CharField(max_length=1, null=False)
     H9 = models.CharField(max_length=5)
     H10 = models.CharField(max_length=5)
-    H11_1 = models.CharField(max_length=1, null=False)
-    H11_2 = models.CharField(max_length=1, null=False)
-    H11_3 = models.CharField(max_length=1, null=False)
-    H11_4 = models.CharField(max_length=1, null=False)
-    H11_5 = models.CharField(max_length=1, null=False)
-    H11_6 = models.CharField(max_length=1, null=False)
-    H11_7 = models.CharField(max_length=1, null=False)
-    H12_1 = models.CharField(max_length=1, null=False)
-    H12_2 = models.CharField(max_length=1, null=False)
-    H12_3 = models.CharField(max_length=1, null=False)
-    H12_4 = models.CharField(max_length=1, null=False)
-    H12_5 = models.CharField(max_length=1, null=False)
-    H12_6 = models.CharField(max_length=1, null=False)
-    H13_1 = models.CharField(max_length=1, null=False)
-    H13_2 = models.CharField(max_length=1, null=False)
-    H13_3 = models.CharField(max_length=1, null=False)
-    H13_4 = models.CharField(max_length=1, null=False)
-    H13_5 = models.CharField(max_length=1, null=False)
-    H13_6 = models.CharField(max_length=1, null=False)
-    H13_7 = models.CharField(max_length=1, null=False)
-    H13_8 = models.CharField(max_length=1, null=False)
+
+    H11 = models.CharField(max_length=10, null=False)
+    H12 = models.CharField(max_length=10, null=False)
+    H13 = models.CharField(max_length=10, null=False)
+
     H14 = models.CharField(max_length=1, null=False)
-    H15_1 = models.CharField(max_length=1, null=False)
-    H15_2 = models.CharField(max_length=1, null=False)
-    H15_3 = models.CharField(max_length=1, null=False)
-    H15_4 = models.CharField(max_length=1, null=False)
-    H16_1 = models.CharField(max_length=1, null=False)
-    H16_2 = models.CharField(max_length=1, null=False)
-    H16_3 = models.CharField(max_length=1, null=False)
-    H16_4 = models.CharField(max_length=1, null=False)
-    H16_5 = models.CharField(max_length=1, null=False)
-    H16_6 = models.CharField(max_length=1, null=False)
-    H16_7 = models.CharField(max_length=1, null=False)
-    H16_8 = models.CharField(max_length=1, null=False)
-    H16_9 = models.CharField(max_length=1, null=False)
-    H16_10 = models.CharField(max_length=1, null=False)
-    H17_1 = models.CharField(max_length=1, null=False)
-    H17_2 = models.CharField(max_length=1, null=False)
-    H17_3 = models.CharField(max_length=1, null=False)
-    H17_4 = models.CharField(max_length=1, null=False)
-    H17_5 = models.CharField(max_length=1, null=False)
+
+    H15 = models.CharField(max_length=10, null=False)
+    H16 = models.CharField(max_length=10, null=False)
+    H17 = models.CharField(max_length=10, null=False)
+
     H18 = models.CharField(max_length=1, null=False)
-    actEff = models.CharField(max_length=100, null=False)
+    actEff = models.CharField(max_length=200, null=False)
     date = models.DateField(auto_now_add=True)
 
 
 class AccessoryExamination(models.Model):
-    type = models.CharField(max_length=5)  # 0 OutPatientService   1 Emerg   2 InHospital
+    P_id = models.CharField(max_length=10,null=False)
+    type = models.CharField(max_length=2)  # 0 OutPatientService   1 Emerg   2 InHospital
     S_id = models.IntegerField(null=False)
     date = models.DateField(blank=True)
     AE_type = models.CharField(max_length=5)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
-    D_id = models.IntegerField()
+    D_id = models.IntegerField(null=False)
 
 
 
