@@ -1019,8 +1019,12 @@ $(document).ready(function () {
         index = A_index;
         console.log("index");
         console.log(index);
-        $("#AccessoryExamination :text").val("");
-        $("#AccessoryExamination :input").val("");
+
+//        $("#AccessoryExamination :date").val("");
+//        $("#AccessoryExamination :input").val("");
+        $('#AccessoryExamination input[name="date"]').val("");
+        $('#AccessoryExamination input[name="AE_id"]').val("");
+        $('#AccessoryExamination textarea[name="description"]').val("");
         $("#AccessoryExamination :radio").attr("checked",false);
 //        $("#AccessoryExamination :checkbox").attr("checked",false);
 

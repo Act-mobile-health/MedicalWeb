@@ -13,6 +13,7 @@ class PatientInfo(models.Model):
     sign = models.CharField(max_length=2)
     name = models.CharField(max_length=50)
     sex = models.CharField(max_length=2)
+    password = models.CharField(max_length=50,default="000000")
     birthday = models.DateField(blank=True)
     age = models.CharField(max_length=10)
     nation = models.CharField(max_length=15, blank=True)
