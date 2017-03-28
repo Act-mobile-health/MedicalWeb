@@ -19,8 +19,12 @@ $(document).ready(function(){
 
     $("#submitUserDetail").click(function () {
         if(confirm("确定修改吗？")){
-            $.post("",$("#userDetailForm").serialize(),function (result) {
-                if(result==0){
+            $.post("/i7/",$("#DoctorInfo").serialize(),function (data) {
+            console.log(data);
+            console.log($("#DoctorInfo").serialize())
+                var result = JSON.parse(data).result;
+                console.log(result);
+                if(result=="0"){
                     alert("修改成功！");
                     appendUserInfoTable();
                     appendUserDetailForm();
@@ -35,44 +39,42 @@ $(document).ready(function(){
 
     function appendUserInfoTable() {
         $("#userInfoTable tbody").text("");
-        $.getJSON("/static/json/user.json",{},function(json_data) {
-            $.each(json_data,function(index,item) {
+        $.getJSON("/i5/",{},function(item) {
+//        var item = json_data[0];
+            console.log(item);
                 $("#userInfoTable tbody").append(
                     "<tr>"+
                         "<td>"+item.D_id+"</td>"+
-                        "<td>"+item.name+"</td>"+
+                        "<td>"+item.userName+"</td>"+
                         "<td>"+item.cellphone+"</td>"+
                         "<td>"+item.mail+"</td>"+
                         "<td>"+item.hospital+"</td>"+
                     "</tr>");
-            });
+
         });
     }
 
     function appendUserDetailForm() {
-        $.getJSON("static/json/user.json",function(json_data) {
-            $.each(json_data,function(index,item) {
-                $("#D_id").val(item.id);
-                $("#name").val(item.name);
-                $("#sex").val(item.sex);
-                if(item.sex==1){
-                    $("#sex1").attr("checked",true);
-                }else if(item.sex==2){
-                    $("#sex2").attr("checked",true);
-                }
-                $("#brithday").val(item.brithday);
-                $("#userName").val(item.userName);
-                $("#cellphone").val(item.cellphone);
-                $("#weChat").val(item.weChat);
-                $("#mail").val(item.mail);
-                $("#title").val(item.title);
-                $("#hospital").val(item.hospital);
-                $("#department").val(item.department);
+        $.getJSON("/i6/",function(item) {
+        console.log(item);
 
-                $("#userGroup1").attr("checked",true);
 
-                $("#registerxwDate").val(item.registerxwDate);
-            });
+                $("#DoctorInfo input[name='sex'][value='"+item.sex+"']").attr('checked',true);
+
+                $("#DoctorInfo input[name='D_id']").val(item.D_id);
+                $("#DoctorInfo input[name='name']").val(item.name);
+                $("#DoctorInfo input[name='birthday']").val(item.birthday);
+                $("#DoctorInfo input[name='userName']").val(item.userName);
+                $("#DoctorInfo input[name='cellphone']").val(item.cellphone);
+                $("#DoctorInfo input[name='weChat']").val(item.weChat);
+                $("#DoctorInfo input[name='mail']").val(item.mail);
+                $("#DoctorInfo input[name='title']").val(item.title);
+                $("#DoctorInfo input[name='hospital']").val(item.hospital);
+                $("#DoctorInfo input[name='department']").val(item.department);
+//                $("#DoctorInfo input[name='userGroup']").val(item.userGroup);
+                $("#DoctorInfo input[name='userGroup'][value='"+item.userGroup+"']").attr('checked',true);
+                $("#DoctorInfo input[name='registerDate']").val(item.registerDate);
+
         });
 
     }

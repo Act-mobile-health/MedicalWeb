@@ -7,9 +7,29 @@ $(document).ready(function () {
         clearAllPatientTable();
         appendAllPatientTable();
     });
+
+    $("#PatientInfobt").click(function () {
+        if(confirm("确定修改吗？")){
+            $.post("/i17/",$("#PatientInfo").serialize(),function (data) {
+            console.log(data);
+            console.log($("#PatientInfo").serialize())
+                var result = JSON.parse(data).result;
+                console.log(result);
+                if(result=="0"){
+                    alert("修改成功！");
+                    appendUserInfoTable();
+                    appendUserDetailForm();
+                }else {
+                    alert("修改失败，请重试！");
+                }
+
+            });
+        }
+
+    });
 })
     function appendAllPatientTable() {
-        $.getJSON('/static/json/AllPatient.json',function (json_data) {
+        $.getJSON('/i15/',{},function (json_data) {
             $.each(json_data,function (index,item) {
                 $("#patientInfoTable tbody").append(
                     "<tr>"+

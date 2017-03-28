@@ -2,15 +2,18 @@
  * Created by wangcaimeng on 2017/3/21.
  */
 $(document).ready(function () {
-    $("#login").click(function () {
-        $.post("",$("#loginForm").serialize(),function (result) {
-            if(result==0){
+    $("#loginbt").click(function () {
+
+        $.post("/i3/",$("#login").serialize(),function (data) {
+            var result = JSON.parse(data).result;
+            if(result=="0"){
                 alert("登录成功");
-                window.location();
+                location.href = "/";
             }else{
                  alert("登录失败");
-                 window.location("#");
+                 location.href = "/login";
             }
         });
+        return false;
     });
 })

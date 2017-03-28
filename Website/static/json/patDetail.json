@@ -1,5 +1,5 @@
 [
-  {"P_id":"2016102301","name":"wangcaimeng","sex":"01","birthday":"1996.6",
+  {"P_id":"2016102301","name":"wangcaimeng","sex":"01","birthday":"1996.6","symptom" :"123",
   "age":"18","nation":"汉","height":"176","weight":"140",
   "registerTime":"20100503","homeAddr":"朝阳区","telephone":"01014010101","cellphone":"12345678912",
   "partnerPhone":"98765432198","education":"",

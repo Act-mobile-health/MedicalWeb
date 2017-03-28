@@ -69,10 +69,11 @@
 							</div>
 							<div class="panel-body">
 								<form id="login" method="post">
+									{% csrf_token %}
 									<div class="form-group">
 										<label style="font-size:16px;color:black;">用户名</label>
 										<div class="input-group input-group-icon">
-											<input name="name" type="text" class="form-control bk-noradius myinput" />
+											<input name="userName" type="text" class="form-control bk-noradius myinput" />
 											<span class="input-group-addon">
 												<span class="icon">
 													<i class="fa fa-user"></i>
@@ -101,7 +102,7 @@
 											</div>
 										</div>
 										<div class="col-sm-4 text-right">
-											<button onclick="/" type="submit" class="btn btn-primary hidden-xs">登录</button>
+											<button  id="loginbt" type="submit" class="btn btn-primary hidden-xs">登录</button>
 											<!--<button onclick="/" type="submit" class="btn btn-primary btn-block btn-lg visible-xs bk-margin-top-10">Login</button>-->
 										</div>
 									</div>
@@ -143,7 +144,7 @@
 		<script src="/static/js/core.min.js"></script>
 		
 		<!-- Pages JS -->
-		<script src="/static/js/pages/page-login.js"></script>
+		<script src="/static/js/pages/login.js"></script>
 		
 		<!-- end: JavaScript-->
 		

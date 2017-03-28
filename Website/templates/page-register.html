@@ -67,14 +67,15 @@
 							</div>
 							<div class="panel-body">
 								<form id="register" method="post">
+                                     {% csrf_token %}
 									<div class="form-group">
 										<label style="font-size:16px;color:black;">用户名</label>
-										<input name="name" type="text" class="form-control myinput" />
+										<input name="userName" type="text" class="form-control myinput" />
 									</div>
 
 									<div class="form-group">
 										<label style="font-size:16px;color:black;">邮箱地址</label>
-										<input name="email" type="email" class="form-control myinput" />
+										<input name="mail" type="email" class="form-control myinput" />
 									</div>
 
 									<div class="form-group">
@@ -85,7 +86,7 @@
 											</div>
 											<div class="col-sm-6">
 												<label style="font-size:16px;color:black;">再次确认密码</label>
-												<input name="password_confirm" type="password" class="form-control myinput" />
+												<input  type="password" class="form-control myinput" /><!--name="password_confirm"-->
 											</div>
 										</div>
 									</div>
@@ -98,8 +99,8 @@
 											</div>
 										</div>
 										<div class="col-sm-4 text-right">
-											<button onclick="/" type="submit" class="btn btn-primary hidden-xs bk-margin-top-10">注册</button>
-											<button onclick="/" type="submit" class="btn btn-primary btn-block btn-lg visible-xs bk-margin-top-10">注册</button>
+											<button id="registerbt" type="submit" class="btn btn-primary hidden-xs bk-margin-top-10">注册</button>
+											<button  type="submit" class="btn btn-primary btn-block btn-lg visible-xs bk-margin-top-10">注册</button>
 										</div>
 									</div>
 									<br />
@@ -141,6 +142,7 @@
 		
 		<!-- Pages JS -->
 		<script src="/static/js/pages/page-register.js"></script>
+		<script src="/static/js/pages/register.js"></script>
 		
 		<!-- end: JavaScript-->
 		

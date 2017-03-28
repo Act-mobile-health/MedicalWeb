@@ -356,7 +356,7 @@
 									</div>
 								</div>
                                 <div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
-                                        <div class="row">
+                                        <div class="row" style="text-indent:2em;">
                                             <h5>Welcome to the website!!!</h5>
                                             <h5>Welcome to the website!!!</h5>
                                             <h5>Welcome to the website!!!</h5>
@@ -395,10 +395,10 @@
 							<div class="panel bk-widget bk-border-off bk-noradius">
 								<div class="panel-heading bk-bg-primary">
 									<div class="row">
-										<div class="col-xs-8 text-left bk-vcenter">
+										<div class="col-md-6 text-left bk-vcenter">
 											<h4 class="bk-margin-off">个人信息</h4>
 										</div>
-                                        <div class="panel-actions">
+                                        <div class="panel-actions col-md-1">
                                             <a  id="refresh"><i class="fa fa-rotate-right"></i></a>
                                             <a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
                                             <a  data-toggle="modal" href="#DoctorInfoDetails"><i class="fa fa-edit"></i></a>
@@ -408,7 +408,7 @@
 								</div>
 								<div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
 									<div class="row">
-                                        <table class="table " id="userInfoTable">
+                                        <table class="table " id="userInfoTable" style="text-indent:2em;">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -461,17 +461,17 @@
                                 <div class="col-md-10">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio"  name="sex" id="sex1" value="1" >男
+                                            <input type="radio"  name="sex" value="1" >男
                                         </label>
                                         <label>
-                                            <input type="radio"  name="sex" id="sex2" value="2" >女
+                                            <input type="radio"  name="sex" value="2" >女
                                         </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="brithday" class="col-md-2">出生日期</label>
-                                <div class="col-md-10"><input type="text" class="form-control" id="brithdayPicker" name="brithday" id="brithday" ></div>
+                                <label for="birthday" class="col-md-2">出生日期</label>
+                                <div class="col-md-10"><input type="text" class="form-control" id="birthday" name="birthday" id="brithday" ></div>
                             </div>
                             <div class="form-group">
                                 <label for="userName" class="col-md-2">用户名</label>
@@ -519,8 +519,8 @@
 
                             </div>
                             <div class="form-group" >
-                                <label for="registerxwDate" class="col-md-2">注册时间</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="registerxwDate" id="registerxwDate" readonly="true" ></div>
+                                <label for="registerDate" class="col-md-2">注册时间</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="registerDate" id="registerDate" readonly="true" ></div>
                             </div>
                                 <button  class="btn btn-primary" id="submitUserDetail">保存修改</button>
                             </form>

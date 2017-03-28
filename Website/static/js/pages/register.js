@@ -1,16 +1,19 @@
-/**
+/**$("#register").serialize()+"&a_id='111111'"
  * Created by wangcaimeng on 2017/3/22.
  */
 $(document).ready(function () {
-    $("#register").click(function () {
-        $.post("",$("#registerForm").serialize(),function (result) {
-            if(result==0){
+    $("#registerbt").click(function () {
+
+        $.post("/i1/",$("#register").serialize(),function (data) {
+            var result = JSON.parse(data).result;
+            if(result=="0"){
                 alert("注册成功");
-                window.location();
+                location.href = "/login/";
             }else{
                  alert("注册失败");
-                 window.location("#");
+                 location.href = "/register/";
             }
         });
+        return false;
     });
 })
