@@ -936,9 +936,13 @@ def test(request):
 
     if request.method == 'POST':
         data = request.POST
-        message = {'result':'1'}
+        print data['P_id']
+        print data['a']
+        message = {'result':'1',"a":"sa"}
         print data
         return HttpResponse(json.dumps(message))
+        #return HttpResponse(message)
+
     else:
         data = request.GET
         message = {'result':'-1'}
