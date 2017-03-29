@@ -307,7 +307,7 @@ def addOrUpdatePatientInfo(request):
         if 'D_id' in request.session:
             D_id = request.session['D_id']
 
-            if data['P_id'] == '':
+            if data['id'] == '':
                 if insert.addPatientInfo(data) == True:
                     message['result'] = 0
                 else:
@@ -427,6 +427,7 @@ def deleteRelation(request):
 def getCEHAllInfo(request):
     if request.method == 'GET':
         data = request.GET
+        print data
         message = []
         if 'D_id' in request.session:
             D_id = request.session['D_id']
@@ -449,7 +450,6 @@ def getCEHAllInfo(request):
 def getCEHDetailedInfo(request):
     if request.method == 'GET':
         data = request.GET
-        print data
         message = []
         if 'D_id' in request.session:
             D_id = request.session['D_id']
@@ -576,6 +576,7 @@ def getCorQBasicInfo(request):
 
             # message = tools.toString(message)
             js = json.dumps(message)
+            print js
             return HttpResponse(js)
         else:
             return render(request, "page-login.html")

@@ -401,6 +401,14 @@
 						<div>
                         <form class="form-horizontal" id = "PatientInfo" method="post" role="form">
 							{% csrf_token %}
+							<div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" style="display:none">id</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" name="id"  style="display:none">
+                                    </div>
+                                </div>
+							</div>
                             <div class="row ">
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">患者编号</label>

@@ -38,8 +38,6 @@ def addClinicInfos(request):
     return render(request,"clinicInfos.html")
 
 def patientDetails(request):
-    print request.GET['P_id']
-    print "testtttt"
 
     return render(request,"patientDetails.html")
 

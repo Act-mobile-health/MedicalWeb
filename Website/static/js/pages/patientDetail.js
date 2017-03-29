@@ -60,15 +60,15 @@ $(document).ready(function () {
     })
 
     $("#submitOutPatientServiceInfobt").click(function () {
-       submitOutPatientServiceInfo();
+       submitInfo();
     });
 
     $("#submitEmergCallInfobt").click(function () {
-        submitEmergCallInfo();
+        submitInfo();
     })
 
     $("#submitInHospitalInfobt").click(function () {
-        submitInHospitalInfobt();
+        submitInfo();
     })
 
 
@@ -259,34 +259,42 @@ $(document).ready(function () {
     function GenerateTab1(index){
     var str_edit = "";
     var str_type = "";
+    var temp_name = "";
+    var temp_show = "";
     if(type==0){
         str_edit = "OutPatientServiceInfoDetails";
         str_type = "outpatient-"+index;
+        temp_name = "门诊";
+        temp_show = "showOutPatientServiceInfo"
     }
     else if(type == 1){
         str_edit = "EmergCallInfoDetails";
         str_type = "emergency-"+index;
+        temp_name = "急诊";
+        temp_show = "showEmergCallInfo"
     }
     else if(type == 2){
         str_edit = "InHospitalInfoDetails";
         str_type = "hospital-"+index;
+        temp_name = "住院";
+        temp_show = "showInHospitalInfo"
     }
     var  str = "";
      str     = '<div class="col-lg-12">'+
 			   '<div class="panel bk-bg-white">'+
 			   '<div class="panel-heading bk-bg-primary">'+
-			   '<h6><i class="fa fa-tags red"></i>门诊记录'+index+'</h6>'+
+			   '<h6><i class="fa fa-tags red"></i>'+temp_name+'记录'+index+'</h6>'+
 			   '<div class="panel-actions">'+
 				'<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>'+
 				'<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>'+
-                '<a  data-toggle="modal" onclick = "editOutPatientServiceInfo('+index+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
-				'<a href="#" onclick = "deleteOutPatientServiceInfo('+index+')" class="btn-close"><i class="fa fa-times"></i></a>'+
+                '<a  data-toggle="modal" onclick = "editInfo('+index+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
+				'<a href="#" onclick = "deleteInfo('+index+')" class="btn-close"><i class="fa fa-times"></i></a>'+
 				'</div>'+
 				'</div>'+
 				'<div class="panel-body">'+
 				'<div id="'+str_type+'-tab'+'" class="wizard-type1">'+
 				'<ul class="steps nav nav-pills">'+
-				'<li><a href="#'+str_type+'-tab1" onclick = "showOutPatientServiceInfo('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-star"></i></span> 详细信息</a></li>'+
+				'<li><a href="#'+str_type+'-tab1" onclick = "'+temp_show+'('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-star"></i></span> 详细信息</a></li>'+
 				'<li><a href="#'+str_type+'-tab2" onclick = "showClinic('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-credit-card"></i></span> 临床信息</a></li>'+
 				'<li><a href="#'+str_type+'-tab3" onclick = "showQuestionnaire('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-building"></i></span> 问卷信息</a></li>'+
 				'<li><a href="#'+str_type+'-tab4" onclick = "showAandAE('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-check"></i></span> 辅助检查和附件</a></li>'+
@@ -479,6 +487,16 @@ $(document).ready(function () {
 	    return str;
     }
 
+    function analyseRadio(input){
+        if(input == "1")
+            return "是";
+        else if(input=="2")
+            return "否";
+        else
+            return "error";
+    }
+
+
     function showOutpatient(){
         type = 0;
         S_id = [];
@@ -495,23 +513,12 @@ $(document).ready(function () {
                 });
     }
 
-    function analyseSymptom(input){
-        if(input == "1")
-            return "是";
-        else
-            return "否";
-    }
-
     function showOutPatientServiceInfo(index){
         var name = "outpatient-"+index+"-table";
         var str =  "";
-        $.getJSON('/i23/',{"S_id":S_id[index],"type":type},function (json_data){
-            item = json_data;
-            console.log(S_id);
-            console.log(item);
-            console.log(index);
+        $.getJSON('/i23/',{"S_id":S_id[index],"type":type},function (item){
             var isStable = "";
-            var isSymptom = analyseSymptom(item.isSymptom);
+            var isSymptom = analyseRadio(item.isSymptom);
             var symptom = "";
             for (var i = 0;i<item.symptom.length;i++){
                 if(item.symptom[i]=="1")
@@ -527,13 +534,13 @@ $(document).ready(function () {
             else if(item.isStable=="2")
                 isStable = "急性期就诊";
 
-            var physicalExam = analyseSymptom(item.physicalExam);
-            var acuteExac = analyseSymptom(item.acuteExac);
-            var useAbt = analyseSymptom(item.useAbt);
-            var useJmzs = analyseSymptom(item.useJmzs);
-            var hospital =analyseSymptom(item.hospital);
-            var airRelate =analyseSymptom(item.airRelate);
-            var treatMethod = analyseSymptom(item.treatMethod);
+            var physicalExam = analyseRadio(item.physicalExam);
+            var acuteExac = analyseRadio(item.acuteExac);
+            var useAbt = analyseRadio(item.useAbt);
+            var useJmzs = analyseRadio(item.useJmzs);
+            var hospital =analyseRadio(item.hospital);
+            var airRelate =analyseRadio(item.airRelate);
+            var treatMethod = analyseRadio(item.treatMethod);
             str = '<tr>'+
                 '<td class="table-small">编号</td>'+
                 '<td class="table-small">'+item.OPS_id+'</td>'+
@@ -586,44 +593,255 @@ $(document).ready(function () {
         });
     }
 
-    function editOutPatientServiceInfo(index){
-        $.getJSON('/i23/',{"S_id":S_id[index],"type":type},function (json_data){
-            var item = json_data;
-            $("#OutPatientServiceInfo input[name='id']").val(item.OPS_id);
-            $("#OutPatientServiceInfo input[name='date']").val(item.date);
-            $("#OutPatientServiceInfo input[name='place']").val(item.place);
+    function showEmergency(){
+        type = 1;
+        S_id = [];
+        $("#emergency").empty();
+        $.getJSON("/i21/",{"P_id":patientId,"type":type},function(json_data){
+             $.each(json_data,function (index,item){
+                S_id.push(item.EC_id);
+                var descDiv = document.createElement('div');
+                $("#emergency").append(descDiv);
+                descDiv.className = "row";
+                descDiv.innerHTML = GenerateTab1(index)+GenerateTab2(index)+GenerateTab3(index)+GenerateTab4(index);
+                });
+                });
+    }
 
-            $("#OutPatientServiceInfo input[name='isStable'][value='"+item.isStable+"']").attr('checked',true);
-            $("#OutPatientServiceInfo input[name='isSymptom'][value='"+item.isSymptom+"']").attr("checked",true);
-            console.log(item);
-            analyzeCheckBox("OutPatientServiceInfo","symptom",item.symptom);
-
-            $("#OutPatientServiceInfo input[name='physicalExam'][value='"+item.physicalExam+"']").attr("checked",true);
-            $("#OutPatientServiceInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
-            $("#OutPatientServiceInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
-            $("#OutPatientServiceInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
-
-            $("#OutPatientServiceInfo textarea[name='breathErr']").val(item.breathErr);
-            $("#OutPatientServiceInfo input[name='disease']").val(item.disease);
-            $("#OutPatientServiceInfo input[name='abtType']").val(item.abtType);
-
-            $("#OutPatientServiceInfo input[name='hospital'][value='"+item.hospital+"']").attr("checked",true);
-            $("#OutPatientServiceInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
-            $("#OutPatientServiceInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
-
-            $("#OutPatientServiceInfo textarea[name='medicine']").val(item.medicine);
+    function showEmergCallInfo(index){
+        var name = "emergency-"+index+"-table";
+        var str =  "";
+        var symptom = "";
+        $.getJSON('/i23/',{"S_id":S_id[index],"type":type},function (item){
+            for (var i = 0;i<item.symptom.length;i++){
+                if(item.symptom[i]=="1")
+                    symptom += "咳嗽加重；";
+                if(item.symptom[i]=="2")
+                    symptom += "咳浓痰并痰量增加；";
+                if(item.symptom[i]=="3")
+                    symptom += "呼吸困难加重；";
+                if(item.symptom[i]=="4")
+                    symptom += "发热；";
+                if(item.symptom[i]=="5")
+                    symptom += "上呼吸道感染症状；";
+                if(item.symptom[i]=="6")
+                    symptom += "意识障碍；";
+            }
+        str='<tr>'+
+            '<td class="table-small">日期</td>'+
+            '<td class="table-small" >'+item.date+'</td>'+
+            '<td class="table-small">地点</td>'+
+            '<td class="table-small">'+item.place+'</td>'+
+            '<td class="table-small">症状为</td>'+
+            '<td>'+symptom+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>是否为慢阻肺急性加重</td>'+
+            '<td>'+analyseRadio(item.acuteExac)+'</td>'+
+            '<td>加重与大气污染是否有关</td>'+
+            '<td>'+analyseRadio(item.airRelate)+'</td>'+
+            '<td>若为其他疾病，类型为</td>'+
+            '<td>'+item.disease+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>是否继续住院治疗</td>'+
+            '<td>'+analyseRadio(item.hospital)+'</td>'+
+            '<td>病原学检查</td>'+
+            '<td>'+analyseRadio(item.byxCheck)+'</td>'+
+            '<td>阳性结果为</td>'+
+            '<td>'+item.byxResult+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>有创/无创呼吸治疗</td>'+
+            '<td>'+analyseRadio(item.ycWcTreat)+'</td>'+
+            '<td>是否使用抗生素</td>'+
+            '<td>'+analyseRadio(item.useAbt)+'</td>'+
+            '<td>抗生素类型</td>'+
+            '<td>'+item.abtType+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>是否使用静脉激素</td>'+
+            '<td>'+analyseRadio(item.useJmzs)+'</td>'+
+            '<td>急诊方式</td>'+
+            '<td>'+analyseRadio(item.ecMethod)+'</td>'+
+            '<td>如果住院，时长为</td>'+
+            '<td>'+item.ecDate+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>是否调整治疗方案</td>'+
+            '<td>'+analyseRadio(item.treatMethod)+'</td>'+
+            '<td></td>'+
+            '<td></td>'+
+            '<td>调整药物为</td>'+
+            '<td>'+item.medicine+'</td>'+
+            '</tr>';
+            $("#"+name+" tbody").html(str);
         });
     }
 
+    function showHospital(){
+        type = 2;
+        S_id = [];
+        $("#hospital").empty();
+        $.getJSON("/i21/",{"P_id":patientId,"type":type},function(json_data){
+             $.each(json_data,function (index,item){
+                S_id.push(item.IH_id);
+                var descDiv = document.createElement('div');
+                $("#hospital").append(descDiv);
+                descDiv.className = "row";
+                descDiv.innerHTML = GenerateTab1(index)+GenerateTab2(index)+GenerateTab3(index)+GenerateTab4(index);
+                });
+                });
+    }
 
-    function addOutPatientServiceInfo(){
+    function showInHospitalInfo(index){
+        var name = "hospital-"+index+"-table";
+        var str =  "";
+        var symptom = "";
+        $.getJSON('/i23/',{"S_id":S_id[index],"type":type},function (item){
+            for (var i = 0;i<item.symptom.length;i++){
+                if(item.symptom[i]=="1")
+                    symptom += "咳嗽加重；";
+                if(item.symptom[i]=="2")
+                    symptom += "咳浓痰并痰量增加；";
+                if(item.symptom[i]=="3")
+                    symptom += "呼吸困难加重；";
+                if(item.symptom[i]=="4")
+                    symptom += "发热；";
+                if(item.symptom[i]=="5")
+                    symptom += "上呼吸道感染症状；";
+                if(item.symptom[i]=="6")
+                    symptom += "意识障碍；";
+            }
+        str='<tr>'+
+            '<td class="table-small">日期</td>'+
+            '<td class="table-small" >'+item.date+'</td>'+
+            '<td class="table-small">地点</td>'+
+            '<td class="table-small">'+item.place+'</td>'+
+            '<td class="table-small">症状为</td>'+
+            '<td>'+symptom+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>是否为慢阻肺急性加重</td>'+
+            '<td>'+analyseRadio(item.acuteExac)+'</td>'+
+            '<td>加重与大气污染是否有关</td>'+
+            '<td>'+analyseRadio(item.airRelate)+'</td>'+
+            '<td>若为其他疾病，类型为</td>'+
+            '<td>'+item.disease+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>住院病房类型</td>'+
+            '<td>'+analyseRadio(item.commonIcu)+'</td>'+
+            '<td>病原学检查</td>'+
+            '<td>'+analyseRadio(item.byxCheck)+'</td>'+
+            '<td>阳性结果为</td>'+
+            '<td>'+item.byxResult+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>有创/无创呼吸治疗</td>'+
+            '<td>'+analyseRadio(item.ycWcTreat)+'</td>'+
+            '<td>是否使用抗生素</td>'+
+            '<td>'+analyseRadio(item.useAbt)+'</td>'+
+            '<td>抗生素类型</td>'+
+            '<td>'+item.abtType+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>是否使用静脉激素</td>'+
+            '<td>'+analyseRadio(item.useJmzs)+'</td>'+
+            '<td>住院时长</td>'+
+            '<td>'+item.hospitalDays+'</td>'+
+            '<td>医嘱信息</td>'+
+            '<td>'+item.docAdvice+'</td>'+
+            '</tr>'+
+            '<tr>'+
+            '<td>是否调整治疗方案</td>'+
+            '<td>'+analyseRadio(item.treatMethod)+'</td>'+
+            '<td></td>'+
+            '<td></td>'+
+            '<td>调整药物为</td>'+
+            '<td>'+item.medicine+'</td>'+
+            '</tr>';
+            $("#"+name+" tbody").html(str);
+        });
+    }
+
+    function editInfo(index){
+        $.getJSON('/i23/',{"S_id":S_id[index],"type":type},function (json_data){
+            var item = json_data;
+            if(type==0){
+                $("#OutPatientServiceInfo input[name='id']").val(item.OPS_id);
+                $("#OutPatientServiceInfo input[name='date']").val(item.date);
+                $("#OutPatientServiceInfo input[name='place']").val(item.place);
+                $("#OutPatientServiceInfo input[name='isStable'][value='"+item.isStable+"']").attr('checked',true);
+                $("#OutPatientServiceInfo input[name='isSymptom'][value='"+item.isSymptom+"']").attr("checked",true);
+                analyzeCheckBox("OutPatientServiceInfo","symptom",item.symptom);
+                $("#OutPatientServiceInfo input[name='physicalExam'][value='"+item.physicalExam+"']").attr("checked",true);
+                $("#OutPatientServiceInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
+                $("#OutPatientServiceInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
+                $("#OutPatientServiceInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
+                $("#OutPatientServiceInfo textarea[name='breathErr']").val(item.breathErr);
+                $("#OutPatientServiceInfo input[name='disease']").val(item.disease);
+                $("#OutPatientServiceInfo input[name='abtType']").val(item.abtType);
+                $("#OutPatientServiceInfo input[name='hospital'][value='"+item.hospital+"']").attr("checked",true);
+                $("#OutPatientServiceInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
+                $("#OutPatientServiceInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
+                $("#OutPatientServiceInfo textarea[name='medicine']").val(item.medicine);
+            }
+            else if(type==1){
+                $("#EmergCallInfo input[name='id']").val(item.EC_id);
+                $("#EmergCallInfo input[name='date']").val(item.date);
+                $("#EmergCallInfo input[name='place']").val(item.place);
+                analyzeCheckBox("EmergCallInfo","symptom",item.symptom);
+                $("#EmergCallInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
+                $("#EmergCallInfo input[name='disease']").val(item.disease);
+                $("#EmergCallInfo input[name='byxCheck'][value='"+item.byxCheck+"']").attr('checked',true);
+                $("#EmergCallInfo textarea[name='byxResult']").val(item.byxResult);
+                $("#EmergCallInfo input[name='ycWcTreat'][value='"+item.ycWcTreat+"']").attr("checked",true);
+                $("#EmergCallInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
+                $("#EmergCallInfo input[name='abtType']").val(item.abtType);
+                $("#EmergCallInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
+                $("#EmergCallInfo input[name='ecMethod'][value='"+item.ecMethod+"']").attr("checked",true);
+                $("#EmergCallInfo input[name='ecDate']").val(item.ecDate);
+                $("#EmergCallInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
+                $("#EmergCallInfo input[name='hospital'][value='"+item.hospital+"']").attr("checked",true);
+                $("#EmergCallInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
+                $("#EmergCallInfo textarea[name='medicine']").val(item.medicine);
+            }
+            else if(type==2){
+                $("#InHospitalInfo input[name='id']").val(item.IH_id);
+                $("#InHospitalInfo input[name='date']").val(item.date);
+                $("#InHospitalInfo input[name='place']").val(item.place);
+                $("#InHospitalInfo input[name='commonIcu'][value='"+item.commonIcu+"']").attr("checked",true);
+                analyzeCheckBox("InHospitalInfo","symptom",item.symptom);
+                $("#InHospitalInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
+                $("#InHospitalInfo input[name='disease']").val(item.disease);
+                $("#InHospitalInfo input[name='byxCheck'][value='"+item.byxCheck+"']").attr('checked',true);
+                $("#InHospitalInfo textarea[name='byxResult']").val(item.byxResult);
+                $("#InHospitalInfo input[name='ycWcTreat'][value='"+item.ycWcTreat+"']").attr("checked",true);
+                $("#InHospitalInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
+                $("#InHospitalInfo input[name='abtType']").val(item.abtType);
+                $("#InHospitalInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
+                $("#InHospitalInfo input[name='hospitalDays']").val(item.hospitalDays);
+                $("#InHospitalInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
+                $("#InHospitalInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
+                $("#InHospitalInfo textarea[name='medicine']").val(item.medicine);
+                $("#InHospitalInfo textarea[name='docAdvice']").val(item.docAdvice);
+            }
+
+
+        });
+    }
+
+    function addInfo(){
 
         $("#OutPatientServiceInfo :text").val("");
+        $("#EmergCallInfo :text").val("");
+        $("#InHospitalInfo :text").val("");
 //        $("#OutPatientServiceInfo :radio").attr("checked",false);
 //        $("#OutPatientServiceInfo :checkbox").attr("checked",false);
     }
 
-    function deleteOutPatientServiceInfo(index){
+    function deleteInfo(index){
         if(confirm("确定删除吗？"))
         $.get("/i24/",{"S_id":S_id[index],"type":type},function (data) {
             var result = JSON.parse(data).result;
@@ -633,13 +851,30 @@ $(document).ready(function () {
                 alert("删除失败！")
             }
         });
-        showOutpatient();
+        if(type==0){
+            showOutpatient();
+        }
+        else if(type==1){
+            showEmergency();
+        }
+        else{
+            showHospital();
+        }
     }
 
-    function submitOutPatientServiceInfo(){
+    function submitInfo(){
+        var str = "";
+        if(type==0){
+            str = $("#OutPatientServiceInfo").serialize()+"&P_id="+patientId+"&type="+type;
+        }
+        else if(type==1){
+            str = $("#EmergCallInfo").serialize()+"&P_id="+patientId+"&type="+type;
+        }
+        else{
+            str = $("#InHospitalInfo").serialize()+"&P_id="+patientId+"&type="+type;
+        }
         if (confirm("确定提交吗？")){
-        console.log($("#OutPatientServiceInfo").serialize());
-            $.post("/i22/",$("#OutPatientServiceInfo").serialize()+"&P_id="+patientId+"&type="+type,function (data) {
+            $.post("/i22/", str, function (data) {
                 var result = JSON.parse(data).result;
                 if(result=="0"){
                     alert("提交成功！")
@@ -647,15 +882,16 @@ $(document).ready(function () {
                     alert("提交失败！")
                 }
             });
-            showOutpatient();
+            if(type==0){
+                showOutpatient();
+            }
+            else if(type==1){
+                showEmergency();
+            }
+            else{
+                showHospital();
+            }
         }
-    }
-
-
-    function showEmergency(index){
-    }
-
-    function showHospital(index){
     }
 
 
@@ -664,11 +900,21 @@ $(document).ready(function () {
     //显示临床信息
 
     function showClinic(c_index) {
-        $("#outpatient-"+c_index+"-clinictable tbody").empty();
+        var str = "";
+        if(type==0){
+            str = "#outpatient-";
+        }
+        else if(type==1){
+            str = "#emergency-";
+        }
+        else{
+            str = "#hospital-";
+        }
+        $(str+c_index+"-clinictable tbody").empty();
         $.getJSON("/i25/",{"type":type,"S_id":S_id[c_index],kind:"0"},function (json_data) {
             $.each(json_data,function (i,item) {
 
-                $("#outpatient-"+c_index+"-clinictable tbody").append("<tr>" +
+                $(str+c_index+"-clinictable tbody").append("<tr>" +
                         "<td>" +item.Cli_id+"</td>"+
                         "<td>" +item.date+"</td>"+
                         "<td>" +item.lung3+"</td>"+
@@ -685,9 +931,7 @@ $(document).ready(function () {
     function  editClinic(Cli_id) {
 
         $.getJSON("/i27/",{"Cli_id":Cli_id},function (json_data) {
-
             var item = json_data;
-            console.log(item);
             $("#Clinic input[name='Cli_id']").val(item.Cli_id);
             //解析dangerType
             analyzeCheckBox("Clinic","dangerType",item.dangerType);
@@ -795,7 +1039,7 @@ $(document).ready(function () {
                     alert("提交失败！")
                 }
             });
-            showClinic(c_index);
+            showClinic(index);
         }
     }
 

@@ -126,6 +126,7 @@ def updateOutPatientServiceInfo(id,data):
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.place = data['place']
         obj.isStable = data['isStable']
+        obj.isSymptom = data['isSymptom']
         obj.symptom = tools.forCheckbox(data,'symptom')
         obj.physicalExam = data['physicalExam']
         obj.breathErr = data['breathErr']
@@ -151,11 +152,11 @@ def updateEmergCallInfo(id,data):
     try:
 
         obj = EmergCallInfo.objects.get(id = id)
-        obj.P_id = data['P_id']
+        # obj.P_id = data['P_id']
         if data['date'] != '':
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.place = data['place']
-        obj.symptom = data['symptom']
+        obj.symptom = tools.forCheckbox(data,'symptom')
         obj.acuteExac = data['acuteExac']
         obj.disease = data['disease']
         obj.byxCheck = data['byxCheck']
@@ -165,11 +166,11 @@ def updateEmergCallInfo(id,data):
         obj.abtType = data['abtType']
         obj.useJmzs = data['useJmzs']
         obj.ecMethod = data['ecMethod']
-        if data['ecDate'] != '':
-            obj.ecDate = datetime.datetime.strptime(data['ecDate'], "%Y-%m-%d").date()
+        obj.ecDate = data['ecDate']
         obj.hospital = data['hospital']
         obj.treatMethod = data['treatMethod']
         obj.airRelate = data['airRelate']
+        obj.medicine = data['medicine']
         obj.save()
         return True
     except Exception, e:
@@ -185,7 +186,7 @@ def updateInHospitalInfo(id,data):
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.place = data['place']
         obj.commonIcu = data['commonIcu']
-        obj.symptom = data['symptom']
+        obj.symptom = tools.forCheckbox(data,'symptom')
         obj.acuteExac = data['acuteExac']
         obj.disease = data['disease']
         obj.byxCheck = data['byxCheck']
@@ -197,7 +198,7 @@ def updateInHospitalInfo(id,data):
         obj.hospitalDays = data['hospitalDays']
         obj.airRelate = data['airRelate']
         obj.treatMethod = data['treatMethod']
-        obj.reason = data['reason']
+        obj.medicine = data['medicine']
         obj.docAdvice = data['docAdvice']
         obj.save()
         return True

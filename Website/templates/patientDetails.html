@@ -332,7 +332,7 @@
                     <!-- Page Header -->
                         <div class="page-header ">
                             <ul id="myTab" class="nav nav-tabs">
-                              <li role="presentation" class="active"><a href="#detailInfos">患者详细信息</a></li>
+                              <li role="presentation" class="active"><a href="#1">患者详细信息</a></li>
                               <li role="presentation"><a href="#2">子女信息</a></li>
                               <li role="presentation" onclick="showOutpatient()"><a href="#3">门诊记录</a></li>
                               <li role="presentation" onclick="showEmergency()"><a href="#4">急诊记录</a></li>
@@ -343,7 +343,8 @@
                         <!-- End Page Header -->
                         <div class="row">
                             <div class="tab-content">
-                            <div class="tab-pane fade in active" id="detailInfos">
+
+                            <div class="tab-pane fade in active" id="1">
                                 <div class="panel">
                                     <div class="panel-heading bk-bg-primary">
                                         <h6><i class="fa fa-table red"></i><span class="break"></span>详细信息</h6>
@@ -435,6 +436,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="tab-pane fade" id="2">
                                 <div class="panel">
                                     <div class="panel-heading bk-bg-primary">
@@ -473,332 +475,31 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="3">
 
+                            <div class="tab-pane fade" id="3">
                             <div class="row col-lg-2 col-md-2 ">
-                                <a  data-toggle="modal" onclick="addOutPatientServiceInfo()" href="#OutPatientServiceInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的门诊</a>
+                                <a  data-toggle="modal" onclick="addInfo()" href="#OutPatientServiceInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的门诊</a>
                             </div>
                             <div id="outpatient">
 
                             </div>
-
                             </div>
+
                             <div class="tab-pane fade" id="4">
-
                             <div class="row col-lg-2 col-md-2 ">
-                                <a  data-toggle="modal" href="#EmergCallInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的急诊</a>
+                                <a  data-toggle="modal" onclick="addInfo()" href="#EmergCallInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的急诊</a>
                             </div>
+                            <div id="emergency">
 
-                            <div class="row">
-                            <div class="col-lg-12">
-							<div class="panel bk-bg-white">
-								<div class="panel-heading bk-bg-primary">
-									<h6><i class="fa fa-tags red"></i>急诊记录1</h6>
-									<div class="panel-actions">
-										<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
-										<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                        <a  data-toggle="modal" href="#EmergCallInfoDetails"><i class="fa fa-edit"></i></a>
-										<a href="#" class="btn-close"><i class="fa fa-times"></i></a>
-									</div>
-								</div>
-								<div class="panel-body">
-									<div id="emergency1" class="wizard-type1">
-										<ul class="steps nav nav-pills">
-											<li><a href="#emergency-1-tab1" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-star"></i></span> 详细信息</a></li>
-											<li><a href="#emergency-1-tab2" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-credit-card"></i></span> 临床信息</a></li>
-											<li><a href="#emergency-1-tab3" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-building"></i></span> 问卷信息</a></li>
-											<li><a href="#emergency-1-tab4" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-check"></i></span> 辅助检查和附件</a></li>
-										</ul>
-										<div class="tab-content">
-											<div class="tab-pane" id="emergency-1-tab1">
-												<div class="row col-lg-10 col-md-10 col-md-offset-1">
-													<table class="table table-bordered table-hover table-entire">
-														<thead>
-														</thead>
-														<tbody>
-														<tr>
-															<td class="table-small">日期</td>
-															<td class="table-small" id="emergency-1-date"></td>
-															<td class="table-small">地点</td>
-															<td class="table-small" id="emergency-1-place"></td>
-															<td class="table-small">症状为</td>
-															<td id="emergency-1-symptom"></td>
-														</tr>
-														<tr>
-															<td>是否为慢阻肺急性加重</td>
-															<td id="emergency-1-acuteExac"></td>
-															<td>加重与大气污染是否有关</td>
-															<td id="emergency-1-airRelate"></td>
-															<td>若为其他疾病，类型为</td>
-															<td id="emergency-1-disease"></td>
-														</tr>
-														<tr>
-															<td>是否继续住院治疗</td>
-															<td id="emergency-1-hospital"></td>
-															<td>病原体检查</td>
-															<td id="emergency-1-byxCheck"></td>
-															<td>阳性结果为</td>
-															<td id="emergency-1-byxResult"></td>
-														</tr>
-														<tr>
-															<td>有创/无创呼吸治疗</td>
-															<td class="table-small" id="emergency-1-ycWcTreat"></td>
-															<td>是否使用抗生素</td>
-															<td id="emergency-1-useAbt"></td>
-															<td>抗生素类型</td>
-															<td id="emergency-1-abtType"></td>
-														</tr>
-														<tr>
-															<td>是否使用静脉激素</td>
-															<td id="emergency-1-useJmzs"></td>
-															<td>急诊方式</td>
-															<td id="emergency-1-ecMethod"></td>
-															<td>如果住院，时长为</td>
-															<td id="emergency-1-hospitalDays"></td>
-														</tr>
-														<tr>
-															<td>是否调整治疗方案</td>
-															<td id="emergency-1-treatMethod"></td>
-															<td></td>
-															<td></td>
-															<td>调整药物为</td>
-															<td id="emergency-1-medicine"></td>
-														</tr>
-														</tbody>
-													</table>
-												</div>
-											</div>
-											<div class="tab-pane" id="emergency-1-tab2">
-												<div class="row">
-
-												</div>
-											</div>
-											<div class="tab-pane" id="emergency-1-tab3">
-												<div class="form-group">
-													<label for=" ">Company</label>
-												</div>
-											</div>
-											<div class="tab-pane" id="emergency-1-tab4">
-												<div class="form-group">
-													<div class="checkbox-custom checkbox-default bk-margin-bottom-10">
-
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						    </div>
-                            </div>
-                            <div class="row">
-                            <div class="col-lg-12">
-							<div class="panel bk-bg-white">
-								<div class="panel-heading bk-bg-primary">
-									<h6><i class="fa fa-tags red"></i>诊记录i+1</h6>
-									<div class="panel-actions">
-										<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
-										<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-										<a href="#" class="btn-close"><i class="fa fa-times"></i></a>
-									</div>
-								</div>
-								<div class="panel-body">
-									<div id="emergency2" class="wizard-type1">
-										<ul class="steps nav nav-pills">
-											<li><a href="#emergency-tab21" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-star"></i></span> 详细信息</a></li>
-											<li><a href="#emergency-tab22" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-credit-card"></i></span> 临床信息</a></li>
-											<li><a href="#emergency-tab23" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-building"></i></span> 问卷信息</a></li>
-											<li><a href="#emergency-tab24" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-check"></i></span> 辅助检查和附件</a></li>
-										</ul>
-										<div class="tab-content">
-											<div class="tab-pane" id="emergency-tab21">
-												<form class="form-horizontal" role="form">
-													<div class="form-group">
-
-													</div>
-												</form>
-											</div>
-											<div class="tab-pane" id="emergency-tab22">
-												<div class="row">
-
-												</div>
-											</div>
-											<div class="tab-pane" id="emergency-tab23">
-												<div class="form-group">
-													<label for=" ">Company</label>
-													<input type="text" class="form-control" id="" placeholder="Company name" />
-												</div>
-											</div>
-											<div class="tab-pane" id="emergency-tab24">
-												<div class="form-group">
-													<div class="checkbox-custom checkbox-default bk-margin-bottom-10">
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						    </div>
                             </div>
                             </div>
 
                             <div class="tab-pane fade" id="5">
-
                             <div class="row col-lg-2 col-md-2 ">
-                                <a  data-toggle="modal" href="#InHospitalInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的住院</a>
+                                <a  data-toggle="modal" onclick="addInfo()" href="#InHospitalInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的住院</a>
                             </div>
-                            <div class="row">
-                            <div class="col-lg-12">
-							<div class="panel bk-bg-white">
-								<div class="panel-heading bk-bg-primary">
-									<h6><i class="fa fa-tags red"></i>住院记录1</h6>
-									<div class="panel-actions">
-										<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
-										<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                        <a  data-toggle="modal" href="#InHospitalInfoDetails"><i class="fa fa-edit"></i></a>
-										<a href="#" class="btn-close"><i class="fa fa-times"></i></a>
-									</div>
-								</div>
-								<div class="panel-body">
-									<div id="hospital1" class="wizard-type1">
-										<ul class="steps nav nav-pills">
-											<li><a href="#hospital-1-tab1" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-star"></i></span> 详细信息</a></li>
-											<li><a href="#hospital-1-tab2" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-credit-card"></i></span> 临床信息</a></li>
-											<li><a href="#hospital-1-tab3" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-building"></i></span> 问卷信息</a></li>
-											<li><a href="#hospital-1-tab4" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-check"></i></span> 辅助检查和附件</a></li>
-										</ul>
-										<div class="tab-content">
-											<div class="tab-pane" id="hospital-1-tab1">
-												<div class="row col-lg-10 col-md-10 col-md-offset-1">
-													<table class="table table-bordered table-hover table-entire">
-														<thead>
-														</thead>
-														<tbody>
-														<tr>
-															<td class="table-small">日期</td>
-															<td class="table-small" id="hospital-1-date"></td>
-															<td class="table-small">地点</td>
-															<td class="table-small" id="hospital-1-place"></td>
-															<td class="table-small">症状为</td>
-															<td id="hospital-1-symptom"></td>
-														</tr>
-														<tr>
-															<td>是否为慢阻肺急性加重</td>
-															<td id="hospital-1-acuteExac"></td>
-															<td>加重与大气污染是否有关</td>
-															<td id="hospital-1-airRelate"></td>
-															<td>若为其他疾病，类型为</td>
-															<td id="hospital-1-disease"></td>
-														</tr>
-														<tr>
-															<td>住院病房类型</td>
-															<td id="hospital-1-commonIcu"></td>
-															<td>病原体检查</td>
-															<td id="hospital-1-byxCheck"></td>
-															<td>阳性结果为</td>
-															<td id="hospital-1-byxResult"></td>
-														</tr>
-														<tr>
-															<td>有创/无创呼吸治疗</td>
-															<td class="table-small" id="hospital-1-ycWcTreat"></td>
-															<td>是否使用抗生素</td>
-															<td id="hospital-1-useAbt"></td>
-															<td>抗生素类型</td>
-															<td id="hospital-1-abtType"></td>
-														</tr>
-														<tr>
-															<td>是否使用静脉激素</td>
-															<td id="hospital-1-useJmzs"></td>
-															<td>住院时长</td>
-															<td id="hospital-1-hospitalDays"></td>
-															<td>医嘱信息</td>
-															<td id="hospital-1-docAdvice"></td>
-														</tr>
-														<tr>
-															<td>是否调整治疗方案</td>
-															<td id="hospital-1-treatMethod"></td>
-															<td></td>
-															<td></td>
-															<td>调整药物为</td>
-															<td id="hospital-1-medicine"></td>
-														</tr>
-														</tbody>
-													</table>
-												</div>
-											</div>
-											<div class="tab-pane" id="hospital-1-tab2">
-												<div class="row">
+                            <div id="hospital">
 
-												</div>
-											</div>
-											<div class="tab-pane" id="hospital-1-tab3">
-												<div class="form-group">
-													<label for=" ">Company</label>
-												</div>
-											</div>
-											<div class="tab-pane" id="hospital-1-tab4">
-												<div class="form-group">
-													<div class="checkbox-custom checkbox-default bk-margin-bottom-10">
-
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						    </div>
-                            </div>
-                            <div class="row">
-                            <div class="col-lg-12">
-							<div class="panel bk-bg-white">
-								<div class="panel-heading bk-bg-primary">
-									<h6><i class="fa fa-tags red"></i>诊记录i+1</h6>
-									<div class="panel-actions">
-										<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
-										<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-										<a href="#" class="btn-close"><i class="fa fa-times"></i></a>
-									</div>
-								</div>
-								<div class="panel-body">
-									<div id="hospital2" class="wizard-type1">
-										<ul class="steps nav nav-pills">
-											<li><a href="#hospital-tab21" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-star"></i></span> 详细信息</a></li>
-											<li><a href="#hospital-tab22" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-credit-card"></i></span> 临床信息</a></li>
-											<li><a href="#hospital-tab23" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-building"></i></span> 问卷信息</a></li>
-											<li><a href="#hospital-tab24" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-check"></i></span> 辅助检查和附件</a></li>
-										</ul>
-										<div class="tab-content">
-											<div class="tab-pane" id="hospital-tab21">
-												<form class="form-horizontal" role="form">
-													<div class="form-group">
-
-													</div>
-												</form>
-											</div>
-											<div class="tab-pane" id="hospital-tab22">
-												<div class="row">
-
-												</div>
-											</div>
-											<div class="tab-pane" id="hospital-tab23">
-												<div class="form-group">
-													<label for=" ">Company</label>
-													<input type="text" class="form-control" id=" " placeholder="Company name" />
-												</div>
-											</div>
-											<div class="tab-pane" id="hospital-tab24">
-												<div class="form-group">
-													<div class="checkbox-custom checkbox-default bk-margin-bottom-10">
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						    </div>
                             </div>
                             </div>
 
@@ -916,11 +617,6 @@
                         </div>
                 </div>
             <!-- End Main Page -->
-
-            <!-- Usage -->
-
-            <!-- End Usage -->
-
 			</div>
 		</div><!--/container-->
 
@@ -3934,7 +3630,7 @@
 								</div>
                             </div>
 
-							<div class="row " name="useAbtconfirm" style="display:none;">
+							<div class="row " name="useAbtconfirm">
 								<div class="col-lg-2 col-md-2 myblockposition">
 									<label class="col-sm-12 control-label mylabel">若使用,抗生素种类为</label>
 
@@ -3986,7 +3682,7 @@
 								<div class="col-lg-8 col-md-8 myblockposition">
 									<label class="col-sm-3 control-label mylabel">急诊住院时长</label>
 									<div>
-										<input class="col-sm-1 form-group myinput" name="hospitalDays"/>
+										<input class="col-sm-1 form-group myinput" name="ecDate"/>
 										<label class="col-sm-1 control-label mylabel">天</label>
 									</div>
 								</div>

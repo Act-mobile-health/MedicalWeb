@@ -95,13 +95,12 @@ def addRelationInfo(data):
 #添加门诊信息
 def addOutPatientServiceInfo(data):
     try:
-        print tools.forCheckbox(data,'symptom')
         if data['date'] != '':
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         print data
-        newObj = OutPatientServiceInfo(P_id = data['P_id'], date = d, place = data['place'],
+        newObj = OutPatientServiceInfo(P_id = data['P_id'], date = d, place = data['place'],isSymptom = data['isSymptom'],
                                        isStable = data['isStable'], symptom = tools.forCheckbox(data,'symptom'),
                                        physicalExam = data['physicalExam'], breathErr = data['breathErr'],
                                        acuteExac = data['acuteExac'], disease = data['disease'],
@@ -127,16 +126,13 @@ def addEmergCallInfo(data):
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        if data['ecDate'] != '':
-            ed = datetime.datetime.strptime(data['ecDate'], "%Y-%m-%d").date()
-        else:
-            ed = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+
         newObj = EmergCallInfo(P_id = data['P_id'], date = d, place = data['place'],
                                symptom = tools.forCheckbox(data,'symptom'), acuteExac = data['acuteExac'],disease = data['disease'],
                                byxCheck = data['byxCheck'],byxResult = data['byxResult'], ycWcTreat = data['ycWcTreat'],
                                useAbt = data['useAbt'], abtType = data['abtType'], useJmzs = data['useJmzs'],
-                               ecMethod = data['ecMethod'], ecDate = ed,hospital = data['hospital'],
-                               treatMethod = data['treatMethod'],airRelate = data['airRelate'])
+                               ecMethod = data['ecMethod'], ecDate = data['ecDate'], hospital = data['hospital'],
+                               treatMethod = data['treatMethod'],airRelate = data['airRelate'], medicine = data['medicine'])
         newObj.save()
 
         obj = MedicalVisit.objects.get(P_id=data['P_id'])
@@ -155,13 +151,14 @@ def addInHospitalInfo(data):
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        print data
         newObj = InHospitalInfo(P_id = data['P_id'], date = d, place = data['place'],
                                 commonIcu = data['commonIcu'], symptom = tools.forCheckbox(data,'symptom'),acuteExac = data['acuteExac'],
                                 disease = data['disease'],byxCheck = data['byxCheck'], byxResult = data['byxResult'],
                                 ycWcTreat = data['ycWcTreat'], useAbt = data['useAbt'],abtType = data['abtType'],
                                 useJmzs = data['useJmzs'],hospitalDays = data['hospitalDays'],
                                 airRelate = data['airRelate'],treatMethod = data['treatMethod'],
-                                reason = data['reason'],docAdvice = data['docAdvice'])
+                                medicine = data['medicine'],docAdvice = data['docAdvice'])
         newObj.save()
 
         obj = MedicalVisit.objects.get(P_id=data['P_id'])

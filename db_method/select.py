@@ -216,6 +216,7 @@ def getPatientDetailedInfo(P_id):
     try:
         obj = PatientInfo.objects.get(P_id = P_id)
         value = []
+        value.append(obj.id)
         value.append(obj.P_id)
         value.append(obj.sign)
         value.append(obj.name)
@@ -241,7 +242,7 @@ def getPatientDetailedInfo(P_id):
         value.append(obj.telephone)
         value.append(obj.cellphone)
         value.append(obj.partnerPhone)
-        keys = ['P_id','sign','name','sex','birthday','age','nation','height','weight','registerTime','education',
+        keys = ['id','P_id','sign','name','sex','birthday','age','nation','height','weight','registerTime','education',
                 'career','marriage','homeAddr','birthAddr','activityAddr1','activityAddr2','actionAddr',
                 'diastolicPressure','systolicPressure','neckCircu','payment','telephone','cellphone','partnerPhone']
         message = tools.dictPackage(keys, value)
@@ -287,7 +288,7 @@ def getBasicClinicInfos(type,S_id):
 
     except Exception, e:
         tools.exceptionRecord('select.py','getBasicClinicInfos',e)
-
+    print list
     return list
 
 #获取问卷的基本信息
@@ -356,6 +357,7 @@ def getPatientDetailedOutPatientServiceInfos(S_id):
         value.append(str(obj.date))
         value.append(obj.place)
         value.append(obj.isStable)
+        value.append(obj.isSymptom)
         value.append(obj.symptom)
         value.append(obj.physicalExam)
         value.append(obj.breathErr)
@@ -369,7 +371,7 @@ def getPatientDetailedOutPatientServiceInfos(S_id):
         value.append(obj.treatMethod)
         value.append(obj.medicine)
 
-        keys = ['OPS_id','P_id','date','place','isStable','symptom','physicalExam','breathErr','acuteExac','disease',
+        keys = ['OPS_id','P_id','date','place','isStable','isSymptom', 'symptom','physicalExam','breathErr','acuteExac','disease',
                 'useAbt','abtType','useJmzs','hospital','airRelate','treatMethod','medicine']
 
         message = tools.dictPackage(keys, value)
@@ -387,10 +389,10 @@ def getPatientAllEmergCallInfos(P_id):
         values=EmergCallInfo.objects.filter(P_id = P_id).values_list('id')
         keys = ['EC_id']
         for value in values:
-            message = tools.dictPackage(keys,value)
+            message = tools.dictPackage(keys, value)
             list.append(message)
-    except Exception,e:
-        tools.exceptionRecord('select.py','getPatientAllEmergCallInfos',e)
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getPatientAllEmergCallInfos', e)
 
     return list
 
@@ -418,9 +420,10 @@ def getPatientDetailedEmergCallInfos(S_id):
         value.append(obj.hospital)
         value.append(obj.treatMethod)
         value.append(obj.airRelate)
+        value.append(obj.medicine)
 
         keys = ['EC_id','P_id','date','place','symptom','acuteExac','disease','byxCheck','byxResult','ycWcTreat',
-                'useAbt','abtType','useJmzs','ecMethod','ecDate','hospital','treatMethod','airRelate']
+                'useAbt','abtType','useJmzs','ecMethod','ecDate','hospital','treatMethod','airRelate','medicine']
         message = tools.dictPackage(keys, value)
 
 
@@ -453,7 +456,7 @@ def getPatientDetailedInHospitalInfos(S_id):
         value = []
         value.append(obj.id)
         value.append(obj.P_id)
-        value.append(str(obj.time))
+        value.append(str(obj.date))
         value.append(obj.place)
         value.append(obj.commonIcu)
         value.append(obj.symptom)
@@ -468,12 +471,12 @@ def getPatientDetailedInHospitalInfos(S_id):
         value.append(obj.hospitalDays)
         value.append(obj.airRelate)
         value.append(obj.treatMethod)
-        value.append(obj.reason)
+        value.append(obj.medicine)
         value.append(obj.docAdvice)
 
-        keys = ['IH_id', 'P_id', 'time', 'place', 'commonIcu', 'symptom', 'acuteExac', 'disease', 'byxCheck',
+        keys = ['IH_id', 'P_id', 'date', 'place', 'commonIcu', 'symptom', 'acuteExac', 'disease', 'byxCheck',
                 'byxResult', 'ycWcTreat', 'useAbt', 'abtType', 'useJmzs', 'hospitalDays', 'airRelate',
-                'treatMethod', 'reason', 'docAdvice']
+                'treatMethod', 'medicine', 'docAdvice']
         message = tools.dictPackage(keys, value)
 
     except Exception, e:

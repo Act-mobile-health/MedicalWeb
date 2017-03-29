@@ -85,7 +85,7 @@ def deleteEmergCallInfo(EC_id):
         AccessoryExamination.objects.filter(type = 1, S_id=EC_id).delete()
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
-        obj.o_time = str(int(obj.e_time) - 1)
+        obj.e_time = str(int(obj.e_time) - 1)
         obj.save()
 
         return True
@@ -109,7 +109,7 @@ def deleteInHospitalInfo(IH_id):
         AccessoryExamination.objects.filter(type = 2, S_id=IH_id).delete()
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
-        obj.o_time = str(int(obj.h_time) - 1)
+        obj.h_time = str(int(obj.h_time) - 1)
         obj.save()
 
         return True
