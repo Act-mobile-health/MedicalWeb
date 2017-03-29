@@ -53,6 +53,9 @@ def register(request):
 def pending(request):
     return render(request,"pending.html")
 
+def group(request):
+    return render(request,"group.html")
+
 def table(request):
     return render(request,"chart-xchart.html")
 

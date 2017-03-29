@@ -3,7 +3,6 @@
  */
 $(document).ready(function () {
     $("#loginbt").click(function () {
-
         $.post("/i3/",$("#login").serialize(),function (data) {
             var result = JSON.parse(data).result;
             if(result=="0"){
@@ -11,7 +10,7 @@ $(document).ready(function () {
                 location.href = "/";
             }else{
                  alert("登录失败");
-                 location.href = "/login";
+                 location.href = "/login/";
             }
         });
         return false;

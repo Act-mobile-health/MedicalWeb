@@ -1,5 +1,5 @@
 # -*- coding:UTF-8 -*-
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 import json
 from django.views.decorators.csrf import csrf_exempt
 import demjson
@@ -99,7 +99,8 @@ def getDoctorBasicInfo(request):
             js = json.dumps(message)
             return HttpResponse(js)
         else:
-            return render(request,"page-login.html")
+
+            return HttpResponseRedirect('/login')
 
 
 #接口6
@@ -167,6 +168,20 @@ def getExpGroupPatientsInfo(request):
         else:
             return render(request, "page-login.html")
 
+@csrf_exempt
+def getOneExpGroupInfo(request):
+    if request.method == 'GET':
+        data = request.GET
+        message = []
+        if 'D_id' in request.session:
+            message = select.getOneExpGroupInfo(int(data['G_id']))
+            # message = tools.toString(message)
+            js = json.dumps(message)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
+
+
 
 #接口10
 @csrf_exempt
@@ -178,12 +193,12 @@ def addOrUpdateExpGroup(request):
             D_id = request.session['D_id']
 
             if data['G_id'] == '':
-                if insert.addExpGroup(D_id,data['name'],data['description']) == True:
+                if insert.addExpGroup(D_id,data['name'],data['description'], data['date']) == True:
                     message['result'] = 0
                 else:
                     message['result'] = -1
             else:
-                if update.updateExpGroup(int(data['G_id']), data['name'], data['description']) == True:
+                if update.updateExpGroup(int(data['G_id']), data['name'], data['description'], data['date']) == True:
                     message['result'] = 0
                 else:
                     message['result'] = -1
@@ -916,12 +931,13 @@ def getExploure2Weeks(request):
 # 接口43
 @csrf_exempt
 def getPatientName(request):
-    if request.method == 'POST':
-        data = request.POST
+    if request.method == 'GET':
+        data = request.GET
+        print data
         message = {}
         if 'D_id' in request.session:
             D_id = request.session['D_id']
-            message = getPatientName(data['P_id'])
+            message = select.getPatientName(data['P_id'])
 
             # message = tools.toString(message)
             js = json.dumps(message)

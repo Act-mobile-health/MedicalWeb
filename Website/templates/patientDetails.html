@@ -3767,6 +3767,7 @@
                     <div class="modal-body">
                         <div>
 						<form class="form-horizontal" id = "InHospitalInfo" method="post" role="form">
+							{% csrf_token %}
                             <div class="row ">
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">编号</label>

@@ -77,7 +77,7 @@ class DoctorInfo(models.Model):
 
 
 class PatientGroup(models.Model):
-    G_id = models.IntegerField()
+    G_id = models.IntegerField(null=False)
     P_id = models.CharField(max_length=10)
 
 
@@ -87,9 +87,9 @@ class PatientGroup(models.Model):
 
 class GroupInfo(models.Model):
     name = models.CharField(max_length=100, null=False)
-    D_id = models.IntegerField()
+    D_id = models.IntegerField(null=False)
     description = models.CharField(max_length=255)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(blank=True)
 
 
 # created by JK@buaa, 2017/3/17

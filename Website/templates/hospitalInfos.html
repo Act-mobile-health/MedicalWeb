@@ -343,19 +343,24 @@
 					<!-- End Page Header -->
 					<div>
 						<form class="form-horizontal" id = "InHospitalInfo" method="post" role="form">
+							{% csrf_token %}
                             <legend>住院信息表</legend>
+
+							<div class="row">
+								<input type="text" class="form-control myinput" name="id"  style="display:none;">
+							</div>
                             <div class="row ">
                                 <div class="form-group col-lg-4 col-md-8 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">患者编号</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="P_id"  placeholder="请输入患者号">
+                                      <input type="text" class="form-control myinput" id = "P_id" name="P_id"  placeholder="请输入患者号">
                                     </div>
-                                    <button class="btn btn-default glyphicon glyphicon-search col-md-1 myinput"  type="button"></button>
+                                    <button class="btn btn-default glyphicon glyphicon-search col-md-1 myinput" id="searchbt" type="button"></button>
                                 </div>
                                 <div class="form-group col-lg-4 col-md-8 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">姓名</label>
                                     <div class="col-sm-6">
-                                      <input type="text" class="form-control myinput" name="name" readonly>
+                                      <input type="text" class="form-control myinput" id="name" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -603,7 +608,7 @@
 							<div class = "row">
 								<div class="col-md-12 col-lg-8">
 									<div class="pull-right">
-										<button type="submit" class="btn btn-primary">提交</button>
+										<button type="submit" id="hospitalbt" class="btn btn-primary">提交</button>
 									</div>
 								</div>
                             </div>
@@ -629,6 +634,7 @@
 		<!-- Theme JS -->
 		<script src="/static/js/jquery.mmenu.min.js"></script>
 		<script src="/static/js/core.min.js"></script>
+		<script src="/static/js/pages/hospital.js"></script>
 
 		<!-- Pages JS -->
 

@@ -23,10 +23,14 @@ def addDoctorInfo(data):
 
 # 添加新的实验组
 # 成功返回True，失败返回False
-def addExpGroup(D_id,name,info):
+def addExpGroup(D_id,name,info,date):
     # TODO
     try:
-        newObj = GroupInfo(D_id=D_id,name=name,description=info)
+        if date != '':
+            d = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        else:
+            d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        newObj = GroupInfo(D_id=D_id,name=name,description=info, date = d)
         newObj.save()
         return True
     except Exception, e:         

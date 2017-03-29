@@ -114,17 +114,35 @@ def getExpGroups(D_id):
     # TODO
     try:
         message = {}
-        values = GroupInfo.objects.filter(D_id = D_id).values_list('id','name','description','data')
-        keys = ['G_id','name','description','data']
+        values = GroupInfo.objects.filter(D_id = D_id).values_list('id','name','description','date', 'D_id')
+        keys = ['G_id','name','description','date', 'D_id']
         for value in values:
-            value[3] = value[3].strftime("%Y-%m-%d")
+            # value[3] = value[3].strftime("%Y-%m-%d")
             message = tools.dictPackage(keys, value)
+            message['date'] = str(message['date'])
             list.append(message)
 
     except Exception, e:
         tools.exceptionRecord('select.py','getExpGroups',e)
     return list
 
+def getOneExpGroupInfo(G_id):
+    # TODO
+    try:
+        message = {}
+        obj = GroupInfo.objects.get(id = G_id)
+        value = []
+        value.append(obj.id)
+        value.append(obj.name)
+        value.append(obj.description)
+        value.append(str(obj.date))
+        value.append(obj.D_id)
+        keys = ['G_id','name','description','date', 'D_id']
+
+        message = tools.dictPackage(keys, value)
+    except Exception, e:
+        tools.exceptionRecord('select.py','getExpGroups',e)
+    return message
 #获取指定实验组中所有患者的基本信息
 #返回一个列表，列表中每个元素都是一个字典，存储着一个患者的基本信息
 def getExpGroupPatientsInfo(G_id):

@@ -306,6 +306,18 @@
 											<i class="fa fa-picture-o" aria-hidden="true"></i><span>待处理事项</span>
 										</a>
 									</li>
+
+									<li class="nav-parent">
+										<a >
+											<i class="fa fa-copy" aria-hidden="true"></i><span>实验组</span>
+										</a>
+										<ul class="nav nav-children" id="experimentGroup">
+
+										</ul>
+									</li>
+									<li>
+										<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-picture-o" aria-hidden="true"></i> 添加实验组</span></a>
+									</li>
 								</ul>
 							</nav>
 						</div>
@@ -438,16 +450,16 @@
 
 		</div><!--/container-->
 
-
 		<div class="modal " id="DoctorInfoDetails">
-                <div class="modal-dialog">
-                    <div class="modal-content modal-lg">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">详情/编辑</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal" method="post"  role="form" id="DoctorInfo">{% csrf_token %}
+                            <form class="form-horizontal" method="post"  role="form" id="DoctorInfo">
+								{% csrf_token %}
                             <div class="form-group">
                                 <label for="D_id" class="col-md-2">ID</label>
                                 <div class="col-md-10"><input type="text" class="form-control " name="D_id" id="D_id" readonly="true"></div>
@@ -471,7 +483,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="birthday" class="col-md-2">出生日期</label>
-                                <div class="col-md-10"><input type="text" class="form-control" id="birthday" name="birthday" id="brithday" ></div>
+                                <div class="col-md-10"><input type="text" class="form-control" id="birthday" name="birthday"></div>
                             </div>
                             <div class="form-group">
                                 <label for="userName" class="col-md-2">用户名</label>
@@ -525,11 +537,6 @@
                                 <button  class="btn btn-primary" id="submitUserDetail">保存修改</button>
                             </form>
                         </div>
-
-
-
-
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         </div>
@@ -537,6 +544,46 @@
                 </div><!-- /.modal-dialog -->
          </div><!-- /.modal -->
 
+
+		<div class="modal fade" id="ExperimentGroupDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">实验组</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" method="post"  role="form" id="ExperimentGroupInfo">
+								{% csrf_token %}
+                            <div class="form-group">
+                                <label class="col-md-2">ID</label>
+                                <div class="col-md-10"><input type="text" class="form-control " name="G_id" id="G_id" readonly="true"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2">名称</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="name" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2">创建时间</label>
+                                <div class="col-md-10"><input type="date" class="form-control" name="date"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2">创建者</label>
+                                <div class="col-md-10"><input type="text" class="form-control" name="D_id" readonly style="display:none"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2" >描述</label>
+                                <div class="col-md-10"><textarea class="form-control myinput" name="description"></textarea></div>
+                            </div>
+                         </form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" id = "experimentGroupbt" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 		<!-- start: JavaScript-->
 		
 		<!-- Vendor JS-->				

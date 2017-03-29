@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^test/$', test),
     url(r'^table/$', table),
     url(r'^$', index),
-    url(r'^patientDetails/$',patientDetails),
+    url(r'^patientDetails/$', patientDetails),
     url(r'^patientInfos/$',patientInfos),
     url(r'^add/outpatientInfos/$', addOutpatientInfos),
     url(r'^add/emergencyInfos/$', addEmergencyInfos),
@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'^login/$', login),
     url(r'^register/$', register),
     url(r'^pending/$', pending),
+    url(r'^group/$', group),
     url(r'^p/p/$', temp1),
 
 
@@ -97,6 +98,12 @@ urlpatterns = [
     url(r'^i35/',view.getOneAorAEDetailedInfo),
     url(r'^test2/',view.test2),
     url(r'^test1/',view.test),
+
+
+    url(r'^i36/',view.getPatientName),
+    url(r'^i37/',view.getExpGroups),
+    url(r'^i38/',view.addOrUpdateExpGroup),
+    url(r'^i39/',view.getOneExpGroupInfo),
 
     # url(r'^i18/',view.updatePatientInfo),
 ]

@@ -336,14 +336,18 @@
 					<!-- End Page Header -->
                     <div>
                         <form class="form-horizontal" id = "OutPatientServiceInfo" method="post" role="form">
+							{% csrf_token %}
                             <legend>门诊信息表</legend>
+							<div class="row">
+								<input type="text" class="form-control myinput" name="id"  style="display:none;">
+							</div>
                             <div class="row ">
                                 <div class="form-group col-lg-4 col-md-8 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">患者编号</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" id="P_id"  placeholder="请输入患者号">
+                                      <input type="text" class="form-control myinput" id = "P_id" name="P_id"  placeholder="请输入患者号">
                                     </div>
-                                    <button class="btn btn-default glyphicon glyphicon-search col-md-1 myinput"  type="button"></button>
+                                    <button class="btn btn-default glyphicon glyphicon-search col-md-1 myinput"  id="searchbt" type="button"></button>
                                 </div>
                                 <div class="form-group col-lg-4 col-md-8 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">姓名</label>
@@ -356,13 +360,13 @@
                                 <div class="form-group col-lg-4 col-md-8 myblockposition">
                                     <label class="col-sm-3 control-label mylabel" >就诊时间</label>
                                     <div class="col-sm-6">
-                                      <input type="date" class="form-control myinput" id="date" placeholder="请选择">
+                                      <input type="date" class="form-control myinput" name="date" placeholder="请选择">
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-4 col-md-8 myblockposition">
                                     <label  class="col-sm-3  control-label mylabel">就诊地点</label>
                                     <div class="col-sm-6">
-                                      <input type="text" class="form-control myinput" id="place" placeholder="请输入就诊地点">
+                                      <input type="text" class="form-control myinput" name="place" placeholder="请输入就诊地点">
                                     </div>
                                 </div>
                             </div>
@@ -372,12 +376,12 @@
 									<label class="col-sm-3 control-label mylabel">就诊原因</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="isStable" id="isStable1" value="1" >稳定期随访
+										<input type="radio" name="isStable"  value="1" >稳定期随访
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="isStable" id="isStable2" value="2">急性期加重
+										<input type="radio" name="isStable"  value="2">急性期加重
 									  </label>
 									</div>
 								</div>
@@ -388,12 +392,12 @@
 									<label class="col-sm-3 control-label mylabel">是否有症状</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="isSymptom" id="isSymptom1" value="1">是
+										<input type="radio" name="isSymptom"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="isSymptom" id="isSymptom2" value="2">否
+										<input type="radio" name="isSymptom"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -404,17 +408,17 @@
 									<label class="col-sm-2 control-label mylabel">若有，症状为</label>
 									<div class="checkbox col-sm-2">
 									  <label class="mycheckbox">
-										<input type="checkbox" name="symptom" id="symptom1" value="1">咳嗽加重
+										<input type="checkbox" name="symptom"  value="1">咳嗽加重
 									  </label>
 									</div>
 									<div class="checkbox col-sm-3">
 									  <label class="mycheckbox">
-										<input type="checkbox" name="symptom" id="symptom2" value="2">咳浓痰并痰量增加
+										<input type="checkbox" name="symptom"  value="2">咳浓痰并痰量增加
 									  </label>
 									</div>
 									<div class="checkbox col-sm-3">
 									  <label class="mycheckbox">
-										<input type="checkbox" name="symptom" id="symptom3" value="3">呼吸困难加重
+										<input type="checkbox" name="symptom"  value="3">呼吸困难加重
 									  </label>
 									</div>
 								</div>
@@ -425,12 +429,12 @@
 									<label class="col-sm-3 control-label mylabel">查体是否正常</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="physicalExam" id="physicalExam1" value="1">是
+										<input type="radio" name="physicalExam"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="physicalExam" id="physicalExam2" value="2">否
+										<input type="radio" name="physicalExam"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -441,7 +445,7 @@
 
 								</div>
 								<div class="col-lg-4 col-md-8 myblockposition ">
-									<textarea class="form-control myinput" id="breathErr"></textarea>
+									<textarea class="form-control myinput" name="breathErr"></textarea>
 								</div>
                             </div>
 
@@ -450,12 +454,12 @@
 									<label class="col-sm-3 control-label mylabel">是否为慢阻肺急性加重</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="acuteExac" id="acuteExac1" value="1">是
+										<input type="radio" name="acuteExac" value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="acuteExac" id="acuteExac2" value="2">否
+										<input type="radio" name="acuteExac" value="2">否
 									  </label>
 									</div>
 								</div>
@@ -467,7 +471,7 @@
 
 								</div>
 								<div class="col-lg-4 col-md-8 myblockposition ">
-									<input class="form-control myinput" id="disease">
+									<input class="form-control myinput" name="disease">
 								</div>
                             </div>
 							<div class="row ">
@@ -475,12 +479,12 @@
 									<label class="col-sm-3 control-label mylabel">是否使用抗生素</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="useAbt" id="useAbt1" value="1">是
+										<input type="radio" name="useAbt"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="useAbt" id="useAbt2" value="2">否
+										<input type="radio" name="useAbt"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -492,7 +496,7 @@
 
 								</div>
 								<div class="col-lg-4 col-md-8 myblockposition ">
-									<input class="form-control myinput" id="abtType">
+									<input class="form-control myinput" name="abtType">
 								</div>
                             </div>
 
@@ -502,12 +506,12 @@
 									<label class="col-sm-3 control-label mylabel">是否使用静脉激素</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="useJmzs" id="useJmzs1" value="1">是
+										<input type="radio" name="useJmzs"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="useJmzs" id="useJmzs2" value="2">否
+										<input type="radio" name="useJmzs"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -517,12 +521,12 @@
 									<label class="col-sm-3 control-label mylabel">是否住院治疗</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="hospital" id="hospital1" value="1">是
+										<input type="radio" name="hospital"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="hospital" id="hospital2" value="2">否
+										<input type="radio" name="hospital"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -533,12 +537,12 @@
 									<label class="col-sm-3 control-label mylabel">慢阻肺急性加重是否与大气污染有关</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="airRelate" id="airRelate1" value="1">是
+										<input type="radio" name="airRelate"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="airRelate" id="airRelate2" value="2">否
+										<input type="radio" name="airRelate"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -549,12 +553,12 @@
 									<label class="col-sm-3 control-label mylabel">是否调整治疗方案</label>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="treatMethod" id="treatMethod1" value="1">是
+										<input type="radio" name="treatMethod"  value="1">是
 									  </label>
 									</div>
 									<div class="radio col-sm-3">
 									  <label class="mycheckbox">
-										<input type="radio" name="treatMethod" id="treatMethod2" value="2">否
+										<input type="radio" name="treatMethod"  value="2">否
 									  </label>
 									</div>
 								</div>
@@ -566,14 +570,14 @@
 
 								</div>
 								<div class="col-lg-4 col-md-8 myblockposition ">
-									<textarea class="form-control myinput" id="medicine"></textarea>
+									<textarea class="form-control myinput" name="medicine"></textarea>
 								</div>
                             </div>
 
 							<div class = "row">
-								<div class="col-md-12 col-lg-8">
+								<div class="col-md-7 col-lg-7">
 									<div class="pull-right">
-										<button type="submit" class="btn btn-primary">提交</button>
+										<button type="submit" id= "outpatientbt" class="btn btn-primary">提交</button>
 									</div>
 								</div>
                             </div>
@@ -603,6 +607,7 @@
 
 		<script src="/static/js/bootstrap-datetimepicker.min.js"></script>
 		<script src="/static/js/moment.min.js"></script>
+		<script src="/static/js/pages/outpatient.js"></script>
 		<!-- end: JavaScript-->
 
 	</body>
