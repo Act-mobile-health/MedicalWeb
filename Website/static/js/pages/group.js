@@ -14,13 +14,25 @@
 $(document).ready(function(){
 
     showExperimentGroup();
-    appendUserInfoTable();
+    showExperimentGroupTable();
 
-    $("#experimentGroupbt").click(
-    	function(){
-    		submitExperimentGroup();
+    $("#experimentGroupbt").click(function(){
+    	submitExperimentGroup();
+        showExperimentGroupTable();
+    });
+});
+
+    function editExperimentGroup(){
+        console.log(G_id);
+        $.getJSON("/i39/",{G_id:G_id},function(item){
+            $("#ExperimentGroupInfo input[name='name']").val(item.name);
+            $("#ExperimentGroupInfo input[name='G_id']").val(item.G_id);
+            $("#ExperimentGroupInfo input[name='D_id']").val(item.D_id);
+            $("#ExperimentGroupInfo input[name='date']").val(item.date);
+            $("#ExperimentGroupInfo textarea[name='description']").val(item.description);
         });
 
+    }
     function showExperimentGroup(){
         group = document.getElementById("experimentGroup");
         $.getJSON("/i37/",{},function(json_data){
@@ -37,16 +49,7 @@ $(document).ready(function(){
         $("#ExperimentGroupInfo :text").val("");
     }
 
-    function updateExperimentGroup(){
-        $.getJSON("/i39/",{G_id:G_id},function(item){
-            $("#ExperimentGroupInfo input[name='name']").val(item.name);
-            $("#ExperimentGroupInfo input[name='G_id']").val(item.G_id);
-            $("#ExperimentGroupInfo input[name='D_id']").val(item.D_id);
-            $("#ExperimentGroupInfo input[name='date']").val(item.date);
-            $("#ExperimentGroupInfo input[name='description']").val(item.description);
-        })
 
-    }
 
     function submitExperimentGroup(){
         if (confirm("确定提交吗？")){
@@ -62,20 +65,16 @@ $(document).ready(function(){
         }
     }
 
-    function appendUserInfoTable() {
-        $("#userInfoTable tbody").text("");
-        console.log(G_id);
+    function showExperimentGroupTable() {
+        $("#experimentGroupInfoTable tbody").empty();
         $.getJSON("/i39/", {G_id:G_id}, function(item) {
-            $("#userInfoTable tbody").append(
+            $("#experimentGroupInfoTable tbody").append(
                 "<tr>"+
-                    "<td>"+item.D_id+"</td>"+
-                    "<td>"+item.name+"</td>"+
                     "<td>"+item.G_id+"</td>"+
+                    "<td>"+item.name+"</td>"+
+                    "<td>"+item.D_id+"</td>"+
                     "<td>"+item.date+"</td>"+
                     "<td>"+item.description+"</td>"+
                 "</tr>");
         });
     }
-});
-
-

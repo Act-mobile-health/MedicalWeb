@@ -32,6 +32,11 @@
 		<!-- Page CSS -->		
 		<link href="/static/css/style.css" rel="stylesheet" />
 		<link href="/static/css/add-ons.min.css" rel="stylesheet" />
+
+
+
+
+		<link href="/static/css/mycss.css" rel="stylesheet" />
 		
 		<!-- end: CSS file-->	
 	    
@@ -550,30 +555,30 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title">实验组</h4>
+						<h4 class="modal-title" style="color:black">实验组</h4>
 					</div>
 					<div class="modal-body">
 						<form class="form-horizontal" method="post"  role="form" id="ExperimentGroupInfo">
 								{% csrf_token %}
                             <div class="form-group">
-                                <label class="col-md-2">ID</label>
-                                <div class="col-md-10"><input type="text" class="form-control " name="G_id" id="G_id" readonly="true"></div>
+                                <label  class="col-md-2  mylabel">实验组编号</label>
+                                <div class="col-md-2"><input type="text" class="form-control myinput " name="G_id" id="G_id" readonly="true"></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2">名称</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="name" ></div>
+                                <label  class="col-md-2  mylabel">名称</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="name" ></div>
                             </div>
                             <div class="form-group">
-                                <label  class="col-md-2">创建时间</label>
-                                <div class="col-md-10"><input type="date" class="form-control" name="date"></div>
+                                <label  class="col-md-2 mylabel">创建时间</label>
+                                <div class="col-md-3"><input type="date" class="form-control myinput" name="date"></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2">创建者</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="D_id" readonly style="display:none"></div>
+                                <label  class="col-md-2 mylabel">创建者</label>
+                                <div class="col-md-2"><input type="text" class="form-control myinput" name="D_id" readonly="true"></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2" >描述</label>
-                                <div class="col-md-10"><textarea class="form-control myinput" name="description"></textarea></div>
+                                <label class="col-md-2 mylabel">描述</label>
+                                <div class="col-md-8"><textarea class="form-control myinput" name="description"></textarea></div>
                             </div>
                          </form>
 					</div>

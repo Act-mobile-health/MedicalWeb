@@ -32,6 +32,7 @@
 		<!-- Page CSS -->
 		<link href="/static/css/style.css" rel="stylesheet" />
 		<link href="/static/css/add-ons.min.css" rel="stylesheet" />
+		<link href="/static/css/mycss.css" rel="stylesheet" />
 
 		<!-- end: CSS file-->
 
@@ -355,33 +356,32 @@
 					</div>
 					<!-- End Page Header -->
 
-
                     <div class="row" >
-						<div class="col-lg-12 col-md-12">
+						<div class="col-lg-12 col-md-12 ">
 							<div class="panel bk-widget bk-border-off bk-noradius">
 								<div class="panel-heading bk-bg-primary">
 									<div class="row">
-										<div class="col-md-6 text-left bk-vcenter">
-											<h4 class="bk-margin-off">个人信息</h4>
+										<div class="col-md-4 text-left bk-vcenter">
+											<h4 class="bk-margin-off">实验组信息</h4>
 										</div>
-                                        <div class="panel-actions col-md-1">
+                                        <div class="panel-actions col-md-2 text-right">
                                             <a  id="refresh"><i class="fa fa-rotate-right"></i></a>
                                             <a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                            <a  data-toggle="modal" href="#DoctorInfoDetails"><i class="fa fa-edit"></i></a>
+                                            <a  data-toggle="modal" onclick="editExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-edit"></i></a>
                                         </div>
 
 									</div>
 								</div>
 								<div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
 									<div class="row">
-                                        <table class="table " id="userInfoTable" style="text-indent:2em;">
+                                        <table class="table " id="experimentGroupInfoTable" style="text-indent:2em;text-align:center;color:black;">
                                             <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>用户名</th>
-                                                <th>手机</th>
-                                                <th>邮箱</th>
-                                                <th>医院</th>
+                                                <th style="width:15%;text-align:center;">实验组编号</th>
+                                                <th style="width:15%;text-align:center;">名称</th>
+                                                <th style="width:15%;text-align:center;">创建者</th>
+                                                <th style="width:15%;text-align:center;">创建日期</th>
+                                                <th style="text-align:center;">实验组描述</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -392,12 +392,54 @@
 							    </div>
 						    </div>
 					    </div>
-
                     </div>
+
+                    <div class="row" >
+						<div class="col-lg-12 col-md-12 ">
+							<div class="panel bk-widget bk-border-off bk-noradius">
+								<div class="panel-heading bk-bg-primary">
+									<div class="row">
+										<div class="col-md-4 text-left bk-vcenter">
+											<h4 class="bk-margin-off">实验组患者</h4>
+										</div>
+                                        <div class="panel-actions col-md-2 text-right">
+                                            <a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                            <a  ><i class="fa fa-edit"></i></a>
+                                        </div>
+
+									</div>
+								</div>
+								<div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
+									<div class="row">
+                                        <table class="table" id="patient" style="text-indent:2em;text-align:center;color:black;">
+                                            <thead>
+                                            <tr>
+                                                <th style="width:15%;text-align:center;">患者编号</th>
+                                                <th style="width:15%;text-align:center;">姓名</th>
+                                                <th style="width:15%;text-align:center;">入组时间</th>
+                                                <th style="width:15%;text-align:center;">健康状况</th>
+                                                <th style="width:10%;text-align:center;">性别</th>
+                                                <th style="width:10%;text-align:center;">年龄</th>
+                                                <th style="width:10%;text-align:center;">查看</th>
+                                                <th style="width:10%;text-align:center;">删除</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+							    </div>
+                                <div class="row col-lg-2 col-md-2 ">
+                                <a  data-toggle="modal" onclick="addPatientIntoGroup()" href="#patientList" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加患者入组</a>
+                                </div>
 						    </div>
 					    </div>
 
                     </div>
+
+				</div>
+				</div>
+                </div>
                 </div>
 				<!-- End Main Page -->
 				</div>
@@ -411,30 +453,30 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title">实验组</h4>
+						<h4 class="modal-title" style="color:black">实验组</h4>
 					</div>
 					<div class="modal-body">
 						<form class="form-horizontal" method="post"  role="form" id="ExperimentGroupInfo">
 								{% csrf_token %}
                             <div class="form-group">
-                                <label  class="col-md-2">ID</label>
-                                <div class="col-md-10"><input type="text" class="form-control " name="G_id" id="G_id" readonly="true"></div>
+                                <label  class="col-md-2  mylabel">实验组编号</label>
+                                <div class="col-md-2"><input type="text" class="form-control myinput " name="G_id" id="G_id" readonly="true"></div>
                             </div>
                             <div class="form-group">
-                                <label  class="col-md-2">名称</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="name" ></div>
+                                <label  class="col-md-2  mylabel">名称</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="name" ></div>
                             </div>
                             <div class="form-group">
-                                <label  class="col-md-2">创建时间</label>
-                                <div class="col-md-10"><input type="date" class="form-control" name="date"></div>
+                                <label  class="col-md-2 mylabel">创建时间</label>
+                                <div class="col-md-3"><input type="date" class="form-control myinput" name="date"></div>
                             </div>
                             <div class="form-group">
-                                <label  class="col-md-2">创建者</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="D_id" readonly style="display:none"></div>
+                                <label  class="col-md-2 mylabel">创建者</label>
+                                <div class="col-md-2"><input type="text" class="form-control myinput" name="D_id" readonly readonly="true"></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2" >描述</label>
-                                <div class="col-md-10"><textarea class="form-control myinput" name="description"></textarea></div>
+                                <label class="col-md-2 mylabel">描述</label>
+                                <div class="col-md-8"><textarea class="form-control myinput" name="description"></textarea></div>
                             </div>
                          </form>
 					</div>

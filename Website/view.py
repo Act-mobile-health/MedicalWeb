@@ -228,23 +228,26 @@ def deleteExpGroup(request):
 
 
 
-#接口12
-# @csrf_exempt
-# def updateExpGroup(request):
-#     if request.method == 'POST':
-#         message = {}
-#         data = request.POST
-#         if 'D_id' in request.session:
-#             if update.updateExpGroup(int(data['G_id']),data['name'],data['description']) == True:
-#                 message['result'] = 0
-#             else:
-#                 message['result'] = -1
-#             # message = tools.toString(message)
-#             js = json.dumps(message)
-#             return HttpResponse(js)
-#         else:
-#             return render(request, "page-login.html")
+@csrf_exempt
+def getPatientGroupInfo(request):
+    if request.method == 'GET':
+        message = {}
+        list =[]
+        patientlist = []
+        data = request.GET
+        if 'D_id' in request.session:
+            D_id = request.session['D_id']
+            G_id = data['G_id']
+            pglist = select.getExpGroupPatientsID(G_id)
+            patientlist = select.getPatientsBasicInfo()
+            for patient in patientlist:
+                if patient['id'] not in pglist:
+                    list.append(patient)
 
+            js = json.dumps(list)
+            return HttpResponse(js)
+        else:
+            return render(request, "page-login.html")
 
 
 #接口13
@@ -289,7 +292,7 @@ def getPatientsBasicInfo(request):
         message = []
         if 'D_id' in request.session:
             D_id = request.session['D_id']
-            message = select.getPatientsBasicInfo(D_id)
+            message = select.getPatientsBasicInfo()
             js = json.dumps(message)
             return HttpResponse(js)
         else:

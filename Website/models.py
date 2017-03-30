@@ -79,6 +79,7 @@ class DoctorInfo(models.Model):
 class PatientGroup(models.Model):
     G_id = models.IntegerField(null=False)
     P_id = models.CharField(max_length=10)
+    date = models.DateField(auto_now_add=True)
 
 
 # created by JK@buaa, 2017/3/17

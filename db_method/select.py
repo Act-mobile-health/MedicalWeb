@@ -150,7 +150,7 @@ def getExpGroupPatientsInfo(G_id):
     message = {}
     try:
         patient_ids = PatientGroup.objects.filter(G_id=G_id).values_list('P_id')
-        keys = ['P_id', 'name', 'sex', 'age', 'cellphone']
+        keys = ['P_id', 'name', 'sex', 'age']
         for patient_id in patient_ids:
             obj = PatientInfo.objects.get(P_id=patient_id)
             value = []
@@ -158,7 +158,6 @@ def getExpGroupPatientsInfo(G_id):
             value.append(obj.name)
             value.append(obj.sex)
             value.append(obj.age)
-            value.append(obj.cellphone)
             message = tools.dictPackage(keys, value)
 
             times = MedicalVisit.objects.get(P_id=patient_id)
@@ -175,10 +174,18 @@ def getExpGroupPatientsInfo(G_id):
         tools.exceptionRecord('select.py','getExpGroupPatientsInfo',e)
 
     return list
+def getExpGroupPatientsID(G_id):
+    try:
+        patient_ids = PatientGroup.objects.filter(G_id=G_id).values_list('P_id')
+
+    except Exception, e:
+        tools.exceptionRecord('select.py','getExpGroupPatientsInfo',e)
+
+    return patient_ids
 
 #获取指定医生管理的所有患者的基本信息
 #返回一个列表，列表中每个元素都是一个字典，存储着一个实验组的信息
-def getPatientsBasicInfo(D_id):
+def getPatientsBasicInfo():
     list = []
     message = {}
     # TODO

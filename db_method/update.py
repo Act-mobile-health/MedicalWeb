@@ -44,12 +44,14 @@ def updatePassword(D_id,o_pwd, n_pwd):
 #修改指定实验组
 #注意判断一下D_id与G_id是否正确
 # 成功返回True，失败返回False
-def updateExpGroup(G_id,name,info):
+def updateExpGroup(G_id, name, info, date):
     # TODO
     try:
         group = GroupInfo.objects.get(id = G_id)
         group.name = name
         group.description = info
+        if date != '':
+            group.date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         group.save()
         return True
     except Exception, e:

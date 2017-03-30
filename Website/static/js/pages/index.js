@@ -55,6 +55,7 @@ $(document).ready(function(){
         }
 
     });
+});
 
     function showExperimentGroup(){
         group = document.getElementById("experimentGroup");
@@ -130,6 +131,3 @@ $(document).ready(function(){
         });
 
     }
-});
-
-

@@ -104,6 +104,7 @@ urlpatterns = [
     url(r'^i37/',view.getExpGroups),
     url(r'^i38/',view.addOrUpdateExpGroup),
     url(r'^i39/',view.getOneExpGroupInfo),
+    url(r'^i40/',view.getPatientGroupInfo),
 
     # url(r'^i18/',view.updatePatientInfo),
 ]
