@@ -1,7 +1,10 @@
 # -*- coding:UTF-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser,AbstractUser
 from django.db import models
+import datetime
 
 # Create your models here.
 
@@ -56,13 +59,29 @@ class RelationInfo(models.Model):
 # created by JK@buaa, 2017/3/17
 # table 3
 
+# class DoctorInfo(AbstractUser):
+#
+#     name = models.CharField(max_length=50)
+#     sex = models.CharField(max_length=2)
+#     birthday = models.DateField(blank=True)
+#     # userName = models.CharField(max_length=50)
+#     # password = models.CharField(max_length=100)
+#     cellphone = models.CharField(max_length=11)
+#     weChat = models.CharField(max_length=50)
+#     mail = models.CharField(max_length=50)
+#     title = models.CharField(max_length=20)
+#     hospital = models.CharField(max_length=30)
+#     department = models.CharField(max_length=20)
+#     userGroup = models.CharField(max_length=10)      # doctor/intern/student
+#     registerDate = models.DateField(auto_now_add=True)
 
-class DoctorInfo(models.Model):
+class UserInfo(AbstractUser):
+
     name = models.CharField(max_length=50)
     sex = models.CharField(max_length=2)
-    birthday = models.DateField(blank=True)
-    userName = models.CharField(max_length=50)
-    password = models.CharField(max_length=100)
+    birthday = models.DateField(blank=True,default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
+    # userName = models.CharField(max_length=50)
+    # password = models.CharField(max_length=100)
     cellphone = models.CharField(max_length=11)
     weChat = models.CharField(max_length=50)
     mail = models.CharField(max_length=50)

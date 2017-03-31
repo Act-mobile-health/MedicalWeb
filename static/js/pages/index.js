@@ -55,13 +55,14 @@ $(document).ready(function(){
         }
 
     });
+});
 
     function showExperimentGroup(){
         group = document.getElementById("experimentGroup");
         $.getJSON("/i37/",{},function(json_data){
             $.each(json_data,function(index,item){
 //                G_id.push(item.G_id);
-                group.innerHTML = group.innerHTML + '<li><a href="/group/?G_id='+item.G_id+'/"><span class="text"> 实验组'+(index+1)+":"+item.name+'</span></a></li>';
+                group.innerHTML = group.innerHTML + '<li><a href="/group/?G_id='+item.G_id+'"><span class="text"> 实验组'+(index+1)+':'+item.name+'</span></a></li>';
             });
 
 
@@ -100,6 +101,10 @@ $(document).ready(function(){
     function appendUserInfoTable() {
         $("#userInfoTable tbody").text("");
         $.getJSON("/i5/",{},function(item) {
+        console.log(item);
+            if(item.result=="-1"){
+                location.href="/login/";
+            }
             $("#userInfoTable tbody").append(
                 "<tr>"+
                     "<td>"+item.D_id+"</td>"+
@@ -109,6 +114,7 @@ $(document).ready(function(){
                     "<td>"+item.hospital+"</td>"+
                 "</tr>");
         });
+        return false;
     }
 
     function appendUserDetailForm() {
@@ -130,6 +136,3 @@ $(document).ready(function(){
         });
 
     }
-});
-
-

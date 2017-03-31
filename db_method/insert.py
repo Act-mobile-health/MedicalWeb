@@ -1,24 +1,31 @@
 # -*- coding:UTF-8 -*-
-from Website.models import DoctorInfo,GroupInfo,PatientGroup,PatientInfo,RelationInfo,OutPatientServiceInfo,\
+from Website.models import UserInfo,GroupInfo,PatientGroup,PatientInfo,RelationInfo,OutPatientServiceInfo,\
     EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination,MedicalVisit
 import time
 from control_method import tools
+from django.contrib.auth import get_user_model
 import datetime, random
 # 添加新用户
 # 参数是一个字典，包含医生的所有信息
 # 成功返回True，失败返回False
 
-def addDoctorInfo(data):
+def addUserInfo(data):
 
-    d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+
     password = tools.md5(data['password'])
     # registerDate会自动生成
     try:
-        newObj = DoctorInfo(userName = data['userName'],password = password,mail = data['mail'],birthday=d)
-        newObj.save()
+        print data
+        user = UserInfo()
+        user.username = data['userName']
+        user.set_password(data['password'])
+        user.email = data['mail']
+        user.save()
+        # newObj = UserInfo.objects.create_user(data['userName'], data['mail'], password)
+        # newObj.save()
         return True
     except Exception, e:
-        tools.exceptionRecord('insert.py','addDoctorInfo',e)
+        tools.exceptionRecord('insert.py','addUserInfo',e)
         return False
 
 # 添加新的实验组

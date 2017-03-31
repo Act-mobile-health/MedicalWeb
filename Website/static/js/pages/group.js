@@ -78,3 +78,9 @@ $(document).ready(function(){
                 "</tr>");
         });
     }
+
+    function addPatientIntoGroup(){
+        $.getJSON("/i40/",{G_id:G_id},function(json_data){
+            console.log(json_data);
+        });
+    }

@@ -1,5 +1,5 @@
 # -*- coding:UTF-8 -*-
-from Website.models import DoctorInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,\
+from Website.models import UserInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,\
     EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination,CATandMRC,PmExposure,\
     MedicalVisit
 from django.core.exceptions import ObjectDoesNotExist
@@ -14,13 +14,13 @@ def checkExist(key,value):
     #TODO
     try:
         if key == 'userName':
-            doc = DoctorInfo.objects.get(userName=value)
+            doc = UserInfo.objects.get(username=value)
         elif key == 'mail':
-            doc = DoctorInfo.objects.get(mail=value)
+            doc = UserInfo.objects.get(mail=value)
         elif key == 'cellphone':
-            doc = DoctorInfo.objects.get(cellphone=value)
+            doc = UserInfo.objects.get(cellphone=value)
         elif key == 'D_id':
-            doc = DoctorInfo.objects.get(D_id=value)
+            doc = UserInfo.objects.get(D_id=value)
 
         return True
     except Exception, e:
@@ -37,13 +37,13 @@ def getUserInfo(userName,key):
     #TODO
     try:
         if key == 'password':
-            result = DoctorInfo.objects.get(userName=userName).password
+            result = UserInfo.objects.get(username=userName).password
         elif key == 'D_id':
-            result = DoctorInfo.objects.get(userName=userName).id
+            result = UserInfo.objects.get(username=userName).id
         elif key == 'mail':
-            result = DoctorInfo.objects.get(userName=userName).mail
+            result = UserInfo.objects.get(username=userName).mail
         elif key == 'cellphone':
-            result = DoctorInfo.objects.get(userName=userName).cellphone
+            result = UserInfo.objects.get(username=userName).cellphone
         else:
             return ""
 
@@ -59,11 +59,11 @@ def getDoctorBasicInfo(D_id):
     message = {}
     # TODO
     try:
-        obj = DoctorInfo.objects.get(id = D_id)
+        obj = UserInfo.objects.get(id = D_id)
         value = []
         value.append(obj.id)
         value.append(obj.name)
-        value.append(obj.userName)
+        value.append(obj.username)
         value.append(obj.mail)
         value.append(obj.cellphone)
         value.append(obj.hospital)
@@ -82,24 +82,25 @@ def getDoctorBasicInfo(D_id):
 def getDoctorDetailedInfo(D_id):
     message = {}
     try:
-        obj = DoctorInfo.objects.get(id=D_id)
+        obj = UserInfo.objects.get(id=D_id)
         value = []
         value.append(obj.id)
         value.append(obj.name)
         value.append(obj.sex)
-        value.append(obj.birthday)
-        value.append(obj.userName)
+        value.append(str(obj.birthday))
+        value.append(obj.username)
         value.append(obj.cellphone)
         value.append(obj.weChat)
-        value.append(obj.mail)
+        value.append(obj.email)
         value.append(obj.title)
         value.append(obj.hospital)
         value.append(obj.department)
         value.append(obj.userGroup)
-        value.append(obj.registerDate)
+        value.append(str(obj.registerDate))
+        print value
         keys = ['D_id','name', 'sex', 'birthday','userName','cellphone','weChat','mail', 'title', 'hospital','department','userGroup','registerDate']
-        value[3] = value[3].strftime("%Y-%m-%d")
-        value[12] = value[12].strftime("%Y-%m-%d")
+        # value[3] = value[3].strftime("%Y-%m-%d")
+        # value[12] = value[12].strftime("%Y-%m-%d")
         message = tools.dictPackage(keys, value)
     except Exception, e:
         tools.exceptionRecord('select.py','getDoctorDetailedInfo',e)

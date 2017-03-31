@@ -1,19 +1,19 @@
 # -*- coding:UTF-8 -*-
-from Website.models import DoctorInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination
+from Website.models import UserInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from control_method import tools
 #修改指定医生信息
 #data为医生新的信息，包括D_id
 #修改成功返回True,否则返回False
-def updateDoctorInfo(D_id,data):
+def updateUserInfo(D_id,data):
     try:
-        doctor = DoctorInfo.objects.get(id=D_id)
+        doctor = UserInfo.objects.get(id=D_id)
         doctor.name = data['name']
         doctor.sex = data['sex']
         if data['birthday'] != '':
             doctor.birthday = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
-        doctor.userName = data['userName']
+        doctor.username = data['userName']
         doctor.cellphone = data['cellphone']
         doctor.weChat = data['weChat']
         doctor.mail = data['mail']
@@ -24,13 +24,13 @@ def updateDoctorInfo(D_id,data):
         doctor.save()
         return True
     except Exception, e:         
-        tools.exceptionRecord('update.py','updateDoctorInfo',e)
+        tools.exceptionRecord('update.py','updateUserInfo',e)
         return False
 
 # update password for doctor
 def updatePassword(D_id,o_pwd, n_pwd):
     try:
-        doc = DoctorInfo.objects.get(id=D_id)
+        doc = UserInfo.objects.get(id=D_id)
         if doc.password == tools.md5(o_pwd):
             doc.password = tools.md5(n_pwd)
             doc.save()
@@ -65,9 +65,13 @@ def updateExpGroup(G_id, name, info, date):
 def updatePatientInfo(data):
     #TODO
     try:
+        print data,data['name'],type(data['name'])
+        print "#############"
         patient = PatientInfo.objects.get(P_id= data['P_id'])
         patient.sign = data['sign']
+        print type(patient.name)
         patient.name = data['name']
+        print type(patient.name)
         patient.sex = data['sex']
         if data['birthday'] != '':
             patient.birthday = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
@@ -104,12 +108,14 @@ def updatePatientInfo(data):
 def updateRelationInfo(R_id,data):
     # TODO
     try:
+        print data
         relation = RelationInfo.objects.get(id=R_id)
         relation.name=data['name']
         relation.sex=data['sex']
         relation.telephone=data['telephone']
         relation.cellphone=data['cellphone']
-        relation.weChate=data['weChat']
+        relation.weChat=data['weChat']
+        print 
         relation.mail=data['mail']
         relation.homeAddr=data['homeAddr']
         relation.save()

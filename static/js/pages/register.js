@@ -2,9 +2,11 @@
  * Created by wangcaimeng on 2017/3/22.
  */
 $(document).ready(function () {
+console.log("aaaaa");
     $("#registerbt").click(function () {
 
         $.post("/i1/",$("#register").serialize(),function (data) {
+            console.log(data);
             var result = JSON.parse(data).result;
             if(result=="0"){
                 alert("注册成功");

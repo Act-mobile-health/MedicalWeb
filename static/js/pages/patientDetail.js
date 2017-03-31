@@ -6,7 +6,7 @@
         $.getUrlParam = function (name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
+            if (r != null) return unescape(r[2].replace("/","")); return null;
         }
   })(jQuery);
     var data = new Array();
@@ -156,6 +156,7 @@ $(document).ready(function () {
     function appendPatientDetail() {
                 item = patientinfo[0];
 
+                $("#PatientInfo input[name='id']").val(item.id);
                 $("#PatientInfo input[name='P_id']").val(item.P_id);
                 $("#PatientInfo input[name='name']").val(item.name);
                 $("#PatientInfo input[name='sign'][value='"+item.sign+"']").attr('checked',true);
