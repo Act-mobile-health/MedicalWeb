@@ -33,6 +33,7 @@
 		<link href="/static/css/style.css" rel="stylesheet" />
 		<link href="/static/css/add-ons.min.css" rel="stylesheet" />
 		<link href="/static/css/mycss.css" rel="stylesheet" />
+		<link href="/static/css/mycss1.css" rel="stylesheet" />
 
 		<!-- end: CSS file-->
 
@@ -276,16 +277,10 @@
 											<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 										</a>
 									</li>
-									<li class="nav-parent">
-										<a >
+									<li>
+										<a href="/patientInfos/">
 											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
 										</a>
-										<ul class="nav nav-children">
-											<li><a href="/patientInfos/"><span class="text"> 所有患者信息</span></a></li>
-											<li><a href="/group/1/"><span class="text"> 实验组1</span></a></li>
-											<li><a href="/group/2/"><span class="text"> 实验组2</span></a></li>
-											<li><a href="/group/3/"><span class="text"> 实验组3</span></a></li>
-										</ul>
 									</li>
 									<li>
 										<a href="/add/outpatientInfos/">
@@ -364,11 +359,11 @@
 										<div class="col-md-4 text-left bk-vcenter">
 											<h4 class="bk-margin-off">实验组信息</h4>
 										</div>
-                                        <div class="panel-actions col-md-2 text-right">
-                                            <a  id="refresh"><i class="fa fa-rotate-right"></i></a>
-                                            <a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                        <div class="panel-actions col-md-4 text-right">
                                             <a  data-toggle="modal" onclick="editExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-edit"></i></a>
-                                        </div>
+                                        	<a  onclick="deleteGroup()"><i class="fa fa-times"></i></a>
+											<a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+										</div>
 
 									</div>
 								</div>
@@ -403,8 +398,8 @@
 											<h4 class="bk-margin-off">实验组患者</h4>
 										</div>
                                         <div class="panel-actions col-md-2 text-right">
-                                            <a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
                                             <a  ><i class="fa fa-edit"></i></a>
+                                            <a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
                                         </div>
 
 									</div>
@@ -414,13 +409,15 @@
                                         <table class="table" id="patient" style="text-indent:2em;text-align:center;color:black;">
                                             <thead>
                                             <tr>
-                                                <th style="width:15%;text-align:center;">患者编号</th>
-                                                <th style="width:15%;text-align:center;">姓名</th>
-                                                <th style="width:15%;text-align:center;">入组时间</th>
-                                                <th style="width:15%;text-align:center;">健康状况</th>
-                                                <th style="width:10%;text-align:center;">性别</th>
-                                                <th style="width:10%;text-align:center;">年龄</th>
-                                                <th style="width:10%;text-align:center;">查看</th>
+                                                <th style="width:10%;text-align:center;">患者编号</th>
+                                                <th style="width:10%;text-align:center;">姓名</th>
+                                                <th style="width:8%;text-align:center;">性别</th>
+                                                <th style="width:8%;text-align:center;">年龄</th>
+                                                <th style="width:10%;text-align:center;">门诊次数</th>
+                                                <th style="width:10%;text-align:center;">急诊次数</th>
+                                                <th style="width:10%;text-align:center;">住院次数</th>
+                                                <th style="width:10%;text-align:center;">健康状况</th>
+                                                <th style="width:14%;text-align:center;">入组时间</th>
                                                 <th style="width:10%;text-align:center;">删除</th>
                                             </tr>
                                             </thead>
@@ -429,14 +426,12 @@
                                         </table>
                                     </div>
 							    </div>
-                                <div class="row col-lg-2 col-md-2 ">
+                                <div class="row col-lg-3 col-md-3 text-left">
                                 <a  data-toggle="modal" onclick="addPatientIntoGroup()" href="#patientList" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加患者入组</a>
                                 </div>
 						    </div>
 					    </div>
-
                     </div>
-
 				</div>
 				</div>
                 </div>
@@ -448,18 +443,33 @@
 
 		<!--<a class="btn btn-primary" data-toggle="modal" href="#modal-id">Trigger modal</a>-->
 		<div class="modal fade" id="patientList">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times</button>
 						<h4 class="modal-title">患者</h4>
 					</div>
 					<div class="modal-body">
-						Modal body ...
+						<form method="post" class="form" role="form" id="addPatientIntoGroup">
+							<table class="table" id="addpatient" style="text-indent:2em;text-align:center;color:black;">
+								<thead>
+								<tr>
+									<th style="width:10%;text-align:center;"></th>
+									<th style="width:15%;text-align:center;">患者编号</th>
+									<th style="width:15%;text-align:center;">姓名</th>
+									<th style="width:15%;text-align:center;">健康状况</th>
+									<th style="width:10%;text-align:center;">性别</th>
+									<th style="width:10%;text-align:center;">年龄</th>
+								</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" id="addPatientIntoGroupbt" class="btn btn-primary">保存</button>
+						<button type="button" id="addPatientIntoGroupbt" class="btn btn-primary" data-dismiss="modal">提交</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -469,7 +479,7 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times</button>
 						<h4 class="modal-title" style="color:black">实验组</h4>
 					</div>
 					<div class="modal-body">
@@ -536,6 +546,7 @@
 
 
 		<script src="/static/js/pages/group.js"></script>
+		<script src="/static/js/pages/group_sidebar.js"></script>
 
 		<!-- end: JavaScript-->
 

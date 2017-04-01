@@ -11,6 +11,14 @@ def forCheckbox(data, attr):
         tempstr = tempstr + str(item)
     return tempstr
 
+def forCheckbox2(data, attr):
+    temp = dict(data.iterlists())
+    json_data = temp[attr]
+    tempstr = []
+    for item in json_data:
+        tempstr.append(item)
+    return tempstr
+
 def exceptionRecord(a,b,c):
     print str(c)+"EXP!!!!!"+b
 

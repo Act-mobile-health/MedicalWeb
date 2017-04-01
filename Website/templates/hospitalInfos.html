@@ -277,16 +277,10 @@
 											<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 										</a>
 									</li>
-									<li class="nav-parent">
-										<a >
+									<li>
+										<a href="/patientInfos/">
 											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
 										</a>
-										<ul class="nav nav-children">
-											<li><a href="/patientInfos/"><span class="text"> 所有患者信息</span></a></li>
-											<li><a href="/group/1/"><span class="text"> 实验组1</span></a></li>
-											<li><a href="/group/2/"><span class="text"> 实验组2</span></a></li>
-											<li><a href="/group/3/"><span class="text"> 实验组3</span></a></li>
-										</ul>
 									</li>
 									<li>
 										<a href="/add/outpatientInfos/">
@@ -307,6 +301,17 @@
 										<a href="/pending/">
 											<i class="fa fa-picture-o" aria-hidden="true"></i><span>待处理事项</span>
 										</a>
+									</li>
+									<li class="nav-parent">
+										<a >
+											<i class="fa fa-copy" aria-hidden="true"></i><span>实验组</span>
+										</a>
+										<ul class="nav nav-children" id="experimentGroup">
+
+										</ul>
+									</li>
+									<li>
+										<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-picture-o" aria-hidden="true"></i> 添加实验组</span></a>
 									</li>
 								</ul>
 							</nav>
@@ -621,6 +626,46 @@
 				<!-- End Main Page -->
 		</div><!--/container-->
 
+
+		<div class="modal fade" id="ExperimentGroupDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" style="color:black">实验组</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" method="post"  role="form" id="ExperimentGroupInfo">
+								{% csrf_token %}
+                            <div class="form-group">
+                                <label  class="col-md-2  mylabel">实验组编号</label>
+                                <div class="col-md-2"><input type="text" class="form-control myinput " name="G_id" id="G_id" readonly="true"></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2  mylabel">名称</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="name" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2 mylabel">创建时间</label>
+                                <div class="col-md-3"><input type="date" class="form-control myinput" name="date"></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2 mylabel">创建者</label>
+                                <div class="col-md-2"><input type="text" class="form-control myinput" name="D_id" readonly="true"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 mylabel">描述</label>
+                                <div class="col-md-8"><textarea class="form-control myinput" name="description"></textarea></div>
+                            </div>
+                         </form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" id = "experimentGroupbt" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
 		<!-- start: JavaScript-->
 
 		<!-- Vendor JS-->
@@ -634,7 +679,9 @@
 		<!-- Theme JS -->
 		<script src="/static/js/jquery.mmenu.min.js"></script>
 		<script src="/static/js/core.min.js"></script>
+
 		<script src="/static/js/pages/hospital.js"></script>
+		<script src="/static/js/pages/group_sidebar.js"></script>
 
 		<!-- Pages JS -->
 

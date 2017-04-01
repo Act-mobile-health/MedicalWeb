@@ -63,12 +63,7 @@ urlpatterns = [
     url(r'^i6/',view.getDoctorDetailedInfo),
     url(r'^i7/',view.updateDoctorInfo),
 
-    url(r'^i8/',view.getExpGroups),
-    url(r'^i9/',view.getExpGroupPatientsInfo),
     # url(r'^i10/',view.addExpGroup),
-    url(r'^i11/',view.deleteExpGroup),
-    url(r'^i13/',view.addPatientToExpGroup),
-    url(r'^i14/',view.removePatientfromExpGroup),
 
     url(r'^i15/',view.getPatientsBasicInfo),
     url(r'^i16/',view.getPatientDetailedInfo),
@@ -105,6 +100,10 @@ urlpatterns = [
     url(r'^i38/',view.addOrUpdateExpGroup),
     url(r'^i39/',view.getOneExpGroupInfo),
     url(r'^i40/',view.getPatientGroupInfo),
+    url(r'^i41/',view.deleteExpGroup),
+    url(r'^i42/',view.getExpGroupPatientsInfo),
+    url(r'^i43/',view.addPatientToExpGroup),
+    url(r'^i44/',view.removePatientfromExpGroup),
 
     # url(r'^i18/',view.updatePatientInfo),
 ]

@@ -38,7 +38,7 @@ $(document).ready(function () {
                         "<td>"+item.sex+"</td>"+
                         "<td>"+item.age+"</td>"+
                         "<td>"+item.health+"</td>"+
-                        "<td><a href=\"/patientDetails/?P_id="+item.P_id+"\">查看详情</a></td>"+
+                        "<td><a href=\"/patientDetails/?P_id="+item.P_id+"\" style='color:black;'>查看详情</a></td>"+
                     "</tr>");
             });
         });

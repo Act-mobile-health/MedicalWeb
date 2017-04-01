@@ -170,6 +170,7 @@ def getExpGroupPatientsInfo(request):
         message = select.getExpGroupPatientsInfo(int(data['G_id']))
         # message = tools.toString(message)
         js = json.dumps(message)
+        print js
         return HttpResponse(js)
 
 @login_required
@@ -220,25 +221,29 @@ def deleteExpGroup(request):
             message['result'] = 0
         else:
             message['result'] = -1
-        # message = tools.toString(message)
+        message = tools.toString(message)
         js = json.dumps(message)
         return HttpResponse(js)
 
 
-
+# for add
 @login_required
 @csrf_exempt
 def getPatientGroupInfo(request):
     if request.method == 'GET':
         message = {}
         list =[]
-        patientlist = []
+        pglist =[]
         data = request.GET
         D_id = request.session['_auth_user_id']
         G_id = data['G_id']
-        pglist = select.getExpGroupPatientsID(G_id)
+        temp = select.getExpGroupPatientsID(G_id)
+        for item in temp:
+            pglist.append(item[0])
         patientlist = select.getPatientsBasicInfo()
+        print patientlist
         for patient in patientlist:
+            print patient['P_id'],"patient"
             if patient['P_id'] not in pglist:
                 list.append(patient)
 
@@ -253,11 +258,12 @@ def addPatientToExpGroup(request):
     if request.method == 'POST':
         message = {}
         data = request.POST
-        if insert.addPatientToExpGroup(int(data['G_id']),data['P_id']):
+        data1 = tools.forCheckbox2(data, 'add')
+        if insert.addPatientToExpGroup(int(data['G_id']),data1):
             message['result'] = 0
         else:
             message['result'] = -1
-        # message = tools.toString(message)
+        message = tools.toString(message)
         js = json.dumps(message)
         return HttpResponse(js)
 
@@ -265,14 +271,14 @@ def addPatientToExpGroup(request):
 @login_required
 @csrf_exempt
 def removePatientfromExpGroup(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         message = {}
-        data = request.POST
+        data = request.GET
         if delete.removePatientfromExpGroup(int(data['G_id']),data['P_id']):
             message['result'] = 0
         else:
             message['result'] = -1
-        # message = tools.toString(message)
+        message = tools.toString(message)
         js = json.dumps(message)
         return HttpResponse(js)
 

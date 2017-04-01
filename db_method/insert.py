@@ -47,11 +47,12 @@ def addExpGroup(D_id,name,info,date):
 # 向实验组中添加患者
 #注意判断一下各种id的正确性
 # 成功返回True，失败返回False
-def addPatientToExpGroup(G_id,P_id):
+def addPatientToExpGroup(G_id, data):
     # TODO
     try:
-        newObj = PatientGroup(G_id=G_id,P_id=P_id)
-        newObj.save()
+        for item in data:
+            newObj = PatientGroup(G_id=G_id, P_id=item)
+            newObj.save()
         return True
     except Exception, e:         
         tools.exceptionRecord('insert.py','addPatientToExpGroup',e)

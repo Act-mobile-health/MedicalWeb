@@ -151,17 +151,19 @@ def getExpGroupPatientsInfo(G_id):
     message = {}
     try:
         patient_ids = PatientGroup.objects.filter(G_id=G_id).values_list('P_id')
-        keys = ['P_id', 'name', 'sex', 'age']
+        keys = ['P_id', 'name', 'sex', 'age', 'date']
         for patient_id in patient_ids:
-            obj = PatientInfo.objects.get(P_id=patient_id)
+            obj = PatientInfo.objects.get(P_id=patient_id[0])
+            obj2 = PatientGroup.objects.get(P_id=patient_id[0],G_id=G_id)
             value = []
             value.append(obj.P_id)
             value.append(obj.name)
             value.append(obj.sex)
             value.append(obj.age)
+            value.append(str(obj2.date))
             message = tools.dictPackage(keys, value)
 
-            times = MedicalVisit.objects.get(P_id=patient_id)
+            times = MedicalVisit.objects.get(P_id=patient_id[0])
             message['o_time'] = times.o_time
             message['e_time'] = times.e_time
             message['h_time'] = times.h_time
