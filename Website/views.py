@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 import MySQLdb
 import datetime,json
 from django.http import HttpResponse
+from django.contrib import auth
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -76,3 +77,7 @@ def temp1(request):
     print request.GET['P_id']
     return HttpResponse(json.dumps([{"P_id":request.GET['P_id']}]))
 
+@login_required
+def logout(request):
+    auth.logout(request)
+    return render(request,"page-login.html")

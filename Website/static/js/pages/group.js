@@ -108,7 +108,7 @@ $(document).ready(function(){
 
     function deleteGroup(){
         if (confirm("确定删除吗？")){
-            $.getJSON("/i41/",{G_id:G_id},function(data){
+            $.post("/i41/",{G_id:G_id},function(data){
                 var result = JSON.parse(data).result;
                 if(result =="0"){
                     alert("删除成功");

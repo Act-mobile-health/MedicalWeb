@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^register/$', register),
     url(r'^pending/$', pending),
     url(r'^group/$', group),
+    url(r'^logout/$', logout),
     url(r'^p/p/$', temp1),
 
 
