@@ -20,7 +20,6 @@
     var index = 0;
 $(document).ready(function () {
 
-
     PatientDetailTable();
     showRelationInfo();
 //    $("#refresh").click(function () {
@@ -150,53 +149,63 @@ $(document).ready(function () {
                 else if(result=="-1")
                     alert("修改失败");
             });
+            PatientDetailTable();
         }
     }
 
     function appendPatientDetail() {
-                item = patientinfo[0];
+        $.getJSON('/i16/',{P_id:patientId},function (json_data) {
+            item = json_data;
+            $("#PatientInfo input[name='id']").val(item.id);
+            $("#PatientInfo input[name='P_id']").val(item.P_id);
+            $("#PatientInfo input[name='name']").val(item.name);
+            $("#PatientInfo input[name='sign'][value='"+item.sign+"']").attr('checked',true);
 
-                $("#PatientInfo input[name='id']").val(item.id);
-                $("#PatientInfo input[name='P_id']").val(item.P_id);
-                $("#PatientInfo input[name='name']").val(item.name);
-                $("#PatientInfo input[name='sign'][value='"+item.sign+"']").attr('checked',true);
+            $("#PatientInfo input[name='age']").val(item.age);
+            $("#PatientInfo input[name='nation']").val(item.nation);
+            $("#PatientInfo input[name='height']").val(item.height);
+            $("#PatientInfo input[name='weight']").val(item.weight);
+            $("#PatientInfo input[name='education']").val(item.education);
+            $("#PatientInfo input[name='career']").val(item.career);
+            $("#PatientInfo input[name='marriage']").val(item.marriage);
+            $("#PatientInfo input[name='registerTime']").val(item.registerTime);
+            $("#PatientInfo input[name='birthday']").val(item.birthday);
+            $("#PatientInfo input[name='homeAddr']").val(item.homeAddr);
+            $("#PatientInfo input[name='birthAddr']").val(item.birthAddr);
+            $("#PatientInfo input[name='activityAddr1']").val(item.activityAddr1);
+            $("#PatientInfo input[name='activityAddr2']").val(item.activityAddr2);
+            $("#PatientInfo input[name='actionAddr']").val(item.actionAddr);
+            $("#PatientInfo input[name='diastolicPressure']").val(item.diastolicPressure);
+            $("#PatientInfo input[name='systolicPressure']").val(item.systolicPressure);
+            $("#PatientInfo input[name='neckCircu']").val(item.neckCircu);
+            $("#PatientInfo input[name='telephone']").val(item.telephone);
+            $("#PatientInfo input[name='cellphone']").val(item.cellphone);
+            $("#PatientInfo input[name='partnerPhone']").val(item.partnerPhone);
 
-                $("#PatientInfo input[name='age']").val(item.age);
-                $("#PatientInfo input[name='nation']").val(item.nation);
-                $("#PatientInfo input[name='height']").val(item.height);
-                $("#PatientInfo input[name='weight']").val(item.weight);
-                $("#PatientInfo input[name='education']").val(item.education);
-                $("#PatientInfo input[name='career']").val(item.career);
-                $("#PatientInfo input[name='marriage']").val(item.marriage);
-                $("#PatientInfo input[name='registerTime']").val(item.registerTime);
-                $("#PatientInfo input[name='birthday']").val(item.birthday);
-                $("#PatientInfo input[name='homeAddr']").val(item.homeAddr);
-                $("#PatientInfo input[name='birthAddr']").val(item.birthAddr);
-                $("#PatientInfo input[name='activityAddr1']").val(item.activityAddr1);
-                $("#PatientInfo input[name='activityAddr2']").val(item.activityAddr2);
-                $("#PatientInfo input[name='actionAddr']").val(item.actionAddr);
-                $("#PatientInfo input[name='diastolicPressure']").val(item.diastolicPressure);
-                $("#PatientInfo input[name='systolicPressure']").val(item.systolicPressure);
-                $("#PatientInfo input[name='neckCircu']").val(item.neckCircu);
-                $("#PatientInfo input[name='telephone']").val(item.telephone);
-                $("#PatientInfo input[name='cellphone']").val(item.cellphone);
-                $("#PatientInfo input[name='partnerPhone']").val(item.partnerPhone);
-
-                $("#PatientInfo input[name='payment'][value='"+item.payment+"']").attr('checked',true);
-                $("#PatientInfo input[name='sex'][value='"+item.sex+"']").attr('checked',true);
+            $("#PatientInfo input[name='payment'][value='"+item.payment+"']").attr('checked',true);
+            $("#PatientInfo input[name='sex'][value='"+item.sex+"']").attr('checked',true);
+            });
     }
 
     //查看患者家属信息
     function showRelationInfo(){
+        data = [];
         $("#RelationInfoTable tbody").empty();
         $.getJSON('/i18/',{"P_id":patientId},function (json_data){
             $.each(json_data,function (index,item){
                 data.push(item);
+                var temp ="";
+                if(item.sex=="1"){
+                    temp = "男";
+                }
+                else{
+                    temp = "女";
+                }
                 $("#RelationInfoTable tbody").append(
                     "<tr>"+
                         "'<td>"+item.R_id+"</td>'"+
                         "'<td>"+item.name+"</td>'"+
-                        "'<td>"+item.sex+"</td>'"+
+                        "'<td>"+temp+"</td>'"+
                         "'<td>"+item.telephone+"</td>'"+
                         "'<td>"+item.cellphone+"</td>'"+
                         "'<td>"+item.weChat+"</td>'"+
@@ -211,7 +220,7 @@ $(document).ready(function () {
     //修改病人家属信息
 
     function editRelationInfo(index){
-
+        console.log(data)
         $("#RelationInfo input[name='R_id']").val(data[index].R_id);
         $("#RelationInfo input[name='weChat']").val(data[index].weChat);
         $("#RelationInfo input[name='name']").val(data[index].name);
@@ -219,7 +228,8 @@ $(document).ready(function () {
         $("#RelationInfo input[name='cellphone']").val(data[index].cellphone);
         $("#RelationInfo input[name='mail']").val(data[index].mail);
         $("#RelationInfo input[name='homeAddr']").val(data[index].homeAddr);
-        $("#RelationInfo input[name='sex'][value='"+data[index].sex+"']").attr('checked',true);
+        $("#RelationInfo input[name='sex']").val(data[index].sex);
+//        $("#RelationInfo input[name='sex'][value='"+data[index].sex+"']").attr('checked',true);
     }
 
     //删除患者家属信息
@@ -245,6 +255,7 @@ $(document).ready(function () {
     }
     function submitRelationInfo() {
         if (confirm("确定提交吗？")){
+            console.log($("#RelationInfo").serialize());
             $.post("/i19/",$("#RelationInfo").serialize()+"&P_id="+patientId,function (data) {
                 var result = JSON.parse(data).result;
                 if(result=="0")
@@ -286,7 +297,7 @@ $(document).ready(function () {
 			   '<div class="panel-heading bk-bg-primary">'+
 			   '<h6><i class="fa fa-tags red"></i>'+temp_name+'记录'+index+'</h6>'+
 			   '<div class="panel-actions">'+
-				'<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>'+
+//				'<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>'+
 				'<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>'+
                 '<a  data-toggle="modal" onclick = "editInfo('+index+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
 				'<a href="#" onclick = "deleteInfo('+index+')" class="btn-close"><i class="fa fa-times"></i></a>'+
@@ -448,6 +459,7 @@ $(document).ready(function () {
 			  '<th class="table-small" style="text-align:center">上传者</th>'+
 			  '<th style="text-align:center">描述</th>'+
 			  '<th class="table-small" style="text-align:center">查看</th>'+
+			  '<th class="table-small" style="text-align:center">上传</th>'+
 			  '<th class="table-small" style="text-align:center">编辑</th>'+
 			  '<th class="table-small" style="text-align:center">删除</th>'+
 			  '</tr>'+
@@ -1233,6 +1245,7 @@ $(document).ready(function () {
                         "<td>"+item.D_id+"</td>"+
                         "<td>"+item.description+"</td>"+
                         "<td>"+item.name+"</td>"+
+                        '<td><a  data-toggle="modal" href="#uploadImageDetails" ><i class=\"fa fa-edit\"></i></td>'+
                         '<td><a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick="editAE('+item.AE_id+')"><i class=\"fa fa-edit\"></i></td>'+
                         '<td><a  data-toggle="modal" onclick="deleteAorAE('+item.AE_id+',0'+')"><i class=\"fa fa-times\"></td>'+
                     "</tr>"
@@ -1285,6 +1298,7 @@ $(document).ready(function () {
         if(kind=="0"){
             str = $("#AccessoryExamination").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index]+"&kind="+"0";
             console.log("000");
+            console.log($("#AccessoryExamination").serialize());
         }
         else{
         console.log("111");

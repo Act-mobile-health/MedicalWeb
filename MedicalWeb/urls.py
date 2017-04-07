@@ -13,11 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
-from django.contrib import admin
-
-from Website.views import test,index,addOutpatientInfos,addEmergencyInfos,addHospitalInfos,addPatientInfos,addESS,addMBQ,addClinicInfos
-
 from Website.views import *
 
 from django.conf.urls import url
@@ -92,6 +87,8 @@ urlpatterns = [
     url(r'^i33/',view.addOrUpdateAorAEDetailedInfo),
     url(r'^i34/',view.deleteAorAEDetailedInfo),
     url(r'^i35/',view.getOneAorAEDetailedInfo),
+
+
     url(r'^test2/',view.test2),
     url(r'^test1/',view.test),
 
@@ -106,5 +103,15 @@ urlpatterns = [
     url(r'^i43/',view.addPatientToExpGroup),
     url(r'^i44/',view.removePatientfromExpGroup),
 
+
+
+
+    url(r'^i45/',view.app_addOrUpdateCATTable),
+    url(r'^i46/',view.app_addOrUpdatePmExposureTable),
+    url(r'^i47/',view.app_addOrUpdateTrackInfoTable),
+    url(r'^i48/',view.app_addOrUpdateMedicineRegularTable),
+    url(r'^i49/',view.app_login),
+    url(r'^i51/',view.upload2),
+
     # url(r'^i18/',view.updatePatientInfo),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

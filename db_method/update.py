@@ -1,8 +1,10 @@
 # -*- coding:UTF-8 -*-
-from Website.models import UserInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination
-from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from control_method import tools
+
+from Website.models import UserInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,\
+    EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination,CATandMRC,\
+    PmExposure,TrackInfo,MedicineRegular,MedicineChange,MedicineRecord
 #修改指定医生信息
 #data为医生新的信息，包括D_id
 #修改成功返回True,否则返回False
@@ -361,7 +363,7 @@ def updateQuestionnaireInfo(kind,S_id,data):
 
 
 #修改附件信息
-def updateAttachInfo(A_id, D_id, S_id, data):
+def updateAttachInfo(A_id, D_id, S_id, data, doc):
     try:
         obj = AttachInfo.objects.get(id = A_id)
         # obj.P_id = data['P_id']
@@ -371,8 +373,8 @@ def updateAttachInfo(A_id, D_id, S_id, data):
         # obj.S_id = S_id
         # obj.D_id = D_id
         obj.description = data['description']
-        #TODO
-        # img context没有加
+        if doc != None :
+            obj.doc = doc
         obj.save()
         return True
     except Exception, e:
@@ -381,7 +383,7 @@ def updateAttachInfo(A_id, D_id, S_id, data):
 
 
 #修改附件信息
-def updateAccessoryExamination(AE_id, D_id, S_id, data):
+def updateAccessoryExamination(AE_id, D_id, S_id, data, doc):
     try:
         obj = AccessoryExamination.objects.get(id = AE_id)
         # obj.S_id = S_id
@@ -390,9 +392,110 @@ def updateAccessoryExamination(AE_id, D_id, S_id, data):
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.AE_type = data['AE_type']
         obj.description = data['description']
-        # obj.D_id = D_id
+        if doc != None :
+            obj.doc = doc
         obj.save()
         return True
     except Exception, e:
         tools.exceptionRecord('update.py','updateAccessoryExamination',e)
         return False
+
+
+#update CAT && MRC Table
+def updateCATandMRC(data):
+    try:
+        obj = CATandMRC.objects.get(id = int(data['id']))
+        obj.P_id = data['P_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.cat1 = data['cat1']
+        obj.cat2 = data['cat2']
+        obj.cat3 = data['cat3']
+        obj.cat4 = data['cat4']
+        obj.cat5 = data['cat5']
+        obj.cat6 = data['cat6']
+        obj.cat7 = data['cat7']
+        obj.cat8 = data['cat8']
+        obj.catSum = data['catSum']
+        obj.mrc = data['mrc']
+        obj.acuteExac = data['acuteExac']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateCATandMRC',e)
+        return -1
+
+#update PmExposure Table
+def updatePmExposure(data):
+    try:
+        obj = PmExposure.objects.get(id = int(data['id']))
+        obj.P_id = data['P_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.exposure = data['exposure']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updatePmExposure',e)
+        return -1
+
+#update TrackInfo Table
+def updateTrackInfo(data):
+    #TODO
+    #上次文件存储问题
+    try:
+        obj = TrackInfo.objects.get(id = int(data['id']))
+        obj.P_id = data['P_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.name = data['name']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateTrackInfo',e)
+        return -1
+
+
+#update MedicineRegular Table
+def updateMedicineRegular(data):
+    try:
+        obj = MedicineRegular.objects.get(id = int(data['id']))
+        obj.P_id = data['P_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.regular = data['regular']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMedicineRegular',e)
+        return -1
+
+#update MedicineChange Table
+def updateMedicineChange(data):
+    try:
+        obj = MedicineChange.objects.get(id = int(data['id']))
+        obj.P_id = data['P_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.regular = data['change']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMedicineChange',e)
+        return -1
+
+#update MedicineRecord Table
+def updateMedicineRecord(data):
+    try:
+        obj = MedicineRecord.objects.get(id = int(data['id']))
+        obj.MC_id = data['MC_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.medicine = data['medicine']
+        obj.name = data['name']
+        obj.producer = data['producer']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMedicineRecord',e)
+        return -1

@@ -8,6 +8,9 @@ from db_method import insert,select,update,delete
 from control_method import tools
 from django.shortcuts import render
 from django.contrib import auth
+from Website.models import AttachInfo
+from django.conf import settings
+import datetime, random
 
 
 #接口1
@@ -155,6 +158,7 @@ def getExpGroups(request):
         data = {}
         message = []
         D_id = request.session['_auth_user_id']
+        print D_id
         message = select.getExpGroups(D_id)
         # message = tools.toString(message)
         js = json.dumps(message)
@@ -613,10 +617,8 @@ def getQuestionnaireDetailedInfo(request):
         data = request.GET
         print data
         message = {}
-        
         D_id = request.session['_auth_user_id']
         message = select.getDetailedQuestionnaireInfo(int(data['type']),int(data['id']))
-
         # message = tools.toString(message)
         js = json.dumps(message)
         print js
@@ -632,17 +634,14 @@ def addOrUpdateClinicInfo(request):
         data = request.POST
         print data
         message = {'result': -1}
-        
         D_id = request.session['_auth_user_id']
         S_id = int(data['S_id'])
-
         if data['Cli_id'] == '':
             if insert.addClinicInfo(S_id,data):
                 message['result'] = 0
         else:
             if update.updateClinicInfo(data):
                 message['result'] = 0
-
         # message = tools.toString(message)
         js = json.dumps(message)
         return HttpResponse(js)
@@ -676,46 +675,6 @@ def addOrUpdateQuestionnaireInfo(request):
         js = json.dumps(message)
         return HttpResponse(js)
 
-
-# 接口32
-# @login_required
-@csrf_exempt
-# def updateClinicInfo(request):
-#     if request.method == 'POST':
-#         data = request.POST
-#         message = {'result': -1}
-#         
-#             D_id = request.session['_auth_user_id']
-#             S_id = int(data['S_id'])
-#             if update.updateClinicInfo(S_id,data):
-#                 message['result'] = 0
-#
-#             # message = tools.toString(message)
-#             js = json.dumps(message)
-#             return HttpResponse(js)
-#         else:
-#             
-
-# 接口33
-# @login_required
-@csrf_exempt
-# def updateQuestionnaireInfo(request):
-#     if request.method == 'POST':
-#         data = request.POST
-#         message = {'result': -1}
-#         
-#             D_id = request.session['_auth_user_id']
-#             S_id = int(data['S_id'])
-#             kind = int(data['kind'])
-#             if update.updateQuestionnaireInfo(kind,S_id,data):
-#                 message['result'] = 0
-#
-#             # message = tools.toString(message)
-#             js = json.dumps(message)
-#             return HttpResponse(js)
-#         else:
-#             
-
 # 接口34
 @login_required
 @csrf_exempt
@@ -726,7 +685,6 @@ def deleteClinicInfo(request):
         D_id = request.session['_auth_user_id']
         if delete.deleteClinicInfo(int(data['Cli_id'])):
             message['result'] = 0
-
         message = tools.toString(message)
         js = json.dumps(message)
         return HttpResponse(js)
@@ -740,11 +698,9 @@ def deleteQuestionnaireInfo(request):
         data = request.GET
         print data
         message = {'result': -1}
-        
         D_id = request.session['_auth_user_id']
         if delete.deleteQuestionnaireInfo(int(data['kind']),int(data['id'])):
             message['result'] = 0
-
         # message = tools.toString(message)
         js = json.dumps(message)
         print js
@@ -759,14 +715,11 @@ def getAorAEDetailedInfo(request):
     if request.method == 'GET':
         data = request.GET
         message = []
-        
         D_id = request.session['_auth_user_id']
         if int(data['kind']) == 0:
             message = select.getDetailedAccessoryExamination(data['type'],int(data['S_id']))
         else:
             message = select.getDetailedAttachInfos(data['type'],int(data['S_id']))
-
-        # message = tools.toString(message)
         js = json.dumps(message)
         return HttpResponse(js)
 
@@ -798,53 +751,31 @@ def addOrUpdateAorAEDetailedInfo(request):
     if request.method == 'POST':
         data = request.POST
         print data
+        myFile = request.FILES.get("myimage",None)
+        print myFile
         message = {'result': -1}
-        
-        D_id = request.session['_auth_user_id']
         S_id = int(data['S_id'])
-
+        D_id = request.session['_auth_user_id']
         if ('A_id' in data and data['A_id']=='') or \
             ('AE_id' in data and data['AE_id']=='') :
+            if not myFile:
+                return HttpResponse("no files for upload!")
             if int(data['kind']) == 0:
-                if insert.addAccessoryExamination(D_id,S_id,data):
+                if insert.addAccessoryExamination(D_id, S_id, data, myFile):
                     message['result'] = 0
             else:
-                if insert.addAttachInfo(D_id,S_id,data):
+                if insert.addAttachInfo(D_id, S_id, data, myFile):
                     message['result'] = 0
         else:
             if int(data['kind']) == 0:
-                if update.updateAccessoryExamination(int(data['AE_id']), D_id, S_id, data):
+                if update.updateAccessoryExamination(int(data['AE_id']), D_id, S_id, data, myFile):
                     message['result'] = 0
             else:
-                if update.updateAttachInfo(int(data['A_id']), D_id, S_id, data):
+                if update.updateAttachInfo(int(data['A_id']), D_id, S_id, data, myFile):
                     message['result'] = 0
 
-        #message = tools.toString(message)
         js = json.dumps(message)
         return HttpResponse(js)
-
-# 接口38
-# @login_required
-@csrf_exempt
-# def updateAorAEDetailedInfo(request):
-#     if request.method == 'POST':
-#         data = request.POST
-#         message = {'result': -1}
-#         
-#             D_id = request.session['_auth_user_id']
-#             S_id = int(data['S_id'])
-#             if int(data['kind']) == 0:
-#                 if update.updateAccessoryExamination(int(data['id']),D_id,S_id,data):
-#                     message['result'] = 0
-#             else:
-#                 if update.updateAttachInfo(int(data['id']),D_id,S_id,data):
-#                     message['result'] = 0
-#
-#             # message = tools.toString(message)
-#             js = json.dumps(message)
-#             return HttpResponse(js)
-#         else:
-#             
 
 # 接口39
 @login_required
@@ -924,14 +855,113 @@ def getPatientName(request):
         data = request.GET
         print data
         message = {}
-        
         D_id = request.session['_auth_user_id']
         message = select.getPatientName(data['P_id'])
-
-        # message = tools.toString(message)
         js = json.dumps(message)
         return HttpResponse(js)
 
+
+
+#APP interface 1
+@csrf_exempt
+def app_login(request):
+    if request.method == 'POST':
+        data = request.POST
+        print data,"loginnnnnnnnn"
+        message = {}
+        message['result'] = select.patientLogin(data['P_id'],data['password'])
+        return HttpResponse(json.dumps(message))
+
+
+#APP interface 2
+@csrf_exempt
+def app_addOrUpdateCATTable(request):
+    if request.method == 'POST':
+        data = request.POST
+        print data,"CATTTTTTTTTTTTTTTT"
+        message = {'result':'-1','id':'-1'}
+        if data['id'] == '':
+            message['id'] = insert.addCATandMRC(data)
+        else:
+            message['id'] = update.updateCATandMRC(data)
+        if message['id'] != -1:
+            message['result'] = '0'
+
+        return HttpResponse(json.dumps(message))
+
+#APP interface 3
+@csrf_exempt
+def app_addOrUpdatePmExposureTable(request):
+    if request.method == 'POST':
+        data = request.POST
+        print data, "PMEEEEEEEEEEEEEE"
+        message = {'result': '-1', 'id': '-1'}
+        if data['id'] == '':
+            message['id'] = insert.addPmExposure(data)
+        else:
+            message['id'] = update.updatePmExposure(data)
+        if message['id'] != -1:
+            message['result'] = '0'
+        return HttpResponse(json.dumps(message))
+
+#APP interface 4
+@csrf_exempt
+def app_addOrUpdateTrackInfoTable(request):
+    if request.method == 'POST':
+        data = request.POST
+        print data, "Trackkkkkkkkkkkk"
+        message = {'result': '-1', 'id': '-1'}
+        if data['id'] == '':
+            message['id'] = insert.addTrackInfo(data)
+        else:
+            message['id'] = update.updateTrackInfo(data)
+        if message['id'] != -1:
+            message['result'] = '0'
+        return HttpResponse(json.dumps(message))
+
+
+#APP interface 5
+@csrf_exempt
+def app_addOrUpdateMedicineRegularTable(request):
+    if request.method == 'POST':
+        data = request.POST
+        print data,"Medicineeeeee"
+        message = {'result': '-1', 'id': '-1'}
+        if data['id'] == '':
+            message['id'] = insert.addMedicineRegular(data)
+        else:
+            message['id'] = update.updateMedicineRegular(data)
+        if message['id'] != -1:
+            message['result'] = '0'
+
+
+#APP interface 6
+@csrf_exempt
+def app_addOrUpdateMedicineChangeTable(request):
+    if request.method == 'POST':
+        data = request.POST
+        message = {'result': '-1', 'id': '-1'}
+        if data['id'] == '':
+            message['id'] = insert.addMedicineChange(data)
+        else:
+            message['id'] = update.updateMedicineChange(data)
+        if message['id'] != -1:
+            message['result'] = '0'
+        return HttpResponse(json.dumps(message))
+
+#APP interface 7
+@csrf_exempt
+def app_addOrUpdateMedicineRecordTable(request):
+    if request.method == 'POST':
+        data = request.POST
+        message = {'result': '-1', 'id': '-1'}
+        if data['id'] == '':
+            message['id'] = insert.addMedicineRecord(data)
+        else:
+            message['id'] = update.updateMedicineRecord(data)
+        if message['id'] != -1:
+            message['result'] = '0'
+        return HttpResponse(json.dumps(message))
 
 # 接口43
 @login_required
@@ -957,3 +987,17 @@ def test(request):
 def test2(request):
 
     return render(request,"form-dropzone.html")
+
+@csrf_exempt
+def upload2(request):
+    if request.method == 'POST':
+        data = request.POST
+        print data
+        myFile = request.FILES['upload_file']
+        D_id = int("4")
+        message = {'result': -1}
+        obj = AttachInfo(type ="0", name = tools.md5(str(random.randint(0,9))+str(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))),doc = myFile,date = datetime.datetime.strptime("2016-04-08", "%Y-%m-%d").date(), D_id = D_id, S_id = int("1"), P_id = "0000000001")
+        obj.save()
+        print request.FILES,"FILES"
+        js = json.dumps(message)
+        return HttpResponse(js)

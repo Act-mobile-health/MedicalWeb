@@ -159,12 +159,14 @@ class TrackInfo(models.Model):
 
 
 class AttachInfo(models.Model):
+
+    name = models.CharField(max_length=50)
+    doc = models.ImageField(upload_to="Attachment")
     P_id = models.CharField(max_length=10,null=False)
     date = models.DateField(blank=True)
     type = models.CharField(max_length=2)                # 0 OutPatientService   1 Emerg   2 InHospital
     S_id = models.IntegerField(null=False)
     D_id = models.IntegerField(null=False)
-    name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
     # source = models.CharField(max_length=32)
     # dir = models.CharField(max_length=50)
@@ -677,12 +679,14 @@ class SGRQ(models.Model):
 
 
 class AccessoryExamination(models.Model):
+
+    name = models.CharField(max_length=50)
+    doc = models.ImageField(upload_to="AE")
     P_id = models.CharField(max_length=10,null=False)
     type = models.CharField(max_length=2)  # 0 OutPatientService   1 Emerg   2 InHospital
     S_id = models.IntegerField(null=False)
     date = models.DateField(blank=True)
     AE_type = models.CharField(max_length=5)
-    name = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
     D_id = models.IntegerField(null=False)
 

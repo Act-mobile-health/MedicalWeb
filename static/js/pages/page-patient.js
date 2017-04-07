@@ -31,14 +31,21 @@ $(document).ready(function () {
     function appendAllPatientTable() {
         $.getJSON('/i15/',{},function (json_data) {
             $.each(json_data,function (index,item) {
+                var temp ="";
+                if(item.sex=="1"){
+                    temp = "男";
+                }
+                else{
+                    temp = "女";
+                }
                 $("#patientInfoTable tbody").append(
                     "<tr>"+
                         "<td>"+item.P_id+"</td>"+
                         "<td>"+item.name+"</td>"+
-                        "<td>"+item.sex+"</td>"+
+                        "<td>"+temp+"</td>"+
                         "<td>"+item.age+"</td>"+
                         "<td>"+item.health+"</td>"+
-                        "<td><a href=\"/patientDetails/?P_id="+item.P_id+"\">查看详情</a></td>"+
+                        "<td><a href=\"/patientDetails/?P_id="+item.P_id+"\" style='color:black;'>查看详情</a></td>"+
                     "</tr>");
             });
         });

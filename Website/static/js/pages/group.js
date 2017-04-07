@@ -15,11 +15,6 @@ $(document).ready(function(){
 
     showExperimentGroupTable();
     showPatient();
-
-    $("#experimentGroupbt").click(function(){
-        showExperimentGroupTable();
-    });
-
     $("#addPatientIntoGroupbt").click(function(){
         submitPatientId();
     });
@@ -55,11 +50,18 @@ $(document).ready(function(){
         $("#patient tbody").empty();
         $.getJSON("/i42/",{G_id:G_id},function(json_data){
             $.each(json_data,function(index,item){
+                var temp ="";
+                if(item.sex=="1"){
+                    temp = "男";
+                }
+                else{
+                    temp = "女";
+                }
                 $("#patient tbody").append(
                     "<tr>"+
                     "<td>"+item.P_id+"</td>"+
                     "<td>"+item.name+"</td>"+
-                    "<td>"+item.sex+"</td>"+
+                    "<td>"+temp+"</td>"+
                     "<td>"+item.age+"</td>"+
                     "<td>"+item.o_time+"</td>"+
                     "<td>"+item.e_time+"</td>"+
@@ -93,13 +95,20 @@ $(document).ready(function(){
         $("#addpatient tbody").empty();
         $.getJSON("/i40/",{G_id:G_id},function(json_data){
             $.each(json_data,function (index,item) {
+            var temp ="";
+            if(item.sex=="1"){
+                temp = "男";
+            }
+            else{
+                temp = "女";
+            }
             $("#addpatient tbody").append(
                 "<tr>"+
                     "<td><div class='checkbox'><input type='checkbox' name='add' value="+item.P_id+"></div></td>"+
                     "<td>"+item.P_id+"</td>"+
                     "<td>"+item.name+"</td>"+
                     "<td>"+index+"</td>"+
-                    "<td>"+item.sex+"</td>"+
+                    "<td>"+temp+"</td>"+
                     "<td>"+item.age+"</td>"+
                 "</tr>");
             });

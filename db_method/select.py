@@ -115,14 +115,14 @@ def getExpGroups(D_id):
     # TODO
     try:
         message = {}
-        values = GroupInfo.objects.filter(D_id = D_id).values_list('id','name','description','date', 'D_id')
+        values = GroupInfo.objects.filter().values_list('id','name','description','date', 'D_id')
         keys = ['G_id','name','description','date', 'D_id']
         for value in values:
             # value[3] = value[3].strftime("%Y-%m-%d")
             message = tools.dictPackage(keys, value)
             message['date'] = str(message['date'])
             list.append(message)
-
+        print list
     except Exception, e:
         tools.exceptionRecord('select.py','getExpGroups',e)
     return list
@@ -692,7 +692,10 @@ def getOneDetailedAttachInfos(A_id):
         value.append(obj.id)
         value.append(str(obj.date))
         value.append(obj.description)
-        keys = ['A_id', 'date', 'description']
+        value.append(obj.P_id)
+        value.append(str(obj.S_id))
+        value.append(obj.type)
+        keys = ['A_id', 'date', 'description', 'P_id', 'S_id', 'type']
 
         message = tools.dictPackage(keys, value)
 
@@ -707,8 +710,8 @@ def getDetailedAttachInfos(type, S_id):
     list = []
     message = {}
     try:
-        values = AttachInfo.objects.filter(type = type, S_id = S_id).values_list('id', 'date', 'D_id', 'name', 'description')
-        keys = ['A_id', 'date', 'D_id', 'name', 'description']
+        values = AttachInfo.objects.filter(type = type, S_id = S_id).values_list('id', 'date', 'D_id', 'name', 'description', 'doc')
+        keys = ['A_id', 'date', 'D_id', 'name', 'description', 'doc']
         for value in values:
             message = tools.dictPackage(keys, value)
             message['date'] = str(message['date'])
@@ -724,8 +727,8 @@ def getDetailedAccessoryExamination(type,S_id):
     list = []
     message = {}
     try:
-        values = AccessoryExamination.objects.filter(type = type, S_id = S_id).values_list('id', 'date', 'AE_type', 'name', 'description', 'D_id')
-        keys = ['AE_id', 'date', 'AE_type', 'name', 'description', 'D_id']
+        values = AccessoryExamination.objects.filter(type = type, S_id = S_id).values_list('id', 'date', 'AE_type', 'name', 'description', 'D_id', 'doc')
+        keys = ['AE_id', 'date', 'AE_type', 'name', 'description', 'D_id', 'doc']
         for value in values:
             message = tools.dictPackage(keys, value)
             message['date'] = str(message['date'])
@@ -746,7 +749,10 @@ def getOneDetailedAccessoryExamination(AE_id):
         value.append(str(obj.date))
         value.append(obj.AE_type)
         value.append(obj.description)
-        keys = ['AE_id', 'date', 'AE_type', 'description']
+        value.append(obj.P_id)
+        value.append(str(obj.S_id))
+        value.append(obj.type)
+        keys = ['AE_id', 'date', 'AE_type', 'description', 'P_id', 'S_id', 'type']
 
         message = tools.dictPackage(keys, value)
 
@@ -774,3 +780,17 @@ def getMsg2Weeks(P_id, type):
     except Exception, e:
         tools.exceptionRecord('select.py','getMsg2Weeks',e)
     return message
+
+
+def patientLogin(P_id,password):
+    result = '-3'
+    try:
+        patient = PatientInfo.objects.get(P_id = P_id)
+        if patient.password == password:
+            result =  '0'
+        else:
+            result = '-2'
+    except:
+        result = '-1'
+
+    return result

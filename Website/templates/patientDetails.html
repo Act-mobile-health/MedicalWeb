@@ -24,6 +24,8 @@
 		<link href="/static/plugins/jquery-ui/css/jquery-ui-1.10.4.min.css" rel="stylesheet" />
 		<link href="/static/plugins/xcharts/css/xcharts.min.css" rel="stylesheet" />
 
+		<link href="/static/plugins/dropzone/css/dropzone.css" rel="stylesheet" />
+
 		<!-- Theme CSS -->
 		<link href="/static/css/jquery.mmenu.css" rel="stylesheet" />
 
@@ -38,8 +40,8 @@
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		<!--my css by zyc-->
 
@@ -354,7 +356,7 @@
                                     <div class="panel-heading bk-bg-primary">
                                         <h6><i class="fa fa-table red"></i><span class="break"></span>详细信息</h6>
                                         <div class="panel-actions">
-                                            <a href="#" id="refresh" onclick="PatientDetailTable()"><i class="fa fa-rotate-right"></i></a>
+                                            <!--<a href="#" id="refresh" onclick="PatientDetailTable()"><i class="fa fa-rotate-right"></i></a>-->
                                             <a  data-toggle="modal" onclick="appendPatientDetail()" href="#PatientInfoDetails"><i class="fa fa-edit"></i></a>
                                             <a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
                                         </div>
@@ -447,9 +449,9 @@
                                     <div class="panel-heading bk-bg-primary">
                                         <h6><i class="fa fa-table red"></i><span class="break"></span>家属信息</h6>
                                         <div class="panel-actions">
-                                            <a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+                                            <!--<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>-->
                                             <a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                            <a href="#" class="btn-close"><i class="fa fa-times"></i></a>
+                                            <!--<a href="#" class="btn-close"><i class="fa fa-times"></i></a>-->
                                         </div>
                                     </div>
                                     <div class="panel-body">
@@ -3101,13 +3103,52 @@
                         <h4 class="modal-title">辅助检查</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form" id = "AccessoryExamination" method="post" role="form">
-                           	{% csrf_token %}
+                        <form enctype="multipart/form-data" class="form" id = "AccessoryExamination" method="post" role="form">
+                          	{% csrf_token %}
 							<div class="row">
-								<h2 class="myquestion" style="text-indent:2em;">编码：<input name="AE_id" type = "text" style="width:150px;text-align:center;" readonly/></h2>
-							</div>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >编码</label>
+                                    <div class="col-sm-6">
+                                      <input class = "myinput" name="AE_id" type = "text" style="width:150px;text-align:center;" readonly/>
+                                    </div>
+                                </div>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >病人编码</label>
+                                    <div class="col-sm-6">
+                                      <input class = "myinput" name="P_id" type = "text" style="width:150px;text-align:center;" readonly/>
+                                    </div>
+                                </div>
+                            </div>
 							<div class="row">
-								<h4 class="mylabel" style = "text-align:left !important;text-indent:2em;">辅助检查类型：</h4>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >AorAE</label>
+                                    <div class="col-sm-6">
+                                      <input class = "myinput" name="kind" type = "text" style="width:150px;text-align:center;" readonly/>
+                                    </div>
+                                </div>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >就诊编码</label>
+                                    <div class="col-sm-6">
+                                      <input class = "myinput" name="S_id" type = "text" style="width:150px;text-align:center;" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >检查日期</label>
+                                    <div class="col-sm-6">
+                                      <input type="date" class="form-control myinput" name="date">
+                                    </div>
+                                </div>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >就诊类型</label>
+                                    <div class="col-sm-6">
+                                      <input class = "myinput" name="type" type = "text" style="width:150px;text-align:center;" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+							<div>
+								<h4 class="mylabel" style = "text-align:left !important;">辅助检查类型：</h4>
 							</div>
 							<div class="row">
 							<div class="row col-sm-offset-1">
@@ -3145,34 +3186,27 @@
 								</div>
 							</div>
 							</div>
-                            <div class="row ">
-                                <div class="form-group col-lg-6 col-md-6 myblockposition">
-                                    <label class="col-sm-3 control-label mylabel" >检查时间</label>
-                                    <div class="col-sm-6">
-                                      <input type="date" class="form-control myinput" name="date" placeholder="请选择">
-                                    </div>
-                                </div>
-                            </div>
 
 							<div class="row ">
-								<div class="col-lg-2 col-md-2 myblockposition">
-									<label class="col-sm-12 control-label mylabel">辅助检查描述：</label>
-								</div>
-								<div class="col-lg-8 col-md-8 myblockposition ">
-									<textarea class="form-control myinput" name="description"></textarea>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+									<label class="col-md-3 control-label mylabel">附加描述</label>
+									<div class="col-md-9">
+										<textarea class="form-control myinput" name="description"></textarea>
+									</div>
 								</div>
                             </div>
-
                             <div class="row ">
-								<div class="col-lg-2 col-md-2 myblockposition">
-									<label class="col-sm-12 control-label mylabel">上传</label>
-									<input name = "image" type="file">
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+									<label class="col-md-3 control-label mylabel">上传</label>
+									<div class="col-md-9">
+										<input name = "myimage" type="file">
+									</div>
 								</div>
                             </div>
+							<input type="button" value="提交" id="submitAccessoryExaminationbt" class="col-md-offset-10 btn-default" data-dismiss="modal">
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="submitAccessoryExaminationbt" class="btn btn-primary" data-dismiss="modal">提交</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -3186,38 +3220,70 @@
                         <h4 class="modal-title">附件</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form" id = "AttachInfo" method="post" role="form">
-
+                        <form enctype="multipart/form-data" class="form" id = "AttachInfo" method="post" role="form">
                             <div class="row">
-                                <h2 class="myquestion" style="text-indent:2em;">编码：<input name="A_id" type = "text" style="width:150px;text-align:center;" readonly/></h2>
-
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >编码</label>
+                                    <div class="col-sm-6">
+                                      <input class = "myinput" name="A_id" type = "text" style="width:150px;text-align:center;" readonly/>
+                                    </div>
+                                </div>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >病人编码</label>
+                                    <div class="col-sm-6">
+                                      <input class = "myinput" name="P_id" type = "text" style="width:150px;text-align:center;" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="row">
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >AorAE</label>
+                                    <div class="col-sm-6">
+                                      <input class = "myinput" name="kind" type = "text" style="width:150px;text-align:center;" readonly/>
+                                    </div>
+                                </div>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >就诊编码</label>
+                                    <div class="col-sm-6">
+                                      <input class = "myinput" name="S_id" type = "text" style="width:150px;text-align:center;" readonly/>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row ">
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
-                                    <label class="col-sm-3 control-label mylabel" >时间</label>
+                                    <label class="col-sm-3 control-label mylabel" >日期</label>
                                     <div class="col-sm-6">
-                                      <input type="date" class="form-control myinput" name="date" placeholder="请选择">
+                                      <input type="date" class="form-control myinput" name="date">
+                                    </div>
+                                </div>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" >就诊类型</label>
+                                    <div class="col-sm-6">
+                                      <input class = "myinput" name="type" type = "text" style="width:150px;text-align:center;" readonly/>
                                     </div>
                                 </div>
                             </div>
 
 							<div class="row ">
-								<div class="col-lg-2 col-md-2 myblockposition">
-									<label class="col-sm-12 control-label mylabel">附件描述：</label>
-								</div>
-								<div class="col-lg-8 col-md-8 myblockposition ">
-									<textarea class="form-control myinput" name="description"></textarea>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+									<label class="col-md-3 control-label mylabel">附件描述</label>
+									<div class="col-md-9">
+										<textarea class="form-control myinput" name="description"></textarea>
+									</div>
 								</div>
                             </div>
                             <div class="row ">
-								<div class="col-lg-2 col-md-2 myblockposition">
-									<label class="col-sm-12 control-label mylabel">上传</label>
+								<div class="form-group col-lg-6 col-md-6 myblockposition">
+									<label class="col-md-3 control-label mylabel">上传</label>
+									<div class="col-md-9">
+										<input name = "myimage" type="file">
+									</div>
 								</div>
                             </div>
+                        	<input type="button" value="提交" id="submitAttachInfobt" class="col-md-offset-10 btn-default" data-dismiss="modal">
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="submitAttachInfobt" class="btn btn-primary" data-dismiss="modal">提交</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -3225,7 +3291,25 @@
 
 
 
-        <div class="modal fade" id="OutPatientServiceInfoDetails">
+		<div class="modal fade" id="imageDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">详情</h4>
+					</div>
+					<div class="modal-body">
+						<img id = "picture" src="" alt="My image"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+
+		<div class="modal fade" id="OutPatientServiceInfoDetails">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content ">
                     <div class="modal-header">
@@ -4102,6 +4186,8 @@
 		<!--<script src="/static/plugins/d3/js/d3.min.js"></script>-->
 		<!--<script src="/static/plugins/xcharts/js/xcharts.min.js"></script>-->
 
+		<!-- Plugins JS-->
+		<script src="/static/plugins/dropzone/js/dropzone.min.js"></script>
 
 		<!-- Theme JS -->
 		<script src="/static/js/jquery.mmenu.min.js"></script>
@@ -4121,6 +4207,7 @@
 		<!-- Pages JS -->
         <script src="/static/js/pages/patientDetail.js"></script>
 		<script src="/static/js/pages/group_sidebar.js"></script>
+		<script src="/static/js/pages/form-dropzone.js"></script>
 
         <!--<script src="/static/js/pages/charts-xcharts.js"></script>-->
 
