@@ -4,10 +4,23 @@
     font-size:16px !important;
     text-align:center !important;
 }
+
+.mylabel2{
+    color:black !important;
+    font-weight:bold !important;
+    font-size:16px !important;
+    text-align:left !important;
+    text-indent:2em;
+}
+
+
+
 .myinput{
     border:1px solid #584f4f !important;
     border-radius:8px !important;
     font-size:16px !important;
+    padding-top=6px !important;
+    padding-bottom=6px !important;
 }
 .mycheckbox{
     color:black !important;

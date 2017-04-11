@@ -12,6 +12,7 @@
     var data = new Array();
     var patientinfo = new Array();
     var patientId = $.getUrlParam("P_id");
+    var A =  $.getUrlParam("A");
     var type = 0;
     var outpatientnum = 0;
     var emergencynum = 0;
@@ -22,9 +23,6 @@ $(document).ready(function () {
 
     PatientDetailTable();
     showRelationInfo();
-//    $("#refresh").click(function () {
-//        PatientDetailTable();
-//    });
 
     $("#submitPatientInfobt").click(function () {
         submitChangePatient();
@@ -72,8 +70,6 @@ $(document).ready(function () {
 
 
 })
-
-
 
     //查看患者个人信息
     function PatientDetailTable() {
@@ -295,7 +291,7 @@ $(document).ready(function () {
      str     = '<div class="col-lg-12">'+
 			   '<div class="panel bk-bg-white">'+
 			   '<div class="panel-heading bk-bg-primary">'+
-			   '<h6><i class="fa fa-tags red"></i>'+temp_name+'记录'+index+'</h6>'+
+			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+index+'</h6>'+
 			   '<div class="panel-actions">'+
 //				'<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>'+
 				'<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>'+
@@ -355,7 +351,7 @@ $(document).ready(function () {
 			'<tbody>'+
 			'</tbody>'+
 			'</table>'+
-            '<div class="row col-lg-2 col-md-2 ">'+
+            '<div class="row col-lg-4 col-md-4 text-left">'+
             '<a  data-toggle="modal" href="#ClinicDetails" onclick = "addClinic('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的临床信息</a>'+
             '</div>'+
 			'</div>'+
@@ -392,7 +388,7 @@ $(document).ready(function () {
 			  '<tbody>'+
 			  '</tbody>'+
 			  '</table>'+
-              '<div class="row col-lg-2 col-md-2 ">'+
+              '<div class="row col-lg-4 col-md-4 text-left">'+
               '<a  data-toggle="modal" href="#ESSDetails" onclick = "addQuestionnaire('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的ESS</a>'+
               '</div>'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-MBQtable">'+
@@ -409,7 +405,7 @@ $(document).ready(function () {
 			  '<tbody>'+
 			  '</tbody>'+
 			  '</table>'+
-              '<div class="row col-lg-2 col-md-2 ">'+
+              '<div class="row col-lg-4 col-md-4 text-left">'+
               '<a  data-toggle="modal" href="#MBQDetails" onclick = "addQuestionnaire('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的MBQ</a>'+
               '</div>'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-SGRQtable">'+
@@ -426,7 +422,7 @@ $(document).ready(function () {
 			  '<tbody>'+
               '</tbody>'+
               '</table>'+
-              '<div class="row col-lg-2 col-md-2 ">'+
+              '<div class="row col-lg-4 col-md-4 text-left">'+
               '<a  data-toggle="modal" href="#SGRQDetails" onclick = "addQuestionnaire('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的SGRQ</a>'+
               '</div>'+
               '</div>'+
@@ -459,7 +455,6 @@ $(document).ready(function () {
 			  '<th class="table-small" style="text-align:center">上传者</th>'+
 			  '<th style="text-align:center">描述</th>'+
 			  '<th class="table-small" style="text-align:center">查看</th>'+
-			  '<th class="table-small" style="text-align:center">上传</th>'+
 			  '<th class="table-small" style="text-align:center">编辑</th>'+
 			  '<th class="table-small" style="text-align:center">删除</th>'+
 			  '</tr>'+
@@ -467,7 +462,7 @@ $(document).ready(function () {
 			  '<tbody>'+
 			  '</tbody>'+
 			  '</table>'+
-			  '<div class="row col-lg-2 col-md-2 ">'+
+			  '<div class="row col-lg-4 col-md-4 text-left">'+
               '<a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick = "addAorAE('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的辅助检查</a>'+
               '</div>'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-Atable">'+
@@ -486,7 +481,7 @@ $(document).ready(function () {
 			  '<tbody>'+
 			  '</tbody>'+
 			  '</table>'+
-              '<div class="row col-lg-2 col-md-2 ">'+
+              '<div class="row col-lg-4 col-md-4 text-left">'+
               '<a  data-toggle="modal" href="#AttachInfoDetails" onclick = "addAorAE('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的附件</a>'+
               '</div>'+
 			  '</div>'+
@@ -1244,10 +1239,9 @@ $(document).ready(function () {
                         "<td>"+item.AE_type+"</td>"+
                         "<td>"+item.D_id+"</td>"+
                         "<td>"+item.description+"</td>"+
-                        "<td>"+item.name+"</td>"+
-                        '<td><a  data-toggle="modal" href="#uploadImageDetails" ><i class=\"fa fa-edit\"></i></td>'+
-                        '<td><a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick="editAE('+item.AE_id+')"><i class=\"fa fa-edit\"></i></td>'+
-                        '<td><a  data-toggle="modal" onclick="deleteAorAE('+item.AE_id+',0'+')"><i class=\"fa fa-times\"></td>'+
+                        "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
+                        '<td><a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick="editAE('+item.AE_id+')"><i class=\"fa fa-edit\"  style=\"color:black\"></i></td>'+
+                        '<td><a  data-toggle="modal" href="#" onclick="deleteAorAE('+item.AE_id+',0'+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
                     "</tr>"
                 )
             });
@@ -1262,9 +1256,9 @@ $(document).ready(function () {
                         "<td>"+item.date+"</td>"+
                         "<td>"+item.D_id+"</td>"+
                         "<td>"+item.description+"</td>"+
-                        "<td>"+item.name+"</td>"+
-                        '<td><a  data-toggle="modal" href="#AttachInfoDetails" onclick="editA('+item.A_id+')"><i class=\"fa fa-edit\"></i></td>'+
-                        '<td><a  data-toggle="modal" onclick="deleteAorAE('+item.A_id+',1'+')"><i class=\"fa fa-times\"></td>'+
+                        "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
+                        '<td><a  data-toggle="modal" href="#AttachInfoDetails" onclick="editA('+item.A_id+')"><i class=\"fa fa-edit\" style=\"color:black\"></i></td>'+
+                        '<td><a  data-toggle="modal" href="#" onclick="deleteAorAE('+item.A_id+',1'+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
                     "</tr>"
                 )
             });
@@ -1272,49 +1266,66 @@ $(document).ready(function () {
 
     }
 
-    function addAorAE(A_index){
-        console.log(index);
-        index = A_index;
-        console.log("index");
-        console.log(index);
 
-//        $("#AccessoryExamination :date").val("");
-//        $("#AccessoryExamination :input").val("");
+    function showAorAEImage(doc){
+    console.log(doc);
+        var pic = document.getElementById("picture");
+        pic.src = "/media/"+doc;
+    }
+    function addAorAE(A_index){
+        index = A_index;
+
         $('#AccessoryExamination input[name="date"]').val("");
         $('#AccessoryExamination input[name="AE_id"]').val("");
         $('#AccessoryExamination textarea[name="description"]').val("");
         $("#AccessoryExamination :radio").attr("checked",false);
-//        $("#AccessoryExamination :checkbox").attr("checked",false);
+        $("#AccessoryExamination :input[name='P_id']").val(patientId);
+        $("#AccessoryExamination :input[name='S_id']").val(S_id[index]);
+        $("#AccessoryExamination :input[name='kind']").val("0");
+        $("#AccessoryExamination :input[name='type']").val(type);
 
         $("#AttachInfo :text").val("");
         $("#AttachInfo :radio").attr("checked",false);
-        $("#AttachInfo :input").val("");
-//        $("#AttachInfo :checkbox").attr("checked",false);
+        $("#AttachInfo :input[name='date']").val("");
+        $("#AttachInfo :input[name='A_id']").val("");
+        $("#AttachInfo :input[name='description']").val("");
+        $("#AttachInfo :input[name='P_id']").val(patientId);
+        $("#AttachInfo :input[name='S_id']").val(S_id[index]);
+        $("#AttachInfo :input[name='kind']").val("1");
+        $("#AttachInfo :input[name='type']").val(type);
     }
-
 
     function submitAorAE(kind){
         var str = "";
         if(kind=="0"){
-            str = $("#AccessoryExamination").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index]+"&kind="+"0";
-            console.log("000");
-            console.log($("#AccessoryExamination").serialize());
+            var formData = new FormData($("#AccessoryExamination")[0])
         }
         else{
-        console.log("111");
-            str = $("#AttachInfo").serialize()+"&P_id="+patientId+"&type="+type+"&S_id="+S_id[index]+"&kind="+"1";
+            var formData = new FormData($("#AttachInfo")[0])
         }
+
         if(confirm("确定提交")==1){
-            $.post('/i33/', str, function (data) {
-            console.log($("#AccessoryExamination").serialize());
-            var result = JSON.parse(data).result;
+            $.ajax({
+              url: '/i33/' ,
+              type: 'POST',
+              data: formData,
+              async: false,
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function (data) {
+              var result=JSON.parse(data).result
                 if(result=="0")
-                    alert("提交成功");
-                else if(result=="-1")
-                    alert("提交失败");
+                  alert("上传成功");
+                else
+                  alert("上传失败");
+              },
+              error: function (returndata) {
+                  alert(returndata);
+              }
             });
             showAandAE(index);
-        }
+         }
     }
 
     function editAE(AE_id) {
@@ -1326,6 +1337,10 @@ $(document).ready(function () {
             console.log(item.AE_type);
             $("#AccessoryExamination textarea[name='description']").val(item.description);
             $("#AccessoryExamination input[name='AE_id']").val(item.AE_id);
+            $("#AccessoryExamination :input[name='P_id']").val(item.P_id);
+            $("#AccessoryExamination :input[name='S_id']").val(item.S_id);
+            $("#AccessoryExamination :input[name='kind']").val("0");
+            $("#AccessoryExamination :input[name='type']").val(item.type);
 
         });
     }
@@ -1336,6 +1351,10 @@ $(document).ready(function () {
             $("#AttachInfo input[name='date']").val(item.date);
             $("#AttachInfo textarea[name='description']").val(item.description);
             $("#AttachInfo input[name='A_id']").val(item.A_id);
+            $("#AttachInfo :input[name='P_id']").val(item.P_id);
+            $("#AttachInfo :input[name='S_id']").val(item.S_id);
+            $("#AttachInfo :input[name='kind']").val("1");
+            $("#AttachInfo :input[name='type']").val(item.type);
 
         });
     }
