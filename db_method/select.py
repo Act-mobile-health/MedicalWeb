@@ -822,7 +822,8 @@ def getInvitation():
         for value in values:
             message = tools.dictPackage(keys, value)
             message['date'] = str(message['date'])
-            list.append(message)
+            if message['state'] == "1":
+                list.append(message)
         return list
     except Exception, e:
         tools.exceptionRecord('select.py', 'getInvitation', e)
