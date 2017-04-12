@@ -3,11 +3,11 @@
  */
 
  (function ($) {
-        $.getUrlParam = function (name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2].replace("/","")); return null;
-        }
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2].replace("/","")); return null;
+    }
   })(jQuery);
     var data = new Array();
     var patientinfo = new Array();

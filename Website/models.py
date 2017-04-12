@@ -88,7 +88,7 @@ class UserInfo(AbstractUser):
     title = models.CharField(max_length=20)
     hospital = models.CharField(max_length=30)
     department = models.CharField(max_length=20)
-    userGroup = models.CharField(max_length=10)      # doctor/intern/student
+    userGroup = models.CharField(max_length=10,default="2")      # doctor/intern/student
     registerDate = models.DateField(auto_now_add=True)
 
 
@@ -788,3 +788,11 @@ class MedicineRecord(models.Model):
     date = models.DateField(auto_now_add=True)
     name = models.CharField(max_length=50, null=False)
     producer = models.CharField(max_length=50, null=False)
+
+class invitation(models.Model):
+
+    code = models.CharField(max_length=32, null=False)
+    date = models.DateField(auto_now_add=True)
+    D_id = models.IntegerField(null=False)
+    state = models.CharField(max_length=1,default="1")
+    uid = models.CharField(max_length=1,default="0")

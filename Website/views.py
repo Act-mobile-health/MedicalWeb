@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 def test(request):
     return render(request,"test.html")
+
 @login_required
 def index(request):
     return render(request,"index.html")
@@ -56,10 +57,10 @@ def patientInfos(request):
     return render(request,"page-patient.html")
 
 def login(request):
-    return render(request,"page-login.html")
+    return render(request,"login.html")
 
 def register(request):
-    return render(request,"page-register.html")
+    return render(request,"register.html")
 
 @login_required
 def pending(request):
@@ -81,3 +82,11 @@ def temp1(request):
 def logout(request):
     auth.logout(request)
     return render(request,"page-login.html")
+
+@login_required
+def setting(request):
+    return render(request,"setting.html")
+
+@login_required
+def invite(request):
+    return render(request,"invite.html")

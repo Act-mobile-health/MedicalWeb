@@ -1,7 +1,7 @@
 # -*- coding:UTF-8 -*-
 from Website.models import UserInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,\
     EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination,CATandMRC,PmExposure,\
-    MedicalVisit
+    MedicalVisit,invitation
 from django.core.exceptions import ObjectDoesNotExist
 from control_method import tools
 
@@ -26,10 +26,20 @@ def checkExist(key,value):
     except Exception, e:
         tools.exceptionRecord('select.py','checkExist',e)
         return False
-
-
-
-
+		
+# 检验邀请码是否存在并可用		
+def checkCode(code):
+    try:
+        print code
+        obj = invitation.objects.get(code=code)
+        if(obj.state=="1"):
+            obj.state = "0"
+            obj.save()
+            return True
+    except Exception, e:
+        tools.exceptionRecord('select.py','checkCode',e)
+        return False
+		
 # 通过用户名获取用户某个字段的信息
 # key 就是字段名， 比如'password' 'D_id'.'mail','cellphone'
 # 返回获取的值
@@ -794,3 +804,25 @@ def patientLogin(P_id,password):
         result = '-1'
 
     return result
+
+def getUserGroup(D_id):
+    try:
+        group = UserInfo.objects.get(id = D_id)
+        return int(group.userGroup)
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getUserGroup', e)
+
+
+def getInvitation():
+    try:
+        message = {}
+        list = []
+        values = invitation.objects.filter().values_list('id','code','state','date', 'D_id')
+        keys = ['id','code','state','date', 'D_id']
+        for value in values:
+            message = tools.dictPackage(keys, value)
+            message['date'] = str(message['date'])
+            list.append(message)
+        return list
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getInvitation', e)

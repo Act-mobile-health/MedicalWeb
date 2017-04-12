@@ -1,10 +1,8 @@
 # -*- coding:UTF-8 -*-
 import datetime
 from control_method import tools
+from Website.models import *
 
-from Website.models import UserInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,\
-    EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination,CATandMRC,\
-    PmExposure,TrackInfo,MedicineRegular,MedicineChange,MedicineRecord
 #修改指定医生信息
 #data为医生新的信息，包括D_id
 #修改成功返回True,否则返回False

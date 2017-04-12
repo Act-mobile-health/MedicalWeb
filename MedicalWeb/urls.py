@@ -43,6 +43,9 @@ urlpatterns = [
     url(r'^logout/$', logout),
     url(r'^p/p/$', temp1),
 
+    url(r'^setting/$', setting),
+    url(r'^invite/$', invite),
+
 
 
 
@@ -112,6 +115,13 @@ urlpatterns = [
     url(r'^i48/',view.app_addOrUpdateMedicineRegularTable),
     url(r'^i49/',view.app_login),
     url(r'^i51/',view.upload2),
+
+
+
+    url(r'^i60/',view.getInvitation),
+    url(r'^i61/',view.addInvitation),
+    url(r'^i62/',view.deleteInvitation),
+    url(r'^i63/',view.getUserGroup),
 
     # url(r'^i18/',view.updatePatientInfo),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

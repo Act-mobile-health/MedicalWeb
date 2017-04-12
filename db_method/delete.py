@@ -1,6 +1,5 @@
 # -*- coding:UTF-8 -*-
-from Website.models import GroupInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,EmergCallInfo,\
-    InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination, MedicalVisit
+from Website.models import *
 from control_method import tools
 #删除指定实验组
 #注意判断一下D_id与G_id是否正确，删除时注意一下删除患者与实验组对应关系那张表中的内容
@@ -165,3 +164,10 @@ def deleteQuestionnaireInfo(kind, Q_id):
         return False
 
 
+def deleteInvitation(data):
+    try:
+        invitation.objects.get(id = int(data['id'])).delete()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('delete.py','deleteInvitation',e)
+        return False

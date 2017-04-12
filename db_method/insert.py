@@ -1,15 +1,12 @@
 # -*- coding:UTF-8 -*-
 from control_method import tools
-from Website.models import UserInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,\
-    EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination,CATandMRC,\
-    PmExposure,TrackInfo,MedicineRegular,MedicineChange,MedicineRecord,MedicalVisit
+from Website.models import *
 import datetime, random
 # 添加新用户
 # 参数是一个字典，包含医生的所有信息
 # 成功返回True，失败返回False
 
 def addUserInfo(data):
-
 
     password = tools.md5(data['password'])
     # registerDate会自动生成
@@ -386,3 +383,22 @@ def addMedicineRecord(data):
     except Exception, e:
         tools.exceptionRecord('insert.py','addMedicineRecord',e)
         return id
+
+def addInvitation(D_id,data):
+    id = -1
+    temp = -1
+    try:
+        if data['uid'] == "":
+            temp = D_id
+        else:
+            temp = data['uid']
+        print temp
+        num = int(data['num'])
+        for i in xrange(num):
+            code = tools.randomStr()
+            newObj = invitation(code = data['prefix']+code, D_id = D_id, uid = temp)
+            newObj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('insert.py', 'addInvitation', e)
+        return False

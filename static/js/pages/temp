@@ -60,3 +60,6 @@
 
 
 		<script src="/static/js/pages/group_sidebar.js"></script>
+
+		 id="sidebar"
+		<script src="/static/js/pages/setting_sidebar.js"></script>

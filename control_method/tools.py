@@ -1,5 +1,6 @@
 # -*- coding:UTF-8 -*-
 import hashlib
+import numpy as np
 from django.core.mail import send_mail
 
 
@@ -10,6 +11,13 @@ def forCheckbox(data, attr):
     for item in json_data:
         tempstr = tempstr + str(item)
     return tempstr
+
+def randomStr():
+    str = ''
+    s = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    for i in xrange(24):
+        str = str + s[np.random.randint(len(s))]
+    return str
 
 def forCheckbox2(data, attr):
     temp = dict(data.iterlists())

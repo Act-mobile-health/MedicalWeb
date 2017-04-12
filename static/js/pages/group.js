@@ -79,7 +79,8 @@ $(document).ready(function(){
     function removePatientFromGroup(P_id){
     console.log(P_id);
         if(confirm("确定删除")==1){
-            $.getJSON("/i44/",{G_id:G_id,P_id:P_id},function(data){
+            $.getJSON("/i44/",{G_id:G_id,P_id:P_id},function(data, info){
+                console.log(info);
                 if(data.result=="0"){
                     alert("删除成功");
                 }
@@ -115,21 +116,52 @@ $(document).ready(function(){
         });
     }
 
+//    function deleteGroup(){
+//        if (confirm("确定删除吗？")){
+//            $.post("/i41/",{G_id:G_id},function(data, info){
+//                console.log(info);
+//                console.log("!!!")
+//                var result = JSON.parse(data).result;
+//                if(result =="0"){
+//                    alert("删除成功");
+//                    location.href = "/"
+//                }
+//                else{
+//                    alert("删除失败");
+//                }
+//            });
+//            return false;
+//        }
+//    }
     function deleteGroup(){
-        if (confirm("确定删除吗？")){
-            $.post("/i41/",{G_id:G_id},function(data){
-                var result = JSON.parse(data).result;
-                if(result =="0"){
-                    alert("删除成功");
-                    location.href = "/"
-                }
-                else{
-                    alert("删除失败");
-                }
-            });
-            return false;
+        $.ajax({
+        type:"POST",
+        url:"/i41/",
+        dataType:"json",
+        data:{
+            G_id: G_id
+        },
+        success:function(data){
+            if(data.result == "0"){
+                $("#msg-error").hide(10);
+                $("#msg-success").show(100);
+                $("#msg-success-p").html("登陆成功");
+                window.setTimeout("location.href='/'", 2000);
+            }else{
+                $("#msg-success").hide(10);
+                $("#msg-error").show(100);
+                $("#msg-error-p").html(data.msg);
+            }
+        },
+        error:function(a){
+            console.log(a);
+            if(a.status==403){
+                alert("您的权限不足");
+            }
         }
+    });
     }
+
     function submitPatientId(){
         if(confirm("确定增加所选患者吗？")==1){
             $.post("/i43/",$("#addPatientIntoGroup").serialize()+"&G_id="+G_id,function(data){

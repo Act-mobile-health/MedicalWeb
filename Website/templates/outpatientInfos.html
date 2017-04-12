@@ -255,7 +255,7 @@
 						<!-- Sidebar Menu-->
 						<div class="sidebar-menu">
 							<nav id="menu" class="nav-main" role="navigation">
-								<ul class="nav nav-sidebar">
+								<ul class="nav nav-sidebar"  id="sidebar">
 									<div class="panel-body text-center">
 										<div class="bk-avatar">
 											<img src="/static/img/avatar.jpg" class="img-circle bk-img-60" alt="" />
@@ -305,6 +305,9 @@
 									</li>
 									<li>
 										<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-picture-o" aria-hidden="true"></i> 添加实验组</span></a>
+									</li>
+									<li id="setting" style="display:none">
+										<a href="/setting/"><i class="fa fa-cog" aria-hidden="true"></i><span>管理面板</span></a>
 									</li>
 								</ul>
 							</nav>
@@ -617,6 +620,7 @@
 		<script src="/static/js/moment.min.js"></script>
 		<script src="/static/js/pages/outpatient.js"></script>
 		<script src="/static/js/pages/group_sidebar.js"></script>
+		<script src="/static/js/pages/setting_sidebar.js"></script>
 		<!-- end: JavaScript-->
 
 	</body>
