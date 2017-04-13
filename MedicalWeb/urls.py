@@ -13,11 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
-from django.contrib import admin
-
-from Website.views import test,index,addOutpatientInfos,addEmergencyInfos,addHospitalInfos,addPatientInfos,addESS,addMBQ,addClinicInfos
-
 from Website.views import *
 
 from django.conf.urls import url
@@ -31,7 +26,7 @@ urlpatterns = [
     url(r'^test/$', test),
     url(r'^table/$', table),
     url(r'^$', index),
-    url(r'^patientDetails/$',patientDetails),
+    url(r'^patientDetails/$', patientDetails),
     url(r'^patientInfos/$',patientInfos),
     url(r'^add/outpatientInfos/$', addOutpatientInfos),
     url(r'^add/emergencyInfos/$', addEmergencyInfos),
@@ -44,7 +39,12 @@ urlpatterns = [
     url(r'^login/$', login),
     url(r'^register/$', register),
     url(r'^pending/$', pending),
+    url(r'^group/$', group),
+    url(r'^logout/$', logout),
     url(r'^p/p/$', temp1),
+
+    url(r'^setting/$', setting),
+    url(r'^invite/$', invite),
 
 
 
@@ -62,12 +62,7 @@ urlpatterns = [
     url(r'^i6/',view.getDoctorDetailedInfo),
     url(r'^i7/',view.updateDoctorInfo),
 
-    url(r'^i8/',view.getExpGroups),
-    url(r'^i9/',view.getExpGroupPatientsInfo),
     # url(r'^i10/',view.addExpGroup),
-    url(r'^i11/',view.deleteExpGroup),
-    url(r'^i13/',view.addPatientToExpGroup),
-    url(r'^i14/',view.removePatientfromExpGroup),
 
     url(r'^i15/',view.getPatientsBasicInfo),
     url(r'^i16/',view.getPatientDetailedInfo),
@@ -95,8 +90,38 @@ urlpatterns = [
     url(r'^i33/',view.addOrUpdateAorAEDetailedInfo),
     url(r'^i34/',view.deleteAorAEDetailedInfo),
     url(r'^i35/',view.getOneAorAEDetailedInfo),
+
+
     url(r'^test2/',view.test2),
     url(r'^test1/',view.test),
 
+
+    url(r'^i36/',view.getPatientName),
+    url(r'^i37/',view.getExpGroups),
+    url(r'^i38/',view.addOrUpdateExpGroup),
+    url(r'^i39/',view.getOneExpGroupInfo),
+    url(r'^i40/',view.getPatientGroupInfo),
+    url(r'^i41/',view.deleteExpGroup),
+    url(r'^i42/',view.getExpGroupPatientsInfo),
+    url(r'^i43/',view.addPatientToExpGroup),
+    url(r'^i44/',view.removePatientfromExpGroup),
+
+
+
+
+    url(r'^i45/',view.app_addOrUpdateCATTable),
+    url(r'^i46/',view.app_addOrUpdatePmExposureTable),
+    url(r'^i47/',view.app_addOrUpdateTrackInfoTable),
+    url(r'^i48/',view.app_addOrUpdateMedicineRegularTable),
+    url(r'^i49/',view.app_login),
+    url(r'^i51/',view.upload2),
+
+
+
+    url(r'^i60/',view.getInvitation),
+    url(r'^i61/',view.addInvitation),
+    url(r'^i62/',view.deleteInvitation),
+    url(r'^i63/',view.getUserGroup),
+
     # url(r'^i18/',view.updatePatientInfo),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

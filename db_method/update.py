@@ -1,19 +1,19 @@
 # -*- coding:UTF-8 -*-
-from Website.models import DoctorInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination
-from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from control_method import tools
+from Website.models import *
+
 #修改指定医生信息
 #data为医生新的信息，包括D_id
 #修改成功返回True,否则返回False
-def updateDoctorInfo(D_id,data):
+def updateUserInfo(D_id,data):
     try:
-        doctor = DoctorInfo.objects.get(id=D_id)
+        doctor = UserInfo.objects.get(id=D_id)
         doctor.name = data['name']
         doctor.sex = data['sex']
         if data['birthday'] != '':
             doctor.birthday = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
-        doctor.userName = data['userName']
+        doctor.username = data['userName']
         doctor.cellphone = data['cellphone']
         doctor.weChat = data['weChat']
         doctor.mail = data['mail']
@@ -24,13 +24,13 @@ def updateDoctorInfo(D_id,data):
         doctor.save()
         return True
     except Exception, e:         
-        tools.exceptionRecord('update.py','updateDoctorInfo',e)
+        tools.exceptionRecord('update.py','updateUserInfo',e)
         return False
 
 # update password for doctor
 def updatePassword(D_id,o_pwd, n_pwd):
     try:
-        doc = DoctorInfo.objects.get(id=D_id)
+        doc = UserInfo.objects.get(id=D_id)
         if doc.password == tools.md5(o_pwd):
             doc.password = tools.md5(n_pwd)
             doc.save()
@@ -44,12 +44,14 @@ def updatePassword(D_id,o_pwd, n_pwd):
 #修改指定实验组
 #注意判断一下D_id与G_id是否正确
 # 成功返回True，失败返回False
-def updateExpGroup(G_id,name,info):
+def updateExpGroup(G_id, name, info, date):
     # TODO
     try:
         group = GroupInfo.objects.get(id = G_id)
         group.name = name
         group.description = info
+        if date != '':
+            group.date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         group.save()
         return True
     except Exception, e:
@@ -63,9 +65,13 @@ def updateExpGroup(G_id,name,info):
 def updatePatientInfo(data):
     #TODO
     try:
+        print data,data['name'],type(data['name'])
+        print "#############"
         patient = PatientInfo.objects.get(P_id= data['P_id'])
         patient.sign = data['sign']
+        print type(patient.name)
         patient.name = data['name']
+        print type(patient.name)
         patient.sex = data['sex']
         if data['birthday'] != '':
             patient.birthday = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
@@ -102,12 +108,14 @@ def updatePatientInfo(data):
 def updateRelationInfo(R_id,data):
     # TODO
     try:
+        print data
         relation = RelationInfo.objects.get(id=R_id)
         relation.name=data['name']
         relation.sex=data['sex']
         relation.telephone=data['telephone']
         relation.cellphone=data['cellphone']
-        relation.weChate=data['weChat']
+        relation.weChat=data['weChat']
+        print 
         relation.mail=data['mail']
         relation.homeAddr=data['homeAddr']
         relation.save()
@@ -126,6 +134,7 @@ def updateOutPatientServiceInfo(id,data):
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.place = data['place']
         obj.isStable = data['isStable']
+        obj.isSymptom = data['isSymptom']
         obj.symptom = tools.forCheckbox(data,'symptom')
         obj.physicalExam = data['physicalExam']
         obj.breathErr = data['breathErr']
@@ -151,11 +160,11 @@ def updateEmergCallInfo(id,data):
     try:
 
         obj = EmergCallInfo.objects.get(id = id)
-        obj.P_id = data['P_id']
+        # obj.P_id = data['P_id']
         if data['date'] != '':
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.place = data['place']
-        obj.symptom = data['symptom']
+        obj.symptom = tools.forCheckbox(data,'symptom')
         obj.acuteExac = data['acuteExac']
         obj.disease = data['disease']
         obj.byxCheck = data['byxCheck']
@@ -165,11 +174,11 @@ def updateEmergCallInfo(id,data):
         obj.abtType = data['abtType']
         obj.useJmzs = data['useJmzs']
         obj.ecMethod = data['ecMethod']
-        if data['ecDate'] != '':
-            obj.ecDate = datetime.datetime.strptime(data['ecDate'], "%Y-%m-%d").date()
+        obj.ecDate = data['ecDate']
         obj.hospital = data['hospital']
         obj.treatMethod = data['treatMethod']
         obj.airRelate = data['airRelate']
+        obj.medicine = data['medicine']
         obj.save()
         return True
     except Exception, e:
@@ -185,7 +194,7 @@ def updateInHospitalInfo(id,data):
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.place = data['place']
         obj.commonIcu = data['commonIcu']
-        obj.symptom = data['symptom']
+        obj.symptom = tools.forCheckbox(data,'symptom')
         obj.acuteExac = data['acuteExac']
         obj.disease = data['disease']
         obj.byxCheck = data['byxCheck']
@@ -197,7 +206,7 @@ def updateInHospitalInfo(id,data):
         obj.hospitalDays = data['hospitalDays']
         obj.airRelate = data['airRelate']
         obj.treatMethod = data['treatMethod']
-        obj.reason = data['reason']
+        obj.medicine = data['medicine']
         obj.docAdvice = data['docAdvice']
         obj.save()
         return True
@@ -352,7 +361,7 @@ def updateQuestionnaireInfo(kind,S_id,data):
 
 
 #修改附件信息
-def updateAttachInfo(A_id, D_id, S_id, data):
+def updateAttachInfo(A_id, D_id, S_id, data, doc):
     try:
         obj = AttachInfo.objects.get(id = A_id)
         # obj.P_id = data['P_id']
@@ -362,8 +371,8 @@ def updateAttachInfo(A_id, D_id, S_id, data):
         # obj.S_id = S_id
         # obj.D_id = D_id
         obj.description = data['description']
-        #TODO
-        # img context没有加
+        if doc != None :
+            obj.doc = doc
         obj.save()
         return True
     except Exception, e:
@@ -372,7 +381,7 @@ def updateAttachInfo(A_id, D_id, S_id, data):
 
 
 #修改附件信息
-def updateAccessoryExamination(AE_id, D_id, S_id, data):
+def updateAccessoryExamination(AE_id, D_id, S_id, data, doc):
     try:
         obj = AccessoryExamination.objects.get(id = AE_id)
         # obj.S_id = S_id
@@ -381,9 +390,110 @@ def updateAccessoryExamination(AE_id, D_id, S_id, data):
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.AE_type = data['AE_type']
         obj.description = data['description']
-        # obj.D_id = D_id
+        if doc != None :
+            obj.doc = doc
         obj.save()
         return True
     except Exception, e:
         tools.exceptionRecord('update.py','updateAccessoryExamination',e)
         return False
+
+
+#update CAT && MRC Table
+def updateCATandMRC(data):
+    try:
+        obj = CATandMRC.objects.get(id = int(data['id']))
+        obj.P_id = data['P_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.cat1 = data['cat1']
+        obj.cat2 = data['cat2']
+        obj.cat3 = data['cat3']
+        obj.cat4 = data['cat4']
+        obj.cat5 = data['cat5']
+        obj.cat6 = data['cat6']
+        obj.cat7 = data['cat7']
+        obj.cat8 = data['cat8']
+        obj.catSum = data['catSum']
+        obj.mrc = data['mrc']
+        obj.acuteExac = data['acuteExac']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateCATandMRC',e)
+        return -1
+
+#update PmExposure Table
+def updatePmExposure(data):
+    try:
+        obj = PmExposure.objects.get(id = int(data['id']))
+        obj.P_id = data['P_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.exposure = data['exposure']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updatePmExposure',e)
+        return -1
+
+#update TrackInfo Table
+def updateTrackInfo(data):
+    #TODO
+    #上次文件存储问题
+    try:
+        obj = TrackInfo.objects.get(id = int(data['id']))
+        obj.P_id = data['P_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.name = data['name']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateTrackInfo',e)
+        return -1
+
+
+#update MedicineRegular Table
+def updateMedicineRegular(data):
+    try:
+        obj = MedicineRegular.objects.get(id = int(data['id']))
+        obj.P_id = data['P_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.regular = data['regular']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMedicineRegular',e)
+        return -1
+
+#update MedicineChange Table
+def updateMedicineChange(data):
+    try:
+        obj = MedicineChange.objects.get(id = int(data['id']))
+        obj.P_id = data['P_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.regular = data['change']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMedicineChange',e)
+        return -1
+
+#update MedicineRecord Table
+def updateMedicineRecord(data):
+    try:
+        obj = MedicineRecord.objects.get(id = int(data['id']))
+        obj.MC_id = data['MC_id']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.medicine = data['medicine']
+        obj.name = data['name']
+        obj.producer = data['producer']
+        obj.save()
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMedicineRecord',e)
+        return -1

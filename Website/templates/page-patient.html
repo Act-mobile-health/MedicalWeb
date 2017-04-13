@@ -235,7 +235,7 @@
 									<a href="#"><i class="fa fa-file"></i> File</a>
 								</li>
 								<li>
-									<a href="page-login.html"><i class="fa fa-power-off"></i> Logout</a>
+									<a href="/logout/"><i class="fa fa-power-off"></i> Logout</a>
 								</li>
 							</ul>
 						</div>
@@ -261,7 +261,7 @@
 						<!-- Sidebar Menu-->
 						<div class="sidebar-menu">
 							<nav id="menu" class="nav-main" role="navigation">
-								<ul class="nav nav-sidebar">
+								<ul class="nav nav-sidebar" id="sidebar">
 									<div class="panel-body text-center">
 										<div class="bk-avatar">
 											<img src="/static/img/avatar.jpg" class="img-circle bk-img-60" alt="" />
@@ -276,17 +276,10 @@
 											<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 										</a>
 									</li>
-
-									<li class="nav-parent">
-										<a >
+									<li>
+										<a href="/patientInfos/">
 											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
 										</a>
-										<ul class="nav nav-children">
-											<li><a href="/patientInfos/"><span class="text"> 所有患者信息</span></a></li>
-											<li><a href="/group/1/"><span class="text"> 实验组1</span></a></li>
-											<li><a href="/group/2/"><span class="text"> 实验组2</span></a></li>
-											<li><a href="/group/3/"><span class="text"> 实验组3</span></a></li>
-										</ul>
 									</li>
 
 									<li>
@@ -308,6 +301,20 @@
 										<a href="/pending/">
 											<i class="fa fa-picture-o" aria-hidden="true"></i><span>待处理事项</span>
 										</a>
+									</li>
+									<li class="nav-parent">
+										<a >
+											<i class="fa fa-copy" aria-hidden="true"></i><span>实验组</span>
+										</a>
+										<ul class="nav nav-children" id="experimentGroup">
+
+										</ul>
+									</li>
+									<li>
+										<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-picture-o" aria-hidden="true"></i> 添加实验组</span></a>
+									</li>
+									<li id="setting" style="display:none">
+										<a href="/setting/"><i class="fa fa-cog" aria-hidden="true"></i><span>管理面板</span></a>
 									</li>
 								</ul>
 							</nav>
@@ -356,15 +363,15 @@
                                     </div>
                                     <div class="panel-body">
                                         <div class="table-responsive" >
-                                            <table class="table table-striped" id="patientInfoTable">
+                                            <table class="table table-striped table-entire" id="patientInfoTable">
                                                 <thead>
                                                 <tr>
-                                                    <th>ID</th>
-                                                    <th>姓名</th>
-                                                    <th>性别</th>
-                                                    <th>年龄</th>
-                                                    <th>健康状况</th>
-                                                    <th>操作</th>
+                                                    <th style="text-align:center">ID</th>
+                                                    <th style="text-align:center">姓名</th>
+                                                    <th style="text-align:center">性别</th>
+                                                    <th style="text-align:center">年龄</th>
+                                                    <th style="text-align:center">健康状况</th>
+                                                    <th style="text-align:center">操作</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -390,7 +397,7 @@
 
 		<!-- Modal Dialog -->
 
-        <div class="modal " id="PatientInfoDetails">
+        <div class="modal fade" id="PatientInfoDetails">
             <div class="modal-dialog  modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -401,6 +408,14 @@
 						<div>
                         <form class="form-horizontal" id = "PatientInfo" method="post" role="form">
 							{% csrf_token %}
+							<div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel" style="display:none">id</label>
+                                    <div class="col-sm-6" >
+                                      <input type="text" class="form-control myinput" name="id"  style="display:none">
+                                    </div>
+                                </div>
+							</div>
                             <div class="row ">
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">患者编号</label>
@@ -668,28 +683,48 @@
             </div>
         </div>
 
-        <!--addPatient!-->
-        <div class="modal fade " id="addPatient">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">添加患者</h4>
-                    </div>
-                    <div class="modal-body">
+		<div class="modal fade" id="ExperimentGroupDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" style="color:black">实验组</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" method="post"  role="form" id="ExperimentGroupInfo">
+								{% csrf_token %}
+                            <div class="form-group">
+                                <label  class="col-md-2  mylabel">实验组编号</label>
+                                <div class="col-md-2"><input type="text" class="form-control myinput " name="G_id" id="G_id" readonly="true"></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2  mylabel">名称</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="name" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2 mylabel">创建时间</label>
+                                <div class="col-md-3"><input type="date" class="form-control myinput" name="date"></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2 mylabel">创建者</label>
+                                <div class="col-md-2"><input type="text" class="form-control myinput" name="D_id" readonly="true"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 mylabel">描述</label>
+                                <div class="col-md-8"><textarea class="form-control myinput" name="description"></textarea></div>
+                            </div>
+                         </form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" id = "experimentGroupbt" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        <!--End addPatient-->
+
         <!-- End Modal Dialog -->
-
-		<div class="clearfix"></div>
-
 
 		<!-- start: JavaScript-->
 
@@ -709,6 +744,8 @@
 
 		<!-- Pages JS -->
         <script src="/static/js/pages/page-patient.js"></script>
+		<script src="/static/js/pages/group_sidebar.js"></script>
+		<script src="/static/js/pages/setting_sidebar.js"></script>
 
 		<!-- end: JavaScript-->
 

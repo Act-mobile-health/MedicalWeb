@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+# print BASE_DIR
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -88,14 +88,21 @@ WSGI_APPLICATION = 'MedicalWeb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'medical',
+        'NAME': 'medic',
         'USER': 'root',
         'PASSWORD': '12345678',
         'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
 
+AUTH_USER_MODEL = 'Website.UserInfo'
+LOGIN_URL = '/login/'
+
+# AUTHENTICATION_BACKENDS =[
+#     'django.contrib.auth.backends.ModelBackend',
+# ]
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -142,7 +149,8 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 #mail
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

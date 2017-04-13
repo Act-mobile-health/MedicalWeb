@@ -1,7 +1,10 @@
 # -*- coding:UTF-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser,AbstractUser
 from django.db import models
+import datetime
 
 # Create your models here.
 
@@ -56,20 +59,36 @@ class RelationInfo(models.Model):
 # created by JK@buaa, 2017/3/17
 # table 3
 
+# class DoctorInfo(AbstractUser):
+#
+#     name = models.CharField(max_length=50)
+#     sex = models.CharField(max_length=2)
+#     birthday = models.DateField(blank=True)
+#     # userName = models.CharField(max_length=50)
+#     # password = models.CharField(max_length=100)
+#     cellphone = models.CharField(max_length=11)
+#     weChat = models.CharField(max_length=50)
+#     mail = models.CharField(max_length=50)
+#     title = models.CharField(max_length=20)
+#     hospital = models.CharField(max_length=30)
+#     department = models.CharField(max_length=20)
+#     userGroup = models.CharField(max_length=10)      # doctor/intern/student
+#     registerDate = models.DateField(auto_now_add=True)
 
-class DoctorInfo(models.Model):
+class UserInfo(AbstractUser):
+
     name = models.CharField(max_length=50)
     sex = models.CharField(max_length=2)
-    birthday = models.DateField(blank=True)
-    userName = models.CharField(max_length=50)
-    password = models.CharField(max_length=100)
+    birthday = models.DateField(blank=True,default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
+    # userName = models.CharField(max_length=50)
+    # password = models.CharField(max_length=100)
     cellphone = models.CharField(max_length=11)
     weChat = models.CharField(max_length=50)
     mail = models.CharField(max_length=50)
     title = models.CharField(max_length=20)
     hospital = models.CharField(max_length=30)
     department = models.CharField(max_length=20)
-    userGroup = models.CharField(max_length=10)      # doctor/intern/student
+    userGroup = models.CharField(max_length=10,default="2")      # doctor/intern/student
     registerDate = models.DateField(auto_now_add=True)
 
 
@@ -77,8 +96,9 @@ class DoctorInfo(models.Model):
 
 
 class PatientGroup(models.Model):
-    G_id = models.IntegerField()
+    G_id = models.IntegerField(null=False)
     P_id = models.CharField(max_length=10)
+    date = models.DateField(auto_now_add=True)
 
 
 # created by JK@buaa, 2017/3/17
@@ -87,9 +107,9 @@ class PatientGroup(models.Model):
 
 class GroupInfo(models.Model):
     name = models.CharField(max_length=100, null=False)
-    D_id = models.IntegerField()
+    D_id = models.IntegerField(null=False)
     description = models.CharField(max_length=255)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(blank=True)
 
 
 # created by JK@buaa, 2017/3/17
@@ -139,12 +159,14 @@ class TrackInfo(models.Model):
 
 
 class AttachInfo(models.Model):
+
+    name = models.CharField(max_length=50)
+    doc = models.ImageField(upload_to="Attachment")
     P_id = models.CharField(max_length=10,null=False)
     date = models.DateField(blank=True)
     type = models.CharField(max_length=2)                # 0 OutPatientService   1 Emerg   2 InHospital
     S_id = models.IntegerField(null=False)
     D_id = models.IntegerField(null=False)
-    name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
     # source = models.CharField(max_length=32)
     # dir = models.CharField(max_length=50)
@@ -440,18 +462,19 @@ class OutPatientServiceInfo(models.Model):
     date = models.DateField(null=False)
     place = models.CharField(max_length=150, null=False)
     isStable = models.CharField(max_length=1, null=False)
+    isSymptom = models.CharField(max_length=1, null=False)
     symptom = models.CharField(max_length=10, null=False, )
     physicalExam = models.CharField(max_length=1, null=False)
     breathErr = models.CharField(max_length=50)
     acuteExac = models.CharField(max_length=1)
     disease = models.CharField(max_length=50, null=False)
     useAbt = models.CharField(max_length=1, null=False)
-    abtType = models.CharField(max_length=20)
+    abtType = models.CharField(max_length=30)
     useJmzs = models.CharField(max_length=1, null=False)
     hospital = models.CharField(max_length=1, null=False)
     airRelate = models.CharField(max_length=1, null=False)
     treatMethod = models.CharField(max_length=1, null=False)
-    medicine = models.CharField(max_length=50, null=False)
+    medicine = models.CharField(max_length=150, null=False)
 
 
 # created by CS@buaa, 2017/3/17
@@ -460,22 +483,23 @@ class OutPatientServiceInfo(models.Model):
 
 class EmergCallInfo(models.Model):
     P_id = models.CharField(max_length=10, null=False)
-    data = models.DateField(null=False)
-    place = models.CharField(max_length=250, null=False)
-    symptom = models.CharField(max_length=15, null=False)
+    date = models.DateField(null=False)
+    place = models.CharField(max_length=150, null=False)
+    symptom = models.CharField(max_length=10, null=False)
     acuteExac = models.CharField(max_length=1)
     disease = models.CharField(max_length=50, null=False)
     byxCheck = models.CharField(max_length=1, null=False)
-    byxResult = models.CharField(max_length=20)
-    ysWcTreat = models.CharField(max_length=1, null=False)
+    byxResult = models.CharField(max_length=50)
+    ycWcTreat = models.CharField(max_length=1, null=False)
     useAbt = models.CharField(max_length=1, null=False)
-    abtType = models.CharField(max_length=20)
+    abtType = models.CharField(max_length=30)
     useJmzs = models.CharField(max_length=1, null=False)
-    ecMethod = models.CharField(max_length=10)
-    ecDate = models.DateField(blank=True)
+    ecMethod = models.CharField(max_length=30)
+    ecDate = models.CharField(max_length=10)
     hospital = models.CharField(max_length=1, null=False)
     treatMethod = models.CharField(max_length=1, null=False)
     airRelate = models.CharField(max_length=1, null=False)
+    medicine = models.CharField(max_length=150, null=False)
 
 
 # created by CS@buaa, 2017/3/17
@@ -485,21 +509,21 @@ class EmergCallInfo(models.Model):
 class InHospitalInfo(models.Model):
     P_id = models.CharField(max_length=10, null=False)
     date = models.DateField(null=False)
-    place = models.CharField(max_length=250, null=False)
+    place = models.CharField(max_length=150, null=False)
     commonIcu = models.CharField(max_length=1, null=False)
-    symptom = models.CharField(max_length=15, null=False)
+    symptom = models.CharField(max_length=10, null=False)
     acuteExac = models.CharField(max_length=1)
     disease = models.CharField(max_length=50, null=False)
     byxCheck = models.CharField(max_length=1, null=False)
-    byxResult = models.CharField(max_length=20)
-    ysWcTreat = models.CharField(max_length=1, null=False)
+    byxResult = models.CharField(max_length=50)
+    ycWcTreat = models.CharField(max_length=1, null=False)
     useAbt = models.CharField(max_length=1)
-    abtType = models.CharField(max_length=20, null=False)
+    abtType = models.CharField(max_length=50, null=False)
     useJmzs = models.CharField(max_length=1, null=False)
     hospitalDays = models.CharField(max_length=10)
     airRelate = models.CharField(max_length=1, null=False)
     treatMethod = models.CharField(max_length=1, null=False)
-    reason = models.CharField(max_length=200, null=False)
+    medicine = models.CharField(max_length=150, null=False)
     docAdvice = models.CharField(max_length=200)
 
 
@@ -655,12 +679,14 @@ class SGRQ(models.Model):
 
 
 class AccessoryExamination(models.Model):
+
+    name = models.CharField(max_length=50)
+    doc = models.ImageField(upload_to="AE")
     P_id = models.CharField(max_length=10,null=False)
     type = models.CharField(max_length=2)  # 0 OutPatientService   1 Emerg   2 InHospital
     S_id = models.IntegerField(null=False)
     date = models.DateField(blank=True)
     AE_type = models.CharField(max_length=5)
-    name = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
     D_id = models.IntegerField(null=False)
 
@@ -762,3 +788,11 @@ class MedicineRecord(models.Model):
     date = models.DateField(auto_now_add=True)
     name = models.CharField(max_length=50, null=False)
     producer = models.CharField(max_length=50, null=False)
+
+class invitation(models.Model):
+
+    code = models.CharField(max_length=32, null=False)
+    date = models.DateField(auto_now_add=True)
+    D_id = models.IntegerField(null=False)
+    state = models.CharField(max_length=1,default="1")
+    uid = models.CharField(max_length=1,default="0")

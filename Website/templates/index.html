@@ -32,6 +32,11 @@
 		<!-- Page CSS -->		
 		<link href="/static/css/style.css" rel="stylesheet" />
 		<link href="/static/css/add-ons.min.css" rel="stylesheet" />
+
+
+
+
+		<link href="/static/css/mycss.css" rel="stylesheet" />
 		
 		<!-- end: CSS file-->	
 	    
@@ -234,7 +239,7 @@
 									<a href="#"><i class="fa fa-file"></i> File</a>
 								</li>
 								<li>
-									<a href="page-login.html"><i class="fa fa-power-off"></i> Logout</a>
+									<a href="/logout/"><i class="fa fa-power-off"></i> Logout</a>
 								</li>
 							</ul>
 						</div>						
@@ -260,7 +265,7 @@
 						<!-- Sidebar Menu-->
 						<div class="sidebar-menu">						
 							<nav id="menu" class="nav-main" role="navigation">
-								<ul class="nav nav-sidebar">
+								<ul class="nav nav-sidebar" id="sidebar">
 									<div class="panel-body text-center">								
 										<div class="bk-avatar">
 											<img src="/static/img/avatar.jpg" class="img-circle bk-img-60" alt="" />
@@ -275,16 +280,10 @@
 											<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 										</a>
 									</li>
-									<li class="nav-parent">
-										<a >
+									<li>
+										<a href="/patientInfos/">
 											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
 										</a>
-										<ul class="nav nav-children">
-											<li><a href="/patientInfos/"><span class="text"> 所有患者信息</span></a></li>
-											<li><a href="/group/1/"><span class="text"> 实验组1</span></a></li>
-											<li><a href="/group/2/"><span class="text"> 实验组2</span></a></li>
-											<li><a href="/group/3/"><span class="text"> 实验组3</span></a></li>
-										</ul>
 									</li>
 									<li>
 										<a href="/add/outpatientInfos/">
@@ -305,6 +304,21 @@
 										<a href="/pending/">
 											<i class="fa fa-picture-o" aria-hidden="true"></i><span>待处理事项</span>
 										</a>
+									</li>
+
+									<li class="nav-parent">
+										<a >
+											<i class="fa fa-copy" aria-hidden="true"></i><span>实验组</span>
+										</a>
+										<ul class="nav nav-children" id="experimentGroup">
+
+										</ul>
+									</li>
+									<li>
+										<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-picture-o" aria-hidden="true"></i> 添加实验组</span></a>
+									</li>
+									<li id="setting" style="display:none">
+										<a href="/setting/"><i class="fa fa-cog" aria-hidden="true"></i><span>管理面板</span></a>
 									</li>
 								</ul>
 							</nav>
@@ -398,10 +412,10 @@
 										<div class="col-md-6 text-left bk-vcenter">
 											<h4 class="bk-margin-off">个人信息</h4>
 										</div>
-                                        <div class="panel-actions col-md-1">
+                                        <div class="panel-actions text-right col-md-3">
                                             <a  id="refresh"><i class="fa fa-rotate-right"></i></a>
                                             <a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                            <a  data-toggle="modal" href="#DoctorInfoDetails"><i class="fa fa-edit"></i></a>
+                                            <a  data-toggle="modal" onclick="editUserDetail()" href="#DoctorInfoDetails"><i class="fa fa-edit"></i></a>
                                         </div>
 
 									</div>
@@ -438,28 +452,28 @@
 
 		</div><!--/container-->
 
-
 		<div class="modal " id="DoctorInfoDetails">
-                <div class="modal-dialog">
-                    <div class="modal-content modal-lg">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title">详情/编辑</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal" method="post"  role="form" id="DoctorInfo">{% csrf_token %}
+                            <form class="form-horizontal" method="post"  role="form" id="DoctorInfo">
+								{% csrf_token %}
                             <div class="form-group">
-                                <label for="D_id" class="col-md-2">ID</label>
-                                <div class="col-md-10"><input type="text" class="form-control " name="D_id" id="D_id" readonly="true"></div>
+                                <label for="D_id" class="col-md-2 mylabel">ID</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="D_id" id="D_id" readonly="true"></div>
                             </div>
                             <div class="form-group">
-                                <label for="name" class="col-md-2">姓名</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="name" id="name" ></div>
+                                <label for="name" class="col-md-2 mylabel">姓名</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="name" id="name" ></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2">性别</label>
-                                <div class="col-md-10">
-                                    <div class="radio">
+                                <label class="col-md-2 mylabel">性别</label>
+                                <div class="col-md-2">
+                                    <div class="radio mycheckbox">
                                         <label>
                                             <input type="radio"  name="sex" value="1" >男
                                         </label>
@@ -470,41 +484,41 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="birthday" class="col-md-2">出生日期</label>
-                                <div class="col-md-10"><input type="text" class="form-control" id="birthday" name="birthday" id="brithday" ></div>
+                                <label for="birthday" class="col-md-2 mylabel">出生日期</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" id="birthday" name="birthday"></div>
                             </div>
                             <div class="form-group">
-                                <label for="userName" class="col-md-2">用户名</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="userName" id="userName" ></div>
+                                <label for="userName" class="col-md-2 mylabel">用户名</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="userName" id="userName" ></div>
                             </div>
                             <div class="form-group">
-                                <label for="cellphone" class="col-md-2" >手机号</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="cellphone" id="cellphone" ></div>
+                                <label for="cellphone" class="col-md-2 mylabel" >手机号</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="cellphone" id="cellphone" ></div>
                             </div>
                             <div class="form-group">
-                                <label for="weChat" class="col-md-2">微信</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="weChat" id="weChat" ></div>
+                                <label for="weChat" class="col-md-2 mylabel">微信</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="weChat" id="weChat" ></div>
                             </div>
                             <div class="form-group">
-                                <label for="mail" class="col-md-2">邮箱</label>
-                                <div class="col-md-10"><input type="email" class="form-control" name="mail" id="mail" ></div>
+                                <label for="mail" class="col-md-2 mylabel">邮箱</label>
+                                <div class="col-md-3"><input type="email" class="form-control myinput" name="mail" id="mail" ></div>
                             </div>
                             <div class="form-group">
-                                <label for="title" class="col-md-2">职称</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="title" id="title" ></div>
+                                <label for="title" class="col-md-2 mylabel">职称</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="title" id="title" ></div>
                             </div>
                             <div class="form-group">
-                                <label for="hospital" class="col-md-2">就职医院</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="hospital" id="hospital" ></div>
+                                <label for="hospital" class="col-md-2 mylabel">就职医院</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="hospital" id="hospital" ></div>
                             </div>
                             <div class="form-group">
-                                <label for="department" class="col-md-2">科室</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="department" id="department" ></div>
+                                <label for="department" class="col-md-2 mylabel">科室</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="department" id="department" ></div>
                             </div>
                             <div class="form-group">
-                                <label  class="col-md-2">用户组</label>
-                                <div class=" col-sm-10">
-                                    <div class="radio">
+                                <label  class="col-md-2 mylabel">用户组</label>
+                                <div class=" col-sm-4">
+                                    <div class="radio mycheckbox">
                                         <label>
                                             <input type="radio"  name="userGroup" value="1" >用户组1
                                         </label>
@@ -519,24 +533,59 @@
 
                             </div>
                             <div class="form-group" >
-                                <label for="registerDate" class="col-md-2">注册时间</label>
-                                <div class="col-md-10"><input type="text" class="form-control" name="registerDate" id="registerDate" readonly="true" ></div>
+                                <label for="registerDate" class="col-md-2 mylabel">注册时间</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="registerDate" id="registerDate" readonly="true" ></div>
                             </div>
-                                <button  class="btn btn-primary" id="submitUserDetail">保存修改</button>
                             </form>
                         </div>
-
-
-
-
-
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-default">关闭</button>
+							<button  class="btn btn-primary"  data-dismiss="modal" id="submitUserDetail">保存</button>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
          </div><!-- /.modal -->
 
+
+		<div class="modal fade" id="ExperimentGroupDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" style="color:black">实验组</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" method="post"  role="form" id="ExperimentGroupInfo">
+								{% csrf_token %}
+                            <div class="form-group">
+                                <label  class="col-md-2  mylabel">实验组编号</label>
+                                <div class="col-md-2"><input type="text" class="form-control myinput " name="G_id" id="G_id" readonly="true"></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2  mylabel">名称</label>
+                                <div class="col-md-3"><input type="text" class="form-control myinput" name="name" ></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2 mylabel">创建时间</label>
+                                <div class="col-md-3"><input type="date" class="form-control myinput" name="date"></div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-md-2 mylabel">创建者</label>
+                                <div class="col-md-2"><input type="text" class="form-control myinput" name="D_id" readonly="true"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 mylabel">描述</label>
+                                <div class="col-md-8"><textarea class="form-control myinput" name="description"></textarea></div>
+                            </div>
+                         </form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" id = "experimentGroupbt" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 		<!-- start: JavaScript-->
 		
 		<!-- Vendor JS-->				
@@ -568,7 +617,9 @@
 
 
 
+		<script src="/static/js/pages/group_sidebar.js"></script>
 		<script src="/static/js/pages/index.js"></script>
+		<script src="/static/js/pages/setting_sidebar.js"></script>
 
 		<!-- end: JavaScript-->
 		
