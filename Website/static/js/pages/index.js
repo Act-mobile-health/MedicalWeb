@@ -12,21 +12,20 @@ $(document).ready(function(){
 });
     function showUserDetail() {
         $("#userInfoTable tbody").text("");
-        $.getJSON("/i5/",{},function(item) {
-        console.log(item);
-            if(item.result=="-1"){
-                location.href="/login/";
-            }
+        $.getJSON("/i5/",{},function(data) {
             $("#userInfoTable tbody").append(
                 "<tr>"+
-                    "<td>"+item.D_id+"</td>"+
-                    "<td>"+item.userName+"</td>"+
-                    "<td>"+item.cellphone+"</td>"+
-                    "<td>"+item.mail+"</td>"+
-                    "<td>"+item.hospital+"</td>"+
+                "<td>"+data.D_id+"</td>"+
+                "<td>"+data.userName+"</td>"+
+                "<td>"+userGroupParse(data.userGroup)+"</td>"+
+                "<td>"+data.name+"</td>"+
+                "<td>"+SexParse(data.sex)+"</td>"+
+                "<td>"+data.title+"</td>"+
+                "<td>"+data.hospital+"</td>"+
+                "<td>"+data.cellphone+"</td>"+
+                "<td>"+data.mail+"</td>"+
                 "</tr>");
         });
-        return false;
     }
 
     function editUserDetail() {

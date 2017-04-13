@@ -58,9 +58,9 @@ urlpatterns = [
     url(r'^i3/',view.login),
     url(r'^i4/',view.retrievePassword),
 
-    url(r'^i5/',view.getDoctorBasicInfo),
-    url(r'^i6/',view.getDoctorDetailedInfo),
-    url(r'^i7/',view.updateDoctorInfo),
+    url(r'^i5/',view.getUserBasicInfo),
+    url(r'^i6/',view.getUserDetailedInfo),
+    url(r'^i7/',view.updateUserInfo),
 
     # url(r'^i10/',view.addExpGroup),
 
@@ -122,6 +122,11 @@ urlpatterns = [
     url(r'^i61/',view.addInvitation),
     url(r'^i62/',view.deleteInvitation),
     url(r'^i63/',view.getUserGroup),
+
+
+
+    url(r'^i65/',view.getUsers),
+    url(r'^i66/',view.getUserName),
 
     # url(r'^i18/',view.updatePatientInfo),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

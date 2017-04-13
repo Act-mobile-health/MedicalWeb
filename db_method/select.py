@@ -65,7 +65,7 @@ def getUserInfo(userName,key):
 # 获取医生的基本信息
 # D_id为医生的编号
 # 以字典形式返回获取到的基本信息
-def getDoctorBasicInfo(D_id):
+def getUserBasicInfo(D_id):
     message = {}
     # TODO
     try:
@@ -73,15 +73,17 @@ def getDoctorBasicInfo(D_id):
         value = []
         value.append(obj.id)
         value.append(obj.name)
-        value.append(obj.username)
-        value.append(obj.mail)
+        value.append(obj.sex)
         value.append(obj.cellphone)
+        value.append(obj.email)
+        value.append(obj.title)
         value.append(obj.hospital)
-        value.append(obj.department)
-        keys = ['D_id','name','userName','mail','cellphone','hospital','department']
+        value.append(obj.userGroup)
+        value.append(obj.username)
+        keys = ['D_id', 'name', 'sex', 'cellphone', 'mail', 'title', 'hospital', 'userGroup', 'userName']
         message = tools.dictPackage(keys,value)
     except Exception, e:
-        tools.exceptionRecord('select.py','getDoctorBasicInfo',e)
+        tools.exceptionRecord('select.py','getUserBasicInfo',e)
 
     return message
 
@@ -89,7 +91,7 @@ def getDoctorBasicInfo(D_id):
 # 获取医生的详细信息
 # D_id为医生的编号
 # 以字典形式返回获取到的详细信息
-def getDoctorDetailedInfo(D_id):
+def getUserDetailedInfo(D_id):
     message = {}
     try:
         obj = UserInfo.objects.get(id=D_id)
@@ -113,7 +115,7 @@ def getDoctorDetailedInfo(D_id):
         # value[12] = value[12].strftime("%Y-%m-%d")
         message = tools.dictPackage(keys, value)
     except Exception, e:
-        tools.exceptionRecord('select.py','getDoctorDetailedInfo',e)
+        tools.exceptionRecord('select.py','getUserDetailedInfo',e)
         pass
 
     return message
@@ -227,10 +229,15 @@ def getPatientsBasicInfo():
         #
         #         list.append(message)
         #
-        values = PatientInfo.objects.all().values_list('P_id','name','sex','age','cellphone')
-        keys = ['P_id', 'name', 'sex','age','cellphone']
+        values = PatientInfo.objects.all().values_list('P_id','name','sex','age', 'nation', 'registerTime', 'telephone', 'cellphone')
+        keys = ['P_id', 'name', 'sex','age', 'nation', 'registerTime', 'telephone', 'cellphone']
         for value in values:
             message = tools.dictPackage(keys, value)
+            time = MedicalVisit.objects.get(P_id=message['P_id'])
+            message['registerTime'] = str(message['registerTime'])
+            message['o_time'] = time.o_time
+            message['e_time'] = time.e_time
+            message['h_time'] = time.h_time
             list.append(message)
     except Exception, e:
         tools.exceptionRecord('select.py','getPatientsBasicInfo',e)
@@ -827,3 +834,26 @@ def getInvitation():
         return list
     except Exception, e:
         tools.exceptionRecord('select.py', 'getInvitation', e)
+
+def getUsers():
+    try:
+        list = []
+        message = {}
+        values = UserInfo.objects.filter().values_list('id', 'name', 'sex', 'cellphone', 'email', 'title', 'hospital', 'userGroup', 'username')
+        keys = ['id', 'name', 'sex', 'cellphone', 'mail', 'title', 'hospital', 'userGroup', 'userName']
+        for value in values:
+            message = tools.dictPackage(keys, value)
+            list.append(message)
+        return list
+    except Exception,e:
+        tools.exceptionRecord('select.py', 'getUsers', e)
+
+
+def getUserName(id):
+    try:
+        message = {}
+        obj = UserInfo.objects.get(id=id)
+        message['userName'] = obj.username
+        return message
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getUserName', e)

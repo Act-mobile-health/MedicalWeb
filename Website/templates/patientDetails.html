@@ -340,15 +340,38 @@
 				<!-- Main Page -->
 				<div class="main">
                     <!-- Page Header -->
-                        <div class="page-header ">
-                            <ul id="myTab" class="nav nav-tabs">
-                              <li role="presentation" class="active"><a href="#1">患者详细信息</a></li>
-                              <li role="presentation"><a href="#2">子女信息</a></li>
-                              <li role="presentation" onclick="showOutpatient()"><a href="#3">门诊记录</a></li>
-                              <li role="presentation" onclick="showEmergency()"><a href="#4">急诊记录</a></li>
-                              <li role="presentation" onclick="showHospital()"><a href="#5">住院记录</a></li>
-                              <li role="presentation" onclick="showAPP()"><a href="#6">APP数据</a></li>
+                        <div class="page-header row">
+                            <ul id="myTab" class="nav nav-tabs row text-center" >
+                              <li role="presentation" class="active" style="width:120px"><a href="#1">患者详情</a></li>
+                              <li role="presentation" style="width:120px"><a href="#2">家属信息</a></li>
+                              <li role="presentation" style="width:120px" onclick="showOutpatient()"><a href="#3">门诊记录</a></li>
+                              <li role="presentation" style="width:120px" onclick="showEmergency()"><a href="#4">急诊记录</a></li>
+                              <li role="presentation" style="width:120px" onclick="showHospital()"><a href="#5">住院记录</a></li>
+                              <li role="presentation" style="width:120px" onclick="showAPP()"><a href="#6">APP数据</a></li>
                             </ul>
+							<ul class="nav nav-tabs" role="tablist" id="myTabSmall">
+								<li class="dropdown" style="width:160px">
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+										患者及其家属信息 <span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu" role="menu" style="background:#7aa2ca;">
+										<li role="presentation"><a href="#1">患者详情</a></li>
+										<li role="presentation"><a href="#2">家属信息</a></li>
+									</ul>
+								</li>
+								<li class="dropdown" style="width:150px">
+									<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+										就诊及APP信息 <span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu" role="menu" style="background:#7aa2ca;">
+										<li role="presentation" onclick="showOutpatient()"><a href="#3">门诊记录</a></li>
+										<li role="presentation" onclick="showEmergency()"><a href="#4">急诊记录</a></li>
+										<li role="presentation" onclick="showHospital()"><a href="#5">住院记录</a></li>
+										<li class="divider" ></li>
+										<li role="presentation" onclick="showAPP()"><a href="#6">APP数据</a></li>
+									</ul>
+								</li>
+							</ul>
                         </div>
                         <!-- End Page Header -->
                         <div class="row">
@@ -361,10 +384,10 @@
 										<div class="col-md-2 col-sm-2 col-xs-4 text-left ">
                                         <h6><i class="fa fa-table red"></i><span class="break"></span>详细信息</h6>
 										</div>
-                                        <div class="panel-actions">
+                                        <div class="panel-actions col-md-4 col-sm-4 col-xs-4 text-right" style="display:block">
                                             <!--<a href="#" id="refresh" onclick="PatientDetailTable()"><i class="fa fa-rotate-right"></i></a>-->
                                             <a  data-toggle="modal" onclick="appendPatientDetail()" href="#PatientInfoDetails"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                            <!--<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>-->
                                         </div>
 											</div>
                                     </div>
@@ -375,71 +398,71 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td>受试者编号</td>
+                                                    <td class="tlabel1">受试者编号</td>
                                                     <td id="P_id"></td>
-                                                    <td>签署知情同意书</td>
+                                                    <td class="tlabel2">签署知情同意书</td>
                                                     <td id="sign"></td>
-                                                    <td>注册时间</td>
+                                                    <td class="tlabel3">注册时间</td>
                                                     <td id="registerTime"></td>
-                                                    <td>照片</td>
+                                                    <td class="tlabel4">照片</td>
                                                     <td ></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>姓名</td>
+                                                    <td class="tlabel1">姓名</td>
                                                     <td id="name"></td>
-                                                    <td>性别</td>
+                                                    <td class="tlabel2">性别</td>
                                                     <td id="sex"></td>
-                                                    <td>出生日期</td>
+                                                    <td class="tlabel3">出生日期</td>
                                                     <td id="birthday"></td>
-                                                    <td>年龄</td>
+                                                    <td class="tlabel4">年龄</td>
                                                     <td id="age"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>身高</td>
+                                                    <td class="tlabel1">身高</td>
                                                     <td id="height"></td>
-                                                    <td>体重</td>
+                                                    <td class="tlabel2">体重</td>
                                                     <td id="weight"></td>
-                                                    <td>民族</td>
+                                                    <td class="tlabel3">民族</td>
                                                     <td id="nation"></td>
-                                                    <td>籍贯</td>
+                                                    <td class="tlabel4">籍贯</td>
                                                     <td id="birthAddr"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>学历</td>
+                                                    <td class="tlabel1">学历</td>
                                                     <td id="education"></td>
-                                                    <td>职业</td>
+                                                    <td class="tlabel2">职业</td>
                                                     <td id="career"></td>
-                                                    <td>婚姻状况</td>
+                                                    <td class="tlabel3">婚姻状况</td>
                                                     <td id="marriage"></td>
-                                                    <td>医疗支付方式</td>
+                                                    <td class="tlabel4">医疗支付方式</td>
                                                     <td id="payment"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>家庭地址</td>
+                                                    <td class="tlabel1">家庭地址</td>
                                                     <td id="homeAddr"></td>
-                                                    <td>最大活动半径</td>
+                                                    <td class="tlabel2">最大活动半径</td>
                                                     <td id="actionAddr"></td>
-                                                    <td>活动地址1</td>
+                                                    <td class="tlabel3">活动地址1</td>
                                                     <td id="activityAddr1"></td>
-                                                    <td>活动地址2</td>
+                                                    <td class="tlabel4">活动地址2</td>
                                                     <td id="activityAddr2"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>舒张压</td>
+                                                    <td class="tlabel1">舒张压</td>
                                                     <td id="diastolicPressure"></td>
-                                                    <td>收缩压</td>
+                                                    <td class="tlabel2">收缩压</td>
                                                     <td id="systolicPressure"></td>
-                                                    <td>颈围</td>
+                                                    <td class="tlabel3">颈围</td>
                                                     <td id="neckCircu"></td>
                                                     <td></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>固定电话</td>
+                                                    <td class="tlabel1">固定电话</td>
                                                     <td id="telephone"></td>
-                                                    <td>手机</td>
+                                                    <td class="tlabel2">手机</td>
                                                     <td id="cellphone"></td>
-                                                    <td>同住人联系方式</td>
+                                                    <td class="tlabel3">同住人联系方式</td>
                                                     <td id="partnerPhone"></td>
                                                     <td></td>
                                                     <td></td>
@@ -628,12 +651,10 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
                 </div>
             <!-- End Main Page -->
 			</div>
 		</div><!--/container-->
-
 
 		<!-- Modal Dialog -->
 
@@ -4081,6 +4102,7 @@
 		<script src="/static/js/pages/form-wizard.js"></script>
 
 		<!-- Pages JS -->
+        <script src="/static/js/pages/tools.js"></script>
         <script src="/static/js/pages/patientDetail.js"></script>
 		<script src="/static/js/pages/group_sidebar.js"></script>
 		<script src="/static/js/pages/setting_sidebar.js"></script>

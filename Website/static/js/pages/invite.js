@@ -27,7 +27,7 @@ function showInvitations(){
 function submitNewInvitation(){
     console.log($("#prefix").val())
     $.ajax({
-        type:"GET",
+        type:"POST",
         url:"/i61/",
         dataType:"json",
         data:{

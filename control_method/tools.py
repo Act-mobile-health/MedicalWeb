@@ -4,6 +4,7 @@ import numpy as np
 from django.core.mail import send_mail
 
 
+
 def forCheckbox(data, attr):
     temp = dict(data.iterlists())
     json_data = temp[attr]
