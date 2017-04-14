@@ -78,7 +78,7 @@ class RelationInfo(models.Model):
 class UserInfo(AbstractUser):
 
     name = models.CharField(max_length=50)
-    sex = models.CharField(max_length=2)
+    sex = models.CharField(max_length=2,default="1")
     birthday = models.DateField(blank=True,default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     # userName = models.CharField(max_length=50)
     # password = models.CharField(max_length=100)

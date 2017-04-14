@@ -322,57 +322,10 @@
 							</ol>
 						</div>
 						<div class="pull-right">
-							<h2>Dashboard</h2>
+							<h2>管理中心</h2>
 						</div>
 					</div>
 					<!-- End Page Header -->
-					<div class="row" >
-						<div class="col-lg-6 col-md-12" >
-							<div class="panel bk-widget bk-border-off bk-noradius">
-								<div class="panel-heading bk-bg-primary">
-									<div class="row">
-										<div class="col-xs-8 text-left bk-vcenter">
-											<h4 class="bk-margin-off">公告&FAQ</h4>
-										</div>
-										<div class="col-xs-4 bk-vcenter text-right">
-											<i class="fa fa-users"></i>
-										</div>
-									</div>
-								</div>
-                                <div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
-                                        <div class="row" style="text-indent:2em;">
-                                            <h5>Welcome to the website!!!</h5>
-                                            <h5>Welcome to the website!!!</h5>
-                                            <h5>Welcome to the website!!!</h5>
-                                        </div>
-                                </div>
-                            </div>
-
-						</div>
-						<div class="col-lg-6 col-md-12">
-							<div class="panel bk-widget bk-border-off bk-noradius">
-								<div class="panel-heading bk-bg-primary">
-									<div class="row">
-										<div class="col-xs-8 text-left bk-vcenter">
-											<h4 class="bk-margin-off">你的通知</h4>
-										</div>
-										<div class="col-xs-4 bk-vcenter text-right">
-											<i class="fa fa-users"></i>
-										</div>
-									</div>
-								</div>
-								<div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
-									<div class="row">
-										<div class="col-xs-12 bk-vcenter text-center bk-padding-top-10 bk-padding-bottom-10">
-											<h5 class="bk-fg-primary bk-margin-off-bottom">please submit the infomation of patient 3</h5>
-										</div>
-
-									</div>
-							    </div>
-						    </div>
-					    </div>
-
-                    </div>
 
                     <div class="row" >
 						<div class="col-lg-12 col-md-12">
@@ -380,26 +333,25 @@
 								<div class="panel-heading bk-bg-primary">
 									<div class="row">
 										<div class="col-md-6 text-left bk-vcenter">
-											<h4 class="bk-margin-off">个人信息</h4>
+											<h4 class="bk-margin-off">用户信息</h4>
 										</div>
-                                        <div class="panel-actions text-right col-md-3">
-                                            <a  id="refresh"><i class="fa fa-rotate-right"></i></a>
-                                            <a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                            <a  data-toggle="modal" onclick="editUserDetail()" href="#DoctorInfoDetails"><i class="fa fa-edit"></i></a>
-                                        </div>
-
 									</div>
 								</div>
 								<div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
 									<div class="row">
-                                        <table class="table " id="userInfoTable" style="text-indent:2em;">
+                                        <table class="table " id="allUserInfoTable" style="text-indent:2em;">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
                                                 <th>用户名</th>
+                                                <th>用户组</th>
+                                                <th>姓名</th>
+                                                <th>性别</th>
+                                                <th>职称</th>
+                                                <th>就职医院</th>
                                                 <th>手机</th>
                                                 <th>邮箱</th>
-                                                <th>医院</th>
+                                                <th>操作</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -585,7 +537,8 @@
 		<script src="/static/js/pages/form-wizard.js"></script>
 
 
-		<script src="/static/js/pages/index.js"></script>
+		<script src="/static/js/pages/tools.js"></script>
+		<script src="/static/js/pages/setting.js"></script>
 
 		<!-- end: JavaScript-->
 

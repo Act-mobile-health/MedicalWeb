@@ -8,7 +8,7 @@ def deleteExpGroup(D_id,G_id):
     #TODO
     try:
 
-        group = GroupInfo.objects.get(D_id=D_id,id=G_id)
+        group = GroupInfo.objects.get(id=G_id)
         group.delete()
         # 没有使用外码
         PatientGroup.objects.filter(G_id=G_id).delete()

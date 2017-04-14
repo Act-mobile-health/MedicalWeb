@@ -356,9 +356,9 @@
                                     <div class="panel-heading bk-bg-primary">
                                         <h6><i class="fa fa-table red"></i><span class="break"></span>患者信息</h6>
                                         <div class="panel-actions">
-                                            <a href="#" id="refresh"><i class="fa fa-rotate-right"></i></a>
+                                            <!--<a href="#" id="refresh"><i class="fa fa-rotate-right"></i></a>-->
                                             <a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                            <a  data-toggle="modal" href="#PatientInfoDetails"><i class="fa fa-edit"></i></a>
+                                            <!--<a  data-toggle="modal" href="#PatientInfoDetails"><i class="fa fa-edit"></i></a>-->
                                         </div>
                                     </div>
                                     <div class="panel-body">
@@ -370,6 +370,13 @@
                                                     <th style="text-align:center">姓名</th>
                                                     <th style="text-align:center">性别</th>
                                                     <th style="text-align:center">年龄</th>
+                                                    <th style="text-align:center">民族</th>
+                                                    <th style="text-align:center">入组时间</th>
+                                                    <th style="text-align:center">手机</th>
+                                                    <th style="text-align:center">固定电话</th>
+                                                    <th style="text-align:center">门诊</th>
+                                                    <th style="text-align:center">急诊</th>
+                                                    <th style="text-align:center">住院</th>
                                                     <th style="text-align:center">健康状况</th>
                                                     <th style="text-align:center">操作</th>
                                                 </tr>
@@ -378,6 +385,9 @@
                                                 </tbody>
                                             </table>
                                      </div>
+                                    <div class="row col-lg-4 col-md-4 text-left">
+                                            <a  data-toggle="modal" href="#PatientInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的患者信息</a>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -743,6 +753,7 @@
 
 
 		<!-- Pages JS -->
+		<script src="/static/js/pages/tools.js"></script>
         <script src="/static/js/pages/page-patient.js"></script>
 		<script src="/static/js/pages/group_sidebar.js"></script>
 		<script src="/static/js/pages/setting_sidebar.js"></script>

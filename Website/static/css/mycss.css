@@ -63,3 +63,16 @@
   .table-bordered td {
     border: 1px solid #000 !important;
   }
+
+.tlabel1{
+    background:#f1b7b7 !important;
+}
+.tlabel2{
+    background:#c7c7fb !important;
+}
+.tlabel3{
+    background:#bfe6bf !important;
+}
+.tlabel4{
+    background:#e3eaad !important;
+}

@@ -21,6 +21,15 @@
     var index = 0;
 $(document).ready(function () {
 
+    if(window.innerWidth<1000){
+	$("#myTab").hide();
+	$("#myTabSmall").show();
+	}
+	else{
+	$("#myTab").show();
+	$("#myTabSmall").hide();
+	}
+
     PatientDetailTable();
     showRelationInfo();
 
@@ -208,7 +217,7 @@ $(document).ready(function () {
                         "'<td>"+item.mail+"</td>'"+
                         "'<td>"+item.homeAddr+"</td>'"+
                         '<td><a  data-toggle="modal" onclick = "editRelationInfo('+ index +')" href="#RelationInfoDetails"><i class="fa fa-edit"></i></a></td>'+
-                        '<td><button onclick = "deleteRelationInfo('+item.R_id+')"></button></td>'+
+                        '<td><a onclick = "deleteRelationInfo('+item.R_id+')"><i class="fa fa-times"></i></a></td>'+
                     "</tr>");
             });
         });

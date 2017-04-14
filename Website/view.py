@@ -24,6 +24,7 @@ def PermissionCheck(function_type = 1):
             D_id = request.session['_auth_user_id']
             user_type = select.getUserGroup(D_id)
             print user_type,function_type
+            print data
             if user_type > function_type:
                 return HttpResponse(status=403)
 
@@ -136,21 +137,21 @@ def retrievePassword(request):
 
 #接口5
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
-def getDoctorBasicInfo(request,data,D_id):
+@PermissionCheck(3)
+def getUserBasicInfo(request,data,D_id):
     print "aaa"
-    message = select.getDoctorBasicInfo(D_id)
+    message = select.getUserBasicInfo(D_id)
     # message = tools.toString(message)
     js = json.dumps(message)
     return HttpResponse(js)
 
 #接口6
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
-def getDoctorDetailedInfo(request,data,D_id):
-    message = select.getDoctorDetailedInfo(D_id)
+@PermissionCheck(3)
+def getUserDetailedInfo(request,data,D_id):
+    message = select.getUserDetailedInfo(D_id)
     # message = tools.toString(message)
     js = json.dumps(message)
     return HttpResponse(js)
@@ -158,9 +159,9 @@ def getDoctorDetailedInfo(request,data,D_id):
 
 #接口7
 @login_required
-@PermissionCheck(2)
 @csrf_exempt
-def updateDoctorInfo(request,data,D_id):
+@PermissionCheck(2)
+def updateUserInfo(request,data,D_id):
     message = {}
     if update.updateUserInfo(D_id,data) == True:
         message['result'] = 0
@@ -174,8 +175,8 @@ def updateDoctorInfo(request,data,D_id):
 
 #接口8
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getExpGroups(request,data,D_id):
     message = []
     print D_id
@@ -186,8 +187,8 @@ def getExpGroups(request,data,D_id):
 
 #接口9
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getExpGroupPatientsInfo(request,data,D_id):
     message = []
     message = select.getExpGroupPatientsInfo(int(data['G_id']))
@@ -197,8 +198,8 @@ def getExpGroupPatientsInfo(request,data,D_id):
     return HttpResponse(js)
 
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getOneExpGroupInfo(request,data,D_id):
     message = []
     message = select.getOneExpGroupInfo(int(data['G_id']))
@@ -210,8 +211,8 @@ def getOneExpGroupInfo(request,data,D_id):
 
 #接口10
 @login_required
-@PermissionCheck(2)
 @csrf_exempt
+@PermissionCheck(2)
 def addOrUpdateExpGroup(request,data,D_id):
     message = {}
 
@@ -231,8 +232,8 @@ def addOrUpdateExpGroup(request,data,D_id):
 
 #接口11
 @login_required
-@PermissionCheck(1)
 @csrf_exempt
+@PermissionCheck(1)
 def deleteExpGroup(request,data,D_id):
     message = {}
     if delete.deleteExpGroup(D_id,int(data['G_id'])) == True:
@@ -246,8 +247,8 @@ def deleteExpGroup(request,data,D_id):
 
 # for add
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getPatientGroupInfo(request,data,D_id):
     message = {}
     list =[]
@@ -269,8 +270,8 @@ def getPatientGroupInfo(request,data,D_id):
 
 #接口13
 @login_required
-@PermissionCheck(2)
 @csrf_exempt
+@PermissionCheck(2)
 def addPatientToExpGroup(request,data,D_id):
     message = {}
     data1 = tools.forCheckbox2(data, 'add')
@@ -284,8 +285,8 @@ def addPatientToExpGroup(request,data,D_id):
 
 #接口14
 @login_required
-@PermissionCheck(1)
 @csrf_exempt
+@PermissionCheck(1)
 def removePatientfromExpGroup(request,data,D_id):
     message = {}
     if delete.removePatientfromExpGroup(int(data['G_id']),data['P_id']):
@@ -298,8 +299,8 @@ def removePatientfromExpGroup(request,data,D_id):
 
 #接口15
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getPatientsBasicInfo(request,data,D_id):
     message = []
     message = select.getPatientsBasicInfo()
@@ -308,8 +309,8 @@ def getPatientsBasicInfo(request,data,D_id):
 
 #接口16
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getPatientDetailedInfo(request,data,D_id):
     message = []
     message = select.getPatientDetailedInfo(data['P_id'])
@@ -322,8 +323,8 @@ def getPatientDetailedInfo(request,data,D_id):
 
 #接口17
 @login_required
-@PermissionCheck(2)
 @csrf_exempt
+@PermissionCheck(2)
 def addOrUpdatePatientInfo(request,data,D_id):
     message = {}
 
@@ -363,8 +364,8 @@ def addOrUpdatePatientInfo(request,data,D_id):
 
 #接口19
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getRelationsInfo(request,data,D_id):
     message = []
     message = select.getRelationInfos(data['P_id'])
@@ -395,8 +396,8 @@ def getRelationsInfo(request,data,D_id):
 
 #接口21
 @login_required
-@PermissionCheck(2)
 @csrf_exempt
+@PermissionCheck(2)
 def addOrUpdateRelationInfo(request,data,D_id):
     message = {}
 
@@ -419,8 +420,8 @@ def addOrUpdateRelationInfo(request,data,D_id):
 
 #接口22
 @login_required
-@PermissionCheck(1)
 @csrf_exempt
+@PermissionCheck(1)
 def deleteRelation(request,data,D_id):
     message = {}
     if delete.deleteRelation(int(data['R_id'])) == True:
@@ -434,8 +435,8 @@ def deleteRelation(request,data,D_id):
 
 
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getCEHAllInfo(request,data,D_id):
     message = []
     if int(data['type']) == 0:
@@ -452,8 +453,8 @@ def getCEHAllInfo(request,data,D_id):
 
 #接口23
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getCEHDetailedInfo(request,data,D_id):
     message = []
     if int(data['type']) == 0:
@@ -470,8 +471,8 @@ def getCEHDetailedInfo(request,data,D_id):
 
 #接口24
 @login_required
-@PermissionCheck(2)
 @csrf_exempt
+@PermissionCheck(2)
 def addOrUpdateCEHInfo(request,data,D_id):
     message = {'result':-1}
 
@@ -506,8 +507,8 @@ def addOrUpdateCEHInfo(request,data,D_id):
 
 #接口25
 @login_required
-@PermissionCheck(1)
 @csrf_exempt
+@PermissionCheck(1)
 def deleteCEHInfo(request,data,D_id):
     message = {'result':-1}
     if int(data['type']) == 0:
@@ -556,8 +557,8 @@ def deleteCEHInfo(request,data,D_id):
 
 # 接口27
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getCorQBasicInfo(request,data,D_id):
     message = []
     if int(data['kind']) == 0:
@@ -573,8 +574,8 @@ def getCorQBasicInfo(request,data,D_id):
 
 # 接口28
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getClinicDetailedInfo(request,data,D_id):
     message = select.getDetailedClinicInfo(int(data['Cli_id']))
 
@@ -584,8 +585,8 @@ def getClinicDetailedInfo(request,data,D_id):
 
 # 接口29
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getQuestionnaireDetailedInfo(request,data,D_id):
     message = select.getDetailedQuestionnaireInfo(int(data['type']),int(data['id']))
     # message = tools.toString(message)
@@ -597,8 +598,8 @@ def getQuestionnaireDetailedInfo(request,data,D_id):
 
 # 接口30
 @login_required
-@PermissionCheck(2)
 @csrf_exempt
+@PermissionCheck(2)
 def addOrUpdateClinicInfo(request,data,D_id):
     message = {'result': -1}
     S_id = int(data['S_id'])
@@ -615,8 +616,8 @@ def addOrUpdateClinicInfo(request,data,D_id):
 
 # 接口31
 @login_required
-@PermissionCheck(2)
 @csrf_exempt
+@PermissionCheck(2)
 def addOrUpdateQuestionnaireInfo(request,data,D_id):
     message = {'result': -1}
     S_id = int(data['S_id'])
@@ -639,8 +640,8 @@ def addOrUpdateQuestionnaireInfo(request,data,D_id):
 
 # 接口34
 @login_required
-@PermissionCheck(1)
 @csrf_exempt
+@PermissionCheck(1)
 def deleteClinicInfo(request,data,D_id):
     message = {'result': -1}
     if delete.deleteClinicInfo(int(data['Cli_id'])):
@@ -652,8 +653,8 @@ def deleteClinicInfo(request,data,D_id):
 
 # 接口35
 @login_required
-@PermissionCheck(1)
 @csrf_exempt
+@PermissionCheck(1)
 def deleteQuestionnaireInfo(request,data,D_id):
     message = {'result': -1}
     if delete.deleteQuestionnaireInfo(int(data['kind']),int(data['id'])):
@@ -667,8 +668,8 @@ def deleteQuestionnaireInfo(request,data,D_id):
 
 # 接口36
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getAorAEDetailedInfo(request,data,D_id):
     message = []
     if int(data['kind']) == 0:
@@ -681,8 +682,8 @@ def getAorAEDetailedInfo(request,data,D_id):
 
 
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getOneAorAEDetailedInfo(request,data,D_id):
     message = []
     if int(data['kind']) == 0:
@@ -698,8 +699,8 @@ def getOneAorAEDetailedInfo(request,data,D_id):
 
 # 接口37
 @login_required
-@PermissionCheck(2)
 @csrf_exempt
+@PermissionCheck(2)
 def addOrUpdateAorAEDetailedInfo(request,data,D_id):
     myFile = request.FILES.get("myimage",None)
     print myFile
@@ -728,8 +729,8 @@ def addOrUpdateAorAEDetailedInfo(request,data,D_id):
 
 # 接口39
 @login_required
-@PermissionCheck(1)
 @csrf_exempt
+@PermissionCheck(1)
 def deleteAorAEDetailedInfo(request,data,D_id):
     message = {'result': -1}
     if int(data['kind']) == 0:
@@ -746,8 +747,8 @@ def deleteAorAEDetailedInfo(request,data,D_id):
 
 # 接口40
 @login_required
-@PermissionCheck(2)
 @csrf_exempt
+@PermissionCheck(2)
 def updateDocPassword(request,data,D_id):
     message = {}
     if update.updatePassword(D_id, data['oldPassword'],data['newPassword']):
@@ -762,8 +763,8 @@ def updateDocPassword(request,data,D_id):
 # 接口41
 # Cat &&MRC 返回近两周的sum
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getCat_MRCSum2Weeks(request,data,D_id):
     message = []
     message = select.getMsg2Weeks(data['P_id'], 1)
@@ -775,8 +776,8 @@ def getCat_MRCSum2Weeks(request,data,D_id):
 # 接口42
 # 近两周暴露水平
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getExploure2Weeks(request,data,D_id):
     message = []
     message = select.getMsg2Weeks(data['P_id'], 2)
@@ -787,8 +788,8 @@ def getExploure2Weeks(request,data,D_id):
 
 # 接口43
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def getPatientName(request,data,D_id):
     message = {}
     message = select.getPatientName(data['P_id'])
@@ -900,8 +901,8 @@ def app_addOrUpdateMedicineRecordTable(request):
 
 # 接口43
 @login_required
-@PermissionCheck(3)
 @csrf_exempt
+@PermissionCheck(3)
 def test(request):
     print "test-inside"
 
@@ -940,8 +941,8 @@ def upload2(request):
 
 
 @login_required
-@PermissionCheck(1)
 @csrf_exempt
+@PermissionCheck(1)
 def addInvitation(request,data,D_id):
     print "wew"
     if insert.addInvitation(D_id,data):
@@ -951,8 +952,8 @@ def addInvitation(request,data,D_id):
     return HttpResponse(js)
 
 @login_required
-@PermissionCheck(1)
 @csrf_exempt
+@PermissionCheck(1)
 def getInvitation(request,data,D_id):
     message = select.getInvitation()
     print message
@@ -960,11 +961,29 @@ def getInvitation(request,data,D_id):
     return HttpResponse(js)
 
 @login_required
-@PermissionCheck(1)
 @csrf_exempt
+@PermissionCheck(1)
 def deleteInvitation(request,data,D_id):
     result = -1
     if delete.deleteInvitation(data):
         result = 0
     js = json.dumps({"result":result})
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getUsers(request,data,D_id):
+    message = []
+    message = select.getUsers()
+    js = json.dumps(message)
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(3)
+def getUserName(request, data, D_id):
+    message = select.getUserName(int(data['D_id']))
+    print message
+    js = json.dumps(message)
     return HttpResponse(js)

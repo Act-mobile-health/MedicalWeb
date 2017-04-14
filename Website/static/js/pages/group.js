@@ -39,7 +39,7 @@ $(document).ready(function(){
                 "<tr>"+
                     "<td>"+item.G_id+"</td>"+
                     "<td>"+item.name+"</td>"+
-                    "<td>"+item.D_id+"</td>"+
+                    "<td>"+userNameParse(item.D_id)+"</td>"+
                     "<td>"+item.date+"</td>"+
                     "<td>"+item.description+"</td>"+
                 "</tr>");
@@ -50,18 +50,11 @@ $(document).ready(function(){
         $("#patient tbody").empty();
         $.getJSON("/i42/",{G_id:G_id},function(json_data){
             $.each(json_data,function(index,item){
-                var temp ="";
-                if(item.sex=="1"){
-                    temp = "男";
-                }
-                else{
-                    temp = "女";
-                }
                 $("#patient tbody").append(
                     "<tr>"+
                     "<td>"+item.P_id+"</td>"+
                     "<td>"+item.name+"</td>"+
-                    "<td>"+temp+"</td>"+
+                    "<td>"+SexParse(item.sex)+"</td>"+
                     "<td>"+item.age+"</td>"+
                     "<td>"+item.o_time+"</td>"+
                     "<td>"+item.e_time+"</td>"+
@@ -134,32 +127,23 @@ $(document).ready(function(){
 //        }
 //    }
     function deleteGroup(){
-        $.ajax({
-        type:"POST",
-        url:"/i41/",
-        dataType:"json",
-        data:{
-            G_id: G_id
-        },
-        success:function(data){
-            if(data.result == "0"){
-                $("#msg-error").hide(10);
-                $("#msg-success").show(100);
-                $("#msg-success-p").html("登陆成功");
-                window.setTimeout("location.href='/'", 2000);
-            }else{
-                $("#msg-success").hide(10);
-                $("#msg-error").show(100);
-                $("#msg-error-p").html(data.msg);
+        if(confirm("确定删除？")==1){
+            $.ajax({
+            type:"POST",
+            url:"/i41/",
+            dataType:"json",
+            data:{
+                G_id: G_id
+            },
+            success:function(data){
+                successProcess(data);
+                location.href = "/";
+            },
+            error:function(a){
+                errorProcess(a);
             }
-        },
-        error:function(a){
-            console.log(a);
-            if(a.status==403){
-                alert("您的权限不足");
-            }
+        });
         }
-    });
     }
 
     function submitPatientId(){
