@@ -9,7 +9,7 @@ function showUsers(){
         url:"/i65/",
         dataType:"json",
         data:{},
-        success(json_data){
+        success : function(json_data){
             $("#allUserInfoTable tbody").empty();
             $.each(json_data,function(index, data){
                 $("#allUserInfoTable tbody").append(
@@ -28,7 +28,7 @@ function showUsers(){
                     +"</tr>");
             });
         },
-        error(data){
+        error:function(data){
             errorProcess(data);
         }
     });

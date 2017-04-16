@@ -485,7 +485,7 @@
                                         </div>
                                     </div>
                                     <div class="panel-body">
-                                        <div class="row col-lg-10 col-md-10 col-md-offset-1">
+                                        <div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">
                                             <table class="table table-bordered table-hover table-entire" id="RelationInfoTable">
                                                 <thead>
                                                 <tr>
@@ -787,7 +787,7 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">颈围</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="neckCircu">
+                                      <input type="text" class="form-control myinput" name="neckCircu"  data-toggle="tooltip" data-placement="top" title="指经喉结节点的颈部水平围长">
                                     </div>
                                 </div>
                             </div>
@@ -796,13 +796,34 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">学历</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="education">
+                                       <select class="form-control myinput" name="education">
+                                            <option value="1">小学</option>
+                                            <option value="2">初中</option>
+                                            <option value="3">高中/中专</option>
+                                            <option value="4">大学专科（大专）</option>
+                                            <option value="5">大学本科（大本）</option>
+                                            <option value="6">研究生（硕士/博士）</option>
+                                      </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">职业</label>
                                     <div class="col-sm-6">
-                                      <input type="text" class="form-control myinput" name="career">
+                                       <select class="form-control myinput" name="career">
+                                            <option value="1">农、林、牧、渔、水利业</option>
+                                            <option value="2">工业</option>
+                                            <option value="3">地质普查和勘探业</option>
+                                            <option value="4">建筑业</option>
+                                            <option value="5">交通运输业、邮电通信业</option>
+                                            <option value="6">商业、公共饮食业、物资供应和仓储业</option>
+                                            <option value="7">房地产管理、公用事业、居民服务和咨询服务业</option>
+                                            <option value="8">卫生、体育和社会福利事业</option>
+                                            <option value="9">教育、文化艺术和广播电视业</option>
+                                            <option value="10">科学研究和综合技术服务业</option>
+                                            <option value="11">金融、保险业</option>
+                                            <option value="12">国家机关、党政机关和社会团体</option>
+                                            <option value="13">其他行业</option>
+                                      </select>
                                     </div>
                                 </div>
                             </div>
@@ -811,7 +832,12 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">婚姻状况</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="marriage">
+                                       <select class="form-control myinput" name="marriage">
+                                            <option value="1">未婚</option>
+                                            <option value="2">已婚</option>
+                                            <option value="3">离异</option>
+                                            <option value="4">丧偶</option>
+                                      </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
@@ -1189,13 +1215,111 @@
                             </div>
                             </div>
 
-
                             <div class="row">
                                 <h2 class="myquestion">2. 粉尘接触史</h2>
                             </div>
                             <div class="row">
-                                <h4 class="myquestion"> 职业粉尘接触史<input name="powder1" type = "text" class="shortinput"/>年，从事职业<input name="powder2" type = "text" class="shortinput"/>，接触有害物质为<input name="powder3" type = "text" class="shortinput"/></h4>
+                                <h4 class="myquestion"> 职业粉尘接触史<input name="powder1" type = "text" class="shortinput"/>年，从事职业<input name="powder2" type = "text" class="shortinput"/>.</h4>
                             </div>
+                            <div class="row">
+                                <h4 class="myquestion">接触有害物质为</h4>
+                            </div>
+                            <div class="row">
+                            <div class="checkbox col-sm-2">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="1">搪瓷、陶瓷
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-2">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="2">玻璃
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-4">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="3">器械（铸造、热处理等）
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="4">纺织
+                              </label>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="checkbox col-sm-5">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="5">有机化合物（二甲苯、杀虫剂等）
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-2 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="6">塑料
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-2 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="7">油漆
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="8">化工
+                              </label>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="9">烧烤
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="10">造纸
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="11">橡胶
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="12">矿物粉尘
+                              </label>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="13">建筑材料
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="14">植物性粉尘
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="15">动物性粉尘
+                              </label>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="16">金属粉尘
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="17">其他
+                              </label>
+                            </div>
+                            </div>
+
                             <div class="row">
                                 <h2 class="myquestion">3. 生物燃料接触史</h2>
                             </div>
@@ -3327,7 +3451,7 @@
 						<h4 class="modal-title">详情</h4>
 					</div>
 					<div class="modal-body">
-						<img id = "picture" src="" alt="My image"/>
+						<img id = "picture" src="" alt="My image" style="max-width:800px"/>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

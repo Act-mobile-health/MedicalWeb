@@ -796,3 +796,110 @@ class invitation(models.Model):
     D_id = models.IntegerField(null=False)
     state = models.CharField(max_length=1,default="1")
     uid = models.CharField(max_length=1,default="0")
+
+
+# created by CS@buaa, 2017/4/16
+# table33
+
+
+class LungFunc(models.Model):
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False)
+    head = models.CharField(max_length=1)
+    FVC1 = models.FloatField()
+    FVC2 = models.FloatField()
+    FVC3 = models.FloatField()
+    FEV11 = models.FloatField()
+    FEV12 = models.FloatField()
+    FEV13 = models.FloatField()
+    FEV1_FVC1 = models.FloatField()
+    FEV1_FVC2 = models.FloatField()
+    FEV1_FVC3 = models.FloatField()
+    RV_TLC1 = models.FloatField()
+    RV_TLC2 = models.FloatField()
+    RV_TLC3 = models.FloatField()
+    FEV1change = models.FloatField()
+    GOLD = models.CharField(max_length=1)
+
+
+# created by CS@buaa, 2017/4/16
+# table34
+
+
+class BloodGasAnalysis(models.Model):
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False)
+    head = models.CharField(max_length=1)
+    useOxygen = models.CharField(max_length=1)
+    oxygen = models.FloatField()
+    PH = models.FloatField()
+    PaO2 = models.FloatField()
+    PaCO3 = models.FloatField()
+    HCO3 = models.FloatField()
+    A_aDO2 = models.FloatField()
+    BEecf = models.FloatField()
+    Lac = models.FloatField()
+    SaO2 = models.FloatField()
+
+
+# created by CS@buaa, 2017/4/16
+# table35
+
+
+class LungCT(models.Model):
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False)
+    head = models.CharField(max_length=1)
+    content = models.CharField(max_length=11)
+    other = models.CharField(max_length=50)
+
+
+# created by CS@buaa, 2017/4/16
+# table36
+
+
+class SleepDetectResult(models.Model):
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False)
+    head = models.CharField(max_length=1)
+    detectTime = models.CharField(max_length=20)
+    sleep = models.FloatField()
+    AHI = models.FloatField()
+    ODI = models.FloatField()
+    avgSpO2 = models.FloatField()
+    lowSpO2 = models.FloatField()
+    relaSpO2 = models.FloatField()
+    avgBreath = models.FloatField()
+    wake = models.FloatField()
+    R = models.FloatField()
+    N2 = models.FloatField()
+    N3 = models.FloatField()
+
+
+# created by CS@buaa, 2017/4/16
+# table37
+
+
+class UCG(models.Model):
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False)
+    CDU = models.CharField(max_length=1)
+    LVEF = models.FloatField()
+    PASP = models.CharField(max_length=1)
+    symptom = models.CharField(max_length=50)
+    left = models.CharField(max_length=8)
+    right = models.CharField(max_length=8)
+    others = models.CharField(max_length=50)
+
+
+
+# created by CS@buaa, 2017/4/16
+# table38
+
+
+class Cardiogram(models.Model):
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False)
+    isNormal = models.CharField(max_length=1)
+    content = models.CharField(max_length=9)
+    other = models.CharField(max_length=50)

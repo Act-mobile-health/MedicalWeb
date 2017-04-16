@@ -10,27 +10,32 @@ $(document).ready(function () {
 
     $("#PatientInfobt").click(function () {
         if(confirm("确定修改吗？")){
-            $.post("/i17/",$("#PatientInfo").serialize(),function (data) {
-            console.log(data);
-            console.log($("#PatientInfo").serialize())
-                var result = JSON.parse(data).result;
-                console.log(result);
-                if(result=="0"){
-                    alert("修改成功！");
+            $.ajax({
+                type: "POST",
+                url: "/i17/",
+                data: $("#PatientInfo").serialize(),
+                dataType: "json",
+                success: function (data) {
+                    successProcess(data);
                     appendUserInfoTable();
                     appendUserDetailForm();
-                }else {
-                    alert("修改失败，请重试！");
+                },
+                error:function(data){
+                    errorProcess(data);
                 }
-
             });
         }
 
     });
 })
     function appendAllPatientTable() {
-        $.getJSON('/i15/',{},function (json_data) {
-            $.each(json_data,function (index,item) {
+        $.ajax({
+            type: "GET",
+            url: "/i15/",
+            data: {},
+            dataType: "json",
+            success: function (json_data) {
+                $.each(json_data,function (index,item) {
                 $("#patientInfoTable tbody").append(
                     "<tr>"+
                         "<td>"+item.P_id+"</td>"+
@@ -47,8 +52,13 @@ $(document).ready(function () {
                         "<td>"+item.health+"</td>"+
                         "<td><a href=\"/patientDetails/?P_id="+item.P_id+"\" style='color:black;'><u>查看详情</u></a></td>"+
                     "</tr>");
-            });
+                });
+            },
+            error:function(data){
+                    errorProcess(data);
+            }
         });
+        
     }
     function clearAllPatientTable() {
         $("#patientInfoTable tbody").clean();

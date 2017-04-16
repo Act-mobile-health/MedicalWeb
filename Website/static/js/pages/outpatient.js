@@ -15,14 +15,16 @@ $(document).ready(function(){
 
 function submitOutpatientInfo(){
     if(confirm("确定提交？")==1){
-        $.post("/i22/",$("#OutPatientServiceInfo").serialize()+"&type="+"0",function(data){
-            var result = JSON.parse(data).result;
-            if(result=="0"){
-                alert("添加成功");
-                location.href="/patientDetails/?P_id="+$("#P_id");
-            }
-            else{
-                alert("添加失败");
+        $.ajax({
+            type: "POST",
+            url: "/i22/",
+            data: $("#OutPatientServiceInfo").serialize()+"&type="+"0",
+            dataType: "json",
+            success: function (data) {
+                successProcess(data);
+            },
+            error:function(data){
+                errorProcess(data);
             }
         });
         return false;
@@ -30,8 +32,16 @@ function submitOutpatientInfo(){
 }
 
 function searchPatient(P_id){
-    $.getJSON("/i36/", {P_id:P_id}, function(data){
-        console.log(data);
-        $("#name").val(data.name);
+    $.ajax({
+        type: "GET",
+        url: "/i36/",
+        data: {P_id:P_id},
+        dataType: "json",
+        success: function (data) {
+            $("#name").val(data.name);
+        },
+        error:function(data){
+                errorProcess(data);
+        }
     });
 }
