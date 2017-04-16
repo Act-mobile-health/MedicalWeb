@@ -2,18 +2,22 @@
 import datetime
 from control_method import tools
 from Website.models import *
+from django.contrib import auth
 
 #修改指定医生信息
 #data为医生新的信息，包括D_id
 #修改成功返回True,否则返回False
 def updateUserInfo(D_id,data):
     try:
+        print data['password']
         doctor = UserInfo.objects.get(id=D_id)
         doctor.name = data['name']
         doctor.sex = data['sex']
         if data['birthday'] != '':
             doctor.birthday = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
         doctor.username = data['userName']
+        if data['password'] != '':
+            doctor.set_password(data['password'])
         doctor.cellphone = data['cellphone']
         doctor.weChat = data['weChat']
         doctor.mail = data['mail']
@@ -31,8 +35,11 @@ def updateUserInfo(D_id,data):
 def updatePassword(D_id,o_pwd, n_pwd):
     try:
         doc = UserInfo.objects.get(id=D_id)
-        if doc.password == tools.md5(o_pwd):
-            doc.password = tools.md5(n_pwd)
+        user = auth.authenticate(username=doc.username, password=o_pwd)
+
+        #判断用户名是否存在
+        if user is not None and user.is_active:
+            doc.set_password(n_pwd)
             doc.save()
             return True
         else:

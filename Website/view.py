@@ -11,6 +11,7 @@ from django.contrib import auth
 from Website.models import AttachInfo
 from django.conf import settings
 import datetime, random
+import xlwt
 
 
 

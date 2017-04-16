@@ -362,16 +362,16 @@
 										<div class="col-md-4 text-left bk-vcenter">
 											<h4 class="bk-margin-off">实验组信息</h4>
 										</div>
-                                        <div class="panel-actions col-md-4 text-right">
+                                        <div class="panel-actions col-md-4 text-right" style="display:block;">
                                             <a  data-toggle="modal" onclick="editExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-edit"></i></a>
                                         	<a  onclick="deleteGroup()"><i class="fa fa-times"></i></a>
-											<a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+											<!--<a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>-->
 										</div>
 
 									</div>
 								</div>
 								<div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
-									<div class="row">
+									<div class="row table-responsive">
                                         <table class="table " id="experimentGroupInfoTable" style="text-indent:2em;text-align:center;color:black;">
                                             <thead>
                                             <tr>
@@ -401,14 +401,14 @@
 											<h4 class="bk-margin-off">实验组患者</h4>
 										</div>
                                         <div class="panel-actions col-md-2 text-right">
-                                            <a  ><i class="fa fa-edit"></i></a>
-                                            <a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                            <!--<a  ><i class="fa fa-edit"></i></a>-->
+                                            <!--<a  class="btn-minimize"><i class="fa fa-chevron-up"></i></a>-->
                                         </div>
 
 									</div>
 								</div>
 								<div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
-									<div class="row">
+									<div class="row table-responsive">
                                         <table class="table" id="patient" style="text-indent:2em;text-align:center;color:black;">
                                             <thead>
                                             <tr>
@@ -454,9 +454,11 @@
 					</div>
 					<div class="modal-body">
 						<form method="post" class="form" role="form" id="addPatientIntoGroup">
+							<div class="row table-responsive">
 							<table class="table" id="addpatient" style="text-indent:2em;text-align:center;color:black;">
 								<thead>
 								<tr>
+									<th style="width:10%;text-align:center;"></th>
 									<th style="width:10%;text-align:center;"></th>
 									<th style="width:15%;text-align:center;">患者编号</th>
 									<th style="width:15%;text-align:center;">姓名</th>
@@ -468,6 +470,7 @@
 								<tbody>
 								</tbody>
 							</table>
+							</div>
 						</form>
 					</div>
 					<div class="modal-footer">

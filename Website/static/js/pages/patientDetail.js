@@ -103,10 +103,10 @@ $(document).ready(function () {
                 $("#nation").html(item.nation);
                 $("#height").html(item.height);
                 $("#weight").html(item.weight);
-                $("#education").html(item.education);
+                $("#education").html(educationParse(item.education));
                 $("#registerTime").html(item.registerTime);
-                $("#career").html(item.career);
-                $("#marriage").html(item.marriage);
+                $("#career").html(careerParse(item.career));
+                $("#marriage").html(marriageParse(item.marriage));
                 $("#homeAddr").html(item.homeAddr);
                 $("#birthAddr").html(item.birthAddr);
                 $("#activityAddr1").html(item.activityAddr1);
@@ -120,33 +120,8 @@ $(document).ready(function () {
                 $("#partnerPhone").html(item.partnerPhone);
                 $("#groupName").html(item.groupName);
                 $("#groupInfo").html(item.groupInfo);
-                if (item.payment=="1"){
-                    $("#payment").html("城镇居民基本保险");
-                }
-                else if(item.payment=="2"){
-                    $("#payment").html("城镇职工基本保险");
-                }
-                else if(item.payment=="3"){
-                    $("#payment").html("新型农村合作医疗");
-                }
-                else if(item.payment=="4"){
-                    $("#payment").html("商业医疗保险");
-                }
-                else if(item.payment=="5"){
-                    $("#payment").html("全公费");
-                }
-                else if(item.payment=="6"){
-                    $("#payment").html("全自费");
-                }
-                else if(item.payment=="7"){
-                    $("#payment").html("其他");
-                }
-                if(item.sex=="1"){
-                    $("#sex").html("男");
-                }
-                else if(item.sex=="2"){
-                    $("#sex").html("女");
-                }
+                $("#payment").html(paymentParse(item.payment));
+                $("#sex").html(SexParse(item.sex));
             },
             error: function (data) {
                 errorProcess(data);
@@ -189,9 +164,11 @@ $(document).ready(function () {
                 $("#PatientInfo input[name='nation']").val(item.nation);
                 $("#PatientInfo input[name='height']").val(item.height);
                 $("#PatientInfo input[name='weight']").val(item.weight);
-                $("#PatientInfo input[name='education']").val(item.education);
-                $("#PatientInfo input[name='career']").val(item.career);
-                $("#PatientInfo input[name='marriage']").val(item.marriage);
+
+                $("#PatientInfo select[name='education'] option[value='"+item.education+"']").attr('selected',true);
+                $("#PatientInfo select[name='career'] option[value='"+item.career+"']").attr('selected',true);
+                $("#PatientInfo select[name='marriage'] option[value='"+item.marriage+"']").attr('selected',true);
+
                 $("#PatientInfo input[name='registerTime']").val(item.registerTime);
                 $("#PatientInfo input[name='birthday']").val(item.birthday);
                 $("#PatientInfo input[name='homeAddr']").val(item.homeAddr);
@@ -359,7 +336,7 @@ $(document).ready(function () {
 				'</ul>'+
 				'<div class="tab-content">'+
 				'<div class="tab-pane" id="'+str_type+'-tab1">'+
-				'<div class="row col-lg-10 col-md-10 col-md-offset-1">'+
+				'<div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">'+
 				'<table class="table table-bordered table-hover table-entire" id="'+str_type+'-table">'+
 				'<thead>'+
 				'</thead>'+
@@ -386,7 +363,7 @@ $(document).ready(function () {
     }
      var str = "";
      str = '<div class="tab-pane" id="'+str_type+'-tab2">'+
-		   '<div class="row col-lg-10 col-md-10 col-md-offset-1">'+
+		   '<div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">'+
 		   '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-clinictable">'+
 		   '<thead>'+
 		   '<tr>'+
@@ -423,7 +400,7 @@ $(document).ready(function () {
         }
         var str = "";
         str = '<div class="tab-pane" id="'+str_type+'-tab3">'+
-			  '<div class="row col-lg-10 col-md-10 col-md-offset-1">'+
+			  '<div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-ESStable">'+
 			  '<caption class="mylabel">Epworth嗜睡量表（ESS）</caption>'+
 			  '<thead>'+
@@ -494,7 +471,7 @@ $(document).ready(function () {
         }
         var str = "";
         str = '<div class="tab-pane" id="'+str_type+'-tab4">'+
-			  '<div class="row col-lg-10 col-md-10 col-md-offset-1">'+
+			  '<div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-AEtable">'+
 			  '<caption class="mylabel">辅助检查</caption>'+
 			  '<thead>'+
