@@ -3451,9 +3451,11 @@
 						<h4 class="modal-title">详情</h4>
 					</div>
 					<div class="modal-body">
-						<img id = "picture" src="" alt="My image" style="max-width:800px"/>
+						<img id = "picture" src="" alt="My image" style="max-width:800px" />
+
 					</div>
 					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="showImage()">查看详情</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 					</div>
 				</div><!-- /.modal-content -->
@@ -4191,7 +4193,88 @@
 			</div><!-- /.modal-dialog -->
 		</div>
 
-      	<!-- start: JavaScript-->
+		<div class="modal fade" id="LungFuncDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">查看/编辑</h4>
+					</div>
+					<div class="modal-body">
+						<div class="table-responsive table table-bordered table-entire">
+							<table class="table table-hover">
+								<thead>
+								</thead>
+								<tbody>
+								<tr>
+									<td  colspan="4">
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 含支气管舒张实验 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 含支气管激发实验 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 无 </label>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="4">
+										<label style="vertical-align:middle;">检查日期：<input class="myinput" type="date" name="date"></label>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:22%">项目</td>
+									<td style="width:16%">预计值</td>
+									<td style="width:31%">支气管扩张剂吸入前实测值</td>
+									<td style="width:31%">支气管扩张剂吸入后实测值</td>
+								</tr>
+								<tr>
+									<td>FVC(L)</td>
+									<td><input type="text" name="FVC1"></td>
+									<td><input type="text" name="FVC2"></td>
+									<td><input type="text" name="FVC3"></td>
+								</tr>
+								<tr>
+									<td>FEV1(L)</td>
+									<td><input type="text" name="FEV11"></td>
+									<td><input type="text" name="FEV12"></td>
+									<td><input type="text" name="FEV13"></td>
+								</tr>
+								<tr>
+									<td>FEV1/FVC(%)</td>
+									<td><input type="text" name="FEV1_FVC1"></td>
+									<td><input type="text" name="FEV1_FVC2"></td>
+									<td><input type="text" name="FEV1_FVC3"></td>
+								</tr>
+								<tr>
+									<td>RV/TLC</td>
+									<td><input type="text" name="RV_TLC1"></td>
+									<td><input type="text" name="RV_TLC2"></td>
+									<td><input type="text" name="RV_TLC3"></td>
+								</tr>
+								<tr>
+									<td>FEV1change%</td>
+									<td></td>
+									<td></td>
+									<td><input type="text" name="FEV1change"></td>
+								</tr>
+								<tr>
+									<td>GOLD分级</td>
+									<td colspan="3">
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD">1级</label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD">2级</label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD">3级</label>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+		<!-- start: JavaScript-->
 
 		<!-- Vendor JS-->
 		<script src="/static/vendor/js/jquery.min.js"></script>

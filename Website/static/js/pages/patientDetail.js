@@ -19,6 +19,7 @@
     var hospitalnum = 0;
     var S_id = new Array();
     var index = 0;
+    var imgDir ='';
 $(document).ready(function () {
 
     if(window.innerWidth<1000){
@@ -1414,6 +1415,7 @@ $(document).ready(function () {
                             "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
                             '<td><a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick="editAE('+item.AE_id+')"><i class=\"fa fa-edit\"  style=\"color:black\"></i></td>'+
                             '<td><a  data-toggle="modal" href="#" onclick="deleteAorAE('+item.AE_id+',0'+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
+                            '<td><a  data-toggle="modal" href="#LungFuncDetails" onclick=""><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
                         "</tr>"
                     )
                 });
@@ -1456,7 +1458,14 @@ $(document).ready(function () {
     console.log(doc);
         var pic = document.getElementById("picture");
         pic.src = "/media/"+doc;
+        imgDir = "/media/"+doc;
+
     }
+    function showImage(){
+        window.open(imgDir);
+//        return false;
+    }
+
     function addAorAE(A_index){
         index = A_index;
 
