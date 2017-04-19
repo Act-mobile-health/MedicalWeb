@@ -1,6 +1,5 @@
 
 function successProcess(info){
-
     if(info.result=="0"){
         alert("成功");
     }
@@ -67,4 +66,12 @@ return Parse(13,['城镇居民基本保险','城镇职工基本保险','新型�
 }
 function checkboxParse(input){
 
+}
+
+function AEtypeParse(input){
+    return Parse(6,['肺功能','血气分析','肺CT','睡眠监测结果','心脏彩超','心电图'],input);
+}
+
+function AEtypeParse2(input){
+    return Parse(6,['LungFunc','BloodGasAnalysis','LungCT','SleepDetectResult','UCG','Cardiogram'],input);
 }

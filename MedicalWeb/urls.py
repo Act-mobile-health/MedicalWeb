@@ -128,5 +128,14 @@ urlpatterns = [
     url(r'^i65/',view.getUsers),
     url(r'^i66/',view.getUserName),
 
+    # for AEType.js
+    url(r'^i71/',view.editAEType),
+    url(r'^i72/',view.updateLungFunc),
+    url(r'^i73/',view.updateBloodGasAnalysis),
+    url(r'^i74/',view.updateLungCT),
+    url(r'^i75/',view.updateSleepDetectResult),
+    url(r'^i76/',view.updateUCG),
+    url(r'^i77/',view.updateCardiogram),
+
     # url(r'^i18/',view.updatePatientInfo),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

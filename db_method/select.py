@@ -1,7 +1,5 @@
 # -*- coding:UTF-8 -*-
-from Website.models import UserInfo,GroupInfo,PatientInfo,PatientGroup,RelationInfo,OutPatientServiceInfo,\
-    EmergCallInfo,InHospitalInfo,Clinic,ESS,MBQ,SGRQ,AttachInfo,AccessoryExamination,CATandMRC,PmExposure,\
-    MedicalVisit,invitation
+from Website.models import *
 from django.core.exceptions import ObjectDoesNotExist
 from control_method import tools
 
@@ -857,3 +855,116 @@ def getUserName(id):
         return message
     except Exception, e:
         tools.exceptionRecord('select.py', 'getUserName', e)
+
+def getAEType(data):
+    try:
+        message = {}
+        print data,"$$$$"
+        if int(data['AE_type']) == 1:
+            obj = LungFunc.objects.get(AE_id=int(data['AE_id']))
+            value = []
+            value.append(obj.head)
+            value.append(str(obj.date))
+            value.append(obj.AE_id)
+            value.append(obj.FVC1)
+            value.append(obj.FVC2)
+            value.append(obj.FVC3)
+            value.append(obj.FEV11)
+            value.append(obj.FEV12)
+            value.append(obj.FEV13)
+            value.append(obj.FEV1_FVC1)
+            value.append(obj.FEV1_FVC2)
+            value.append(obj.FEV1_FVC3)
+            value.append(obj.RV_TLC1)
+            value.append(obj.RV_TLC2)
+            value.append(obj.RV_TLC3)
+            value.append(obj.FEV1change)
+            value.append(obj.GOLD)
+            keys = ['head', 'date', 'AE_id', 'FVC1', 'FVC2', 'FVC3', 'FEV11', 'FEV12', 'FEV13', 'FEV1_FVC1', 'FEV1_FVC2', 'FEV1_FVC3',
+                    'RV_TLC1', 'RV_TLC2', 'RV_TLC3', 'FEV1change', 'GOLD']
+            message = tools.dictPackage(keys, value)
+
+        elif int(data['AE_type']) == 2:
+            obj = BloodGasAnalysis.objects.get(AE_id=int(data['AE_id']))
+            value = []
+            value.append(obj.head)
+            value.append(str(obj.date))
+            value.append(obj.AE_id)
+            value.append(obj.useOxygen)
+            value.append(obj.oxygen)
+            value.append(obj.PH)
+            value.append(obj.PaO2)
+            value.append(obj.PaCO2)
+            value.append(obj.HCO3)
+            value.append(obj.A_aDO2)
+            value.append(obj.BEecf)
+            value.append(obj.Lac)
+            value.append(obj.SaO2)
+            keys = ['head', 'date', 'AE_id', 'useOxygen', 'oxygen', 'PH', 'PaO2', 'PaCO2', 'HCO3', 'A_aDO2', 'BEecf', 'Lac','SaO2']
+            message = tools.dictPackage(keys, value)
+
+        elif int(data['AE_type']) == 3:
+            obj = LungCT.objects.get(AE_id=int(data['AE_id']))
+            value = []
+            value.append(obj.head)
+            value.append(str(obj.date))
+            value.append(obj.AE_id)
+            value.append(obj.content)
+            value.append(obj.other)
+            keys = ['head', 'date', 'AE_id', 'content', 'other']
+            message = tools.dictPackage(keys, value)
+
+        elif int(data['AE_type']) == 4:
+            obj = SleepDetectResult.objects.get(AE_id=int(data['AE_id']))
+            value = []
+            value.append(obj.head)
+            value.append(str(obj.date))
+            value.append(obj.AE_id)
+            value.append(obj.detectTime)
+            value.append(obj.sleep)
+            value.append(obj.AHI)
+            value.append(obj.ODI)
+            value.append(obj.avgSpO2)
+            value.append(obj.lowSpO2)
+            value.append(obj.relaSpO2)
+            value.append(obj.avgBreath)
+            value.append(obj.wake)
+            value.append(obj.R)
+            value.append(obj.N2)
+            value.append(obj.N3)
+            keys = ['head', 'date', 'AE_id', 'detectTime', 'sleep', 'AHI', 'ODI', 'avgSpO2', 'lowSpO2', 'relaSpO2', 'avgBreath',
+                    'wake','R', 'N2','N3']
+            message = tools.dictPackage(keys, value)
+
+        elif int(data['AE_type']) == 5:
+            obj = UCG.objects.get(AE_id=int(data['AE_id']))
+            value = []
+            value.append(obj.head)
+            value.append(str(obj.date))
+            value.append(obj.AE_id)
+            value.append(obj.LVEF)
+            value.append(obj.PASP)
+            value.append(obj.symptom)
+            value.append(obj.left)
+            value.append(obj.right)
+            value.append(obj.other)
+            keys = ['head', 'date', 'AE_id', 'LVEF', 'PASP', 'symptom', 'left', 'right', 'other']
+            message = tools.dictPackage(keys, value)
+            
+        elif int(data['AE_type']) == 6:
+            print data,"$$$$2"
+            obj = Cardiogram.objects.get(AE_id=int(data['AE_id']))
+            value = []
+            value.append(str(obj.date))
+            value.append(obj.AE_id)
+            value.append(obj.isNormal)
+            value.append(obj.content)
+            value.append(obj.other)
+            print value
+            keys = ['date', 'AE_id', 'isNormal', 'content', 'other']
+            message = tools.dictPackage(keys, value)
+            
+
+        return message
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getAEType', e)

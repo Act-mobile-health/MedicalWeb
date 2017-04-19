@@ -368,12 +368,12 @@ $(document).ready(function () {
 		   '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-clinictable">'+
 		   '<thead>'+
 		   '<tr>'+
-		   '<th class="table-small" style="text-align:center">编号</th>'+
-			'<th class="table-small" style="text-align:center">就诊日期</th>'+
-			'<th class="table-small" style="text-align:center">慢阻肺诊断级别</th>'+
-			'<th style="text-align:center">服用药品及用量</th>'+
-			'<th class="table-small" style="text-align:center"></th>'+
-			'<th class="table-small" style="text-align:center">删除</th>'+
+		   '<th class="table-small tlabel5" style="text-align:center">编号</th>'+
+			'<th class="tlabel5" style="text-align:center;width:70px;">就诊日期</th>'+
+			'<th class="tlabel5" style="text-align:center;width:110px;">慢阻肺诊断级别</th>'+
+			'<th class = "tlabel5"style="text-align:center">服用药品及用量</th>'+
+			'<th class="table-small tlabel5" style="text-align:center">编辑</th>'+
+			'<th class="table-small tlabel5" style="text-align:center">删除</th>'+
 			'</tr>'+
 			'</thead>'+
 			'<tbody>'+
@@ -406,11 +406,11 @@ $(document).ready(function () {
 			  '<caption class="mylabel">Epworth嗜睡量表（ESS）</caption>'+
 			  '<thead>'+
 			  '<tr>'+
-			  '<th class="table-small" style="text-align:center">编号</th>'+
-			  '<th class="table-small" style="text-align:center">填表日期</th>'+
-			  '<th class="table-small" style="text-align:center">分数</th>'+
-			  '<th class="table-small" style="text-align:center"></th>'+
-			  '<th class="table-small" style="text-align:center">删除</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编号</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">填表日期</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">分数</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编辑</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">删除</th>'+
 			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
@@ -423,11 +423,11 @@ $(document).ready(function () {
 			  '<caption class="mylabel">改良柏林问卷（MBQ）</caption>'+
 			  '<thead>'+
 			  '<tr>'+
-			  '<th class="table-small" style="text-align:center">编号</th>'+
-			  '<th class="table-small" style="text-align:center">填表日期</th>'+
-			  '<th class="table-small" style="text-align:center">BMI</th>'+
-			  '<th class="table-small" style="text-align:center">编辑</th>'+
-			  '<th class="table-small" style="text-align:center">删除</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编号</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">填表日期</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">BMI</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编辑</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">删除</th>'+
 			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
@@ -440,11 +440,11 @@ $(document).ready(function () {
 			  '<caption class="mylabel">SGRQ生活质量问卷</caption>'+
 			  '<thead>'+
 			  '<tr>'+
-			  '<th class="table-small" style="text-align:center">编号</th>'+
-			  '<th class="table-small" style="text-align:center">填表日期</th>'+
-			  '<th class="table-small" style="text-align:center">其他</th>'+
-			  '<th class="table-small" style="text-align:center">编辑</th>'+
-			  '<th class="table-small" style="text-align:center">删除</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编号</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">填表日期</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">其他</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编辑</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">删除</th>'+
 			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
@@ -472,19 +472,20 @@ $(document).ready(function () {
         }
         var str = "";
         str = '<div class="tab-pane" id="'+str_type+'-tab4">'+
-			  '<div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">'+
+			  '<div class="row table-responsive">'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-AEtable">'+
 			  '<caption class="mylabel">辅助检查</caption>'+
 			  '<thead>'+
 			  '<tr>'+
-			  '<th class="table-small" style="text-align:center">编号</th>'+
-			  '<th class="table-small" style="text-align:center">日期</th>'+
-			  '<th class="table-small" style="text-align:center">类型</th>'+
-			  '<th class="table-small" style="text-align:center">上传者</th>'+
-			  '<th style="text-align:center">描述</th>'+
-			  '<th class="table-small" style="text-align:center">查看</th>'+
-			  '<th class="table-small" style="text-align:center">编辑</th>'+
-			  '<th class="table-small" style="text-align:center">删除</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编号</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">日期</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">类型</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">上传者</th>'+
+			  '<th style="text-align:center;background:#72a9e2;">描述</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">查看</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编辑</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">手动填写</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">删除</th>'+
 			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
@@ -497,13 +498,13 @@ $(document).ready(function () {
 			  '<caption class="mylabel">附件</caption>'+
 			  '<thead>'+
 			  '<tr>'+
-			  '<th class="table-small" style="text-align:center">编号</th>'+
-			  '<th class="table-small" style="text-align:center">日期</th>'+
-			  '<th class="table-small" style="text-align:center">上传者</th>'+
-			  '<th style="text-align:center">描述</th>'+
-			  '<th class="table-small" style="text-align:center">查看</th>'+
-			  '<th class="table-small" style="text-align:center">编辑</th>'+
-			  '<th class="table-small" style="text-align:center">删除</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编号</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">日期</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">上传者</th>'+
+			  '<th style="text-align:center;background:#72a9e2;">描述</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">查看</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编辑</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">删除</th>'+
 			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
@@ -1409,13 +1410,13 @@ $(document).ready(function () {
                         "<tr>"+
                             "<td>"+item.AE_id+"</td>"+
                             "<td>"+item.date+"</td>"+
-                            "<td>"+item.AE_type+"</td>"+
-                            "<td>"+item.D_id+"</td>"+
+                            "<td>"+AEtypeParse(item.AE_type)+"</td>"+
+                            "<td>"+userNameParse(item.D_id)+"</td>"+
                             "<td>"+item.description+"</td>"+
                             "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
                             '<td><a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick="editAE('+item.AE_id+')"><i class=\"fa fa-edit\"  style=\"color:black\"></i></td>'+
+                            '<td><a  data-toggle="modal" href="#'+AEtypeParse2(item.AE_type)+'Details" onclick="edit'+AEtypeParse2(item.AE_type)+'('+item.AE_id+','+item.AE_type+')"><i class=\"fa fa-file-text-o\"  style=\"color:black\"></td>'+
                             '<td><a  data-toggle="modal" href="#" onclick="deleteAorAE('+item.AE_id+',0'+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
-                            '<td><a  data-toggle="modal" href="#LungFuncDetails" onclick=""><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
                         "</tr>"
                     )
                 });
@@ -1437,7 +1438,7 @@ $(document).ready(function () {
                         "<tr>"+
                             "<td>"+item.A_id+"</td>"+
                             "<td>"+item.date+"</td>"+
-                            "<td>"+item.D_id+"</td>"+
+                            "<td>"+userNameParse(item.D_id)+"</td>"+
                             "<td>"+item.description+"</td>"+
                             "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
                             '<td><a  data-toggle="modal" href="#AttachInfoDetails" onclick="editA('+item.A_id+')"><i class=\"fa fa-edit\" style=\"color:black\"></i></td>'+
@@ -1503,6 +1504,7 @@ $(document).ready(function () {
               url: '/i33/' ,
               type: 'POST',
               data: formData,
+              dataType:"json",
               async: false,
               cache: false,
               contentType: false,

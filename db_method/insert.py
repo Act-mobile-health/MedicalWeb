@@ -275,6 +275,26 @@ def addAccessoryExamination(D_id,S_id, data, doc):
                                       description = data['description'], D_id = D_id, doc = doc)
 
         newObj.save()
+
+        if data['AE_type'] == "1":
+            Obj = LungFunc(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+        elif data['AE_type'] == "2":
+            Obj = BloodGasAnalysis(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+        elif data['AE_type'] == "3":
+            Obj = LungCT(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+        elif data['AE_type'] == "4":
+            Obj = SleepDetectResult(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+        elif data['AE_type'] == "5":
+            Obj = UCG(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+        elif data['AE_type'] == "6":
+            Obj = Cardiogram(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+
         return True
     except Exception, e:
         tools.exceptionRecord('insert.py','addAccessoryExamination',e)

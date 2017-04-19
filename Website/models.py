@@ -640,7 +640,7 @@ class MBQ(models.Model):
     q8 = models.CharField(max_length=1, null=False)
     q9 = models.CharField(max_length=5)
     q10 = models.CharField(max_length=1, null=False)
-    BMI = models.FloatField(null=False)
+    BMI = models.CharField(max_length=50)
     date = models.DateField(auto_now_add=True)
 
 
@@ -803,22 +803,23 @@ class invitation(models.Model):
 
 
 class LungFunc(models.Model):
+    AE_id = models.IntegerField(null=False)
     P_id = models.CharField(max_length=10, null=False)
-    date = models.DateField(null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     head = models.CharField(max_length=1)
-    FVC1 = models.FloatField()
-    FVC2 = models.FloatField()
-    FVC3 = models.FloatField()
-    FEV11 = models.FloatField()
-    FEV12 = models.FloatField()
-    FEV13 = models.FloatField()
-    FEV1_FVC1 = models.FloatField()
-    FEV1_FVC2 = models.FloatField()
-    FEV1_FVC3 = models.FloatField()
-    RV_TLC1 = models.FloatField()
-    RV_TLC2 = models.FloatField()
-    RV_TLC3 = models.FloatField()
-    FEV1change = models.FloatField()
+    FVC1 = models.CharField(max_length=20)
+    FVC2 = models.CharField(max_length=20)
+    FVC3 = models.CharField(max_length=20)
+    FEV11 = models.CharField(max_length=20)
+    FEV12 = models.CharField(max_length=20)
+    FEV13 = models.CharField(max_length=20)
+    FEV1_FVC1 = models.CharField(max_length=20)
+    FEV1_FVC2 = models.CharField(max_length=20)
+    FEV1_FVC3 = models.CharField(max_length=20)
+    RV_TLC1 = models.CharField(max_length=20)
+    RV_TLC2 = models.CharField(max_length=20)
+    RV_TLC3 = models.CharField(max_length=20)
+    FEV1change = models.CharField(max_length=20)
     GOLD = models.CharField(max_length=1)
 
 
@@ -827,19 +828,20 @@ class LungFunc(models.Model):
 
 
 class BloodGasAnalysis(models.Model):
+    AE_id = models.IntegerField(null=False)
     P_id = models.CharField(max_length=10, null=False)
-    date = models.DateField(null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     head = models.CharField(max_length=1)
     useOxygen = models.CharField(max_length=1)
-    oxygen = models.FloatField()
-    PH = models.FloatField()
-    PaO2 = models.FloatField()
-    PaCO3 = models.FloatField()
-    HCO3 = models.FloatField()
-    A_aDO2 = models.FloatField()
-    BEecf = models.FloatField()
-    Lac = models.FloatField()
-    SaO2 = models.FloatField()
+    oxygen = models.CharField(max_length=20)
+    PH = models.CharField(max_length=20)
+    PaO2 = models.CharField(max_length=20)
+    PaCO2 = models.CharField(max_length=20)
+    HCO3 = models.CharField(max_length=20)
+    A_aDO2 = models.CharField(max_length=20)
+    BEecf = models.CharField(max_length=20)
+    Lac = models.CharField(max_length=20)
+    SaO2 = models.CharField(max_length=20)
 
 
 # created by CS@buaa, 2017/4/16
@@ -847,8 +849,9 @@ class BloodGasAnalysis(models.Model):
 
 
 class LungCT(models.Model):
+    AE_id = models.IntegerField(null=False)
     P_id = models.CharField(max_length=10, null=False)
-    date = models.DateField(null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     head = models.CharField(max_length=1)
     content = models.CharField(max_length=11)
     other = models.CharField(max_length=50)
@@ -859,21 +862,22 @@ class LungCT(models.Model):
 
 
 class SleepDetectResult(models.Model):
+    AE_id = models.IntegerField(null=False)
     P_id = models.CharField(max_length=10, null=False)
-    date = models.DateField(null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     head = models.CharField(max_length=1)
     detectTime = models.CharField(max_length=20)
-    sleep = models.FloatField()
-    AHI = models.FloatField()
-    ODI = models.FloatField()
-    avgSpO2 = models.FloatField()
-    lowSpO2 = models.FloatField()
-    relaSpO2 = models.FloatField()
-    avgBreath = models.FloatField()
-    wake = models.FloatField()
-    R = models.FloatField()
-    N2 = models.FloatField()
-    N3 = models.FloatField()
+    sleep = models.CharField(max_length=20)
+    AHI = models.CharField(max_length=20)
+    ODI = models.CharField(max_length=20)
+    avgSpO2 = models.CharField(max_length=20)
+    lowSpO2 = models.CharField(max_length=20)
+    relaSpO2 = models.CharField(max_length=20)
+    avgBreath = models.CharField(max_length=20)
+    wake = models.CharField(max_length=20)
+    R = models.CharField(max_length=20)
+    N2 = models.CharField(max_length=20)
+    N3 = models.CharField(max_length=20)
 
 
 # created by CS@buaa, 2017/4/16
@@ -881,15 +885,16 @@ class SleepDetectResult(models.Model):
 
 
 class UCG(models.Model):
+    AE_id = models.IntegerField(null=False)
     P_id = models.CharField(max_length=10, null=False)
-    date = models.DateField(null=False)
-    CDU = models.CharField(max_length=1)
-    LVEF = models.FloatField()
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
+    head = models.CharField(max_length=1)
+    LVEF = models.CharField(max_length=20)
     PASP = models.CharField(max_length=1)
     symptom = models.CharField(max_length=50)
     left = models.CharField(max_length=8)
     right = models.CharField(max_length=8)
-    others = models.CharField(max_length=50)
+    other = models.CharField(max_length=50)
 
 
 
@@ -898,8 +903,9 @@ class UCG(models.Model):
 
 
 class Cardiogram(models.Model):
+    AE_id = models.IntegerField(null=False)
     P_id = models.CharField(max_length=10, null=False)
-    date = models.DateField(null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     isNormal = models.CharField(max_length=1)
     content = models.CharField(max_length=9)
     other = models.CharField(max_length=50)

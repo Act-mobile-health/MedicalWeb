@@ -395,7 +395,7 @@ def updateAccessoryExamination(AE_id, D_id, S_id, data, doc):
         # obj.type = data['type']
         if data['date'] != '':
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        obj.AE_type = data['AE_type']
+        # obj.AE_type = data['AE_type']
         obj.description = data['description']
         if doc != None :
             obj.doc = doc
@@ -504,3 +504,123 @@ def updateMedicineRecord(data):
     except Exception, e:
         tools.exceptionRecord('update.py','updateMedicineRecord',e)
         return -1
+
+def updateLungFunc(data):
+    try:
+        obj = LungFunc.objects.get(AE_id = int(data['AE_id']))
+        obj.head = data['head']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.FVC1 = data['FVC1']
+        obj.FVC2 = data['FVC2']
+        obj.FVC3 = data['FVC3']
+        obj.FEV11 = data['FEV11']
+        obj.FEV12 = data['FEV12']
+        obj.FEV13 = data['FEV13']
+        obj.FEV1_FVC1 = data['FEV1_FVC1']
+        obj.FEV1_FVC2 = data['FEV1_FVC2']
+        obj.FEV1_FVC3 = data['FEV1_FVC3']
+        obj.RV_TLC1 = data['RV_TLC1']
+        obj.RV_TLC2 = data['RV_TLC2']
+        obj.RV_TLC3 = data['RV_TLC3']
+        obj.FEV1change = data['FEV1change']
+        obj.GOLD = data['GOLD']
+        obj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateLungFunc',e)
+        return False
+
+def updateBloodGasAnalysis(data):
+    try:
+        obj = BloodGasAnalysis.objects.get(AE_id = int(data['AE_id']))
+        obj.head = data['head']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.useOxygen = data['useOxygen']
+        obj.oxygen = data['oxygen']
+        obj.PH = data['PH']
+        obj.PaO2 = data['PaO2']
+        obj.PaCO3 = data['PaCO2']
+        obj.HCO3 = data['HCO3']
+        obj.A_aDO2 = data['A_aDO2']
+        obj.BEecf = data['BEecf']
+        obj.Lac = data['Lac']
+        obj.SaO2 = data['SaO2']
+        obj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateBloodGasAnalysis',e)
+        return False
+
+def updateLungCT(data):
+    try:
+        obj = LungCT.objects.get(AE_id = int(data['AE_id']))
+        obj.head = data['head']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.content = data['content']
+        obj.other = data['other']
+        obj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateLungCT',e)
+        return False
+
+def updateSleepDetectResult(data):
+    try:
+        obj = SleepDetectResult.objects.get(AE_id = int(data['AE_id']))
+        obj.head = data['head']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.detectTime = data['detectTime']
+        obj.sleep = data['sleep']
+        obj.AHI = data['AHI']
+        obj.ODI = data['ODI']
+        obj.avgSpO2 = data['avgSpO2']
+        obj.lowSpO2 = data['lowSpO2']
+        obj.relaSpO2 = data['relaSpO2']
+        obj.avgBreath = data['avgBreath']
+        obj.wake = data['wake']
+        obj.R = data['R']
+        obj.N2 = data['N2']
+        obj.N3 = data['N3']
+        obj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateSleepDetectResult',e)
+        return False
+
+def updateUCG(data):
+    try:
+        obj = UCG.objects.get(AE_id = int(data['AE_id']))
+        obj.head = data['head']
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.LVEF = data['LVEF']
+        obj.PASP = data['PASP']
+        obj.symptom = data['symptom']
+        obj.left = data['left']
+        obj.right = data['right']
+        obj.other = data['other']
+        obj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateUCG',e)
+        return False
+
+def updateCardiogram(data):
+    try:
+        print type(data['AE_id'])
+        obj = Cardiogram.objects.get(AE_id = int(data['AE_id']))
+        print "###"
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.isNormal = data['isNormal']
+        obj.content = data['content']
+        obj.other = data['other']
+        obj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateCardiogram',e)
+        return False

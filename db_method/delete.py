@@ -58,7 +58,9 @@ def deleteOutPatientServiceInfo(OPS_id):
         MBQ.objects.filter(type = 0, S_id=OPS_id).delete()
         SGRQ.objects.filter(type = 0, S_id=OPS_id).delete()
         AttachInfo.objects.filter(type = 0, S_id=OPS_id).delete()
-        AccessoryExamination.objects.filter(type = 0, S_id=OPS_id).delete()
+        values = AccessoryExamination.objects.filter(type = 0, S_id=OPS_id)
+        for v in values:
+            deleteAccessoryExamination(v.id)
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
         obj.o_time = str(int(obj.o_time) - 1)
@@ -81,7 +83,9 @@ def deleteEmergCallInfo(EC_id):
         MBQ.objects.filter(type = 1, S_id=EC_id).delete()
         SGRQ.objects.filter(type = 1, S_id=EC_id).delete()
         AttachInfo.objects.filter(type = 1, S_id=EC_id).delete()
-        AccessoryExamination.objects.filter(type = 1, S_id=EC_id).delete()
+        values = AccessoryExamination.objects.filter(type = 1, S_id=EC_id)
+        for v in values:
+            deleteAccessoryExamination(v.id)
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
         obj.e_time = str(int(obj.e_time) - 1)
@@ -105,7 +109,9 @@ def deleteInHospitalInfo(IH_id):
         MBQ.objects.filter(type = 2, S_id=IH_id).delete()
         SGRQ.objects.filter(type = 2, S_id=IH_id).delete()
         AttachInfo.objects.filter(type = 2, S_id=IH_id).delete()
-        AccessoryExamination.objects.filter(type = 2, S_id=IH_id).delete()
+        values = AccessoryExamination.objects.filter(type = 2, S_id=IH_id)
+        for v in values:
+            deleteAccessoryExamination(v.id)
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
         obj.h_time = str(int(obj.h_time) - 1)
@@ -141,6 +147,25 @@ def deleteAttachInfo(A_id):
 def deleteAccessoryExamination(AE_id):
     try:
         ae = AccessoryExamination.objects.get(id=AE_id)
+        if ae.AE_type== "1":
+            Obj = LungFunc.objects.get(AE_id = AE_id)
+            Obj.delete()
+        elif ae.AE_type== "2":
+            Obj = BloodGasAnalysis.objects.get(AE_id = AE_id)
+            Obj.delete()
+        elif ae.AE_type== "3":
+            Obj = LungCT.objects.get(AE_id = AE_id)
+            Obj.delete()
+        elif ae.AE_type== "4":
+            Obj = SleepDetectResult.objects.get(AE_id = AE_id)
+            Obj.delete()
+        elif ae.AE_type== "5":
+            Obj = UCG.objects.get(AE_id = AE_id)
+            Obj.delete()
+        elif ae.AE_type== "6":
+            Obj = Cardiogram.objects.get(AE_id = AE_id)
+            Obj.delete()
+            
         ae.delete()
         return True
     except Exception, e:

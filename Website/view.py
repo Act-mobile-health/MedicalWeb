@@ -988,3 +988,74 @@ def getUserName(request, data, D_id):
     print message
     js = json.dumps(message)
     return HttpResponse(js)
+
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def editAEType(request, data, D_id):
+    message = select.getAEType(data)
+    js = json.dumps(message)
+    print js
+    return HttpResponse(js)
+
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def updateLungFunc(request, data, D_id):
+    message = {"result":'-1'}
+    if update.updateLungFunc(data):
+        message = {"result":'0'}
+    js = json.dumps(message)
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def updateBloodGasAnalysis(request, data, D_id):
+    message = {"result": '-1'}
+    if update.updateBloodGasAnalysis(data):
+        message = {"result":'0'}
+    js = json.dumps(message)
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def updateLungCT(request, data, D_id):
+    message = {"result":'-1'}
+    if update.updateLungCT(data):
+        message = {"result":'0'}
+    js = json.dumps(message)
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def updateSleepDetectResult(request, data, D_id):
+    message = {"result":'-1'}
+    if update.updateSleepDetectResult(data):
+        message = {"result":'0'}
+    js = json.dumps(message)
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def updateUCG(request, data, D_id):
+    message = {"result":'-1'}
+    if update.updateUCG(data):
+        message = {"result": '0'}
+    js = json.dumps(message)
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def updateCardiogram(request, data, D_id):
+    message = {"result":'-1'}
+    if update.updateCardiogram(data):
+        message = {"result":'0'}
+    js = json.dumps(message)
+    return HttpResponse(js)
