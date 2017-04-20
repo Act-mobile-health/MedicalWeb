@@ -1,5 +1,5 @@
 /**
- * Created by 91034 on 2017/3/16.
+ * Created on 2017/3/16.
  */
 
  (function ($) {
@@ -9,17 +9,17 @@
         if (r != null) return unescape(r[2].replace("/","")); return null;
     }
   })(jQuery);
-    var data = new Array();
-    var patientinfo = new Array();
-    var patientId = $.getUrlParam("P_id");
-    var A =  $.getUrlParam("A");
-    var type = 0;
-    var outpatientnum = 0;
-    var emergencynum = 0;
-    var hospitalnum = 0;
-    var S_id = new Array();
-    var index = 0;
-    var imgDir ='';
+var data = new Array();
+var patientinfo = new Array();
+var patientId = $.getUrlParam("P_id");
+var A =  $.getUrlParam("A");
+var type = 0;
+var outpatientnum = 0;
+var emergencynum = 0;
+var hospitalnum = 0;
+var S_id = new Array();
+var index = 0;
+var imgDir ='';
 $(document).ready(function () {
 
     if(window.innerWidth<1000){
@@ -108,8 +108,11 @@ $(document).ready(function () {
                 $("#registerTime").html(item.registerTime);
                 $("#career").html(careerParse(item.career));
                 $("#marriage").html(marriageParse(item.marriage));
-                $("#homeAddr").html(item.homeAddr);
-                $("#birthAddr").html(item.birthAddr);
+
+                $("#homeAddr").html(item.province_h+item.city_h+item.county_h+item.detail_h);
+
+                $("#birthAddr").html(item.province+item.city+item.county);
+
                 $("#activityAddr1").html(item.activityAddr1);
                 $("#activityAddr2").html(item.activityAddr2);
                 $("#actionAddr").html(item.actionAddr);
@@ -172,8 +175,16 @@ $(document).ready(function () {
 
                 $("#PatientInfo input[name='registerTime']").val(item.registerTime);
                 $("#PatientInfo input[name='birthday']").val(item.birthday);
-                $("#PatientInfo input[name='homeAddr']").val(item.homeAddr);
-                $("#PatientInfo input[name='birthAddr']").val(item.birthAddr);
+
+                $("#PatientInfo select[name='province_h'] option[value='"+item.province_h+"']").attr('selected',true);
+                $("#PatientInfo select[name='city_h'] option[value='"+item.city_h+"']").attr('selected',true);
+                $("#PatientInfo select[name='county_h'] option[value='"+item.county_h+"']").attr('selected',true);
+                $("#PatientInfo input[name='detail_h']").val(item.detail_h);
+
+                $("#PatientInfo select[name='province'] option[value='"+item.province+"']").attr('selected',true);
+                $("#PatientInfo select[name='city'] option[value='"+item.city+"']").attr('selected',true);
+                $("#PatientInfo select[name='county'] option[value='"+item.county+"']").attr('selected',true);
+
                 $("#PatientInfo input[name='activityAddr1']").val(item.activityAddr1);
                 $("#PatientInfo input[name='activityAddr2']").val(item.activityAddr2);
                 $("#PatientInfo input[name='actionAddr']").val(item.actionAddr);
@@ -232,8 +243,8 @@ $(document).ready(function () {
             }
         });
     }
-    //修改病人家属信息
 
+    //修改病人家属信息
     function editRelationInfo(index){
         console.log(data)
         $("#RelationInfo input[name='R_id']").val(data[index].R_id);
@@ -272,6 +283,7 @@ $(document).ready(function () {
         $("#RelationInfo :text").val("");
         $("#RelationInfo :radio").attr("checked",false);
     }
+
     function submitRelationInfo() {
         if (confirm("确定提交吗？")){
             console.log($("#RelationInfo").serialize());
@@ -523,16 +535,6 @@ $(document).ready(function () {
 
 	    return str;
     }
-
-    function analyseRadio(input){
-        if(input == "1")
-            return "是";
-        else if(input=="2")
-            return "否";
-        else
-            return "error";
-    }
-
 
     function showOutpatient(){
         type = 0;
@@ -998,11 +1000,9 @@ $(document).ready(function () {
         }
     }
 
-
     /********************************begin*********************临床相关函数******************************begin******************************/
 
     //显示临床信息
-
     function showClinic(c_index) {
         var str = "";
         if(type==0){
@@ -1124,7 +1124,6 @@ $(document).ready(function () {
         });
     }
 
-
     //删除临床信息记录
     function deleteClinic(c_index,Cli_id) {
         if(confirm("确定删除吗？"))
@@ -1151,7 +1150,6 @@ $(document).ready(function () {
     }
 
     //提交临床信息记录
-
     function submitClinic() {
         if (confirm("确定提交吗？")){
             $.ajax({
@@ -1231,6 +1229,7 @@ $(document).ready(function () {
 
          });
     }
+
     function addQuestionnaire(Q_index){
         index = Q_index;
         $("#ESS :text").val("");
@@ -1243,6 +1242,7 @@ $(document).ready(function () {
         $("#SGRQ :radio").attr("checked",false);
         $("#SGRQ :checkbox").attr("checked",false);
     }
+
     function deleteQuestionnaire(id, kind) {
         if(confirm("确定删除")==1) {
             $.ajax({
@@ -1448,7 +1448,6 @@ $(document).ready(function () {
 
     }
 
-
     function showAorAEImage(doc){
     console.log(doc);
         var pic = document.getElementById("picture");
@@ -1456,6 +1455,7 @@ $(document).ready(function () {
         imgDir = "/media/"+doc;
 
     }
+
     function showImage(){
         window.open(imgDir);
 //        return false;

@@ -89,8 +89,16 @@ def updatePatientInfo(data):
         patient.education = data['education']
         patient.career = data['career']
         patient.marriage = data['marriage']
-        patient.homeAddr = data['homeAddr']
-        patient.birthAddr = data['birthAddr']
+
+        patient.province_h = data['province_h']
+        patient.city_h = data['city_h']
+        patient.county_h = data['county_h']
+        patient.detail_h = data['detail_h']
+
+        patient.province = data['province']
+        patient.city = data['city']
+        patient.county = data['county']
+
         patient.activityAddr1 = data['activityAddr1']
         patient.activityAddr2 = data['activityAddr2']
         patient.actionAddr = data['actionAddr']

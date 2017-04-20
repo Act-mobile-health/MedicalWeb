@@ -273,8 +273,15 @@ def getPatientDetailedInfo(P_id):
         value.append(obj.education)
         value.append(obj.career)
         value.append(obj.marriage)
-        value.append(obj.homeAddr)
-        value.append(obj.birthAddr)
+
+        value.append(obj.province_h)
+        value.append(obj.city_h)
+        value.append(obj.county_h)
+        value.append(obj.detail_h)
+
+        value.append(obj.province)
+        value.append(obj.city)
+        value.append(obj.county)
         value.append(obj.activityAddr1)
         value.append(obj.activityAddr2)
         value.append(obj.actionAddr)
@@ -286,7 +293,7 @@ def getPatientDetailedInfo(P_id):
         value.append(obj.cellphone)
         value.append(obj.partnerPhone)
         keys = ['id','P_id','sign','name','sex','birthday','age','nation','height','weight','registerTime','education',
-                'career','marriage','homeAddr','birthAddr','activityAddr1','activityAddr2','actionAddr',
+                'career','marriage','province_h','city_h','county_h','detail_h','province','city','county','activityAddr1','activityAddr2','actionAddr',
                 'diastolicPressure','systolicPressure','neckCircu','payment','telephone','cellphone','partnerPhone']
         message = tools.dictPackage(keys, value)
 

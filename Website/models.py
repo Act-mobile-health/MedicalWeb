@@ -27,8 +27,16 @@ class PatientInfo(models.Model):
     career = models.CharField(max_length=20)
     marriage = models.CharField(max_length=20)
     photo = models.CharField(max_length=50, blank=True)
-    homeAddr = models.CharField(max_length=150)
-    birthAddr = models.CharField(max_length=50)
+
+    province_h = models.CharField(max_length=20)
+    city_h = models.CharField(max_length=20)
+    county_h = models.CharField(max_length=20)
+    detail_h = models.CharField(max_length=50)
+
+    province = models.CharField(max_length=20)
+    city = models.CharField(max_length=20)
+    county = models.CharField(max_length=20)
+
     activityAddr1 = models.CharField(max_length=150)
     activityAddr2 = models.CharField(max_length=150)
     actionAddr = models.CharField(max_length=50)  # this details need be filled

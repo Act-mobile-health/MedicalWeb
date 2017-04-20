@@ -82,3 +82,11 @@ function analyzeCheckBox(modal,name,item) {
             $("#"+modal+" input[name='"+name+"'][value='"+item[i]+"']").attr('checked',true);
     }
 }
+function analyseRadio(input){
+        if(input == "1")
+            return "是";
+        else if(input=="2")
+            return "否";
+        else
+            return "error";
+    }

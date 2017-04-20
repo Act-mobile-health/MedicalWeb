@@ -840,10 +840,22 @@
                                       </select>
                                     </div>
                                 </div>
-                                <div class="form-group col-lg-6 col-md-6 myblockposition">
-                                    <label class="col-sm-3 control-label mylabel">家庭住址</label>
-                                    <div class="col-sm-6">
-                                      <input type="text" class="form-control myinput" name="homeAddr">
+                            </div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-9 col-md-9 myblockposition">
+                                    <label class="col-sm-2 control-label mylabel">家庭住址</label>
+                                    <div class="col-sm-2" style="margin-left:padding-left:0;padding-right:0"  >
+                                      <select class="form-control myinput" name="province_h" id="province_h"></select>
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left:0;padding-right:0" >
+                                      <select class="form-control myinput" name="city_h" id="city_h"></select>
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left:0;padding-right:0" >
+                                      <select class="form-control myinput" name="county_h" id="county_h"></select>
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left:0;padding-right:0" >
+                                      <input type="text" class="form-control myinput" name="detail_h" id="detail_h">
                                     </div>
                                 </div>
                             </div>
@@ -851,8 +863,14 @@
                             <div class="row ">
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">籍贯</label>
-                                    <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="birthAddr">
+                                    <div class="col-sm-3" style="margin-left:padding-left:0;padding-right:0"  >
+                                      <select class="form-control myinput" name="province" id="province"></select>
+                                    </div>
+                                    <div class="col-sm-3" style="padding-left:0;padding-right:0" >
+                                      <select class="form-control myinput" name="city" id="city"></select>
+                                    </div>
+                                    <div class="col-sm-3" style="padding-left:0;padding-right:0" >
+                                      <select class="form-control myinput" name="county" id="county"></select>
                                     </div>
                                 </div>
                             </div>
@@ -4213,7 +4231,7 @@
 								</thead>
 								<tbody>
 								<tr>
-									<td  colspan="4">
+									<td  colspan="4" style="background:yellow">
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 含支气管舒张实验 </label>
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 含支气管激发实验 </label>
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="3"> 无 </label>
@@ -4301,7 +4319,7 @@
 								</thead>
 								<tbody>
 								<tr>
-									<td  colspan="6">
+									<td  colspan="6" style="background:yellow">
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 住院首次 </label>
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 末次 </label>
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="3"> ICU首次 </label>
@@ -4392,8 +4410,8 @@
 								<thead>
 								</thead>
 								<tbody>
-								<tr style="background:yellow">
-									<td  colspan="6">
+								<tr>
+									<td  colspan="6" style="background:yellow">
 										<label style="vertical-align:middle;margin-right:30px">肺 CT <input type="radio" name="head" value="1"> HRCT </label>
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 增强 </label>
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="3"> 低剂量 </label>
@@ -4510,7 +4528,7 @@
 								</thead>
 								<tbody>
 								<tr>
-									<td  colspan="6">
+									<td  colspan="6" style="background:yellow">
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 便捷式 </label>
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> PSG </label>
 									</td>
@@ -4611,7 +4629,7 @@
 								</thead>
 								<tbody>
 								<tr>
-									<td  colspan="2">
+									<td  colspan="2" style="background:yellow">
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 床旁彩超 </label>
 										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 普通彩超 </label>
 									</td>
@@ -4844,6 +4862,7 @@
 		<!-- Pages JS -->
         <script src="/static/js/pages/tools.js"></script>
         <script src="/static/js/pages/AEType.js"></script>
+        <script src="/static/js/pages/areaSelect.js"></script>
         <script src="/static/js/pages/patientDetail.js"></script>
 		<script src="/static/js/pages/group_sidebar.js"></script>
 		<script src="/static/js/pages/setting_sidebar.js"></script>
