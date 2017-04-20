@@ -1382,12 +1382,6 @@ $(document).ready(function () {
         });
     }
 
-    function analyzeCheckBox(modal,name,item) {
-        for (var i = 0;i<item.length;i++){
-                $("#"+modal+" input[name='"+name+"'][value='"+item[i]+"']").attr('checked',true);
-        }
-    }
-
     function showAandAE(A_index){
         if(type==0){
             temp="outpatient";

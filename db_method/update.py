@@ -541,7 +541,7 @@ def updateBloodGasAnalysis(data):
         obj.oxygen = data['oxygen']
         obj.PH = data['PH']
         obj.PaO2 = data['PaO2']
-        obj.PaCO3 = data['PaCO2']
+        obj.PaCO2 = data['PaCO2']
         obj.HCO3 = data['HCO3']
         obj.A_aDO2 = data['A_aDO2']
         obj.BEecf = data['BEecf']
@@ -559,7 +559,7 @@ def updateLungCT(data):
         obj.head = data['head']
         if data['date'] != '':
             obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        obj.content = data['content']
+        obj.content = tools.forCheckbox(data,'content')
         obj.other = data['other']
         obj.save()
         return True
@@ -617,7 +617,7 @@ def updateCardiogram(data):
         if data['date'] != '':
             obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.isNormal = data['isNormal']
-        obj.content = data['content']
+        obj.content = tools.forCheckbox(data,'content')
         obj.other = data['other']
         obj.save()
         return True

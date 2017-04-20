@@ -4202,7 +4202,7 @@
 					</div>
 					<div class="modal-body">
 						<form method="post" id="LungFunc" role="form">
-							<div class="row">
+							<div class="row" style="display:none">
 								<label>AE_id
 									<input type="text" name="AE_id" readonly>
 								</label>
@@ -4214,9 +4214,9 @@
 								<tbody>
 								<tr>
 									<td  colspan="4">
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 含支气管舒张实验 </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 含支气管激发实验 </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 无 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 含支气管舒张实验 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 含支气管激发实验 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="3"> 无 </label>
 									</td>
 								</tr>
 								<tr>
@@ -4263,9 +4263,9 @@
 								<tr>
 									<td style="background:#f59f85">GOLD分级</td>
 									<td colspan="3">
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD">1级</label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD">2级</label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD">3级</label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD" value="1">1级</label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD" value="2">2级</label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD" value="3">3级</label>
 									</td>
 								</tr>
 								</tbody>
@@ -4290,7 +4290,7 @@
 					</div>
 					<div class="modal-body">
 						<form method="post" id="BloodGasAnalysis" role="form">
-							<div class="row">
+							<div class="row" style="display:none">
 								<label>AE_id
 									<input type="text" name="AE_id" readonly>
 								</label>
@@ -4302,17 +4302,17 @@
 								<tbody>
 								<tr>
 									<td  colspan="6">
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 住院首次 </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 末次 </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> ICU首次 </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 末次 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 住院首次 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 末次 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="3"> ICU首次 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="4"> 末次 </label>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="6">
-										<label style="vertical-align:middle;margin-right:30px">条件：<input type="radio" name="useOxygen"> 未吸氧</label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="useOxygen"> 吸氧 </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="text" name="oxygen"> L/min </label>
+										<label style="vertical-align:middle;margin-right:30px">条件：<input type="radio" name="useOxygen" value="1"> 未吸氧</label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="useOxygen" value="2"> 吸氧 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="text" name="oxygen" style="width:80px;"> L/min </label>
 									</td>
 								</tr>
 								<tr>
@@ -4322,10 +4322,10 @@
 								</tr>
 								<tr>
 									<td style="width:16%;background:#75cbe6">项目</td>
-									<td style="width:16%;background:#75cbe6">值</td>
+									<td style="width:80px;background:#75cbe6">值</td>
 									<td style="width:16%;background:#75cbe6">单位</td>
 									<td style="width:16%;background:#75cbe6">项目</td>
-									<td style="width:16%;background:#75cbe6">值</td>
+									<td style="width:80px;background:#75cbe6">值</td>
 									<td style="width:16%;background:#75cbe6">单位</td>
 								</tr>
 								<tr>
@@ -4382,7 +4382,7 @@
 					</div>
 					<div class="modal-body">
 						<form method="post" id="LungCT" role="form">
-							<div class="row">
+							<div class="row" style="display:none">
 								<label>AE_id
 									<input type="text" name="AE_id" readonly>
 								</label>
@@ -4392,12 +4392,12 @@
 								<thead>
 								</thead>
 								<tbody>
-								<tr>
+								<tr style="background:yellow">
 									<td  colspan="6">
-										<label style="vertical-align:middle;margin-right:30px">肺 CT <input type="radio" name="head"> HRCT </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 增强 </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 低剂量 </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> CTPA </label>
+										<label style="vertical-align:middle;margin-right:30px">肺 CT <input type="radio" name="head" value="1"> HRCT </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 增强 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="3"> 低剂量 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="4"> CTPA </label>
 									</td>
 								</tr>
 								<tr>
@@ -4460,17 +4460,17 @@
 												</div>
 												<div class="checkbox col-sm-3">
 												  <label class="mycheckbox">
-													<input type="checkbox" name="content"  value="10">肺部肿物
+													<input type="checkbox" name="content"  value="a">肺部肿物
 												  </label>
 												</div>
 												<div class="checkbox col-sm-3">
 												  <label class="mycheckbox">
-													<input type="checkbox" name="content"  value="11">肺血栓栓塞
+													<input type="checkbox" name="content"  value="b">肺血栓栓塞
 												  </label>
 												</div>
 												<div class="checkbox col-sm-3">
 												  <label class="mycheckbox">
-													<span><input type="checkbox" name="content"  value="12">其他 <input type="text" name="other" style="width:100px"></span>
+													<span><input type="checkbox" name="content"  value="c">其他 <input type="text" name="other" style="width:100px"></span>
 												  </label>
 												</div>
 											</div>
@@ -4499,7 +4499,7 @@
 					</div>
 					<div class="modal-body">
 						<form method="post" id="SleepDetectResult" role="form">
-							<div class="row">
+							<div class="row" style="display:none">
 								<label>AE_id
 									<input type="text" name="AE_id" readonly>
 								</label>
@@ -4511,8 +4511,8 @@
 								<tbody>
 								<tr>
 									<td  colspan="6">
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 便捷式 </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> PSG </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 便捷式 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> PSG </label>
 									</td>
 								</tr>
 								<tr>
@@ -4600,7 +4600,7 @@
 					</div>
 					<div class="modal-body">
 						<form method="post" id="UCG" role="form">
-							<div class="row">
+							<div class="row" style="display:none">
 								<label>AE_id
 									<input type="text" name="AE_id" readonly>
 								</label>
@@ -4612,8 +4612,8 @@
 								<tbody>
 								<tr>
 									<td  colspan="2">
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 床旁彩超 </label>
-										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head"> 普通彩超 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 床旁彩超 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 普通彩超 </label>
 									</td>
 								</tr>
 								<tr>
@@ -4628,9 +4628,9 @@
 										<label style="vertical-align:middle;margin-right:30px">LVEF: <input type="text" name="LVEF" style="width:70px">%</label>
 									</td>
 									<td>
-										<label style="vertical-align:middle;margin-right:30px">PASP: <input type="radio" name="PASP"> 正常</label>
+										<label style="vertical-align:middle;margin-right:30px">PASP: <input type="radio" name="PASP" value="1"> 正常</label>
 										<label style="vertical-align:middle;margin-right:30px">
-											<span><input type="radio" name="PASP"> 异常
+											<span><input type="radio" name="PASP" value="2"> 异常
 												<input type="text" name="symptom" style="width:70px">mmHg
 											</span></label>
 									</td>
@@ -4639,54 +4639,54 @@
 									<td>
 										<div class="row checkbox">
 											<label>
-												<input type="radio" name="left"> 正常/未见异常
+												<input type="radio" name="left" value="1"> 正常/未见异常
 											</label>
 											<label>
-												<input type="radio" name="left"> 左心室肥厚
+												<input type="radio" name="left" value="2"> 左心室肥厚
 											</label>
 										</div>
 										<div class="row checkbox">
 											<label>
-												<input type="radio" name="left"> 右心室肥厚
+												<input type="radio" name="left" value="3"> 右心室肥厚
 											</label>
 											</label>
 											<label>
-												<input type="radio" name="left"> 左心房增大
+												<input type="radio" name="left" value="4"> 左心房增大
 											</label>
 										</div>
 										<div class="row checkbox">
 											<label>
-												<input type="radio" name="left"> 右心房增大
+												<input type="radio" name="left" value="5"> 右心房增大
 											</label>
 											</label>
 											<label>
-												<input type="radio" name="left"> 全心增大
+												<input type="radio" name="left" value="6"> 全心增大
 											</label>
 										</div>
 									</td>
 									<td>
 										<div class="row checkbox">
 											<label>
-												<input type="radio" name="right"> 肺动脉高压
+												<input type="radio" name="right" value="1"> 肺动脉高压
 											</label>
 											<label>
-												<input type="radio" name="right"> 三尖瓣反流
-											</label>
-										</div>
-										<div class="row checkbox">
-											<label>
-												<input type="radio" name="right"> 二尖瓣反流
-											</label>
-											<label>
-												<input type="radio" name="right"> 主动脉瓣反流
+												<input type="radio" name="right" value="2"> 三尖瓣反流
 											</label>
 										</div>
 										<div class="row checkbox">
 											<label>
-												<input type="radio" name="right"> 心包积液
+												<input type="radio" name="right" value="3"> 二尖瓣反流
 											</label>
 											<label>
-												<input type="radio" name="right"> 其他
+												<input type="radio" name="right" value="4"> 主动脉瓣反流
+											</label>
+										</div>
+										<div class="row checkbox">
+											<label>
+												<input type="radio" name="right" value="5"> 心包积液
+											</label>
+											<label>
+												<input type="radio" name="right" value="6"> 其他
 											</label>
 											<input type="text" name="other" style="width:70px">
 										</div>
@@ -4714,7 +4714,7 @@
 					</div>
 					<div class="modal-body">
 						<form method="post" id="Cardiogram" role="form">
-							<div class="row">
+							<div class="row" style="display:none">
 								<label>AE_id
 									<input type="text" name="AE_id" readonly>
 								</label>
@@ -4725,13 +4725,15 @@
 								</thead>
 								<tbody>
 								<tr>
-									<td>
-										<label style="vertical-align:middle;">检查日期：<input type="date" name="date" style="height:30px"></label>
+									<td style="background:yellow">
+									<label style="vertical-align:middle;margin-right:30px"> 心电图 <input type="radio" name="isNormal"  value="1"> 正常</label>
+									<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="isNormal"  value="2"> 异常</label>
 									</td>
 								</tr>
 								<tr>
-									<label style="vertical-align:middle;margin-right:30px">心电图 <input type="radio" name="isNormal"  value="1"> 正常</label>
-									<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="isNormal"  value="2"> 异常</label>
+									<td>
+										<label style="vertical-align:middle;">检查日期：<input type="date" name="date" style="height:30px"></label>
+									</td>
 								</tr>
 								<tr>
 									<td>
@@ -4786,7 +4788,7 @@
 											<div class="row">
 												<div class="checkbox col-sm-4">
 												  <label class="mycheckbox" style="margin-left:20px;">
-													<span><input type="checkbox" name="content"  value="12">其他 <input type="text" name="other" style="width:100px"></span>
+													<span><input type="checkbox" name="content"  value="9">其他 <input type="text" name="other" style="width:100px"></span>
 												  </label>
 												</div>
 											</div>

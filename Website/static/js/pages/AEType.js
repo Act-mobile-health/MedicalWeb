@@ -28,6 +28,7 @@ function editLungFunc(id, type){
         dataType: "json",
         success: function (json_data) {
             var item = json_data;
+            console.log(item)
             $("#LungFuncDetails input[name='AE_id']").val(id);
             $("#LungFuncDetails input[name='head'][value='"+item.head+"']").attr("checked",true);
             $("#LungFuncDetails input[name='date']").val(item.date);
@@ -38,11 +39,12 @@ function editLungFunc(id, type){
             $("#LungFuncDetails input[name='FEV12']").val(item.FEV12);
             $("#LungFuncDetails input[name='FEV13']").val(item.FEV13);
             $("#LungFuncDetails input[name='FEV1_FVC1']").val(item.FEV1_FVC1);
-            $("#LungFuncDetails input[name='FEV2_FVC2']").val(item.FEV2_FVC2);
-            $("#LungFuncDetails input[name='FEV3_FVC3']").val(item.FEV3_FVC3);
-            $("#LungFuncDetails input[name='RV_TCL1']").val(item.RV_TCL1);
-            $("#LungFuncDetails input[name='RV_TCL2']").val(item.RV_TCL2);
-            $("#LungFuncDetails input[name='RV_TCL3']").val(item.RV_TCL3);
+            $("#LungFuncDetails input[name='FEV1_FVC2']").val(item.FEV1_FVC2);
+            $("#LungFuncDetails input[name='FEV1_FVC3']").val(item.FEV1_FVC3);
+            $("#LungFuncDetails input[name='FEV1change']").val(item.FEV1change);
+            $("#LungFuncDetails input[name='RV_TLC1']").val(item.RV_TLC1);
+            $("#LungFuncDetails input[name='RV_TLC2']").val(item.RV_TLC2);
+            $("#LungFuncDetails input[name='RV_TLC3']").val(item.RV_TLC3);
             $("#LungFuncDetails input[name='GOLD'][value='"+item.GOLD+"']").attr("checked",true);
         },
         error: function(data){
@@ -78,6 +80,7 @@ function editBloodGasAnalysis(id, type){
             var item = json_data;
             $("#BloodGasAnalysisDetails input[name='AE_id']").val(id);
             $("#BloodGasAnalysisDetails input[name='head'][value='"+item.head+"']").attr("checked",true);
+            $("#BloodGasAnalysisDetails input[name='date']").val(item.date);
             $("#BloodGasAnalysisDetails input[name='useOxygen'][value='"+item.useOxygen+"']").attr("checked",true);
             $("#BloodGasAnalysisDetails input[name='oxygen']").val(item.oxygen);
             $("#BloodGasAnalysisDetails input[name='PH']").val(item.PH);
@@ -96,6 +99,7 @@ function editBloodGasAnalysis(id, type){
     });
 }
 function submitBloodGasAnalysis(){
+console.log($("#BloodGasAnalysis").serialize());
     if(confirm("确定提交吗？")){
         $.ajax({
             type: "POST",
@@ -121,6 +125,7 @@ function editLungCT(id, type){
         dataType: "json",
         success: function (json_data) {
             var item = json_data;
+            console.log(item)
             $("#LungCTDetails input[name='AE_id']").val(id);
             $("#LungCTDetails input[name='date']").val(item.date);
             $("#LungCTDetails input[name='head'][value='"+item.head+"']").attr("checked",true);
@@ -207,7 +212,7 @@ function editUCG(id, type){
         success:function (json_data) {
             item=json_data;
             $("#UCG input[name='AE_id']").val(id);
-            $("#UCG input[name='CDU'][value='"+item.CDU+"']").attr("checked",true);
+            $("#UCG input[name='head'][value='"+item.head+"']").attr("checked",true);
             $("#UCG input[name='date']").val(item.date);
             $("#UCG input[name='LVEF']").val(item.LVEF);
             $("#UCG input[name='PASP'][value='"+item.PASP+"']").attr("checked",true);

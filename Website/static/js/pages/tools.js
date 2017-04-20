@@ -75,3 +75,10 @@ function AEtypeParse(input){
 function AEtypeParse2(input){
     return Parse(6,['LungFunc','BloodGasAnalysis','LungCT','SleepDetectResult','UCG','Cardiogram'],input);
 }
+
+
+function analyzeCheckBox(modal,name,item) {
+    for (var i = 0;i<item.length;i++){
+            $("#"+modal+" input[name='"+name+"'][value='"+item[i]+"']").attr('checked',true);
+    }
+}
