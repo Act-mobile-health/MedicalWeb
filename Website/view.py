@@ -804,7 +804,6 @@ def getPatientName(request,data,D_id):
 def app_login(request):
     if request.method == 'POST':
         data = request.POST
-        print data,"loginnnnnnnnn"
         message = {}
         message['result'] = select.patientLogin(data['P_id'],data['password'])
         return HttpResponse(json.dumps(message))
@@ -843,16 +842,13 @@ def app_addOrUpdatePmExposureTable(request):
 
 #APP interface 4
 @csrf_exempt
-def app_addOrUpdateTrackInfoTable(request):
+def app_addTrackInfoTable(request):
     if request.method == 'POST':
         data = request.POST
+        myFile = request.FILES.get("myimage", None)
         print data, "Trackkkkkkkkkkkk"
-        message = {'result': '-1', 'id': '-1'}
-        if data['id'] == '':
-            message['id'] = insert.addTrackInfo(data)
-        else:
-            message['id'] = update.updateTrackInfo(data)
-        if message['id'] != -1:
+        message = {'result': '-1'}
+        if insert.addTrackInfo(data, myFile):
             message['result'] = '0'
         return HttpResponse(json.dumps(message))
 
@@ -870,6 +866,7 @@ def app_addOrUpdateMedicineRegularTable(request):
             message['id'] = update.updateMedicineRegular(data)
         if message['id'] != -1:
             message['result'] = '0'
+        return HttpResponse(json.dumps(message))
 
 
 #APP interface 6
@@ -891,14 +888,43 @@ def app_addOrUpdateMedicineChangeTable(request):
 def app_addOrUpdateMedicineRecordTable(request):
     if request.method == 'POST':
         data = request.POST
+        message = {'result': '-1'}
+        if insert.addMedicineRecord(data):
+            message['result'] = '0'
+        return HttpResponse(json.dumps(message))
+
+#APP interface 8
+@csrf_exempt
+def app_addOrUpdateAppInfo(request):
+    if request.method == 'POST':
+        data = request.POST
         message = {'result': '-1', 'id': '-1'}
         if data['id'] == '':
-            message['id'] = insert.addMedicineRecord(data)
+            message['id'] = insert.addAppInfo(data)
         else:
-            message['id'] = update.updateMedicineRecord(data)
+            message['id'] = update.updateAppInfo(data)
         if message['id'] != -1:
             message['result'] = '0'
         return HttpResponse(json.dumps(message))
+
+#APP interface 9
+@csrf_exempt
+def app_addAppAttachment(request):
+    if request.method == 'POST':
+        data = request.POST
+        message = {'result': '-1'}
+        myFile = request.FILES.get("myimage", None)
+
+        S_id = int(data['S_id'])
+        D_id = int(data['D_id'])
+        if not myFile:
+            js = json.dumps(message)
+            return HttpResponse(js)
+        if insert.addAttachInfo(D_id, S_id, data, myFile):
+            message['result'] = 0
+        js = json.dumps(message)
+        return HttpResponse(js)
+
 
 # 接口43
 @login_required

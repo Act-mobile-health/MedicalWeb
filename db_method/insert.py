@@ -339,7 +339,7 @@ def addPmExposure(data):
 
 
 #add TrackInfo Table
-def addTrackInfo(data):
+def addTrackInfo(data, doc):
     #TODO
     #如何存储file
     id = -1
@@ -348,13 +348,13 @@ def addTrackInfo(data):
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = TrackInfo(P_id = data['P_id'], date = d, name = data['name'])
+        newObj = TrackInfo(P_id = data['P_id'], date = d, doc = doc)
         newObj.save()
         id = newObj.id
-        return id
+        return True
     except Exception, e:
         tools.exceptionRecord('insert.py','addTrackInfo',e)
-        return id
+        return False
 
 #add MedicineRegular Table
 def addMedicineRegular(data):
@@ -400,10 +400,26 @@ def addMedicineRecord(data):
                                 producer = data['producer'])
         newObj.save()
         id = newObj.id
-        return id
+        return True
     except Exception, e:
         tools.exceptionRecord('insert.py','addMedicineRecord',e)
+        return False
+
+def addAppInfo(data):
+    id = -1
+    try:
+        if data['date'] != '':
+            d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        else:
+            d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        obj = AppInfo(P_id = data['P_id'], date = d, type = data['type'])
+        obj.save()
+        id = obj.id
         return id
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addAppInfo',e)
+        return id
+
 
 def addInvitation(D_id,data):
     id = -1

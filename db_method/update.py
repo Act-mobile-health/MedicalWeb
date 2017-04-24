@@ -513,6 +513,20 @@ def updateMedicineRecord(data):
         tools.exceptionRecord('update.py','updateMedicineRecord',e)
         return -1
 
+def updateAppInfo(data):
+    id = -1
+    try:
+        obj = AppInfo.objects.get(id = int(data['id']))
+        if data['date'] != '':
+            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        obj.P_id = data['P_id']
+        obj.type = data['type']
+        return int(data['id'])
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateAppInfo',e)
+        return -1
+
+
 def updateLungFunc(data):
     try:
         obj = LungFunc.objects.get(AE_id = int(data['AE_id']))

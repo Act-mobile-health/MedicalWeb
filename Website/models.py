@@ -158,8 +158,7 @@ class PmExposure(models.Model):
 class TrackInfo(models.Model):
     P_id = models.CharField(max_length=10)
     date = models.DateField(blank=True)
-    name = models.CharField(max_length=50)
-    dir = models.CharField(max_length=50)
+    doc = models.FileField(upload_to="TrackInfo")
 
 
 # created by JK@buaa, 2017/3/17
@@ -172,7 +171,7 @@ class AttachInfo(models.Model):
     doc = models.ImageField(upload_to="Attachment")
     P_id = models.CharField(max_length=10,null=False)
     date = models.DateField(blank=True)
-    type = models.CharField(max_length=2)                # 0 OutPatientService   1 Emerg   2 InHospital
+    type = models.CharField(max_length=2)    # 0 OutPatientService   1 Emerg   2 InHospital
     S_id = models.IntegerField(null=False)
     D_id = models.IntegerField(null=False)
     description = models.CharField(max_length=255)
@@ -762,7 +761,7 @@ class AppInfo(models.Model):
 class AppAttachment(models.Model):
     name = models.CharField(max_length=10, null=False)
     P_id = models.CharField(max_length=10, null=False)
-    AI_id = models.CharField(max_length=32, null=False)
+    AI_id = models.IntegerField(null=False)
     dir = models.CharField(max_length=50, null=False)
 
 
