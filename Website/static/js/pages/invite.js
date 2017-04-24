@@ -10,22 +10,30 @@ $(document).ready(function(){
 //#34495E
 function showInvitations(){
     $("#invitations tbody").empty();
-    $.getJSON('/i60/',{},function(json_data){
-    console.log(json_data);
-        $.each(json_data,function(index,item){
-            $("#invitations tbody").append(
-                '<tr>'+
-                '<td>'+item.id+'</td>'+
-                '<td><a style="color:#29b6f6;" href="/register?code='+item.code+'">'+item.code+'</a></td>'+
-                '<td>可用</td>'+
-                '</tr>');
-        });
+    $.ajax({
+        type: "GET",
+        url: "/i60/",
+        data: {},
+        dataType: "json",
+        success: function (json_data) {
+            $.each(json_data,function(index,item){
+                $("#invitations tbody").append(
+                    '<tr>'+
+                    '<td>'+item.id+'</td>'+
+                    '<td><a style="color:#29b6f6;" href="/register?code='+item.code+'">'+item.code+'</a></td>'+
+                    '<td>可用</td>'+
+                    '</tr>');
+            });
+        },
+        error:function(data){
+                    errorProcess(data);
+        }
+
     });
 
 }
 
 function submitNewInvitation(){
-    console.log($("#prefix").val())
     $.ajax({
         type:"POST",
         url:"/i61/",

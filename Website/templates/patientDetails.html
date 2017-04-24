@@ -485,20 +485,20 @@
                                         </div>
                                     </div>
                                     <div class="panel-body">
-                                        <div class="row col-lg-10 col-md-10 col-md-offset-1">
+                                        <div class="row table-responsive">
                                             <table class="table table-bordered table-hover table-entire" id="RelationInfoTable">
                                                 <thead>
                                                 <tr>
-                                                    <th class="table-small" style="text-align:center">编号</th>
-                                                    <th class="table-small" style="text-align:center">姓名</th>
-                                                    <th style="text-align:center;width:5%">性别</th>
-                                                    <th class="table-small" style="text-align:center;">固定电话</th>
-                                                    <th class="table-small" style="text-align:center;">手机</th>
-                                                    <th class="table-small" style="text-align:center;">微信</th>
-                                                    <th class="table-small" style="text-align:center;">邮箱</th>
-                                                    <th style="text-align:center">住址</th>
-                                                    <th style="text-align:center;width:5%;">编辑</th>
-                                                    <th style="text-align:center;width:5%;">删除</th>
+                                                    <th class="tlabel6" style="text-align:center;width:45px">编号</th>
+                                                    <th class="table-small tlabel6" style="text-align:center">姓名</th>
+                                                    <th class="tlabel6" style="text-align:center;width:45px;">性别</th>
+                                                    <th class="table-small tlabel6" style="text-align:center;">固定电话</th>
+                                                    <th class="table-small tlabel6" style="text-align:center;">手机</th>
+                                                    <th class="table-small tlabel6" style="text-align:center;">微信</th>
+                                                    <th class="table-small tlabel6" style="text-align:center;">邮箱</th>
+                                                    <th class="tlabel6" style="text-align:center">住址</th>
+                                                    <th class="tlabel6" style="text-align:center;width:45px;">编辑</th>
+                                                    <th class="tlabel6" style="text-align:center;width:45px">删除</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -787,7 +787,7 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">颈围</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="neckCircu">
+                                      <input type="text" class="form-control myinput" name="neckCircu"  data-toggle="tooltip" data-placement="top" title="指经喉结节点的颈部水平围长">
                                     </div>
                                 </div>
                             </div>
@@ -796,13 +796,34 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">学历</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="education">
+                                       <select class="form-control myinput" name="education">
+                                            <option value="1">小学</option>
+                                            <option value="2">初中</option>
+                                            <option value="3">高中/中专</option>
+                                            <option value="4">大学专科（大专）</option>
+                                            <option value="5">大学本科（大本）</option>
+                                            <option value="6">研究生（硕士/博士）</option>
+                                      </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">职业</label>
                                     <div class="col-sm-6">
-                                      <input type="text" class="form-control myinput" name="career">
+                                       <select class="form-control myinput" name="career">
+                                            <option value="1">农、林、牧、渔、水利业</option>
+                                            <option value="2">工业</option>
+                                            <option value="3">地质普查和勘探业</option>
+                                            <option value="4">建筑业</option>
+                                            <option value="5">交通运输业、邮电通信业</option>
+                                            <option value="6">商业、公共饮食业、物资供应和仓储业</option>
+                                            <option value="7">房地产管理、公用事业、居民服务和咨询服务业</option>
+                                            <option value="8">卫生、体育和社会福利事业</option>
+                                            <option value="9">教育、文化艺术和广播电视业</option>
+                                            <option value="10">科学研究和综合技术服务业</option>
+                                            <option value="11">金融、保险业</option>
+                                            <option value="12">国家机关、党政机关和社会团体</option>
+                                            <option value="13">其他行业</option>
+                                      </select>
                                     </div>
                                 </div>
                             </div>
@@ -811,13 +832,30 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">婚姻状况</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="marriage">
+                                       <select class="form-control myinput" name="marriage">
+                                            <option value="1">未婚</option>
+                                            <option value="2">已婚</option>
+                                            <option value="3">离异</option>
+                                            <option value="4">丧偶</option>
+                                      </select>
                                     </div>
                                 </div>
-                                <div class="form-group col-lg-6 col-md-6 myblockposition">
-                                    <label class="col-sm-3 control-label mylabel">家庭住址</label>
-                                    <div class="col-sm-6">
-                                      <input type="text" class="form-control myinput" name="homeAddr">
+                            </div>
+
+                            <div class="row ">
+                                <div class="form-group col-lg-9 col-md-9 myblockposition">
+                                    <label class="col-sm-2 control-label mylabel">家庭住址</label>
+                                    <div class="col-sm-2" style="margin-left:padding-left:0;padding-right:0"  >
+                                      <select class="form-control myinput" name="province_h" id="province_h"></select>
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left:0;padding-right:0" >
+                                      <select class="form-control myinput" name="city_h" id="city_h"></select>
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left:0;padding-right:0" >
+                                      <select class="form-control myinput" name="county_h" id="county_h"></select>
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left:0;padding-right:0" >
+                                      <input type="text" class="form-control myinput" name="detail_h" id="detail_h">
                                     </div>
                                 </div>
                             </div>
@@ -825,8 +863,14 @@
                             <div class="row ">
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">籍贯</label>
-                                    <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="birthAddr">
+                                    <div class="col-sm-3" style="margin-left:padding-left:0;padding-right:0"  >
+                                      <select class="form-control myinput" name="province" id="province"></select>
+                                    </div>
+                                    <div class="col-sm-3" style="padding-left:0;padding-right:0" >
+                                      <select class="form-control myinput" name="city" id="city"></select>
+                                    </div>
+                                    <div class="col-sm-3" style="padding-left:0;padding-right:0" >
+                                      <select class="form-control myinput" name="county" id="county"></select>
                                     </div>
                                 </div>
                             </div>
@@ -1189,13 +1233,111 @@
                             </div>
                             </div>
 
-
                             <div class="row">
                                 <h2 class="myquestion">2. 粉尘接触史</h2>
                             </div>
                             <div class="row">
-                                <h4 class="myquestion"> 职业粉尘接触史<input name="powder1" type = "text" class="shortinput"/>年，从事职业<input name="powder2" type = "text" class="shortinput"/>，接触有害物质为<input name="powder3" type = "text" class="shortinput"/></h4>
+                                <h4 class="myquestion"> 职业粉尘接触史<input name="powder1" type = "text" class="shortinput"/>年，从事职业<input name="powder2" type = "text" class="shortinput"/>.</h4>
                             </div>
+                            <div class="row">
+                                <h4 class="myquestion">接触有害物质为</h4>
+                            </div>
+                            <div class="row">
+                            <div class="checkbox col-sm-2">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="1">搪瓷、陶瓷
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-2">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="2">玻璃
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-4">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="3">器械（铸造、热处理等）
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="4">纺织
+                              </label>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="checkbox col-sm-5">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="5">有机化合物（二甲苯、杀虫剂等）
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-2 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="6">塑料
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-2 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="7">油漆
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="8">化工
+                              </label>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="9">烧烤
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="10">造纸
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="11">橡胶
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="12">矿物粉尘
+                              </label>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="13">建筑材料
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="14">植物性粉尘
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="15">动物性粉尘
+                              </label>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="16">金属粉尘
+                              </label>
+                            </div>
+                            <div class="checkbox col-sm-3 ">
+                              <label class="mycheckbox">
+                                <input type="checkbox" name="powder3" value="17">其他
+                              </label>
+                            </div>
+                            </div>
+
                             <div class="row">
                                 <h2 class="myquestion">3. 生物燃料接触史</h2>
                             </div>
@@ -3327,9 +3469,11 @@
 						<h4 class="modal-title">详情</h4>
 					</div>
 					<div class="modal-body">
-						<img id = "picture" src="" alt="My image"/>
+						<img id = "picture" src="" alt="My image" style="max-width:800px" />
+
 					</div>
 					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="showImage()">查看详情</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 					</div>
 				</div><!-- /.modal-content -->
@@ -4067,7 +4211,621 @@
 			</div><!-- /.modal-dialog -->
 		</div>
 
-      	<!-- start: JavaScript-->
+		<div class="modal fade" id="LungFuncDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" style="color:black;text-align:center;font-weight:normal">肺功能</h4>
+					</div>
+					<div class="modal-body">
+						<form method="post" id="LungFunc" role="form">
+							<div class="row" style="display:none">
+								<label>AE_id
+									<input type="text" name="AE_id" readonly>
+								</label>
+							</div>
+						<div class="table-responsive table table-bordered table-entire">
+							<table class="table table-hover">
+								<thead>
+								</thead>
+								<tbody>
+								<tr>
+									<td  colspan="4" style="background:yellow">
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 含支气管舒张实验 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 含支气管激发实验 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="3"> 无 </label>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="4">
+										<label style="vertical-align:middle;">检查日期：<input type="date" name="date" style="height:30px"></label>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:22%;background:#75cbe6">项目</td>
+									<td style="width:16%;background:#75cbe6">预计值</td>
+									<td style="width:31%;background:#75cbe6">支气管扩张剂吸入前实测值</td>
+									<td style="width:31%;background:#75cbe6">支气管扩张剂吸入后实测值</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">FVC(L)</td>
+									<td><input type="text" name="FVC1"></td>
+									<td><input type="text" name="FVC2"></td>
+									<td><input type="text" name="FVC3"></td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">FEV1(L)</td>
+									<td><input type="text" name="FEV11"></td>
+									<td><input type="text" name="FEV12"></td>
+									<td><input type="text" name="FEV13"></td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">FEV1/FVC(%)</td>
+									<td><input type="text" name="FEV1_FVC1"></td>
+									<td><input type="text" name="FEV1_FVC2"></td>
+									<td><input type="text" name="FEV1_FVC3"></td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">RV/TLC</td>
+									<td><input type="text" name="RV_TLC1"></td>
+									<td><input type="text" name="RV_TLC2"></td>
+									<td><input type="text" name="RV_TLC3"></td>
+								</tr>
+								<tr>
+									<td style="background:#f59f85">FEV1change%</td>
+									<td></td>
+									<td></td>
+									<td><input type="text" name="FEV1change"></td>
+								</tr>
+								<tr>
+									<td style="background:#f59f85">GOLD分级</td>
+									<td colspan="3">
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD" value="1">1级</label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD" value="2">2级</label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="GOLD" value="3">3级</label>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" id="LungFuncbt" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+		<div class="modal fade" id="BloodGasAnalysisDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" style="color:black;text-align:center;font-weight:normal">血气分析</h4>
+					</div>
+					<div class="modal-body">
+						<form method="post" id="BloodGasAnalysis" role="form">
+							<div class="row" style="display:none">
+								<label>AE_id
+									<input type="text" name="AE_id" readonly>
+								</label>
+							</div>
+						<div class="table-responsive table table-bordered table-entire">
+							<table class="table table-hover">
+								<thead>
+								</thead>
+								<tbody>
+								<tr>
+									<td  colspan="6" style="background:yellow">
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 住院首次 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 末次 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="3"> ICU首次 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="4"> 末次 </label>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="6">
+										<label style="vertical-align:middle;margin-right:30px">条件：<input type="radio" name="useOxygen" value="1"> 未吸氧</label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="useOxygen" value="2"> 吸氧 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="text" name="oxygen" style="width:80px;"> L/min </label>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="6">
+										<label style="vertical-align:middle;">采血日期：<input type="date" name="date" style="height:30px"></label>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:16%;background:#75cbe6">项目</td>
+									<td style="width:80px;background:#75cbe6">值</td>
+									<td style="width:16%;background:#75cbe6">单位</td>
+									<td style="width:16%;background:#75cbe6">项目</td>
+									<td style="width:80px;background:#75cbe6">值</td>
+									<td style="width:16%;background:#75cbe6">单位</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">pH</td>
+									<td><input type="text" name="PH"></td>
+									<td>--</td>
+									<td style="background:#a2e06b">A-aDO2</td>
+									<td><input type="text" name="A_aDO2"></td>
+									<td>%</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">PaO<sub>2</sub></td>
+									<td><input type="text" name="PaO2"></td>
+									<td>mmHg</td>
+									<td style="background:#a2e06b">BEecf</td>
+									<td><input type="text" name="BEecf"></td>
+									<td>mmol/L</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">PaCO<sub>2</sub></td>
+									<td><input type="text" name="PaCO2"></td>
+									<td>mmHg</td>
+									<td style="background:#a2e06b">Lac</td>
+									<td><input type="text" name="Lac"></td>
+									<td>mmol/L</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">HCO<sub>3</sub><sup>-</sup></td>
+									<td><input type="text" name="HCO3"></td>
+									<td>mmol/L</td>
+									<td style="background:#a2e06b">SaO<sub>2</sub></td>
+									<td><input type="text" name="SaO2"></td>
+									<td>%</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" id="BloodGasAnalysisbt" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+		<div class="modal fade" id="LungCTDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" style="color:black;text-align:center;font-weight:normal">肺 CT</h4>
+					</div>
+					<div class="modal-body">
+						<form method="post" id="LungCT" role="form">
+							<div class="row" style="display:none">
+								<label>AE_id
+									<input type="text" name="AE_id" readonly>
+								</label>
+							</div>
+						<div class="table-responsive table table-bordered table-entire">
+							<table class="table table-hover">
+								<thead>
+								</thead>
+								<tbody>
+								<tr>
+									<td  colspan="6" style="background:yellow">
+										<label style="vertical-align:middle;margin-right:30px">肺 CT <input type="radio" name="head" value="1"> HRCT </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 增强 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="3"> 低剂量 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="4"> CTPA </label>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="6">
+										<label style="vertical-align:middle;">采血日期：<input type="date" name="date" style="height:30px"></label>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="6" >
+										<div>
+											<div class="row">
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="1" >正常/未见异常
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="2">慢性支气管炎
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="3">肺气肿
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="4">支气管扩张
+												  </label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="5">间质性改变/纤维化
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="6">肺不张
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="7">肺炎
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="8">陈旧性结核
+												  </label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="9">肺叶切除术后
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="a">肺部肿物
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="b">肺血栓栓塞
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<span><input type="checkbox" name="content"  value="c">其他 <input type="text" name="other" style="width:100px"></span>
+												  </label>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" id="LungCTbt" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+		<div class="modal fade" id="SleepDetectResultDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" style="color:black;text-align:center;font-weight:normal">睡眠监测结果</h4>
+					</div>
+					<div class="modal-body">
+						<form method="post" id="SleepDetectResult" role="form">
+							<div class="row" style="display:none">
+								<label>AE_id
+									<input type="text" name="AE_id" readonly>
+								</label>
+							</div>
+						<div class="table-responsive table table-bordered table-entire">
+							<table class="table table-hover">
+								<thead>
+								</thead>
+								<tbody>
+								<tr>
+									<td  colspan="6" style="background:yellow">
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 便捷式 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> PSG </label>
+									</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+									<td colspan="6">
+										<label style="vertical-align:middle;">检查日期：<input type="date" name="date" style="height:30px"></label>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:16%;background:#75cbe6">项目</td>
+									<td style="width:16%;background:#75cbe6">值</td>
+									<td style="width:16%;background:#75cbe6">单位</td>
+									<td style="width:16%;background:#75cbe6">项目</td>
+									<td style="width:16%;background:#75cbe6">值</td>
+									<td style="width:16%;background:#75cbe6">单位</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">监测时间</td>
+									<td><input type="text" name="detectTime"></td>
+									<td>hh/mm</td>
+									<td style="background:#a2e06b">小于90%的SPO2时间百分比</td>
+									<td><input type="text" name="relaSpO2"></td>
+									<td>%</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">睡眠效率</td>
+									<td><input type="text" name="sleep"></td>
+									<td>%</td>
+									<td style="background:#a2e06b">平均呼吸暂停持续时间</td>
+									<td><input type="text" name="avgBreath"></td>
+									<td>s</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">AHI<sub>2</sub></td>
+									<td><input type="text" name="AHI"></td>
+									<td>次／h</td>
+									<td style="background:#a2e06b">微觉醒指数</td>
+									<td><input type="text" name="wake"></td>
+									<td>次／h</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">ODI</td>
+									<td><input type="text" name="ODI"></td>
+									<td>次／h</td>
+									<td style="background:#a2e06b">R期百分比<sub>2</sub></td>
+									<td><input type="text" name="R"></td>
+									<td>%</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">平均SpO2</td>
+									<td><input type="text" name="avgSpO2"></td>
+									<td>%</td>
+									<td style="background:#a2e06b">N2期百分比<sub>2</sub></td>
+									<td><input type="text" name="N2"></td>
+									<td>%</td>
+								</tr>
+								<tr>
+									<td style="background:#a2e06b">最低SpO2</td>
+									<td><input type="text" name="lowSpO2"></td>
+									<td>%</td>
+									<td style="background:#a2e06b">N3期百分比<sub>2</sub></td>
+									<td><input type="text" name="N3"></td>
+									<td>%</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" id="SleepDetectResultbt" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+
+		<div class="modal fade" id="UCGDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" style="color:black;text-align:center;font-weight:normal">心脏彩超</h4>
+					</div>
+					<div class="modal-body">
+						<form method="post" id="UCG" role="form">
+							<div class="row" style="display:none">
+								<label>AE_id
+									<input type="text" name="AE_id" readonly>
+								</label>
+							</div>
+						<div class="table-responsive table table-bordered table-entire">
+							<table class="table table-hover">
+								<thead>
+								</thead>
+								<tbody>
+								<tr>
+									<td  colspan="2" style="background:yellow">
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="1"> 床旁彩超 </label>
+										<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="head" value="2"> 普通彩超 </label>
+									</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<label style="vertical-align:middle;">检查日期：<input type="date" name="date" style="height:30px"></label>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label style="vertical-align:middle;margin-right:30px">LVEF: <input type="text" name="LVEF" style="width:70px">%</label>
+									</td>
+									<td>
+										<label style="vertical-align:middle;margin-right:30px">PASP: <input type="radio" name="PASP" value="1"> 正常</label>
+										<label style="vertical-align:middle;margin-right:30px">
+											<span><input type="radio" name="PASP" value="2"> 异常
+												<input type="text" name="symptom" style="width:70px">mmHg
+											</span></label>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="row checkbox">
+											<label>
+												<input type="radio" name="left" value="1"> 正常/未见异常
+											</label>
+											<label>
+												<input type="radio" name="left" value="2"> 左心室肥厚
+											</label>
+										</div>
+										<div class="row checkbox">
+											<label>
+												<input type="radio" name="left" value="3"> 右心室肥厚
+											</label>
+											</label>
+											<label>
+												<input type="radio" name="left" value="4"> 左心房增大
+											</label>
+										</div>
+										<div class="row checkbox">
+											<label>
+												<input type="radio" name="left" value="5"> 右心房增大
+											</label>
+											</label>
+											<label>
+												<input type="radio" name="left" value="6"> 全心增大
+											</label>
+										</div>
+									</td>
+									<td>
+										<div class="row checkbox">
+											<label>
+												<input type="radio" name="right" value="1"> 肺动脉高压
+											</label>
+											<label>
+												<input type="radio" name="right" value="2"> 三尖瓣反流
+											</label>
+										</div>
+										<div class="row checkbox">
+											<label>
+												<input type="radio" name="right" value="3"> 二尖瓣反流
+											</label>
+											<label>
+												<input type="radio" name="right" value="4"> 主动脉瓣反流
+											</label>
+										</div>
+										<div class="row checkbox">
+											<label>
+												<input type="radio" name="right" value="5"> 心包积液
+											</label>
+											<label>
+												<input type="radio" name="right" value="6"> 其他
+											</label>
+											<input type="text" name="other" style="width:70px">
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" id="UCGbt" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+
+		<div class="modal fade" id="CardiogramDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" style="color:black;text-align:center;font-weight:normal">心电图</h4>
+					</div>
+					<div class="modal-body">
+						<form method="post" id="Cardiogram" role="form">
+							<div class="row" style="display:none">
+								<label>AE_id
+									<input type="text" name="AE_id" readonly>
+								</label>
+							</div>
+						<div class="table-responsive table table-bordered table-entire">
+							<table class="table table-hover">
+								<thead>
+								</thead>
+								<tbody>
+								<tr>
+									<td style="background:yellow">
+									<label style="vertical-align:middle;margin-right:30px"> 心电图 <input type="radio" name="isNormal"  value="1"> 正常</label>
+									<label style="vertical-align:middle;margin-right:30px"><input type="radio" name="isNormal"  value="2"> 异常</label>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label style="vertical-align:middle;">检查日期：<input type="date" name="date" style="height:30px"></label>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div>
+											<div class="row">
+												<h5 style="color:black;font-weight:normal">异常心电图</h5>
+											</div>
+											<div class="row">
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="1" >房颤
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="2">陈旧心梗
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="3">正常/未见异常
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="4">右束支传导阻滞
+												  </label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="5">ST-T改变
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="6">右室肥厚
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="7">肺型P波
+												  </label>
+												</div>
+												<div class="checkbox col-sm-3">
+												  <label class="mycheckbox">
+													<input type="checkbox" name="content"  value="8">其他心律失常
+												  </label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="checkbox col-sm-4">
+												  <label class="mycheckbox" style="margin-left:20px;">
+													<span><input type="checkbox" name="content"  value="9">其他 <input type="text" name="other" style="width:100px"></span>
+												  </label>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" id="Cardiogrambt" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<!-- start: JavaScript-->
 
 		<!-- Vendor JS-->
 		<script src="/static/vendor/js/jquery.min.js"></script>
@@ -4103,6 +4861,8 @@
 
 		<!-- Pages JS -->
         <script src="/static/js/pages/tools.js"></script>
+        <script src="/static/js/pages/AEType.js"></script>
+        <script src="/static/js/pages/areaSelect.js"></script>
         <script src="/static/js/pages/patientDetail.js"></script>
 		<script src="/static/js/pages/group_sidebar.js"></script>
 		<script src="/static/js/pages/setting_sidebar.js"></script>

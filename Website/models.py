@@ -27,8 +27,16 @@ class PatientInfo(models.Model):
     career = models.CharField(max_length=20)
     marriage = models.CharField(max_length=20)
     photo = models.CharField(max_length=50, blank=True)
-    homeAddr = models.CharField(max_length=150)
-    birthAddr = models.CharField(max_length=50)
+
+    province_h = models.CharField(max_length=20)
+    city_h = models.CharField(max_length=20)
+    county_h = models.CharField(max_length=20)
+    detail_h = models.CharField(max_length=50)
+
+    province = models.CharField(max_length=20)
+    city = models.CharField(max_length=20)
+    county = models.CharField(max_length=20)
+
     activityAddr1 = models.CharField(max_length=150)
     activityAddr2 = models.CharField(max_length=150)
     actionAddr = models.CharField(max_length=50)  # this details need be filled
@@ -150,8 +158,7 @@ class PmExposure(models.Model):
 class TrackInfo(models.Model):
     P_id = models.CharField(max_length=10)
     date = models.DateField(blank=True)
-    name = models.CharField(max_length=50)
-    dir = models.CharField(max_length=50)
+    doc = models.FileField(upload_to="TrackInfo")
 
 
 # created by JK@buaa, 2017/3/17
@@ -164,7 +171,7 @@ class AttachInfo(models.Model):
     doc = models.ImageField(upload_to="Attachment")
     P_id = models.CharField(max_length=10,null=False)
     date = models.DateField(blank=True)
-    type = models.CharField(max_length=2)                # 0 OutPatientService   1 Emerg   2 InHospital
+    type = models.CharField(max_length=2)    # 0 OutPatientService   1 Emerg   2 InHospital
     S_id = models.IntegerField(null=False)
     D_id = models.IntegerField(null=False)
     description = models.CharField(max_length=255)
@@ -640,7 +647,7 @@ class MBQ(models.Model):
     q8 = models.CharField(max_length=1, null=False)
     q9 = models.CharField(max_length=5)
     q10 = models.CharField(max_length=1, null=False)
-    BMI = models.FloatField(null=False)
+    BMI = models.CharField(max_length=50)
     date = models.DateField(auto_now_add=True)
 
 
@@ -754,7 +761,7 @@ class AppInfo(models.Model):
 class AppAttachment(models.Model):
     name = models.CharField(max_length=10, null=False)
     P_id = models.CharField(max_length=10, null=False)
-    AI_id = models.CharField(max_length=32, null=False)
+    AI_id = models.IntegerField(null=False)
     dir = models.CharField(max_length=50, null=False)
 
 
@@ -796,3 +803,116 @@ class invitation(models.Model):
     D_id = models.IntegerField(null=False)
     state = models.CharField(max_length=1,default="1")
     uid = models.CharField(max_length=1,default="0")
+
+
+# created by CS@buaa, 2017/4/16
+# table33
+
+
+class LungFunc(models.Model):
+    AE_id = models.IntegerField(null=False)
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
+    head = models.CharField(max_length=1)
+    FVC1 = models.CharField(max_length=20)
+    FVC2 = models.CharField(max_length=20)
+    FVC3 = models.CharField(max_length=20)
+    FEV11 = models.CharField(max_length=20)
+    FEV12 = models.CharField(max_length=20)
+    FEV13 = models.CharField(max_length=20)
+    FEV1_FVC1 = models.CharField(max_length=20)
+    FEV1_FVC2 = models.CharField(max_length=20)
+    FEV1_FVC3 = models.CharField(max_length=20)
+    RV_TLC1 = models.CharField(max_length=20)
+    RV_TLC2 = models.CharField(max_length=20)
+    RV_TLC3 = models.CharField(max_length=20)
+    FEV1change = models.CharField(max_length=20)
+    GOLD = models.CharField(max_length=1)
+
+
+# created by CS@buaa, 2017/4/16
+# table34
+
+
+class BloodGasAnalysis(models.Model):
+    AE_id = models.IntegerField(null=False)
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
+    head = models.CharField(max_length=1)
+    useOxygen = models.CharField(max_length=1)
+    oxygen = models.CharField(max_length=20)
+    PH = models.CharField(max_length=20)
+    PaO2 = models.CharField(max_length=20)
+    PaCO2 = models.CharField(max_length=20)
+    HCO3 = models.CharField(max_length=20)
+    A_aDO2 = models.CharField(max_length=20)
+    BEecf = models.CharField(max_length=20)
+    Lac = models.CharField(max_length=20)
+    SaO2 = models.CharField(max_length=20)
+
+
+# created by CS@buaa, 2017/4/16
+# table35
+
+
+class LungCT(models.Model):
+    AE_id = models.IntegerField(null=False)
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
+    head = models.CharField(max_length=1)
+    content = models.CharField(max_length=11)
+    other = models.CharField(max_length=50)
+
+
+# created by CS@buaa, 2017/4/16
+# table36
+
+
+class SleepDetectResult(models.Model):
+    AE_id = models.IntegerField(null=False)
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
+    head = models.CharField(max_length=1)
+    detectTime = models.CharField(max_length=20)
+    sleep = models.CharField(max_length=20)
+    AHI = models.CharField(max_length=20)
+    ODI = models.CharField(max_length=20)
+    avgSpO2 = models.CharField(max_length=20)
+    lowSpO2 = models.CharField(max_length=20)
+    relaSpO2 = models.CharField(max_length=20)
+    avgBreath = models.CharField(max_length=20)
+    wake = models.CharField(max_length=20)
+    R = models.CharField(max_length=20)
+    N2 = models.CharField(max_length=20)
+    N3 = models.CharField(max_length=20)
+
+
+# created by CS@buaa, 2017/4/16
+# table37
+
+
+class UCG(models.Model):
+    AE_id = models.IntegerField(null=False)
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
+    head = models.CharField(max_length=1)
+    LVEF = models.CharField(max_length=20)
+    PASP = models.CharField(max_length=1)
+    symptom = models.CharField(max_length=50)
+    left = models.CharField(max_length=8)
+    right = models.CharField(max_length=8)
+    other = models.CharField(max_length=50)
+
+
+
+# created by CS@buaa, 2017/4/16
+# table38
+
+
+class Cardiogram(models.Model):
+    AE_id = models.IntegerField(null=False)
+    P_id = models.CharField(max_length=10, null=False)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
+    isNormal = models.CharField(max_length=1)
+    content = models.CharField(max_length=9)
+    other = models.CharField(max_length=50)

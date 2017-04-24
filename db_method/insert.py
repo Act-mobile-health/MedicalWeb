@@ -66,8 +66,9 @@ def addPatientInfo(data):
         newObj = PatientInfo(P_id = data['P_id'], sign = data['sign'], name = data['name'], sex = data['sex'],
                                  birthday = d, age = data['age'], nation = data['nation'], height = data['height'],
                                  weight = data['weight'], education = data['education'], career = data['career'],
-                                 marriage = data['marriage'], homeAddr = data['homeAddr'],
-                                 birthAddr = data['birthAddr'], activityAddr1 = data['activityAddr1'],
+                                 marriage = data['marriage'], province_h = data['province_h'], city_h = data['city_h'],
+                                 county_h = data['county_h'], detail_h = data['detail_h'], province = data['province'],
+                                 city = data['city'],county = data['county'], activityAddr1 = data['activityAddr1'],
                                  activityAddr2 = data['activityAddr2'], actionAddr = data['actionAddr'],
                                  diastolicPressure = data['diastolicPressure'],
                                  systolicPressure = data['systolicPressure'], neckCircu = data['neckCircu'],
@@ -275,6 +276,26 @@ def addAccessoryExamination(D_id,S_id, data, doc):
                                       description = data['description'], D_id = D_id, doc = doc)
 
         newObj.save()
+
+        if data['AE_type'] == "1":
+            Obj = LungFunc(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+        elif data['AE_type'] == "2":
+            Obj = BloodGasAnalysis(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+        elif data['AE_type'] == "3":
+            Obj = LungCT(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+        elif data['AE_type'] == "4":
+            Obj = SleepDetectResult(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+        elif data['AE_type'] == "5":
+            Obj = UCG(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+        elif data['AE_type'] == "6":
+            Obj = Cardiogram(AE_id = newObj.id, P_id = data['P_id'])
+            Obj.save()
+
         return True
     except Exception, e:
         tools.exceptionRecord('insert.py','addAccessoryExamination',e)
@@ -318,7 +339,7 @@ def addPmExposure(data):
 
 
 #add TrackInfo Table
-def addTrackInfo(data):
+def addTrackInfo(data, doc):
     #TODO
     #如何存储file
     id = -1
@@ -327,13 +348,13 @@ def addTrackInfo(data):
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = TrackInfo(P_id = data['P_id'], date = d, name = data['name'])
+        newObj = TrackInfo(P_id = data['P_id'], date = d, doc = doc)
         newObj.save()
         id = newObj.id
-        return id
+        return True
     except Exception, e:
         tools.exceptionRecord('insert.py','addTrackInfo',e)
-        return id
+        return False
 
 #add MedicineRegular Table
 def addMedicineRegular(data):
@@ -379,10 +400,26 @@ def addMedicineRecord(data):
                                 producer = data['producer'])
         newObj.save()
         id = newObj.id
-        return id
+        return True
     except Exception, e:
         tools.exceptionRecord('insert.py','addMedicineRecord',e)
+        return False
+
+def addAppInfo(data):
+    id = -1
+    try:
+        if data['date'] != '':
+            d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        else:
+            d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        obj = AppInfo(P_id = data['P_id'], date = d, type = data['type'])
+        obj.save()
+        id = obj.id
         return id
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addAppInfo',e)
+        return id
+
 
 def addInvitation(D_id,data):
     id = -1

@@ -91,10 +91,8 @@ urlpatterns = [
     url(r'^i34/',view.deleteAorAEDetailedInfo),
     url(r'^i35/',view.getOneAorAEDetailedInfo),
 
-
     url(r'^test2/',view.test2),
     url(r'^test1/',view.test),
-
 
     url(r'^i36/',view.getPatientName),
     url(r'^i37/',view.getExpGroups),
@@ -107,11 +105,9 @@ urlpatterns = [
     url(r'^i44/',view.removePatientfromExpGroup),
 
 
-
-
     url(r'^i45/',view.app_addOrUpdateCATTable),
     url(r'^i46/',view.app_addOrUpdatePmExposureTable),
-    url(r'^i47/',view.app_addOrUpdateTrackInfoTable),
+    url(r'^i47/',view.app_addTrackInfoTable),
     url(r'^i48/',view.app_addOrUpdateMedicineRegularTable),
     url(r'^i49/',view.app_login),
     url(r'^i51/',view.upload2),
@@ -123,10 +119,17 @@ urlpatterns = [
     url(r'^i62/',view.deleteInvitation),
     url(r'^i63/',view.getUserGroup),
 
-
-
     url(r'^i65/',view.getUsers),
     url(r'^i66/',view.getUserName),
+
+    # for AEType.js
+    url(r'^i71/',view.editAEType),
+    url(r'^i72/',view.updateLungFunc),
+    url(r'^i73/',view.updateBloodGasAnalysis),
+    url(r'^i74/',view.updateLungCT),
+    url(r'^i75/',view.updateSleepDetectResult),
+    url(r'^i76/',view.updateUCG),
+    url(r'^i77/',view.updateCardiogram),
 
     # url(r'^i18/',view.updatePatientInfo),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

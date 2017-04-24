@@ -513,7 +513,8 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">体重</label>
                                     <div class="col-sm-6">
-                                      <input type="text" class="form-control myinput" name="weight">
+                                      <input type="text" class="form-control col-sm-3 myinput" name="weight">
+                                      <!--<label class="mylabel col-sm-3">千克</label>-->
                                     </div>
                                 </div>
                             </div>
@@ -537,7 +538,7 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">颈围</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="neckCircu">
+                                      <input type="text" class="form-control myinput" name="neckCircu"  data-toggle="tooltip" data-placement="top" title="指经喉结节点的颈部水平围长">
                                     </div>
                                 </div>
                             </div>
@@ -546,13 +547,34 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">学历</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="education">
+                                      <select class="form-control myinput" name="education">
+                                            <option value="1">小学</option>
+                                            <option value="2">初中</option>
+                                            <option value="3">高中/中专</option>
+                                            <option value="4">大学专科（大专）</option>
+                                            <option value="5">大学本科（大本）</option>
+                                            <option value="6">研究生（硕士/博士）</option>
+                                      </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">职业</label>
                                     <div class="col-sm-6">
-                                      <input type="text" class="form-control myinput" name="career">
+                                       <select class="form-control myinput" name="career">
+                                            <option value="1">农、林、牧、渔、水利业</option>
+                                            <option value="2">工业</option>
+                                            <option value="3">地质普查和勘探业</option>
+                                            <option value="4">建筑业</option>
+                                            <option value="5">交通运输业、邮电通信业</option>
+                                            <option value="6">商业、公共饮食业、物资供应和仓储业</option>
+                                            <option value="7">房地产管理、公用事业、居民服务和咨询服务业</option>
+                                            <option value="8">卫生、体育和社会福利事业</option>
+                                            <option value="9">教育、文化艺术和广播电视业</option>
+                                            <option value="10">科学研究和综合技术服务业</option>
+                                            <option value="11">金融、保险业</option>
+                                            <option value="12">国家机关、党政机关和社会团体</option>
+                                            <option value="13">其他行业</option>
+                                      </select>
                                     </div>
                                 </div>
                             </div>
@@ -561,7 +583,12 @@
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
                                     <label class="col-sm-3 control-label mylabel">婚姻状况</label>
                                     <div class="col-sm-6" >
-                                      <input type="text" class="form-control myinput" name="marriage">
+                                       <select class="form-control myinput" name="marriage">
+                                            <option value="1">未婚</option>
+                                            <option value="2">已婚</option>
+                                            <option value="3">离异</option>
+                                            <option value="4">丧偶</option>
+                                      </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 myblockposition">
