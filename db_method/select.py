@@ -809,7 +809,7 @@ def patientLogin(P_id,password):
     try:
         patient = PatientInfo.objects.get(P_id = P_id)
         if patient.password == password:
-            result =  '0'
+            result = '0'
         else:
             result = '-2'
     except:
@@ -975,3 +975,14 @@ def getAEType(data):
         return message
     except Exception, e:
         tools.exceptionRecord('select.py', 'getAEType', e)
+
+def getAppId(data):
+    try:
+        message = {}
+        obj = AppInfo.objects.get(AI_id = data['AI_id'])
+        message['S_id'] = obj.S_id
+        message['type'] = obj.type
+        return message
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getAppId', e)
+        return -1

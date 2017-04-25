@@ -779,7 +779,7 @@ def getCat_MRCSum2Weeks(request,data,D_id):
 @login_required
 @csrf_exempt
 @PermissionCheck(3)
-def getExploure2Weeks(request,data,D_id):
+def getExploure2Weeks(request, data, D_id):
     message = []
     message = select.getMsg2Weeks(data['P_id'], 2)
     # message = tools.toString(message)
@@ -804,8 +804,10 @@ def getPatientName(request,data,D_id):
 def app_login(request):
     if request.method == 'POST':
         data = request.POST
+        print data
         message = {}
         message['result'] = select.patientLogin(data['P_id'],data['password'])
+        print message
         return HttpResponse(json.dumps(message))
 
 
@@ -816,13 +818,13 @@ def app_addOrUpdateCATTable(request):
         data = request.POST
         print data,"CATTTTTTTTTTTTTTTT"
         message = {'result':'-1','id':'-1'}
-        if data['id'] == '':
+        if data['id'] == 'null':
             message['id'] = insert.addCATandMRC(data)
         else:
             message['id'] = update.updateCATandMRC(data)
         if message['id'] != -1:
             message['result'] = '0'
-
+        print message
         return HttpResponse(json.dumps(message))
 
 #APP interface 3
@@ -832,7 +834,7 @@ def app_addOrUpdatePmExposureTable(request):
         data = request.POST
         print data, "PMEEEEEEEEEEEEEE"
         message = {'result': '-1', 'id': '-1'}
-        if data['id'] == '':
+        if data['id'] == 'null':
             message['id'] = insert.addPmExposure(data)
         else:
             message['id'] = update.updatePmExposure(data)
@@ -860,7 +862,7 @@ def app_addOrUpdateMedicineRegularTable(request):
         data = request.POST
         print data,"Medicineeeeee"
         message = {'result': '-1', 'id': '-1'}
-        if data['id'] == '':
+        if data['id'] == 'null':
             message['id'] = insert.addMedicineRegular(data)
         else:
             message['id'] = update.updateMedicineRegular(data)
@@ -874,20 +876,23 @@ def app_addOrUpdateMedicineRegularTable(request):
 def app_addOrUpdateMedicineChangeTable(request):
     if request.method == 'POST':
         data = request.POST
+        print data,"MCCCCCCCC"
         message = {'result': '-1', 'id': '-1'}
-        if data['id'] == '':
+        if data['id'] == 'null':
             message['id'] = insert.addMedicineChange(data)
         else:
             message['id'] = update.updateMedicineChange(data)
         if message['id'] != -1:
             message['result'] = '0'
+        print message
         return HttpResponse(json.dumps(message))
 
 #APP interface 7
 @csrf_exempt
-def app_addOrUpdateMedicineRecordTable(request):
+def app_addMedicineRecordTable(request):
     if request.method == 'POST':
         data = request.POST
+        print data,"MRRRR"
         message = {'result': '-1'}
         if insert.addMedicineRecord(data):
             message['result'] = '0'
@@ -898,8 +903,9 @@ def app_addOrUpdateMedicineRecordTable(request):
 def app_addOrUpdateAppInfo(request):
     if request.method == 'POST':
         data = request.POST
+        print data
         message = {'result': '-1', 'id': '-1'}
-        if data['id'] == '':
+        if data['id'] == 'null':
             message['id'] = insert.addAppInfo(data)
         else:
             message['id'] = update.updateAppInfo(data)
@@ -912,15 +918,19 @@ def app_addOrUpdateAppInfo(request):
 def app_addAppAttachment(request):
     if request.method == 'POST':
         data = request.POST
+        print data
         message = {'result': '-1'}
-        myFile = request.FILES.get("myimage", None)
-
-        S_id = int(data['S_id'])
+        myFile = request.FILES['upload_file']
+        print request
+        obj = select.getAppId(data)
+        S_id = int(obj['S_id'])
+        type = obj['type']
+        date = obj['date']
         D_id = int(data['D_id'])
         if not myFile:
             js = json.dumps(message)
             return HttpResponse(js)
-        if insert.addAttachInfo(D_id, S_id, data, myFile):
+        if insert.addAttachInfo2(D_id, S_id, data, myFile, type, date):
             message['result'] = 0
         js = json.dumps(message)
         return HttpResponse(js)

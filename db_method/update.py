@@ -490,7 +490,7 @@ def updateMedicineChange(data):
         obj.P_id = data['P_id']
         if data['date'] != '':
             obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        obj.regular = data['change']
+        obj.change = data['change']
         obj.save()
         return int(data['id'])
     except Exception, e:
@@ -520,7 +520,7 @@ def updateAppInfo(data):
         if data['date'] != '':
             obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.P_id = data['P_id']
-        obj.type = data['type']
+        # obj.type = data['type']
         return int(data['id'])
     except Exception, e:
         tools.exceptionRecord('update.py','updateAppInfo',e)

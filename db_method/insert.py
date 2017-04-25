@@ -263,6 +263,24 @@ def addAttachInfo(D_id, S_id, data, doc):
         tools.exceptionRecord('insert.py','addAttachInfo',e)
         return False
 
+def addAttachInfo2(D_id, S_id, data, doc, date, type):
+    try:
+        if date!= '':
+            d = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        else:
+            d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        newObj = AttachInfo(P_id = data['P_id'], type = type,  date = d, S_id = S_id, D_id = D_id,
+                            name = tools.md5(str(random.randint(0,9))+str(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))),
+                            description = data['description'], doc = doc)
+
+        #TODO
+        # img context没有加
+        newObj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addAttachInfo2',e)
+        return False
+
 #添加附件信息
 def addAccessoryExamination(D_id,S_id, data, doc):
     try:
@@ -380,7 +398,7 @@ def addMedicineChange(data):
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = MedicineChange(P_id = data['P_id'], date = d, change = data['change'])
+        newObj = MedicineChange(P_id = data['P_id'], date = d, change = data['change'],MC_id = data['MC_id'])
         newObj.save()
         id = newObj.id
         return id
@@ -392,12 +410,11 @@ def addMedicineChange(data):
 def addMedicineRecord(data):
     id = -1
     try:
-        if data['date'] != '':
-            d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        else:
-            d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = MedicineRecord(MC_id = data['MC_id'], date = d, medicine = data['medicine'], name = data['name'],
-                                producer = data['producer'])
+        # if data['date'] != '':
+        #     d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        # else:
+        #     d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        newObj = MedicineRecord(MC_id = data['MC_id'], medicine = data['medicine'])
         newObj.save()
         id = newObj.id
         return True
@@ -412,9 +429,29 @@ def addAppInfo(data):
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        obj = AppInfo(P_id = data['P_id'], date = d, type = data['type'])
+        obj = AppInfo(P_id = data['P_id'], date = d, type = data['type'],AI_id = data['AI_id'])
         obj.save()
         id = obj.id
+
+        if(data['type']=="0"):
+            newObj = OutPatientServiceInfo(P_id = data['P_id'], date = d)
+            newObj.save()
+            obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
+            obj1.o_time = str(int(obj1.o_time) + 1)
+            obj1.save()
+        elif(data['type']=="1"):
+            newObj = EmergCallInfo(P_id = data['P_id'], date = d)
+            newObj.save()
+            obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
+            obj1.o_time = str(int(obj1.e_time) + 1)
+            obj1.save()
+        elif(data['type']=="2"):
+            newObj = InHospitalInfo(P_id = data['P_id'], date = d)
+            newObj.save()
+            obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
+            obj1.o_time = str(int(obj1.h_time) + 1)
+            obj1.save()
+
         return id
     except Exception, e:
         tools.exceptionRecord('insert.py','addAppInfo',e)
