@@ -271,7 +271,7 @@
 											<img src="/static/img/avatar.jpg" class="img-circle bk-img-60" alt="" />
 										</div>
 										<div class="bk-padding-top-10">
-											<i class="fa fa-circle text-success"></i> <small>用户所属权限组</small>
+											<i class="fa fa-circle text-success"></i> <small>管理员</small>
 										</div>
 									</div>
 									<div class="divider2"></div>
@@ -334,7 +334,7 @@
 							<li><a href="/">About</a></li>
 						</ul>
 						<div class="copyright text-center">
-							<small>Website <i class="fa fa-coffee"></i> Support by ACT-BUAA</small>
+							<small id="WebName"></small>
 						</div>					
 					</div>
 					<!-- End Sidebar Footer-->
@@ -352,7 +352,7 @@
 							</ol>						
 						</div>
 						<div class="pull-right">
-							<h2>Dashboard</h2>
+							<h2></h2>
 						</div>					
 					</div>
 					<!-- End Page Header -->
@@ -370,11 +370,9 @@
 									</div>
 								</div>
                                 <div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
-                                        <div class="row" style="text-indent:2em;">
-                                            <h5>Welcome to the website!!!</h5>
-                                            <h5>Welcome to the website!!!</h5>
-                                            <h5>Welcome to the website!!!</h5>
-                                        </div>
+									<div class="row" id="public" style="color:black;text-indent:0.7em;background:#d2e0ef;height:200px">
+										<!--9beac6-->
+									</div>
                                 </div>
                             </div>
 
@@ -391,12 +389,11 @@
 										</div>
 									</div>
 								</div>
+								<!--#77bcef-->
 								<div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
 									<div class="row">
-										<div class="col-xs-12 bk-vcenter text-center bk-padding-top-10 bk-padding-bottom-10">
-											<h5 class="bk-fg-primary bk-margin-off-bottom">please submit the infomation of patient 3</h5>
+										<div class="row" id="inform" style="color:black;text-indent:1.5em;background:#d2e0ef;height:200px">
 										</div>
-
 									</div>
 							    </div>
 						    </div>
@@ -422,8 +419,8 @@
 								</div>
 								<div class="panel-body bk-bg-white bk-padding-off-top bk-padding-off-bottom">
 									<div class="row table-responsive">
-                                        <table class="table " id="userInfoTable" style="text-indent:2em;">
-                                            <thead>
+                                        <table class="table " id="userInfoTable" style="text-indent:2em">
+                                            <thead style="background:#d2e0ef;">
                                             <tr>
                                                 <th>ID</th>
                                                 <th>用户名</th>

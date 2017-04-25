@@ -90,3 +90,13 @@ function analyseRadio(input){
         else
             return "error";
 }
+
+$(document).ready(function(){
+    try{
+        a = document.getElementById("WebName")
+        a.innerHTML = "iBreathCare " + '<i class="fa fa-coffee"></i> ACT-BUAA';
+    }
+    catch(err){
+        console.log(err)
+    }
+})

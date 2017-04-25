@@ -12,7 +12,7 @@ import datetime
 
 
 class PatientInfo(models.Model):
-    P_id = models.CharField(max_length=10, unique=True,null=False)
+    P_id = models.CharField(max_length=12, unique=True,null=False)
     sign = models.CharField(max_length=2)
     name = models.CharField(max_length=50)
     sex = models.CharField(max_length=2)
@@ -54,7 +54,7 @@ class PatientInfo(models.Model):
 
 
 class RelationInfo(models.Model):
-    P_id = models.CharField(max_length=10)
+    P_id = models.CharField(max_length=12, null=False)
     name = models.CharField(max_length=50)
     sex = models.CharField(max_length=2)
     telephone = models.CharField(max_length=15)
@@ -105,7 +105,7 @@ class UserInfo(AbstractUser):
 
 class PatientGroup(models.Model):
     G_id = models.IntegerField(null=False)
-    P_id = models.CharField(max_length=10)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(auto_now_add=True)
 
 
@@ -126,7 +126,7 @@ class GroupInfo(models.Model):
 
 class CATandMRC(models.Model):
     # CM_id = models.CharField(max_length=32,primary_key=True)
-    P_id = models.CharField(max_length=10)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(blank=True)
     cat1 = models.CharField(max_length=2)
     cat2 = models.CharField(max_length=2)
@@ -146,7 +146,7 @@ class CATandMRC(models.Model):
 
 
 class PmExposure(models.Model):
-    P_id = models.CharField(max_length=10)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(blank=True)
     exposure = models.CharField(max_length=10)
 
@@ -156,7 +156,7 @@ class PmExposure(models.Model):
 
 
 class TrackInfo(models.Model):
-    P_id = models.CharField(max_length=10)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(blank=True)
     doc = models.FileField(upload_to="TrackInfo")
 
@@ -169,7 +169,7 @@ class AttachInfo(models.Model):
 
     name = models.CharField(max_length=50)
     doc = models.ImageField(upload_to="Attachment")
-    P_id = models.CharField(max_length=10,null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(blank=True)
     type = models.CharField(max_length=2)    # 0 OutPatientService   1 Emerg   2 InHospital
     S_id = models.IntegerField(null=False)
@@ -465,7 +465,7 @@ class WeatherInfo(models.Model):
 
 
 class OutPatientServiceInfo(models.Model):
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False)
     place = models.CharField(max_length=150, null=False)
     isStable = models.CharField(max_length=1, null=False)
@@ -489,7 +489,7 @@ class OutPatientServiceInfo(models.Model):
 
 
 class EmergCallInfo(models.Model):
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False)
     place = models.CharField(max_length=150, null=False)
     symptom = models.CharField(max_length=10, null=False)
@@ -514,7 +514,7 @@ class EmergCallInfo(models.Model):
 
 
 class InHospitalInfo(models.Model):
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False)
     place = models.CharField(max_length=150, null=False)
     commonIcu = models.CharField(max_length=1, null=False)
@@ -539,7 +539,7 @@ class InHospitalInfo(models.Model):
 
 
 class Clinic(models.Model):
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     type = models.CharField(max_length=5)  # 0 OutPatientService   1 Emerg   2 InHospital   3 AccessoryExamination
     S_id = models.IntegerField(null=False)
     dangerType = models.CharField(max_length=20, null=False)
@@ -614,7 +614,7 @@ class Clinic(models.Model):
 
 
 class ESS(models.Model):
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     type = models.CharField(max_length=5)  # 0 OutPatientService   1 Emerg   2 InHospital   3 AccessoryExamination
     S_id = models.IntegerField(null=False)
     ess1 = models.CharField(max_length=5)
@@ -634,7 +634,7 @@ class ESS(models.Model):
 
 
 class MBQ(models.Model):
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     type = models.CharField(max_length=5)  # 0 OutPatientService   1 Emerg   2 InHospital   3 AccessoryExamination
     S_id = models.IntegerField(null=False)
     q1 = models.CharField(max_length=5)
@@ -656,7 +656,7 @@ class MBQ(models.Model):
 
 
 class SGRQ(models.Model):
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     type = models.CharField(max_length=5)  # 0 OutPatientService   1 Emerg   2 InHospital   3 AccessoryExamination
     S_id = models.IntegerField(null=False)
     H1 = models.CharField(max_length=5)
@@ -689,7 +689,7 @@ class AccessoryExamination(models.Model):
 
     name = models.CharField(max_length=50)
     doc = models.ImageField(upload_to="AE")
-    P_id = models.CharField(max_length=10,null=False)
+    P_id = models.CharField(max_length=12, null=False)
     type = models.CharField(max_length=2)  # 0 OutPatientService   1 Emerg   2 InHospital
     S_id = models.IntegerField(null=False)
     date = models.DateField(blank=True)
@@ -708,7 +708,7 @@ class MedicalVisit(models.Model):
     o_time = models.CharField(max_length=5,default="0")
     e_time = models.CharField(max_length=5,default="0")
     h_time = models.CharField(max_length=5,default="0")
-    P_id = models.CharField(max_length=10, unique=True, null=False)
+    P_id = models.CharField(max_length=12, unique=True, null=False)
 
 
 # created by JK@buaa, 2017/3/17
@@ -718,7 +718,7 @@ class MedicalVisit(models.Model):
 class HealthyCondition(models.Model):
     #HC_id = models.CharField(max_length=32, primary_key=True)
     condition = models.CharField(max_length=5)
-    P_id = models.CharField(max_length=7)
+    P_id = models.CharField(max_length=12, null=False)
 
 
 # created by JK@buaa, 2017/3/17
@@ -727,7 +727,7 @@ class HealthyCondition(models.Model):
 
 class DiseaseType(models.Model):
     #DT_id = models.CharField(max_length=32, primary_key=True)
-    P_id = models.CharField(max_length=7)
+    P_id = models.CharField(max_length=12, null=False)
     # TODO: need to finish
     #
     #
@@ -740,7 +740,7 @@ class DiseaseType(models.Model):
 class WarningInfo(models.Model):
     #WI_id = models.CharField(max_length=32)
     warning = models.CharField(max_length=50)
-    P_id = models.CharField(max_length=10)
+    P_id = models.CharField(max_length=12, null=False)
 
 
 # created by JK@buaa, 2017/3/17
@@ -748,10 +748,10 @@ class WarningInfo(models.Model):
 
 
 class AppInfo(models.Model):
-    #AI_id = models.CharField(max_length=32, primary_key=True)
     date = models.DateField(blank=True)
-    P_id = models.CharField(max_length=10)
+    P_id = models.CharField(max_length=12, null=False)
     type = models.CharField(max_length=5)
+    AI_id = models.CharField(max_length=32, null=False)
 
 
 # created by CS@buaa, 2017/3/17
@@ -760,7 +760,7 @@ class AppInfo(models.Model):
 
 class AppAttachment(models.Model):
     name = models.CharField(max_length=10, null=False)
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     AI_id = models.IntegerField(null=False)
     dir = models.CharField(max_length=50, null=False)
 
@@ -771,7 +771,7 @@ class AppAttachment(models.Model):
 
 class MedicineRegular(models.Model):
     regular = models.CharField(max_length=2, null=False)
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(auto_now_add=True)
 
 
@@ -781,8 +781,10 @@ class MedicineRegular(models.Model):
 
 class MedicineChange(models.Model):
     change = models.CharField(max_length=2, null=False)
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(auto_now_add=True)
+    MC_id = models.CharField(max_length=32, null=False)
+
 
 
 # created by CS@buaa, 2017/3/17
@@ -790,7 +792,7 @@ class MedicineChange(models.Model):
 
 
 class MedicineRecord(models.Model):
-    MC_id = models.IntegerField(null=False)
+    MC_id = models.CharField(max_length=32, null=False)
     medicine = models.CharField(max_length=20, null=False)
     date = models.DateField(auto_now_add=True)
     name = models.CharField(max_length=50, null=False)
@@ -811,7 +813,7 @@ class invitation(models.Model):
 
 class LungFunc(models.Model):
     AE_id = models.IntegerField(null=False)
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     head = models.CharField(max_length=1)
     FVC1 = models.CharField(max_length=20)
@@ -836,7 +838,7 @@ class LungFunc(models.Model):
 
 class BloodGasAnalysis(models.Model):
     AE_id = models.IntegerField(null=False)
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     head = models.CharField(max_length=1)
     useOxygen = models.CharField(max_length=1)
@@ -857,7 +859,7 @@ class BloodGasAnalysis(models.Model):
 
 class LungCT(models.Model):
     AE_id = models.IntegerField(null=False)
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     head = models.CharField(max_length=1)
     content = models.CharField(max_length=11)
@@ -870,7 +872,7 @@ class LungCT(models.Model):
 
 class SleepDetectResult(models.Model):
     AE_id = models.IntegerField(null=False)
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     head = models.CharField(max_length=1)
     detectTime = models.CharField(max_length=20)
@@ -893,7 +895,7 @@ class SleepDetectResult(models.Model):
 
 class UCG(models.Model):
     AE_id = models.IntegerField(null=False)
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     head = models.CharField(max_length=1)
     LVEF = models.CharField(max_length=20)
@@ -911,7 +913,7 @@ class UCG(models.Model):
 
 class Cardiogram(models.Model):
     AE_id = models.IntegerField(null=False)
-    P_id = models.CharField(max_length=10, null=False)
+    P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     isNormal = models.CharField(max_length=1)
     content = models.CharField(max_length=9)

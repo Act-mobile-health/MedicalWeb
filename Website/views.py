@@ -81,7 +81,7 @@ def temp1(request):
 @login_required
 def logout(request):
     auth.logout(request)
-    return render(request,"page-login.html")
+    return render(request,"login.html")
 
 @login_required
 def setting(request):
