@@ -921,7 +921,7 @@ def app_addAppAttachment(request):
         print data
         message = {'result': '-1'}
         myFile = request.FILES['upload_file']
-        print request
+        print request,"AppAttachment"
         obj = select.getAppId(data)
         S_id = int(obj['S_id'])
         type = obj['type']

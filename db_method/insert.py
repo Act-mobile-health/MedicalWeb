@@ -438,6 +438,7 @@ def addAppInfo(data):
             newObj.save()
             obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
             obj1.o_time = str(int(obj1.o_time) + 1)
+            print obj1.o_time
             obj1.save()
         elif(data['type']=="1"):
             newObj = EmergCallInfo(P_id = data['P_id'], date = d)
