@@ -263,15 +263,15 @@ def addAttachInfo(D_id, S_id, data, doc):
         tools.exceptionRecord('insert.py','addAttachInfo',e)
         return False
 
-def addAttachInfo2(D_id, S_id, data, doc, date, type):
+def addAttachInfo2(P_id, D_id, S_id, description, doc, type, date):
     try:
         if date!= '':
             d = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = AttachInfo(P_id = data['P_id'], type = type,  date = d, S_id = S_id, D_id = D_id,
+        newObj = AttachInfo(P_id = P_id, type = type,  date = d, S_id = S_id, D_id = D_id,
                             name = tools.md5(str(random.randint(0,9))+str(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))),
-                            description = data['description'], doc = doc)
+                            description = description, doc = doc)
 
         #TODO
         # img context没有加
@@ -430,7 +430,6 @@ def addAppInfo(data):
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         obj = AppInfo(P_id = data['P_id'], date = d, type = data['type'],AI_id = data['AI_id'])
-        obj.save()
         id = obj.id
 
         if(data['type']=="0"):
@@ -438,6 +437,7 @@ def addAppInfo(data):
             newObj.save()
             obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
             obj1.o_time = str(int(obj1.o_time) + 1)
+            print obj1.o_time
             obj1.save()
         elif(data['type']=="1"):
             newObj = EmergCallInfo(P_id = data['P_id'], date = d)
@@ -452,6 +452,8 @@ def addAppInfo(data):
             obj1.o_time = str(int(obj1.h_time) + 1)
             obj1.save()
 
+        obj.S_id = newObj.id
+        obj.save()
         return id
     except Exception, e:
         tools.exceptionRecord('insert.py','addAppInfo',e)

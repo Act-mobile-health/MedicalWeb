@@ -131,7 +131,7 @@ $(document).ready(function(){
                     temp = "女";
                 }
                 $("#addpatient tbody").append(
-                    "<tr>"+
+                    "<tr><td></td>"+
                         "<td><div class='checkbox'><input type='checkbox' name='add' value="+item.P_id+"></div></td>"+
                         "<td>"+item.P_id+"</td>"+
                         "<td>"+item.name+"</td>"+

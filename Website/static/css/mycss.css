@@ -83,3 +83,16 @@
 .tlabel6{
     background:#c6eadd !important;
 }
+
+.badge1{
+    background: #d9534f;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: normal;
+    height: 25px;
+    padding: 3px 5px 3px 5px;
+    position: absolute;
+    right: 2px;
+    top: 3px;
+    border-radius:12px !important;
+}

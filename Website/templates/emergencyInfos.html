@@ -348,13 +348,20 @@
 						</div>
 					</div>
 					<!-- End Page Header -->
-					<div class="row col-md-offset-3">
+					<div class="row" id="eminfos">
 						<form class="form-horizontal" id = "EmergCallInfo" method="post" role="form">
 							{% csrf_token %}
                             <legend>急诊信息表</legend>
 							<div class="row">
 								<input type="text" class="form-control myinput" name="id"  style="display:none;">
 							</div>
+							<div class="panel panel-primary"><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    基本信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
 
 							<div class="row ">
                                 <div class="form-inline myblockposition">
@@ -375,12 +382,21 @@
                                     <input type="text" style="width:160px;margin-left:40px;" class="myinput" name="place" placeholder="请输入就诊地点">
                                 </div>
                             </div>
+							</div>
+							</div>
+							<div class="panel panel-success"><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    检查信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
 
 							<div class="row">
                                 <h4 class="mylabel2" >症状为</h4>
                             </div>
 							<div>
-								<div class="row" style="text-indent:2em">
+								<div class="row" style="padding-left:50px">
 									<div class="checkbox">
 									  <label class="mycheckbox" style="width:150px">
 										<input type="checkbox" name="symptom"  value="1" >咳嗽加重
@@ -388,12 +404,12 @@
 									  <label class="mycheckbox" style="width:200px">
 										<input type="checkbox" name="symptom"  value="2">咳浓痰并痰量增加
 									  </label>
-									  <label class="mycheckbox" style="width:200px;text-indent:3em">
+									  <label class="mycheckbox" style="width:200px;">
 										<input type="checkbox" name="symptom"  value="3">发热
 									  </label>
 									</div>
 								</div>
-								<div class="row" style="text-indent:2em">
+								<div class="row" style="padding-left:50px">
 									<div class="checkbox">
 									  <label class="mycheckbox" style="width:150px">
 										<input type="checkbox" name="symptom"  value="4" >呼吸困难加重
@@ -401,7 +417,7 @@
 									  <label class="mycheckbox" style="width:200px">
 										<input type="checkbox" name="symptom"  value="5">上呼吸道感染症状
 									  </label>
-									  <label class="mycheckbox" style="width:200px;text-indent:3em">
+									  <label class="mycheckbox" style="width:200px;">
 										<input type="checkbox" name="symptom"  value="6">意识障碍
 									  </label>
 									</div>
@@ -448,7 +464,7 @@
                             </div>
                             <div class="row" style="text-indent:2em">
 								<div class="myblockposition">
-									<textarea class="myinput" style="width:350px;height:60px;text-align:left;margin-left:25px" name="byxResult"></textarea>
+									<textarea class="myinput" style="width:300px;height:60px;text-align:left;margin-left:25px" name="byxResult"></textarea>
 								</div>
                             </div>
 
@@ -504,7 +520,7 @@
 							<div class="row">
                                 <h4 class="mylabel2" >急诊方式</h4>
                             </div>
-                            <div class="row" style="text-indent:2em">
+                            <div class="row" style="padding-left:50px">
                                 <div class="radio">
 								  <label class="mycheckbox" style="width:150px">
 									<input type="radio" name="ecMethod"  value="1" >流水
@@ -517,6 +533,15 @@
 								  </label>
 								</div>
                             </div>
+							</div>
+							</div>
+							<div class="panel panel-info"><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    诊断信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
 
 							<div class="row">
                                 <h4 class="mylabel2" >是否住院治疗</h4>
@@ -574,17 +599,16 @@
                             </div>
                             <div class="row" style="text-indent:2em">
 								<div class="myblockposition">
-									<textarea class="myinput" style="width:350px;height:60px;text-align:left;margin-left:25px" name="medicine"></textarea>
+									<textarea class="myinput" style="width:300px;height:60px;text-align:left;margin-left:25px" name="medicine"></textarea>
 								</div>
                             </div>
-
 							<div class = "row">
-								<div class="col-md-7 col-lg-7">
-									<div class="pull-right">
-										<button type="submit" id ="emergencybt" class="btn btn-primary">提交</button>
-									</div>
+								<div class="pull-right" style="padding-right:20px">
+									<button type="submit" id ="emergencybt" class="btn btn-primary">提交</button>
 								</div>
                             </div>
+							</div>
+							</div>
                         </form>
 					</div>
 					</div>

@@ -752,6 +752,7 @@ class AppInfo(models.Model):
     P_id = models.CharField(max_length=12, null=False)
     type = models.CharField(max_length=5)
     AI_id = models.CharField(max_length=32, null=False)
+    S_id = models.IntegerField()
 
 
 # created by CS@buaa, 2017/3/17

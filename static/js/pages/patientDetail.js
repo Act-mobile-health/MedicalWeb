@@ -1,5 +1,5 @@
 /**
- * Created by 91034 on 2017/3/16.
+ * Created on 2017/3/16.
  */
 
  (function ($) {
@@ -9,17 +9,18 @@
         if (r != null) return unescape(r[2].replace("/","")); return null;
     }
   })(jQuery);
-    var data = new Array();
-    var patientinfo = new Array();
-    var patientId = $.getUrlParam("P_id");
-    var A =  $.getUrlParam("A");
-    var type = 0;
-    var outpatientnum = 0;
-    var emergencynum = 0;
-    var hospitalnum = 0;
-    var S_id = new Array();
-    var index = 0;
-$(document).ready(function () {
+var data = new Array();
+var patientinfo = new Array();
+var patientId = $.getUrlParam("P_id");
+var A =  $.getUrlParam("A");
+var type = 0;
+var outpatientnum = 0;
+var emergencynum = 0;
+var hospitalnum = 0;
+var S_id = new Array();
+var index = 0;
+var imgDir ='';
+$(document).ready(function (e) {
 
     if(window.innerWidth<1000){
 	$("#myTab").hide();
@@ -103,12 +104,15 @@ $(document).ready(function () {
                 $("#nation").html(item.nation);
                 $("#height").html(item.height);
                 $("#weight").html(item.weight);
-                $("#education").html(item.education);
+                $("#education").html(educationParse(item.education));
                 $("#registerTime").html(item.registerTime);
-                $("#career").html(item.career);
-                $("#marriage").html(item.marriage);
-                $("#homeAddr").html(item.homeAddr);
-                $("#birthAddr").html(item.birthAddr);
+                $("#career").html(careerParse(item.career));
+                $("#marriage").html(marriageParse(item.marriage));
+
+                $("#homeAddr").html(item.province_h+item.city_h+item.county_h+item.detail_h);
+
+                $("#birthAddr").html(item.province+item.city+item.county);
+
                 $("#activityAddr1").html(item.activityAddr1);
                 $("#activityAddr2").html(item.activityAddr2);
                 $("#actionAddr").html(item.actionAddr);
@@ -120,33 +124,8 @@ $(document).ready(function () {
                 $("#partnerPhone").html(item.partnerPhone);
                 $("#groupName").html(item.groupName);
                 $("#groupInfo").html(item.groupInfo);
-                if (item.payment=="1"){
-                    $("#payment").html("城镇居民基本保险");
-                }
-                else if(item.payment=="2"){
-                    $("#payment").html("城镇职工基本保险");
-                }
-                else if(item.payment=="3"){
-                    $("#payment").html("新型农村合作医疗");
-                }
-                else if(item.payment=="4"){
-                    $("#payment").html("商业医疗保险");
-                }
-                else if(item.payment=="5"){
-                    $("#payment").html("全公费");
-                }
-                else if(item.payment=="6"){
-                    $("#payment").html("全自费");
-                }
-                else if(item.payment=="7"){
-                    $("#payment").html("其他");
-                }
-                if(item.sex=="1"){
-                    $("#sex").html("男");
-                }
-                else if(item.sex=="2"){
-                    $("#sex").html("女");
-                }
+                $("#payment").html(paymentParse(item.payment));
+                $("#sex").html(SexParse(item.sex));
             },
             error: function (data) {
                 errorProcess(data);
@@ -158,16 +137,16 @@ $(document).ready(function () {
         if(confirm("确定提交？")==1){
             $.ajax({
                 type:"POST",
-                url:"/i17",
+                url:"/i17/",
                 dataType:"json",
-                data($("#PatientInfo").serialize()),
+                data: $("#PatientInfo").serialize(),
                 success:function (data) {
                     successProcess(data);
-                }
+                },
                 error:function(data){
                     errorProcess(data);
                 }
-            )};
+            });
             PatientDetailTable();
         }
     }
@@ -175,7 +154,7 @@ $(document).ready(function () {
     function appendPatientDetail() {
         $.ajax({
             type:"GET",
-            url:'/i16'/,
+            url:'/i16/',
             dataType:"json",
             data:{P_id:patientId},
             success:function (data) {
@@ -189,13 +168,23 @@ $(document).ready(function () {
                 $("#PatientInfo input[name='nation']").val(item.nation);
                 $("#PatientInfo input[name='height']").val(item.height);
                 $("#PatientInfo input[name='weight']").val(item.weight);
-                $("#PatientInfo input[name='education']").val(item.education);
-                $("#PatientInfo input[name='career']").val(item.career);
-                $("#PatientInfo input[name='marriage']").val(item.marriage);
+
+                $("#PatientInfo select[name='education'] option[value='"+item.education+"']").attr('selected',true);
+                $("#PatientInfo select[name='career'] option[value='"+item.career+"']").attr('selected',true);
+                $("#PatientInfo select[name='marriage'] option[value='"+item.marriage+"']").attr('selected',true);
+
                 $("#PatientInfo input[name='registerTime']").val(item.registerTime);
                 $("#PatientInfo input[name='birthday']").val(item.birthday);
-                $("#PatientInfo input[name='homeAddr']").val(item.homeAddr);
-                $("#PatientInfo input[name='birthAddr']").val(item.birthAddr);
+
+                $("#PatientInfo select[name='province_h'] option[value='"+item.province_h+"']").attr('selected',true);
+                $("#PatientInfo select[name='city_h'] option[value='"+item.city_h+"']").attr('selected',true);
+                $("#PatientInfo select[name='county_h'] option[value='"+item.county_h+"']").attr('selected',true);
+                $("#PatientInfo input[name='detail_h']").val(item.detail_h);
+
+                $("#PatientInfo select[name='province'] option[value='"+item.province+"']").attr('selected',true);
+                $("#PatientInfo select[name='city'] option[value='"+item.city+"']").attr('selected',true);
+                $("#PatientInfo select[name='county'] option[value='"+item.county+"']").attr('selected',true);
+
                 $("#PatientInfo input[name='activityAddr1']").val(item.activityAddr1);
                 $("#PatientInfo input[name='activityAddr2']").val(item.activityAddr2);
                 $("#PatientInfo input[name='actionAddr']").val(item.actionAddr);
@@ -212,7 +201,7 @@ $(document).ready(function () {
             error:function(data){
                 errorProcess(data);
             }
-        )};
+        });
     }
 
     //查看患者家属信息
@@ -254,8 +243,8 @@ $(document).ready(function () {
             }
         });
     }
-    //修改病人家属信息
 
+    //修改病人家属信息
     function editRelationInfo(index){
         console.log(data)
         $("#RelationInfo input[name='R_id']").val(data[index].R_id);
@@ -280,7 +269,7 @@ $(document).ready(function () {
             success:function (data) {
                 successProcess(data);
             },
-            error;function (data) {
+            error:function (data) {
                 errorProcess(data);
             }
         });
@@ -294,6 +283,7 @@ $(document).ready(function () {
         $("#RelationInfo :text").val("");
         $("#RelationInfo :radio").attr("checked",false);
     }
+
     function submitRelationInfo() {
         if (confirm("确定提交吗？")){
             console.log($("#RelationInfo").serialize());
@@ -342,9 +332,9 @@ $(document).ready(function () {
 			   '<div class="panel bk-bg-white">'+
 			   '<div class="panel-heading bk-bg-primary">'+
 			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+index+'</h6>'+
-			   '<div class="panel-actions">'+
+			   '<div class="panel-actions" style="display:block;">'+
 //				'<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>'+
-				'<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>'+
+				'<a href="#" onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>'+
                 '<a  data-toggle="modal" onclick = "editInfo('+index+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
 				'<a href="#" onclick = "deleteInfo('+index+')" class="btn-close"><i class="fa fa-times"></i></a>'+
 				'</div>'+
@@ -359,7 +349,7 @@ $(document).ready(function () {
 				'</ul>'+
 				'<div class="tab-content">'+
 				'<div class="tab-pane" id="'+str_type+'-tab1">'+
-				'<div class="row col-lg-10 col-md-10 col-md-offset-1">'+
+				'<div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">'+
 				'<table class="table table-bordered table-hover table-entire" id="'+str_type+'-table">'+
 				'<thead>'+
 				'</thead>'+
@@ -371,6 +361,15 @@ $(document).ready(function () {
 
 		return str;
 
+    }
+
+    function updown(t)
+    {
+        var n = t.parent() .parent() .next('.panel-body');
+        n.is(':visible') ? $(t.find("i")[0]).removeClass('fa-chevron-up') .addClass('fa-chevron-down')  :$(t.find("i")[0]).removeClass('fa-chevron-down') .addClass('fa-chevron-up');
+        n.slideToggle('slow', function () {
+          widthFunctions()
+        });
     }
 
     function GenerateTab2(index){
@@ -386,16 +385,16 @@ $(document).ready(function () {
     }
      var str = "";
      str = '<div class="tab-pane" id="'+str_type+'-tab2">'+
-		   '<div class="row col-lg-10 col-md-10 col-md-offset-1">'+
+		   '<div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">'+
 		   '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-clinictable">'+
 		   '<thead>'+
 		   '<tr>'+
-		   '<th class="table-small" style="text-align:center">编号</th>'+
-			'<th class="table-small" style="text-align:center">就诊日期</th>'+
-			'<th class="table-small" style="text-align:center">慢阻肺诊断级别</th>'+
-			'<th style="text-align:center">服用药品及用量</th>'+
-			'<th class="table-small" style="text-align:center"></th>'+
-			'<th class="table-small" style="text-align:center">删除</th>'+
+		   '<th class="table-small tlabel5" style="text-align:center">编号</th>'+
+			'<th class="tlabel5" style="text-align:center;width:70px;">就诊日期</th>'+
+			'<th class="tlabel5" style="text-align:center;width:110px;">慢阻肺诊断级别</th>'+
+			'<th class = "tlabel5"style="text-align:center">服用药品及用量</th>'+
+			'<th class="table-small tlabel5" style="text-align:center">编辑</th>'+
+			'<th class="table-small tlabel5" style="text-align:center">删除</th>'+
 			'</tr>'+
 			'</thead>'+
 			'<tbody>'+
@@ -423,16 +422,16 @@ $(document).ready(function () {
         }
         var str = "";
         str = '<div class="tab-pane" id="'+str_type+'-tab3">'+
-			  '<div class="row col-lg-10 col-md-10 col-md-offset-1">'+
+			  '<div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-ESStable">'+
 			  '<caption class="mylabel">Epworth嗜睡量表（ESS）</caption>'+
 			  '<thead>'+
 			  '<tr>'+
-			  '<th class="table-small" style="text-align:center">编号</th>'+
-			  '<th class="table-small" style="text-align:center">填表日期</th>'+
-			  '<th class="table-small" style="text-align:center">分数</th>'+
-			  '<th class="table-small" style="text-align:center"></th>'+
-			  '<th class="table-small" style="text-align:center">删除</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编号</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">填表日期</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">分数</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编辑</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">删除</th>'+
 			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
@@ -445,11 +444,11 @@ $(document).ready(function () {
 			  '<caption class="mylabel">改良柏林问卷（MBQ）</caption>'+
 			  '<thead>'+
 			  '<tr>'+
-			  '<th class="table-small" style="text-align:center">编号</th>'+
-			  '<th class="table-small" style="text-align:center">填表日期</th>'+
-			  '<th class="table-small" style="text-align:center">BMI</th>'+
-			  '<th class="table-small" style="text-align:center">编辑</th>'+
-			  '<th class="table-small" style="text-align:center">删除</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编号</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">填表日期</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">BMI</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编辑</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">删除</th>'+
 			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
@@ -462,11 +461,11 @@ $(document).ready(function () {
 			  '<caption class="mylabel">SGRQ生活质量问卷</caption>'+
 			  '<thead>'+
 			  '<tr>'+
-			  '<th class="table-small" style="text-align:center">编号</th>'+
-			  '<th class="table-small" style="text-align:center">填表日期</th>'+
-			  '<th class="table-small" style="text-align:center">其他</th>'+
-			  '<th class="table-small" style="text-align:center">编辑</th>'+
-			  '<th class="table-small" style="text-align:center">删除</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编号</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">填表日期</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">其他</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">编辑</th>'+
+			  '<th class="table-small tlabel3" style="text-align:center">删除</th>'+
 			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
@@ -494,19 +493,20 @@ $(document).ready(function () {
         }
         var str = "";
         str = '<div class="tab-pane" id="'+str_type+'-tab4">'+
-			  '<div class="row col-lg-10 col-md-10 col-md-offset-1">'+
+			  '<div class="row table-responsive">'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-AEtable">'+
 			  '<caption class="mylabel">辅助检查</caption>'+
 			  '<thead>'+
 			  '<tr>'+
-			  '<th class="table-small" style="text-align:center">编号</th>'+
-			  '<th class="table-small" style="text-align:center">日期</th>'+
-			  '<th class="table-small" style="text-align:center">类型</th>'+
-			  '<th class="table-small" style="text-align:center">上传者</th>'+
-			  '<th style="text-align:center">描述</th>'+
-			  '<th class="table-small" style="text-align:center">查看</th>'+
-			  '<th class="table-small" style="text-align:center">编辑</th>'+
-			  '<th class="table-small" style="text-align:center">删除</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编号</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">日期</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">类型</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">上传者</th>'+
+			  '<th style="text-align:center;background:#72a9e2;">描述</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">查看</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编辑</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">手动填写</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">删除</th>'+
 			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
@@ -519,13 +519,13 @@ $(document).ready(function () {
 			  '<caption class="mylabel">附件</caption>'+
 			  '<thead>'+
 			  '<tr>'+
-			  '<th class="table-small" style="text-align:center">编号</th>'+
-			  '<th class="table-small" style="text-align:center">日期</th>'+
-			  '<th class="table-small" style="text-align:center">上传者</th>'+
-			  '<th style="text-align:center">描述</th>'+
-			  '<th class="table-small" style="text-align:center">查看</th>'+
-			  '<th class="table-small" style="text-align:center">编辑</th>'+
-			  '<th class="table-small" style="text-align:center">删除</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编号</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">日期</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">上传者</th>'+
+			  '<th style="text-align:center;background:#72a9e2;">描述</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">查看</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编辑</th>'+
+			  '<th class="table-small" style="text-align:center;background:#72a9e2;">删除</th>'+
 			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
@@ -544,16 +544,6 @@ $(document).ready(function () {
 
 	    return str;
     }
-
-    function analyseRadio(input){
-        if(input == "1")
-            return "是";
-        else if(input=="2")
-            return "否";
-        else
-            return "error";
-    }
-
 
     function showOutpatient(){
         type = 0;
@@ -1019,11 +1009,9 @@ $(document).ready(function () {
         }
     }
 
-
     /********************************begin*********************临床相关函数******************************begin******************************/
 
     //显示临床信息
-
     function showClinic(c_index) {
         var str = "";
         if(type==0){
@@ -1145,7 +1133,6 @@ $(document).ready(function () {
         });
     }
 
-
     //删除临床信息记录
     function deleteClinic(c_index,Cli_id) {
         if(confirm("确定删除吗？"))
@@ -1172,7 +1159,6 @@ $(document).ready(function () {
     }
 
     //提交临床信息记录
-
     function submitClinic() {
         if (confirm("确定提交吗？")){
             $.ajax({
@@ -1252,6 +1238,7 @@ $(document).ready(function () {
 
          });
     }
+
     function addQuestionnaire(Q_index){
         index = Q_index;
         $("#ESS :text").val("");
@@ -1264,6 +1251,7 @@ $(document).ready(function () {
         $("#SGRQ :radio").attr("checked",false);
         $("#SGRQ :checkbox").attr("checked",false);
     }
+
     function deleteQuestionnaire(id, kind) {
         if(confirm("确定删除")==1) {
             $.ajax({
@@ -1403,12 +1391,6 @@ $(document).ready(function () {
         });
     }
 
-    function analyzeCheckBox(modal,name,item) {
-        for (var i = 0;i<item.length;i++){
-                $("#"+modal+" input[name='"+name+"'][value='"+item[i]+"']").attr('checked',true);
-        }
-    }
-
     function showAandAE(A_index){
         if(type==0){
             temp="outpatient";
@@ -1431,11 +1413,12 @@ $(document).ready(function () {
                         "<tr>"+
                             "<td>"+item.AE_id+"</td>"+
                             "<td>"+item.date+"</td>"+
-                            "<td>"+item.AE_type+"</td>"+
-                            "<td>"+item.D_id+"</td>"+
+                            "<td>"+AEtypeParse(item.AE_type)+"</td>"+
+                            "<td>"+userNameParse(item.D_id)+"</td>"+
                             "<td>"+item.description+"</td>"+
                             "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
                             '<td><a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick="editAE('+item.AE_id+')"><i class=\"fa fa-edit\"  style=\"color:black\"></i></td>'+
+                            '<td><a  data-toggle="modal" href="#'+AEtypeParse2(item.AE_type)+'Details" onclick="edit'+AEtypeParse2(item.AE_type)+'('+item.AE_id+','+item.AE_type+')"><i class=\"fa fa-file-text-o\"  style=\"color:black\"></td>'+
                             '<td><a  data-toggle="modal" href="#" onclick="deleteAorAE('+item.AE_id+',0'+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
                         "</tr>"
                     )
@@ -1458,7 +1441,7 @@ $(document).ready(function () {
                         "<tr>"+
                             "<td>"+item.A_id+"</td>"+
                             "<td>"+item.date+"</td>"+
-                            "<td>"+item.D_id+"</td>"+
+                            "<td>"+userNameParse(item.D_id)+"</td>"+
                             "<td>"+item.description+"</td>"+
                             "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
                             '<td><a  data-toggle="modal" href="#AttachInfoDetails" onclick="editA('+item.A_id+')"><i class=\"fa fa-edit\" style=\"color:black\"></i></td>'+
@@ -1474,12 +1457,19 @@ $(document).ready(function () {
 
     }
 
-
     function showAorAEImage(doc){
     console.log(doc);
         var pic = document.getElementById("picture");
         pic.src = "/media/"+doc;
+        imgDir = "/media/"+doc;
+
     }
+
+    function showImage(){
+        window.open(imgDir);
+//        return false;
+    }
+
     function addAorAE(A_index){
         index = A_index;
 
@@ -1517,6 +1507,7 @@ $(document).ready(function () {
               url: '/i33/' ,
               type: 'POST',
               data: formData,
+              dataType:"json",
               async: false,
               cache: false,
               contentType: false,
@@ -1594,4 +1585,7 @@ $(document).ready(function () {
         });
             showAandAE(index);
         }
+    }
+
+    function showAPP(){
     }

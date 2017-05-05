@@ -20,7 +20,7 @@ var hospitalnum = 0;
 var S_id = new Array();
 var index = 0;
 var imgDir ='';
-$(document).ready(function () {
+$(document).ready(function (e) {
 
     if(window.innerWidth<1000){
 	$("#myTab").hide();
@@ -313,28 +313,30 @@ $(document).ready(function () {
         str_edit = "OutPatientServiceInfoDetails";
         str_type = "outpatient-"+index;
         temp_name = "门诊";
-        temp_show = "showOutPatientServiceInfo"
+        temp_show = "showOutPatientServiceInfo";
     }
     else if(type == 1){
         str_edit = "EmergCallInfoDetails";
         str_type = "emergency-"+index;
         temp_name = "急诊";
-        temp_show = "showEmergCallInfo"
+        temp_show = "showEmergCallInfo";
     }
     else if(type == 2){
         str_edit = "InHospitalInfoDetails";
         str_type = "hospital-"+index;
         temp_name = "住院";
-        temp_show = "showInHospitalInfo"
+        temp_show = "showInHospitalInfo";
     }
+    var temp_index = parseInt(index)+1;
+    temp_index = temp_index.toString();
     var  str = "";
      str     = '<div class="col-lg-12">'+
 			   '<div class="panel bk-bg-white">'+
 			   '<div class="panel-heading bk-bg-primary">'+
-			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+index+'</h6>'+
+			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+temp_index+'</h6>'+
 			   '<div class="panel-actions" style="display:block;">'+
 //				'<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>'+
-				'<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>'+
+				'<a href="#" onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>'+
                 '<a  data-toggle="modal" onclick = "editInfo('+index+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
 				'<a href="#" onclick = "deleteInfo('+index+')" class="btn-close"><i class="fa fa-times"></i></a>'+
 				'</div>'+
@@ -361,6 +363,15 @@ $(document).ready(function () {
 
 		return str;
 
+    }
+
+    function updown(t)
+    {
+        var n = t.parent() .parent() .next('.panel-body');
+        n.is(':visible') ? $(t.find("i")[0]).removeClass('fa-chevron-up') .addClass('fa-chevron-down')  :$(t.find("i")[0]).removeClass('fa-chevron-down') .addClass('fa-chevron-up');
+        n.slideToggle('slow', function () {
+          widthFunctions()
+        });
     }
 
     function GenerateTab2(index){

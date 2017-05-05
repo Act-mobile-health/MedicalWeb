@@ -9,6 +9,18 @@ $(document).ready(function(){
         submitUserDetail();
     });
 
+    inform = document.getElementById("inform");
+    inform.innerHTML = "<h5><i class='fa fa-comments'></i> 欢迎使用<b>健康呼吸</b>医疗信息管理系统！</h5>"+
+                        "<h5><i class='fa fa-comments'></i> 初次登录，请您及时完善个人信息！</h5>"+
+                        "<h5><i class='fa fa-comments'></i> 病人A需要完善就诊信息！</h5>"+
+                        "<h5><i class='fa fa-comments'></i> 您还没有填写手机号码！</h5>";
+
+    public = document.getElementById("public");
+    public.innerHTML = "<h5><i class='fa fa-volume-up'></i> 欢迎使用<b>健康呼吸</b>医疗信息管理系统！</h5>"+
+                        "<h5><i class='fa fa-volume-up'></i> 有问题请联系管理员，或参照<b>《用户使用说明》</b>！</h5>"+
+                        "<h5><i class='fa fa-volume-up'></i> 本系统<b>不对外开放</b>注册，申请账号请联系管理员！</h5>"+
+                        "<h5><i class='fa fa-volume-up'></i> 请自觉保护患者<b>隐私</b>信息，不要对外公布患者信息！</h5>";
+
 });
     function showUserDetail() {
         $("#userInfoTable tbody").text("");

@@ -28,6 +28,23 @@ function SexParse(input){
     return Parse(2,['男','女'],input)
 }
 
+function getUserId(){
+    var str = '';
+    $.ajax({
+        type:"GET",
+        url:"/i100/",
+        dataType:"json",
+        async :false,
+        success(data){
+            str = data.userId;
+        },
+        error(data){
+            errorProcess(data);
+        }
+    });
+    return str;
+}
+
 function userNameParse(input){
     var str = '';
     $.ajax({
@@ -91,10 +108,35 @@ function analyseRadio(input){
             return "error";
 }
 
+function for_userbox() {
+    message = {};
+    $.ajax({
+        type: "GET",
+        url: "/i5/",
+        data: {},
+        dataType: "json",
+        async:false,
+        success: function (data) {
+            message = {"userName":data.userName,"title":data.title};
+        },
+        error:function(data){
+            errorProcess(data);
+        }
+    });
+    return message;
+}
+
 $(document).ready(function(){
     try{
+        var temp = for_userbox();
         a = document.getElementById("WebName")
         a.innerHTML = "iBreathCare " + '<i class="fa fa-coffee"></i> ACT-BUAA';
+
+        b = document.getElementById("userName_s")
+        b.innerHTML = temp.userName;
+
+        c = document.getElementById("title_s")
+        c.innerHTML = temp.title;
     }
     catch(err){
         console.log(err)
