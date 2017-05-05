@@ -342,14 +342,14 @@
 						</div>
 					</div>
 					<!-- End Page Header -->
-                    <div class="row col-md-offset-3">
+                    <div class="row" id="outinfos">
                         <form class="form-horizontal" id = "OutPatientServiceInfo" method="post" role="form">
 							{% csrf_token %}
                             <legend>门诊信息表</legend>
 							<div class="row">
 								<input type="text" class="form-control myinput" name="id"  style="display:none;">
 							</div>
-							<div class="panel panel-primary" id="p1"><!--text-center-->
+							<div class="panel panel-primary"><!--text-center-->
                             <div class="panel-heading">
                                 <h3 class="panel-title mylabel">
                                     基本信息
@@ -390,7 +390,7 @@
 								</div>
                             </div>
 							</div>
-								</div>
+							</div>
 							<div class="panel panel-success" id="p2"><!--text-center-->
                             <div class="panel-heading">
                                 <h3 class="panel-title mylabel">
@@ -416,7 +416,7 @@
 							<div class="row">
                                 <h4 class="mylabel2" >症状为</h4>
                             </div>
-                            <div class="row" style="text-indent:2em">
+                            <div class="row" style="padding-left:50px">
                                 <div class="checkbox">
 								  <label class="mycheckbox" style="width:150px">
 									<input type="checkbox" name="symptom"  value="1" >咳嗽加重
@@ -424,7 +424,7 @@
 								  <label class="mycheckbox" style="width:200px">
 									<input type="checkbox" name="symptom"  value="2">咳浓痰并痰量增加
 								  </label>
-								  <label class="mycheckbox" style="width:200px;text-indent:3em">
+								  <label class="mycheckbox" style="width:200px;">
 									<input type="checkbox" name="symptom"  value="3">呼吸困难加重
 								  </label>
 								</div>
@@ -449,7 +449,7 @@
                             </div>
                             <div class="row" style="text-indent:2em">
 								<div class="myblockposition">
-									<textarea class="myinput" style="width:350px;height:60px;text-align:left;margin-left:25px" name="breathErr"></textarea>
+									<textarea class="myinput" style="width:300px;height:60px;text-align:left;margin-left:25px" name="breathErr"></textarea>
 								</div>
                             </div>
 
@@ -509,7 +509,7 @@
 								</div>
                             </div>
 							</div>
-								</div>
+							</div>
 							<div class="panel panel-info" id="p3"><!--text-center-->
                             <div class="panel-heading">
                                 <h3 class="panel-title mylabel">
@@ -565,19 +565,17 @@
                             </div>
                             <div class="row" style="text-indent:2em">
 								<div class="myblockposition">
-									<textarea class="myinput" style="width:350px;height:60px;text-align:left;margin-left:25px" name="medicine"></textarea>
+									<textarea class="myinput" style="width:300px;height:60px;text-align:left;margin-left:25px" name="medicine"></textarea>
 								</div>
                             </div>
 
 							<div class = "row">
-								<div class="col-md-7 col-lg-7">
-									<div class="pull-right">
-										<button type="submit" id= "outpatientbt" class="btn btn-primary">提交</button>
-									</div>
+								<div class="pull-right" style="padding-right:20px">
+									<button type="submit" id= "outpatientbt" class="btn btn-primary">提交</button>
 								</div>
                             </div>
-								</div>
-								</div>
+							</div>
+							</div>
                         </form>
                     </div>
 

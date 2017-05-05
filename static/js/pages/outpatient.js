@@ -11,6 +11,23 @@ $(document).ready(function(){
         searchPatient($("#P_id").val());
     });
 
+    if(window.innerWidth>1600){
+        var p1 = document.getElementById("p1");
+        p1.style.width = "70%"
+        var p2 = document.getElementById("p2");
+        p2.style.width = "70%"
+        var p3 = document.getElementById("p3");
+        p3.style.width = "70%"
+	}
+	else if(window.innerWidth>1000){
+        var p1 = document.getElementById("p1");
+        p1.style.width = "80%"
+        var p2 = document.getElementById("p2");
+        p2.style.width = "80%"
+        var p3 = document.getElementById("p3");
+        p3.style.width = "80%"
+	}
+
 });
 
 function submitOutpatientInfo(){

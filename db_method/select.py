@@ -979,9 +979,12 @@ def getAEType(data):
 def getAppId(data):
     try:
         message = {}
-        obj = AppInfo.objects.get(AI_id = data['AI_id'])
+        obj = AppInfo.objects.get(AI_id = data)
         message['S_id'] = obj.S_id
+        message['date'] = str(obj.date)
+        print str(obj.date),"%%%%%%"
         message['type'] = obj.type
+        message['P_id'] = obj.P_id
         return message
     except Exception, e:
         tools.exceptionRecord('select.py', 'getAppId', e)

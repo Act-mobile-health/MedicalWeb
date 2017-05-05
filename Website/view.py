@@ -11,6 +11,7 @@ from django.contrib import auth
 from Website.models import AttachInfo
 from django.conf import settings
 import datetime, random
+from django import forms
 import xlwt
 
 
@@ -913,24 +914,27 @@ def app_addOrUpdateAppInfo(request):
             message['result'] = '0'
         return HttpResponse(json.dumps(message))
 
+
 #APP interface 9
 @csrf_exempt
 def app_addAppAttachment(request):
     if request.method == 'POST':
-        data = request.POST
-        print data
         message = {'result': '-1'}
         myFile = request.FILES['upload_file']
-        print request,"AppAttachment"
-        obj = select.getAppId(data)
+        print request.FILES
+
+        obj = select.getAppId(request.GET.get('AI_id', ''))
         S_id = int(obj['S_id'])
         type = obj['type']
         date = obj['date']
-        D_id = int(data['D_id'])
+        P_id = obj['P_id']
+        print date
+        D_id = 0
+        description = "from app"
         if not myFile:
             js = json.dumps(message)
             return HttpResponse(js)
-        if insert.addAttachInfo2(D_id, S_id, data, myFile, type, date):
+        if insert.addAttachInfo2(P_id, D_id, S_id, description, myFile, type, date):
             message['result'] = 0
         js = json.dumps(message)
         return HttpResponse(js)
@@ -1094,4 +1098,12 @@ def updateCardiogram(request, data, D_id):
     if update.updateCardiogram(data):
         message = {"result":'0'}
     js = json.dumps(message)
+    return HttpResponse(js)
+
+@login_required
+def getUserId(request):
+    D_id = request.session['_auth_user_id']
+    message = {"userId":D_id}
+    js = json.dumps(message)
+    print js
     return HttpResponse(js)

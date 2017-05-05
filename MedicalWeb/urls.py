@@ -135,6 +135,7 @@ urlpatterns = [
     url(r'^i75/',view.updateSleepDetectResult),
     url(r'^i76/',view.updateUCG),
     url(r'^i77/',view.updateCardiogram),
+    url(r'^i100/',view.getUserId),
 
     # url(r'^i18/',view.updatePatientInfo),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
