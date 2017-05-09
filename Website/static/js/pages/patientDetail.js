@@ -396,7 +396,7 @@ $(document).ready(function (e) {
 			'</tbody>'+
 			'</table>'+
             '<div class="row col-lg-4 col-md-4 text-left">'+
-            '<a  data-toggle="modal" href="#ClinicDetails" onclick = "addClinic('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的临床信息</a>'+
+            '<a  data-toggle="modal" href="#ClinicDetails" onclick = "addClinic('+index+','+type+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的临床信息</a>'+
             '</div>'+
 			'</div>'+
 			'</div>';
@@ -427,7 +427,7 @@ $(document).ready(function (e) {
 			  '</tbody>'+
 			  '</table>'+
               '<div class="row col-lg-4 col-md-4 text-left">'+
-              '<a  data-toggle="modal" href="#ESSDetails" onclick = "addQuestionnaire('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的ESS</a>'+
+              '<a  data-toggle="modal" href="#ESSDetails" onclick = "addQuestionnaire('+index+','+type+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的ESS</a>'+
               '</div>'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-MBQtable">'+
 			  '<caption class="mylabel"></caption>'+
@@ -437,7 +437,7 @@ $(document).ready(function (e) {
 			  '</tbody>'+
 			  '</table>'+
               '<div class="row col-lg-4 col-md-4 text-left">'+
-              '<a  data-toggle="modal" href="#MBQDetails" onclick = "addQuestionnaire('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的MBQ</a>'+
+              '<a  data-toggle="modal" href="#MBQDetails" onclick = "addQuestionnaire('+index+','+type+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的MBQ</a>'+
               '</div>'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-SGRQtable">'+
 			  '<caption class="mylabel"></caption>'+
@@ -447,7 +447,7 @@ $(document).ready(function (e) {
               '</tbody>'+
               '</table>'+
               '<div class="row col-lg-4 col-md-4 text-left">'+
-              '<a  data-toggle="modal" href="#SGRQDetails" onclick = "addQuestionnaire('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的SGRQ</a>'+
+              '<a  data-toggle="modal" href="#SGRQDetails" onclick = "addQuestionnaire('+index+','+type+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的SGRQ</a>'+
               '</div>'+
               '</div>'+
               '</div>';
@@ -478,7 +478,7 @@ $(document).ready(function (e) {
 			  '</tbody>'+
 			  '</table>'+
 			  '<div class="row col-lg-4 col-md-4 text-left">'+
-              '<a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick = "addAorAE('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的辅助检查</a>'+
+              '<a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick = "addAorAE('+index+','+type+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的辅助检查</a>'+
               '</div>'+
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-Atable">'+
 			  '<caption class="mylabel"></caption>'+
@@ -488,7 +488,7 @@ $(document).ready(function (e) {
 			  '</tbody>'+
 			  '</table>'+
               '<div class="row col-lg-4 col-md-4 text-left">'+
-              '<a  data-toggle="modal" href="#AttachInfoDetails" onclick = "addAorAE('+index+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的附件</a>'+
+              '<a  data-toggle="modal" href="#AttachInfoDetails" onclick = "addAorAE('+index+','+type+')" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的附件</a>'+
               '</div>'+
 			  '</div>'+
 			  '</div>'+
@@ -1223,7 +1223,8 @@ $(document).ready(function (e) {
     }
 
     //添加临床信息记录
-    function addClinic(c_index) {
+    function addClinic(c_index, type_t) {
+        type = type_t;
         index = c_index;
         $("#Clinic :text").val("");
 //        $("#Clinic :radio").attr("checked",false);
@@ -1355,7 +1356,8 @@ $(document).ready(function (e) {
          });
     }
 
-    function addQuestionnaire(Q_index){
+    function addQuestionnaire(Q_index, type_t){
+        type = type_t;
         index = Q_index;
         $("#ESS :text").val("");
         $("#ESS :radio").attr("checked",false);
@@ -1627,7 +1629,8 @@ $(document).ready(function (e) {
 //        return false;
     }
 
-    function addAorAE(A_index){
+    function addAorAE(A_index, type_t){
+        type = type_t;
         index = A_index;
 
         $('#AccessoryExamination input[name="date"]').val("");
