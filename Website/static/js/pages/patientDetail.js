@@ -20,6 +20,7 @@ var hospitalnum = 0;
 var S_id = new Array();
 var index = 0;
 var imgDir ='';
+var type_now;
 $(document).ready(function (e) {
 
     if(window.innerWidth<1000){
@@ -304,7 +305,8 @@ $(document).ready(function (e) {
     }
 
 
-    function GenerateTab1(index){
+    function GenerateTab1(index,type_t){
+    type = type_t;
     var str_edit = "";
     var str_type = "";
     var temp_name = "";
@@ -335,9 +337,9 @@ $(document).ready(function (e) {
 			   '<div class="panel-heading bk-bg-primary">'+
 			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+temp_index+'</h6>'+
 			   '<div class="panel-actions" style="display:block;">'+
-				'<a href="#" onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>'+
-                '<a  data-toggle="modal" onclick = "editInfo('+index+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
-				'<a href="#" onclick = "deleteInfo('+index+','+type+')" class="btn-close"><i class="fa fa-times"></i></a>'+
+				'<a onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>'+
+                '<a data-toggle="modal" onclick = "editInfo('+index+','+type+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
+				'<a onclick = "deleteInfo('+index+','+type+')" class="btn-close"><i class="fa fa-times"></i></a>'+
 				'</div>'+
 				'</div>'+
 				'<div class="panel-body">'+
@@ -372,7 +374,8 @@ $(document).ready(function (e) {
         });
     }
 
-    function GenerateTab2(index){
+    function GenerateTab2(index,type_t){
+    type = type_t;
     var str_type = "";
     if(type== 0){
         str_type = "outpatient-"+index;
@@ -401,7 +404,8 @@ $(document).ready(function (e) {
 	    return str;
     }
 
-    function GenerateTab3(index){
+    function GenerateTab3(index,type_t){
+        type = type_t;
         var str_type = "";
         if(type==0){
             str_type = "outpatient-"+index;
@@ -451,7 +455,8 @@ $(document).ready(function (e) {
         return str;
     }
 
-    function GenerateTab4(index){
+    function GenerateTab4(index, type_t){
+        type = type_t;
         var str_type = "";
         if(type==0){
             str_type = "outpatient-"+index;
@@ -496,26 +501,26 @@ $(document).ready(function (e) {
 	    return str;
     }
     function showTimeline(){
-        console.log("####1")
+//        console.log("####1")
         timelineAnimate = function(elem) {
-        console.log("####2.0")
-        console.log($(".timeline.animated .timeline-row"))
+//        console.log("####2.0")
+//        console.log($(".timeline.animated .timeline-row"))
         $(".timeline.animated .timeline-row").each(function(i) {
-        console.log("####2")
+//        console.log("####2")
         var bottom_of_object, bottom_of_window;
-        console.log("####2")
+//        console.log("####2")
         bottom_of_object = $(this).position().top + $(this).outerHeight();
 //        console.log($(this).position().top,$(this).outerHeight(),i)
         bottom_of_window = $(window).scrollTop() + $(window).height();
-        console.log(bottom_of_window,bottom_of_object,i)
+//        console.log(bottom_of_window,bottom_of_object,i)
         if (bottom_of_window > bottom_of_object && i>2) {
           $(this).addClass("active");
         }
         });
         };
-        console.log("####2.1")
+//        console.log("####2.1")
         timelineAnimate();
-        console.log("####3")
+//        console.log("####3")
         return $(window).scroll(function() {
           return timelineAnimate();
         });
@@ -799,6 +804,7 @@ $(document).ready(function (e) {
 
     function showOne(type_t){
         type = parseInt(type_t);
+        type_now = type;
         S_id = [];
         $("#follow_up").empty();
         temp = document.getElementById("follow_up");
@@ -812,7 +818,7 @@ $(document).ready(function (e) {
                     S_id.push(item.id);
                     if(index<3){
                         tt = "active";
-                        console.log(tt);
+//                        console.log(tt);
                     }
                     else{
                         tt ="";
@@ -824,7 +830,7 @@ $(document).ready(function (e) {
                     '</div>'+
                     '<div class="panel timeline-content">'+
                     '<div class="panel-body">'+
-                    GenerateTab1(index)+GenerateTab2(index)+GenerateTab3(index)+GenerateTab4(index)+
+                    GenerateTab1(index, type)+GenerateTab2(index, type)+GenerateTab3(index, type)+GenerateTab4(index, type)+
                     '</div>'+
                     '</div>'+
                     '</div>';
@@ -837,7 +843,7 @@ $(document).ready(function (e) {
     }
 
     function showAll(){
-        type = 4;
+        type_now = 4;
         S_id = [];
         $("#follow_up").empty();
         temp = document.getElementById("follow_up");
@@ -851,7 +857,7 @@ $(document).ready(function (e) {
                 $.each(json_data,function (index,item){
                     S_id.push(item.id);
                     type = parseInt(item['type']);
-                    console.log(index)
+                    console.log(type,"type")
                     if(index<3){
                         tt = "active";
                         console.log(tt);
@@ -866,7 +872,7 @@ $(document).ready(function (e) {
                     '</div>'+
                     '<div class="panel timeline-content">'+
                     '<div class="panel-body">'+
-                    GenerateTab1(index)+GenerateTab2(index)+GenerateTab3(index)+GenerateTab4(index)+
+                    GenerateTab1(index, type)+GenerateTab2(index, type)+GenerateTab3(index, type)+GenerateTab4(index, type)+
                     '</div>'+
                     '</div>'+
                     '</div>';
@@ -905,7 +911,8 @@ $(document).ready(function (e) {
 //
 //}).call(this);
 
-    function editInfo(index){
+    function editInfo(index, type_t){
+        type = type_t;
         $.ajax({
            type:"GET",
             url:"/i23/",
@@ -984,8 +991,8 @@ $(document).ready(function (e) {
         $("#OutPatientServiceInfo :text").val("");
         $("#EmergCallInfo :text").val("");
         $("#InHospitalInfo :text").val("");
-//        $("#OutPatientServiceInfo :radio").attr("checked",false);
-//        $("#OutPatientServiceInfo :checkbox").attr("checked",false);
+        $("#OutPatientServiceInfo :radio").attr("checked",false);
+        $("#OutPatientServiceInfo :checkbox").attr("checked",false);
     }
 
     function deleteInfo(index, type1){
@@ -1003,14 +1010,17 @@ $(document).ready(function (e) {
                     errorProcess(data);
                 }
             });
-        if(type==0){
-            showOutpatient();
+        if(type_now==0){
+            showOne("0");
         }
-        else if(type==1){
-            showEmergency();
+        else if(type_now==1){
+            showOne("1");
+        }
+        else if(type_now==2){
+            showOne("2");
         }
         else{
-            showHospital();
+            showAll();
         }
     }
 
@@ -1031,21 +1041,23 @@ $(document).ready(function (e) {
                type:"POST",
                 url:"/i22/",
                 data:str,
-                dataType:function (data) {
-                    successProcess(data);
+                dataType:"json",
+                success:function (data) {
+                   successProcess(data);
                 },
                 error:function(data){
+                console.log(data,"error");
                    errorProcess(data);
                 }
             });
-            if(type==0){
-                showOutpatient();
+            if(type_now==0){
+                showOne("0");
             }
-            else if(type==1){
-                showEmergency();
+            else if(type_now==1){
+                showOne("1");
             }
-            else if(type==2){
-                showHospital();
+            else if(type_now==2){
+                showOne("2");
             }
             else{
                 showAll();
@@ -1058,6 +1070,7 @@ $(document).ready(function (e) {
     //显示临床信息
     function showClinic(c_index, type1) {
         type = type1;
+        index = c_index;
         var str = "";
         if(type==0){
             str = "#outpatient-";
@@ -1096,7 +1109,7 @@ $(document).ready(function (e) {
                         "<td>" +item.lung3+"</td>"+
                         "<td>" +item.detail+"</td>"+
                         "<td><a  data-toggle=\"modal\" onclick=\"editClinic("+item.Cli_id+")\" href=\"#ClinicDetails\"><i class=\"fa fa-edit\"></i></td>"+
-                        "<td><a  onclick=\"deleteClinic("+c_index+","+item.Cli_id+")\" ><i class=\"fa fa-times\"></i></td>"+
+                        "<td><a  onclick=\"deleteClinic("+c_index+","+item.Cli_id+','+index+','+type+")\" ><i class=\"fa fa-times\"></i></td>"+
                     "</tr>");
                 });
             },
@@ -1191,7 +1204,7 @@ $(document).ready(function (e) {
     }
 
     //删除临床信息记录
-    function deleteClinic(c_index,Cli_id) {
+    function deleteClinic(c_index,Cli_id,index_t, type_t) {
         if(confirm("确定删除吗？")){
             $.ajax({
                type:"GET",
@@ -1205,7 +1218,7 @@ $(document).ready(function (e) {
                     errorProcess(data);
                 }
             });
-            showClinic(index, type);
+            showClinic(index_t, type_t);
         }
     }
 
@@ -1239,8 +1252,9 @@ $(document).ready(function (e) {
     /************************end*****************************临床相关函数********************************end****************************/
 
 
-    function showQuestionnaire(index, type1) {
+    function showQuestionnaire(index_q, type1) {
          type = type1;
+         index = index_q
          if(type==0){
              temp="outpatient";
          }
@@ -1287,7 +1301,7 @@ $(document).ready(function (e) {
                                 "<td>"+item.date+"</td>"+
                                 "<td>"+item.score+"</td>"+
                                 '<td><a data-toggle="modal" href="#ESSDetails" onclick="editESS('+item.ESS_id+')"><i class=\"fa fa-edit\"></i></td>'+
-                                '<td><a onclick="deleteQuestionnaire('+item.ESS_id+',0'+')"><i class=\"fa fa-times\"></i></td>'+
+                                '<td><a onclick="deleteQuestionnaire('+item.ESS_id+',0'+','+index+','+type+')"><i class=\"fa fa-times\"></i></td>'+
                             "</tr>");
                     }
                     else if(item.kind == "1"){
@@ -1308,7 +1322,7 @@ $(document).ready(function (e) {
                                 "<td>"+item.date+"</td>"+
                                 "<td>"+item.BMI+"</td>"+
                                 '<td><a data-toggle="modal" href="#MBQDetails" onclick="editMBQ('+item.MBQ_id+')"><i class=\"fa fa-edit\"></i></td>'+
-                                '<td><a onclick="deleteQuestionnaire('+item.MBQ_id+',1'+')"><i class=\"fa fa-times\"></i></td>'+
+                                '<td><a onclick="deleteQuestionnaire('+item.MBQ_id+',1'+','+index+','+type+')"><i class=\"fa fa-times\"></i></td>'+
                             "</tr>");
                     }
                     else if(item.kind == "2"){
@@ -1329,7 +1343,7 @@ $(document).ready(function (e) {
                                 "<td>"+item.date+"</td>"+
                                 "<td>"+item.score+"</td>"+
                                 '<td><a data-toggle="modal" href="#SGRQDetails" onclick="editSGRQ('+item.SGRQ_id+')"><i class=\"fa fa-edit\"></i></td>'+
-                                '<td><a onclick="deleteQuestionnaire('+item.SGRQ_id+',2'+')"><i class=\"fa fa-times\"></i></td>'+
+                                '<td><a onclick="deleteQuestionnaire('+item.SGRQ_id+',2'+','+index+','+type+')"><i class=\"fa fa-times\"></i></td>'+
                             "</tr>");
                     }
                 });
@@ -1354,7 +1368,7 @@ $(document).ready(function (e) {
         $("#SGRQ :checkbox").attr("checked",false);
     }
 
-    function deleteQuestionnaire(id, kind) {
+    function deleteQuestionnaire(id, kind, index_t, type_t) {
         if(confirm("确定删除")==1) {
             $.ajax({
                 type: "GET",
@@ -1370,7 +1384,7 @@ $(document).ready(function (e) {
                 }
 
             });
-            showQuestionnaire(index, type);
+            showQuestionnaire(index_t, type_t);
         }
     }
 
@@ -1495,6 +1509,8 @@ $(document).ready(function (e) {
 
     function showAandAE(A_index, type1){
         type = type1;
+        index = A_index;
+        console.log(type,"######");
         if(type==0){
             temp="outpatient";
         }
@@ -1508,8 +1524,11 @@ $(document).ready(function (e) {
         var head_2 = 1;
         console.log(type)
         $("#"+temp+"-"+A_index+"-"+"AEtable tbody").empty();
+        console.log("#"+temp+"-"+A_index+"-"+"AEtable thead")
         $("#"+temp+"-"+A_index+"-"+"AEtable thead").empty();
+        console.log("@@@@@1")
         $("#"+temp+"-"+A_index+"-"+"AEtable caption").empty();
+        console.log("@@@@@1")
         $.ajax({
             type: "GET",
             url: "/i32/",
@@ -1542,7 +1561,7 @@ $(document).ready(function (e) {
                             "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
                             '<td><a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick="editAE('+item.AE_id+')"><i class=\"fa fa-edit\"  style=\"color:black\"></i></td>'+
                             '<td><a  data-toggle="modal" href="#'+AEtypeParse2(item.AE_type)+'Details" onclick="edit'+AEtypeParse2(item.AE_type)+'('+item.AE_id+','+item.AE_type+')"><i class=\"fa fa-file-text-o\"  style=\"color:black\"></td>'+
-                            '<td><a  data-toggle="modal" href="#" onclick="deleteAorAE('+item.AE_id+',0'+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
+                            '<td><a  data-toggle="modal" href="#" onclick="deleteAorAE('+item.AE_id+',0'+','+A_index+','+type+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
                         "</tr>"
                     )
                 });
@@ -1583,7 +1602,7 @@ $(document).ready(function (e) {
                             "<td>"+item.description+"</td>"+
                             "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
                             '<td><a  data-toggle="modal" href="#AttachInfoDetails" onclick="editA('+item.A_id+')"><i class=\"fa fa-edit\" style=\"color:black\"></i></td>'+
-                            '<td><a  data-toggle="modal" href="#" onclick="deleteAorAE('+item.A_id+',1'+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
+                            '<td><a  data-toggle="modal" href="#" onclick="deleteAorAE('+item.A_id+',1'+','+A_index+','+type+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
                         "</tr>"
                     )
                 });
@@ -1707,7 +1726,7 @@ $(document).ready(function (e) {
 
     }
 
-    function deleteAorAE(id, kind) {
+    function deleteAorAE(id, kind, index_t, type_t) {
         if(confirm("确定删除")==1) {
             $.ajax({
             type: "GET",
@@ -1721,7 +1740,7 @@ $(document).ready(function (e) {
                 errorProcess(data);
             }
         });
-            showAandAE(index);
+        showAandAE(index_t, type_t);
         }
     }
 
