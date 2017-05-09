@@ -335,7 +335,6 @@ $(document).ready(function (e) {
 			   '<div class="panel-heading bk-bg-primary">'+
 			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+temp_index+'</h6>'+
 			   '<div class="panel-actions" style="display:block;">'+
-//				'<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>'+
 				'<a href="#" onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>'+
                 '<a  data-toggle="modal" onclick = "editInfo('+index+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
 				'<a href="#" onclick = "deleteInfo('+index+','+type+')" class="btn-close"><i class="fa fa-times"></i></a>'+
@@ -365,8 +364,7 @@ $(document).ready(function (e) {
 
     }
 
-    function updown(t)
-    {
+    function updown(t){
         var n = t.parent() .parent() .next('.panel-body');
         n.is(':visible') ? $(t.find("i")[0]).removeClass('fa-chevron-up') .addClass('fa-chevron-down')  :$(t.find("i")[0]).removeClass('fa-chevron-down') .addClass('fa-chevron-up');
         n.slideToggle('slow', function () {
@@ -390,14 +388,6 @@ $(document).ready(function (e) {
 		   '<div class="row table-responsive" style="padding-left:25px;padding-right:25px">'+
 		   '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-clinictable">'+
 		   '<thead>'+
-//		   '<tr>'+
-//		   '<th class="table-small tlabel5" style="text-align:center">编号</th>'+
-//			'<th class="tlabel5" style="text-align:center;width:70px;">就诊日期</th>'+
-//			'<th class="tlabel5" style="text-align:center;width:110px;">慢阻肺诊断级别</th>'+
-//			'<th class = "tlabel5"style="text-align:center">服用药品及用量</th>'+
-//			'<th class="table-small tlabel5" style="text-align:center">编辑</th>'+
-//			'<th class="table-small tlabel5" style="text-align:center">删除</th>'+
-//			'</tr>'+
 			'</thead>'+
 			'<tbody>'+
 			'</tbody>'+
@@ -428,13 +418,6 @@ $(document).ready(function (e) {
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-ESStable">'+
 			  '<caption class="mylabel"></caption>'+
 			  '<thead>'+
-//			  '<tr>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">编号</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">填表日期</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">分数</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">编辑</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">删除</th>'+
-//			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
 			  '</tbody>'+
@@ -445,13 +428,6 @@ $(document).ready(function (e) {
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-MBQtable">'+
 			  '<caption class="mylabel"></caption>'+
 			  '<thead>'+
-//			  '<tr>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">编号</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">填表日期</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">BMI</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">编辑</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">删除</th>'+
-//			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
 			  '</tbody>'+
@@ -462,13 +438,6 @@ $(document).ready(function (e) {
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-SGRQtable">'+
 			  '<caption class="mylabel"></caption>'+
 			  '<thead>'+
-//			  '<tr>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">编号</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">填表日期</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">其他</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">编辑</th>'+
-//			  '<th class="table-small tlabel3" style="text-align:center">删除</th>'+
-//			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
               '</tbody>'+
@@ -499,17 +468,6 @@ $(document).ready(function (e) {
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-AEtable">'+
 			  '<caption class="mylabel"></caption>'+
 			  '<thead>'+
-//			  '<tr>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编号</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">日期</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">类型</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">上传者</th>'+
-//			  '<th style="text-align:center;background:#72a9e2;">描述</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">查看</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编辑</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">手动填写</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">删除</th>'+
-//			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
 			  '</tbody>'+
@@ -520,15 +478,6 @@ $(document).ready(function (e) {
 			  '<table class="table table-bordered table-hover table-entire" id="'+str_type+'-Atable">'+
 			  '<caption class="mylabel"></caption>'+
 			  '<thead>'+
-//			  '<tr>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编号</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">日期</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">上传者</th>'+
-//			  '<th style="text-align:center;background:#72a9e2;">描述</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">查看</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">编辑</th>'+
-//			  '<th class="table-small" style="text-align:center;background:#72a9e2;">删除</th>'+
-//			  '</tr>'+
 			  '</thead>'+
 			  '<tbody>'+
 			  '</tbody>'+
@@ -547,19 +496,26 @@ $(document).ready(function (e) {
 	    return str;
     }
     function showTimeline(){
+        console.log("####1")
         timelineAnimate = function(elem) {
-        return $(".timeline.animated .timeline-row").each(function(i) {
+        console.log("####2.0")
+        console.log($(".timeline.animated .timeline-row"))
+        $(".timeline.animated .timeline-row").each(function(i) {
+        console.log("####2")
         var bottom_of_object, bottom_of_window;
+        console.log("####2")
         bottom_of_object = $(this).position().top + $(this).outerHeight();
 //        console.log($(this).position().top,$(this).outerHeight(),i)
         bottom_of_window = $(window).scrollTop() + $(window).height();
-//        console.log(bottom_of_window,bottom_of_object)
-        if (bottom_of_window > bottom_of_object) {
-          return $(this).addClass("active");
+        console.log(bottom_of_window,bottom_of_object,i)
+        if (bottom_of_window > bottom_of_object && i>2) {
+          $(this).addClass("active");
         }
         });
         };
+        console.log("####2.1")
         timelineAnimate();
+        console.log("####3")
         return $(window).scroll(function() {
           return timelineAnimate();
         });
@@ -588,26 +544,84 @@ $(document).ready(function (e) {
         }
 
     }
-    function showOutpatient(){
-        type = 0;
-        S_id = [];
-        $("#outpatient").empty();
+
+    function showInHospitalInfo(index){
+        type = 2;
+        var name = "hospital-"+index+"-table";
+        var str =  "";
+        var symptom = "";
         $.ajax({
             type:"GET",
-            url:"/i21/",
-            data:{"P_id":patientId,"type":type},
+            url:"/i23/",
+            data:{"S_id":S_id[index],"type":2},
             dataType:"json",
-            success:function (json_data) {
-				$.each(json_data,function (index,item){
-					S_id.push(item.OPS_id);
-					var descDiv = document.createElement('div');
-					$("#outpatient").append(descDiv);
-					descDiv.className = "row";
-					descDiv.innerHTML = GenerateTab1(index)+GenerateTab2(index)+GenerateTab3(index)+GenerateTab4(index);
-				});
+            success:function (item) {
+                for (var i = 0;i<item.symptom.length;i++){
+                if(item.symptom[i]=="1")
+                    symptom += "咳嗽加重；";
+                if(item.symptom[i]=="2")
+                    symptom += "咳浓痰并痰量增加；";
+                if(item.symptom[i]=="3")
+                    symptom += "呼吸困难加重；";
+                if(item.symptom[i]=="4")
+                    symptom += "发热；";
+                if(item.symptom[i]=="5")
+                    symptom += "上呼吸道感染症状；";
+                if(item.symptom[i]=="6")
+                    symptom += "意识障碍；";
+            }
+            str='<tr>'+
+                '<td class="table-small">日期</td>'+
+                '<td class="table-small" >'+item.date+'</td>'+
+                '<td class="table-small">地点</td>'+
+                '<td class="table-small">'+item.place+'</td>'+
+                '<td class="table-small">症状为</td>'+
+                '<td>'+symptom+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>是否为慢阻肺急性加重</td>'+
+                '<td>'+analyseRadio(item.acuteExac)+'</td>'+
+                '<td>加重与大气污染是否有关</td>'+
+                '<td>'+analyseRadio(item.airRelate)+'</td>'+
+                '<td>若为其他疾病，类型为</td>'+
+                '<td>'+item.disease+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>住院病房类型</td>'+
+                '<td>'+analyseRadio(item.commonIcu)+'</td>'+
+                '<td>病原学检查</td>'+
+                '<td>'+analyseRadio(item.byxCheck)+'</td>'+
+                '<td>阳性结果为</td>'+
+                '<td>'+item.byxResult+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>有创/无创呼吸治疗</td>'+
+                '<td>'+analyseRadio(item.ycWcTreat)+'</td>'+
+                '<td>是否使用抗生素</td>'+
+                '<td>'+analyseRadio(item.useAbt)+'</td>'+
+                '<td>抗生素类型</td>'+
+                '<td>'+item.abtType+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>是否使用静脉激素</td>'+
+                '<td>'+analyseRadio(item.useJmzs)+'</td>'+
+                '<td>住院时长</td>'+
+                '<td>'+item.hospitalDays+'</td>'+
+                '<td>医嘱信息</td>'+
+                '<td>'+item.docAdvice+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>是否调整治疗方案</td>'+
+                '<td>'+analyseRadio(item.treatMethod)+'</td>'+
+                '<td></td>'+
+                '<td></td>'+
+                '<td>调整药物为</td>'+
+                '<td>'+item.medicine+'</td>'+
+                '</tr>';
+            $("#"+name+" tbody").html(str);
             },
-            error:function (json_data) {
-                errorProcess(json_data);
+            error:function (data) {
+                errorProcess(data);
             }
         });
     }
@@ -698,39 +712,6 @@ $(document).ready(function (e) {
             },
             error:function (data) {
                 errorProcess(data);
-            }
-        });
-    }
-
-    function showEmergency(){
-        type = 1;
-        S_id = [];
-        $("#hospital").empty();
-        temp = document.getElementById("hospital");
-        $.ajax({
-            type:"GET",
-            url:"/i21/",
-            data:{"P_id":patientId,"type":type},
-            dataType:"json",
-            success:function (json_data) {
-                $.each(json_data,function (index,item){
-                    S_id.push(item.id);
-                    type = 1;
-                    temp.innerHTML = temp.innerHTML+'<div class="timeline-row">'+
-                    '<div class="timeline-time"><small style="color:black;">'+item['date']+'</small>'+item['place']+'</div>'+
-                    '<div class="timeline-icon">'+
-                    '<div class="'+colorForOEH("1")+'"><i class="'+iconForOEH("1")+'"></i></div>'+
-                    '</div>'+
-                    '<div class="panel timeline-content">'+
-                    '<div class="panel-body">'+
-                    GenerateTab1(index)+GenerateTab2(index)+GenerateTab3(index)+GenerateTab4(index)+
-                    '</div>'+
-                    '</div>'+
-                    '</div>';
-                });
-            },
-            error:function (json_data) {
-                errorProcess(json_data);
             }
         });
     }
@@ -829,7 +810,14 @@ $(document).ready(function (e) {
             success:function (json_data) {
                 $.each(json_data,function (index,item){
                     S_id.push(item.id);
-                    temp.innerHTML = temp.innerHTML+'<div class="timeline-row">'+
+                    if(index<3){
+                        tt = "active";
+                        console.log(tt);
+                    }
+                    else{
+                        tt ="";
+                    }
+                    temp.innerHTML = temp.innerHTML+'<div class="timeline-row  '+tt+'">'+
                     '<div class="timeline-time"><small style="color:black;">'+item['date']+'</small>'+item['place']+'</div>'+
                     '<div class="timeline-icon">'+
                     '<div class="'+colorForOEH(type_t)+'"><i class="'+iconForOEH(type_t)+'"></i></div>'+
@@ -848,12 +836,12 @@ $(document).ready(function (e) {
         });
     }
 
-
     function showAll(){
         type = 4;
         S_id = [];
         $("#follow_up").empty();
         temp = document.getElementById("follow_up");
+        console.log("inside")
         $.ajax({
             type:"GET",
             url:"/i1000/",
@@ -863,7 +851,15 @@ $(document).ready(function (e) {
                 $.each(json_data,function (index,item){
                     S_id.push(item.id);
                     type = parseInt(item['type']);
-                    temp.innerHTML = temp.innerHTML+'<div class="timeline-row">'+
+                    console.log(index)
+                    if(index<3){
+                        tt = "active";
+                        console.log(tt);
+                    }
+                    else{
+                        tt ="";
+                    }
+                    temp.innerHTML = temp.innerHTML+'<div class="timeline-row  '+tt+'">'+
                     '<div class="timeline-time"><small style="color:black;">'+item['date']+'</small>'+item['place']+'</div>'+
                     '<div class="timeline-icon">'+
                     '<div class="'+colorForOEH(item['type'])+'"><i class="'+iconForOEH(item['type'])+'"></i></div>'+
@@ -882,8 +878,10 @@ $(document).ready(function (e) {
                 errorProcess(data);
             }
         });
+        console.log("outside");
         showTimeline();
     }
+
 //(function() {
 //  $(document).ready(function() {
 //    var timelineAnimate;
@@ -906,88 +904,6 @@ $(document).ready(function (e) {
 //  });
 //
 //}).call(this);
-
-
-    function showInHospitalInfo(index){
-        type = 2;
-        var name = "hospital-"+index+"-table";
-        var str =  "";
-        var symptom = "";
-        $.ajax({
-            type:"GET",
-            url:"/i23/",
-            data:{"S_id":S_id[index],"type":2},
-            dataType:"json",
-            success:function (item) {
-                for (var i = 0;i<item.symptom.length;i++){
-                if(item.symptom[i]=="1")
-                    symptom += "咳嗽加重；";
-                if(item.symptom[i]=="2")
-                    symptom += "咳浓痰并痰量增加；";
-                if(item.symptom[i]=="3")
-                    symptom += "呼吸困难加重；";
-                if(item.symptom[i]=="4")
-                    symptom += "发热；";
-                if(item.symptom[i]=="5")
-                    symptom += "上呼吸道感染症状；";
-                if(item.symptom[i]=="6")
-                    symptom += "意识障碍；";
-            }
-            str='<tr>'+
-                '<td class="table-small">日期</td>'+
-                '<td class="table-small" >'+item.date+'</td>'+
-                '<td class="table-small">地点</td>'+
-                '<td class="table-small">'+item.place+'</td>'+
-                '<td class="table-small">症状为</td>'+
-                '<td>'+symptom+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>是否为慢阻肺急性加重</td>'+
-                '<td>'+analyseRadio(item.acuteExac)+'</td>'+
-                '<td>加重与大气污染是否有关</td>'+
-                '<td>'+analyseRadio(item.airRelate)+'</td>'+
-                '<td>若为其他疾病，类型为</td>'+
-                '<td>'+item.disease+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>住院病房类型</td>'+
-                '<td>'+analyseRadio(item.commonIcu)+'</td>'+
-                '<td>病原学检查</td>'+
-                '<td>'+analyseRadio(item.byxCheck)+'</td>'+
-                '<td>阳性结果为</td>'+
-                '<td>'+item.byxResult+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>有创/无创呼吸治疗</td>'+
-                '<td>'+analyseRadio(item.ycWcTreat)+'</td>'+
-                '<td>是否使用抗生素</td>'+
-                '<td>'+analyseRadio(item.useAbt)+'</td>'+
-                '<td>抗生素类型</td>'+
-                '<td>'+item.abtType+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>是否使用静脉激素</td>'+
-                '<td>'+analyseRadio(item.useJmzs)+'</td>'+
-                '<td>住院时长</td>'+
-                '<td>'+item.hospitalDays+'</td>'+
-                '<td>医嘱信息</td>'+
-                '<td>'+item.docAdvice+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>是否调整治疗方案</td>'+
-                '<td>'+analyseRadio(item.treatMethod)+'</td>'+
-                '<td></td>'+
-                '<td></td>'+
-                '<td>调整药物为</td>'+
-                '<td>'+item.medicine+'</td>'+
-                '</tr>';
-            $("#"+name+" tbody").html(str);
-            },
-            error:function (data) {
-                errorProcess(data);
-            }
-        });
-    }
 
     function editInfo(index){
         $.ajax({
