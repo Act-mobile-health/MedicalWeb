@@ -28,7 +28,7 @@ $(document).ready(function(){
 function submitEmergencyInfo(){
     if(confirm("确定提交？")==1){
         $.ajax({
-            type: "post",
+            type: "POST",
             url: "/i22/",
             data: $("#EmergCallInfo").serialize()+"&type="+"1",
             dataType: "json",
@@ -36,14 +36,14 @@ function submitEmergencyInfo(){
                 successProcess(data);
             },
             error:function(data){
-            errorProcess(data);
-        }
+                errorProcess(data);
+            }
         });
     }
 }
 
 function searchPatient(P_id){
-     $.ajax({
+    $.ajax({
         type: "GET",
         url: "/i36/",
         data: {P_id:P_id},

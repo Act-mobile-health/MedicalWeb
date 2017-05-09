@@ -2,9 +2,10 @@
 <html lang="en">
 
 	<head>
-
 		<!-- Basic -->
     	<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 
 		<title>首页</title>
 
@@ -47,6 +48,7 @@
 
 		<link href="/static/css/mycss1.css" rel="stylesheet" />
 		<link href="/static/css/mycss.css" rel="stylesheet" />
+		<!--<link href="/static/css/styles.css" media="all" rel="stylesheet">-->
 
 	</head>
 
@@ -277,7 +279,7 @@
 											<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 										</a>
 									</li>
-									<li>
+									<li class="active">
 										<a href="/patientInfos/">
 											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
 										</a>
@@ -287,7 +289,7 @@
 											<i class="fa fa-table" aria-hidden="true"></i><span>添加门诊信息</span>
 										</a>
 									</li>
-									<li class="active">
+									<li>
 										<a href="/add/emergencyInfos/">
 											<i class="fa fa-life-bouy" aria-hidden="true"></i><span>添加急诊信息</span>
 										</a>
@@ -344,10 +346,11 @@
                             <ul id="myTab" class="nav nav-tabs row text-center" >
                               <li role="presentation" class="active" style="width:120px"><a href="#1">患者详情</a></li>
                               <li role="presentation" style="width:120px"><a href="#2">家属信息</a></li>
-                              <li role="presentation" style="width:120px" onclick="showOutpatient()"><a href="#3">门诊记录</a><span class="badge1">+2</span></li>
-                              <li role="presentation" style="width:120px" onclick="showEmergency()"><a href="#4">急诊记录</a></li>
-                              <li role="presentation" style="width:120px" onclick="showHospital()"><a href="#5">住院记录</a></li>
-                              <li role="presentation" style="width:120px" onclick="showAPP()"><a href="#6">APP数据</a></li>
+                              <li role="presentation" style="width:120px" onclick="showAll()"><a href="#3">随访记录</a></li>
+								<!--<span class="badge1">+2</span>-->
+                              <!--<li role="presentation" style="width:120px" onclick="showEmergency()"><a href="#4">急诊记录</a></li>-->
+                              <!--<li role="presentation" style="width:120px" onclick="showAll()"><a href="#5">就诊记录</a></li>-->
+                              <li role="presentation" style="width:120px" onclick="showAPP()"><a href="#4">APP数据</a></li>
                             </ul>
 							<ul class="nav nav-tabs" role="tablist" id="myTabSmall">
 								<li class="dropdown" style="width:160px">
@@ -513,34 +516,46 @@
                                 </div>
                             </div>
 
+                            <!--<div class="tab-pane fade" id="3">-->
+                            <!--<div class="row text-left" style="text-indent:2em">-->
+                                <!--<a  data-toggle="modal" onclick="addInfo()" href="#OutPatientServiceInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加门诊</a>-->
+                            <!--</div>-->
+                            <!--<div id="outpatient">-->
+
+                            <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="tab-pane fade" id="4">-->
+                            <!--<div class="row text-left" style="text-indent:2em">-->
+                                <!--<a  data-toggle="modal" onclick="addInfo()" href="#EmergCallInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加急诊</a>-->
+                            <!--</div>-->
+                            <!--<div id="emergency">-->
+                            <!--</div>-->
+                            <!--</div>-->
+
                             <div class="tab-pane fade" id="3">
-                            <div class="row text-left" style="text-indent:2em">
-                                <a  data-toggle="modal" onclick="addInfo()" href="#OutPatientServiceInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的门诊</a>
+                            <div style="margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
+								<button id="temp_all" onclick="showAll()" type="button" class="btn btn-warning" style="width:150px;height:25px;padding:2px;font-size:14px;margin-left:40px;">显示全部随访记录</button>
                             </div>
-                            <div id="outpatient">
+                            <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
+                                <a  data-toggle="modal" onclick="addInfo()" href="#OutPatientServiceInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加门诊</a>
+								<button id="showOutpaBt" onclick="showOne('0')" type="button" class="btn btn-success" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示门诊</button>
+                            </div>
+                            <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
+                                <a  data-toggle="modal" onclick="addInfo()" href="#EmergCallInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加急诊</a>
+								<button id="showEmBt" onclick="showOne('1')" type="button" class="btn btn-info" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示急诊</button>
+                            </div>
+                            <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
+                                <a  data-toggle="modal" onclick="addInfo()" href="#InHospitalInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加住院</a>
+								<button id="showInhoBt" onclick="showOne('2')" type="button" class="btn btn-primary" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示住院</button>
+                            </div>
+                            <!--<div id="hospital">-->
+							<div class="timeline animated" id="follow_up">
 
                             </div>
                             </div>
 
                             <div class="tab-pane fade" id="4">
-                            <div class="row text-left" style="text-indent:2em">
-                                <a  data-toggle="modal" onclick="addInfo()" href="#EmergCallInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的急诊</a>
-                            </div>
-                            <div id="emergency">
-
-                            </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="5">
-                            <div class="row text-left" style="text-indent:2em">
-                                <a  data-toggle="modal" onclick="addInfo()" href="#InHospitalInfoDetails" class="mylabel"><i class="glyphicon glyphicon-plus "></i> 添加新的住院</a>
-                            </div>
-                            <div id="hospital">
-
-                            </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="6">
                                 <div class="panel">
                                     <div class="panel-heading bk-bg-primary">
                                         <h6><i class="fa fa-table red"></i><span class="break"></span>APP数据</h6>
@@ -4942,6 +4957,7 @@
 
 		<!-- Pages JS -->
         <script src="/static/js/pages/tools.js"></script>
+		<!--<script type="text/javascript" src="/static/js/pages/main.js"></script>-->
         <script src="/static/js/pages/AEType.js"></script>
         <script src="/static/js/pages/areaSelect.js"></script>
         <script src="/static/js/pages/patientDetail.js"></script>

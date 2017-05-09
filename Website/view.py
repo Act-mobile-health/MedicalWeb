@@ -446,9 +446,10 @@ def getCEHAllInfo(request,data,D_id):
     elif int(data['type']) == 1:
         message = select.getPatientAllEmergCallInfos(data['P_id'])
     elif int(data['type']) == 2:
-        message = select.getPatientAllInHospitalInfos( data['P_id'])
+        message = select.getPatientAllInHospitalInfos(data['P_id'])
 
     # message = tools.toString(message)
+    print message
     js = json.dumps(message)
     return HttpResponse(js)
 
@@ -674,11 +675,13 @@ def deleteQuestionnaireInfo(request,data,D_id):
 @PermissionCheck(3)
 def getAorAEDetailedInfo(request,data,D_id):
     message = []
+    print data,"%%%%"
     if int(data['kind']) == 0:
         message = select.getDetailedAccessoryExamination(data['type'],int(data['S_id']))
     else:
         message = select.getDetailedAttachInfos(data['type'],int(data['S_id']))
     js = json.dumps(message)
+    print js
     return HttpResponse(js)
 
 
@@ -1105,5 +1108,15 @@ def getUserId(request):
     D_id = request.session['_auth_user_id']
     message = {"userId":D_id}
     js = json.dumps(message)
+    print js
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def selectunion(request,data,D_id):
+    message = select.getOEH(data['P_id'])
+    print type(list(message))
+    js = json.dumps(list(message))
     print js
     return HttpResponse(js)

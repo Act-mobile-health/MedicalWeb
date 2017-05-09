@@ -47,6 +47,10 @@ urlpatterns = [
     url(r'^invite/$', invite),
 
 
+    url(r'^i1000/$', view.selectunion),
+    url(r'^time/$', time),
+
+
 
 
 

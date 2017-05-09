@@ -6,8 +6,6 @@ $(document).ready(function(){
     });
 
     $("#searchbt").click(function(){
-        console.log($("#P_id").val());
-        console.log("!111");
         searchPatient($("#P_id").val());
     });
 
@@ -25,23 +23,6 @@ $(document).ready(function(){
         p1.setAttribute("class", "row");
 	}
 
-//    if(window.innerWidth>1600){
-//        var p1 = document.getElementById("p1");
-//        p1.style.width = "70%"
-//        var p2 = document.getElementById("p2");
-//        p2.style.width = "70%"
-//        var p3 = document.getElementById("p3");
-//        p3.style.width = "70%"
-//	}
-//	else if(window.innerWidth>1000){
-//        var p1 = document.getElementById("p1");
-//        p1.style.width = "80%"
-//        var p2 = document.getElementById("p2");
-//        p2.style.width = "80%"
-//        var p3 = document.getElementById("p3");
-//        p3.style.width = "80%"
-//	}
-
 });
 
 function submitOutpatientInfo(){
@@ -58,7 +39,6 @@ function submitOutpatientInfo(){
                 errorProcess(data);
             }
         });
-        return false;
     }
 }
 
@@ -72,7 +52,7 @@ function searchPatient(P_id){
             $("#name").val(data.name);
         },
         error:function(data){
-                errorProcess(data);
+            errorProcess(data);
         }
     });
 }

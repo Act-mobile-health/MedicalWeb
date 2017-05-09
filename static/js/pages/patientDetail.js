@@ -313,25 +313,27 @@ $(document).ready(function (e) {
         str_edit = "OutPatientServiceInfoDetails";
         str_type = "outpatient-"+index;
         temp_name = "门诊";
-        temp_show = "showOutPatientServiceInfo"
+        temp_show = "showOutPatientServiceInfo";
     }
     else if(type == 1){
         str_edit = "EmergCallInfoDetails";
         str_type = "emergency-"+index;
         temp_name = "急诊";
-        temp_show = "showEmergCallInfo"
+        temp_show = "showEmergCallInfo";
     }
     else if(type == 2){
         str_edit = "InHospitalInfoDetails";
         str_type = "hospital-"+index;
         temp_name = "住院";
-        temp_show = "showInHospitalInfo"
+        temp_show = "showInHospitalInfo";
     }
+    var temp_index = parseInt(index)+1;
+    temp_index = temp_index.toString();
     var  str = "";
      str     = '<div class="col-lg-12">'+
 			   '<div class="panel bk-bg-white">'+
 			   '<div class="panel-heading bk-bg-primary">'+
-			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+index+'</h6>'+
+			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+temp_index+'</h6>'+
 			   '<div class="panel-actions" style="display:block;">'+
 //				'<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>'+
 				'<a href="#" onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>'+
@@ -762,28 +764,60 @@ $(document).ready(function (e) {
         });
     }
 
+//    function showHospital(){
+//        type = 2;
+//        S_id = [];
+//        $("#hospital").empty();
+//        $.ajax({
+//            type:"GET",
+//            url:"/i21/",
+//            data:{"P_id":patientId,"type":type},
+//            dataType:"json",
+//            success:function (json_data) {
+//                $.each(json_data,function (index,item){
+//                    S_id.push(item.IH_id);
+//                    var descDiv = document.createElement('div');
+//                    $("#hospital").append(descDiv);
+//                    descDiv.className = "row";
+//                    descDiv.innerHTML = GenerateTab1(index)+GenerateTab2(index)+GenerateTab3(index)+GenerateTab4(index);
+//                });
+//            },
+//            error:function (data) {
+//                errorProcess(data);
+//            }
+//        });
+//    }
+
     function showHospital(){
-        type = 2;
-        S_id = [];
-        $("#hospital").empty();
-        $.ajax({
-            type:"GET",
-            url:"/i21/",
-            data:{"P_id":patientId,"type":type},
-            dataType:"json",
-            success:function (json_data) {
-                $.each(json_data,function (index,item){
-                    S_id.push(item.IH_id);
-                    var descDiv = document.createElement('div');
-                    $("#hospital").append(descDiv);
-                    descDiv.className = "row";
-                    descDiv.innerHTML = GenerateTab1(index)+GenerateTab2(index)+GenerateTab3(index)+GenerateTab4(index);
-                });
-            },
-            error:function (data) {
-                errorProcess(data);
-            }
-        });
+//        var descDiv = document.createElement('div');
+//        $("#hospital").append(descDiv);
+        temp = document.getElementById("hospital"),
+        temp.innerHTML = '<div class="timeline-row">'+
+'		<div class="timeline-time"><small>Oct 30</small>4:53 PM</div>'+
+'		<div class="timeline-icon">'+
+'			<div class="bg-primary"><i class="fa fa-pencil"></i></div>'+
+'		</div>'+
+'		<div class="panel timeline-content">'+
+'			<div class="panel-body">'+
+'				<h2>This is a title for this timeline post</h2>'+
+'				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.</p>'+
+'			</div>'+
+'		</div>'+
+'	</div>'+
+'	'+
+'	<div class="timeline-row">'+
+'		<div class="timeline-time"><small>Oct 25</small>6:14 PM</div>'+
+'		<div class="timeline-icon">'+
+'			<div class="bg-warning"><i class="fa fa-quote-right"></i></div>'+
+'		</div>'+
+'		<div class="panel timeline-content">'+
+'			<div class="panel-body">'+
+'				<blockquote>'+
+'					<p>Lorem ipsum velit ullamco anim pariatur proident eu deserunt laborum. Lorem ipsum ad in nostrud adipisicing cupidatat anim officia ad id cupidatat veniam quis elit ullamco</p>'+
+'					<small>John Smith</small></blockquote>'+
+'			</div>'+
+'		</div>'+
+'	</div>';
     }
 
     function showInHospitalInfo(index){

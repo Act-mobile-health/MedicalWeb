@@ -90,3 +90,6 @@ def setting(request):
 @login_required
 def invite(request):
     return render(request,"invite.html")
+
+def time(request):
+    return render(request,'demo.html')

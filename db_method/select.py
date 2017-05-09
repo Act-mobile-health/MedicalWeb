@@ -2,6 +2,8 @@
 from Website.models import *
 from django.core.exceptions import ObjectDoesNotExist
 from control_method import tools
+from operator import attrgetter
+from itertools import chain
 
 
 # 用户名/邮箱/手机号 重复性检验
@@ -383,18 +385,18 @@ def getBasicQuestionnaireInfos(type,S_id):
 
 #获取某个病人所有的门诊的个数
 def getPatientAllOutPatientServiceInfos(P_id):
-    list = []
-    message = {}
+    q = []
     try:
-        values=OutPatientServiceInfo.objects.filter(P_id = P_id).values_list('id')
-        keys = ['OPS_id']
-        for value in values:
-            message = tools.dictPackage(keys,value)
-            list.append(message)
+        values=OutPatientServiceInfo.objects.filter(P_id = P_id).values('id','date','place')
+        q = list(values)
+        print q
+        q = sorted(q, key=lambda q:q['date'])
+        for a in q:
+            a['date'] = str(a['date'])
     except Exception,e:
         tools.exceptionRecord('select.py','getPatientAllOutPatientServiceInfos',e)
 
-    return list
+    return q
 
 #获取某个病人某个的门诊的详细信息
 def getPatientDetailedOutPatientServiceInfos(S_id):
@@ -433,18 +435,18 @@ def getPatientDetailedOutPatientServiceInfos(S_id):
 
 #获取某个病人所有的急诊的个数
 def getPatientAllEmergCallInfos(P_id):
-    list = []
-    message = {}
+    q = []
     try:
-        values=EmergCallInfo.objects.filter(P_id = P_id).values_list('id')
-        keys = ['EC_id']
-        for value in values:
-            message = tools.dictPackage(keys, value)
-            list.append(message)
+        values=EmergCallInfo.objects.filter(P_id = P_id).values('id','date','place')
+        q = list(values)
+        print q
+        q = sorted(q, key=lambda q:q['date'])
+        for a in q:
+            a['date'] = str(a['date'])
     except Exception, e:
         tools.exceptionRecord('select.py', 'getPatientAllEmergCallInfos', e)
 
-    return list
+    return q
 
 # 获取某个病人某个的急诊的详细信息
 def getPatientDetailedEmergCallInfos(S_id):
@@ -485,18 +487,18 @@ def getPatientDetailedEmergCallInfos(S_id):
 
 #获取某个病人所有的住院的个数
 def getPatientAllInHospitalInfos(P_id):
-    list = []
-    message = {}
+    q = []
     try:
-        values=InHospitalInfo.objects.filter(P_id = P_id).values_list('id')
-        keys = ['IH_id']
-        for value in values:
-            message = tools.dictPackage(keys,value)
-            list.append(message)
+        values=InHospitalInfo.objects.filter(P_id = P_id).values('id','date','place')
+        q = list(values)
+        print q
+        q = sorted(q, key=lambda q:q['date'])
+        for a in q:
+            a['date'] = str(a['date'])
     except Exception,e:
         tools.exceptionRecord('select.py','getPatientAllInHospitalInfos',e)
 
-    return list
+    return q
 
 #获取某个病人某个的住院的详细信息
 def getPatientDetailedInHospitalInfos(S_id):
@@ -989,3 +991,25 @@ def getAppId(data):
     except Exception, e:
         tools.exceptionRecord('select.py', 'getAppId', e)
         return -1
+
+def getOEH(P_id):
+    try:
+        o = OutPatientServiceInfo.objects.filter(P_id=P_id).values("id","date","place")
+        for a in o:
+            a['type'] = "0"
+        e = EmergCallInfo.objects.filter(P_id=P_id).values("id","date","place")
+        for a in e:
+            a['type'] = "1"
+        h = InHospitalInfo.objects.filter(P_id=P_id).values("id","date","place")
+        for a in h:
+            a['type'] = "2"
+        q = list(chain(o,e,h))
+        print q
+        q = sorted(q, key=lambda q:q['date'])
+        # print q
+        for a in q:
+            a['date'] = str(a['date'])
+        return q
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getOEH', e)
+
