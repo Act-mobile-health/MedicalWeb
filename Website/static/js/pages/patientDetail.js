@@ -527,25 +527,25 @@ $(document).ready(function (e) {
     }
     function colorForOEH(str){
         if(str=="0"){
-            return "bg-primary";
+            return "bg-success";
         }
         if(str=="1"){
             return "bg-warning";
         }
         if(str=="2"){
-            return "bg-info";
+            return "bg-danger";
         }
 
     }
     function iconForOEH(str){
         if(str=="0"){
-            return "fa fa-pencil";
+            return "fa fa-medkit";
         }
         if(str=="1"){
-            return "fa fa-camera";
+            return "fa fa-ambulance";
         }
         if(str=="2"){
-            return "fa fa-video-camera";
+            return "fa fa-hospital-o";
         }
 
     }

@@ -423,14 +423,13 @@ def addMedicineRecord(data):
         return False
 
 def addAppInfo(data):
-    id = -1
+    # id = -1
     try:
         if data['date'] != '':
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         obj = AppInfo(P_id = data['P_id'], date = d, type = data['type'],AI_id = data['AI_id'])
-        id = obj.id
 
         if(data['type']=="0"):
             newObj = OutPatientServiceInfo(P_id = data['P_id'], date = d)
@@ -439,25 +438,27 @@ def addAppInfo(data):
             obj1.o_time = str(int(obj1.o_time) + 1)
             print obj1.o_time
             obj1.save()
+            obj.S_id = newObj.id
         elif(data['type']=="1"):
             newObj = EmergCallInfo(P_id = data['P_id'], date = d)
             newObj.save()
             obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
             obj1.o_time = str(int(obj1.e_time) + 1)
             obj1.save()
+            obj.S_id = newObj.id
         elif(data['type']=="2"):
             newObj = InHospitalInfo(P_id = data['P_id'], date = d)
             newObj.save()
             obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
             obj1.o_time = str(int(obj1.h_time) + 1)
             obj1.save()
-
-        obj.S_id = newObj.id
+            obj.S_id = newObj.id
         obj.save()
-        return id
+        print obj.S_id,"S_id"
+        return str(obj.S_id)
     except Exception, e:
         tools.exceptionRecord('insert.py','addAppInfo',e)
-        return id
+        return str(obj.S_id)
 
 
 def addInvitation(D_id,data):

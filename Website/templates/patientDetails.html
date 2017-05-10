@@ -279,42 +279,51 @@
 											<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 										</a>
 									</li>
-									<li class="active">
-										<a href="/patientInfos/">
-											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
-										</a>
-									</li>
-									<li>
-										<a href="/add/outpatientInfos/">
-											<i class="fa fa-table" aria-hidden="true"></i><span>添加门诊信息</span>
-										</a>
-									</li>
-									<li>
-										<a href="/add/emergencyInfos/">
-											<i class="fa fa-life-bouy" aria-hidden="true"></i><span>添加急诊信息</span>
-										</a>
-									</li>
-									<li>
-										<a href="/add/hospitalInfos/">
-											<i class="fa fa-font" aria-hidden="true"></i><span>添加住院信息</span>
-										</a>
-									</li>
+
 									<li>
 										<a href="/pending/">
 											<i class="fa fa-picture-o" aria-hidden="true"></i><span>待处理事项</span>
 										</a>
+									</li>
+									<li class="active">
+										<a href="/patientInfos/">
+											<i class="fa fa-copy" aria-hidden="true"></i><span>患者汇总信息</span>
+										</a>
+									</li>
+									<li class="nav-parent">
+										<a >
+											<i class="fa fa-copy" aria-hidden="true"></i><span>添加随访记录</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/add/outpatientInfos/">
+													<span>添加门诊信息</span>
+												</a>
+											</li>
+											<li>
+												<a href="/add/emergencyInfos/">
+													<span>添加急诊信息</span>
+												</a>
+											</li>
+											<li>
+												<a href="/add/hospitalInfos/">
+													<span>添加住院信息</span>
+												</a>
+											</li>
+										</ul>
 									</li>
 									<li class="nav-parent">
 										<a >
 											<i class="fa fa-copy" aria-hidden="true"></i><span>实验组</span>
 										</a>
 										<ul class="nav nav-children" id="experimentGroup">
+											<li>
+												<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails">添加实验组</span></a>
+											</li>
 
 										</ul>
 									</li>
-									<li>
-										<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-picture-o" aria-hidden="true"></i> 添加实验组</span></a>
-									</li>
+
 									<li id="setting" style="display:none">
 										<a href="/setting/"><i class="fa fa-cog" aria-hidden="true"></i><span>管理面板</span></a>
 									</li>
@@ -359,19 +368,18 @@
 									</a>
 									<ul class="dropdown-menu" role="menu" style="background:#7aa2ca;">
 										<li role="presentation"><a href="#1">患者详情</a></li>
+										<li class="divider" ></li>
 										<li role="presentation"><a href="#2">家属信息</a></li>
 									</ul>
 								</li>
 								<li class="dropdown" style="width:150px">
 									<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-										就诊及APP信息 <span class="caret"></span>
+										随访及APP数据 <span class="caret"></span>
 									</a>
 									<ul class="dropdown-menu" role="menu" style="background:#7aa2ca;">
-										<li role="presentation" onclick="showOutpatient()"><a href="#3">门诊记录</a></li>
-										<li role="presentation" onclick="showEmergency()"><a href="#4">急诊记录</a></li>
-										<li role="presentation" onclick="showHospital()"><a href="#5">住院记录</a></li>
+										<li role="presentation" onclick="showAll()"><a href="#3">随访记录</a></li>
 										<li class="divider" ></li>
-										<li role="presentation" onclick="showAPP()"><a href="#6">APP数据</a></li>
+										<li role="presentation" onclick="showAPP()"><a href="#4">APP数据</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -535,7 +543,7 @@
 
                             <div class="tab-pane fade" id="3">
                             <div style="margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
-								<button id="temp_all" onclick="showAll()" type="button" class="btn btn-warning" style="width:150px;height:25px;padding:2px;font-size:14px;margin-left:40px;">显示全部随访记录</button>
+								<button id="temp_all" onclick="showAll()" type="button" class="btn btn-info" style="width:150px;height:25px;padding:2px;font-size:14px;margin-left:40px;">显示全部随访记录</button>
                             </div>
                             <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
                                 <a  data-toggle="modal" onclick="addInfo()" href="#OutPatientServiceInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加门诊</a>
@@ -543,11 +551,11 @@
                             </div>
                             <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
                                 <a  data-toggle="modal" onclick="addInfo()" href="#EmergCallInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加急诊</a>
-								<button id="showEmBt" onclick="showOne('1')" type="button" class="btn btn-info" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示急诊</button>
+								<button id="showEmBt" onclick="showOne('1')" type="button" class="btn btn-warning" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示急诊</button>
                             </div>
                             <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
                                 <a  data-toggle="modal" onclick="addInfo()" href="#InHospitalInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加住院</a>
-								<button id="showInhoBt" onclick="showOne('2')" type="button" class="btn btn-primary" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示住院</button>
+								<button id="showInhoBt" onclick="showOne('2')" type="button" class="btn btn-danger" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示住院</button>
                             </div>
                             <!--<div id="hospital">-->
 							<div class="timeline animated" id="follow_up">

@@ -915,6 +915,7 @@ def app_addOrUpdateAppInfo(request):
             message['id'] = update.updateAppInfo(data)
         if message['id'] != -1:
             message['result'] = '0'
+        print message,"message#####################"
         return HttpResponse(json.dumps(message))
 
 
@@ -926,7 +927,8 @@ def app_addAppAttachment(request):
         myFile = request.FILES['upload_file']
         print request.FILES
 
-        obj = select.getAppId(request.GET.get('AI_id', ''))
+        obj = select.getAppId(request.GET.get('AI_id'))
+        print obj
         S_id = int(obj['S_id'])
         type = obj['type']
         date = obj['date']
