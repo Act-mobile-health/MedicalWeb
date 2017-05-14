@@ -142,3 +142,11 @@ $(document).ready(function(){
         console.log(err)
     }
 })
+
+function getIndex(list, value){
+    for(j=0;j<list.length;j++){
+        if(list[j] == value){
+            return j;
+        }
+    }
+}

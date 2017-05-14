@@ -1747,5 +1747,4 @@ $(document).ready(function (e) {
         }
     }
 
-    function showAPP(){
-    }
+

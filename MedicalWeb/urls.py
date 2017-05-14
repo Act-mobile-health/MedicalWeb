@@ -141,5 +141,9 @@ urlpatterns = [
     url(r'^i77/',view.updateCardiogram),
     url(r'^i100/',view.getUserId),
 
+
+
+    url(r'^i90/',view.getCat_MRCSum2Weeks),
+
     # url(r'^i18/',view.updatePatientInfo),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

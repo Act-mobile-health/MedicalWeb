@@ -133,3 +133,76 @@ def get_values_listHandle():
 #get_values_listHandle()
 
 
+def WordToPinyin(data):
+    result = ''
+    if data == '植物园':
+        result = 'zhiWuYuan'
+    elif data == '云岗':
+        result = 'yunGang'
+    elif data == '榆垡':
+        result = 'yuFa'
+    elif data == '永乐店':
+        result = 'yongLeDian'
+    elif data == '永定门内':
+        result = 'yongDingMenNei'
+    elif data == '亦庄':
+        result = 'yiZhuang'
+    elif data == '延庆':
+        result = 'yanQing'
+    elif data == '西直门北':
+        result = 'xiZhiMenBei'
+    elif data == '万寿西宫':
+        result = 'wanShouXiGong'
+    elif data == '万柳':
+        result = 'wanLiu'
+    elif data == '通州':
+        result = 'tongZhou'
+    elif data == '天坛':
+        result = 'tianTan'
+    elif data == '顺义':
+        result = 'shunYi'
+    elif data == '前门':
+        result = 'qianMen'
+    elif data == '平谷':
+        result = 'pingGu'
+    elif data == '农展馆':
+        result = 'nongZhanGuan'
+    elif data == '南三环':
+        result = 'nanSanHuan'
+    elif data == '密云水库':
+        result = 'miYunShuiKu'
+    elif data == '密云':
+        result = 'miYun'
+    elif data == '门头沟':
+        result = 'menTouGou'
+    elif data == '琉璃河':
+        result = 'liuLiHe'
+    elif data == '怀柔':
+        result = 'huaiRou'
+    elif data == '官园':
+        result = 'guanYuan'
+    elif data == '古城':
+        result = 'guCheng'
+    elif data == '丰台花园':
+        result = 'fengTaiHuaYuan'
+    elif data == '房山':
+        result = 'fangShan'
+    elif data == '东四环':
+        result = 'dongSiHuan'
+    elif data == '东四':
+        result = 'dongSi'
+    elif data == '东高村':
+        result = 'dongGaoCun'
+    elif data == '定陵':
+        result = 'dingLing'
+    elif data == '大兴':
+        result = 'daXing'
+    elif data == '昌平':
+        result = 'changPing'
+    elif data == '北部新区':
+        result = 'beiBuXinQu'
+    elif data == '八达岭':
+        result = 'baDaLing'
+    elif data == '奥体中心':
+        result = 'aoTiZhongXin'
+    return result

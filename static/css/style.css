@@ -4147,11 +4147,29 @@ margin-bottom: 20px !important;
 /* Page: Profile
 =================================================================== */
 
+.bg-primary {
+  background-color: #32b9b1; }
+
+.bg-success {
+  background-color: #51be38; }
+
+.bg-info {
+  background-color: #5bc0de; }
+
+.bg-warning {
+  background-color: #ef9544; }
+
+.bg-danger {
+  background-color: #f05a5b; }
+
+.bg-muted {
+  background-color: #bbbbbb; }
+
 
 .timeline {
   list-style: none;
   position: relative;
-  max-width: 1200px;
+  max-width: 1000px;
   padding: 20px;
   margin: 0 auto;
   overflow: hidden; }
@@ -4169,7 +4187,7 @@ margin-bottom: 20px !important;
   .timeline .timeline-row {
     padding-left: 50%;
     position: relative;
-    z-index: 10; }
+    z-index: 2; }
     .timeline .timeline-row .timeline-time {
       position: absolute;
       right: 50%;
@@ -4278,8 +4296,8 @@ margin-bottom: 20px !important;
     left: 0; }
   .timeline.animated .timeline-row.active:nth-child(odd) .timeline-content {
     left: 0; }
-
-@media (max-width: 1200px) {
+/*add by zyc*/
+@media (max-width: 2000px) {
   .timeline {
     padding: 15px 10px; }
     .timeline:after {

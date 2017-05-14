@@ -790,17 +790,23 @@ def getMsg2Weeks(P_id, type):
     from django.utils.timezone import now, timedelta
     end = now().date()
     start = end - timedelta(weeks=2)
-    message={}
+    print start,end,start +timedelta(days=1)
+    temp = {}
+    message =[]
+    message.append(temp)
+    for i in xrange(15):
+        temp[str(i+1)] = str(start + timedelta(days=i))[5:10].replace("-","")
     try:
         if type == 1:
-            values = CATandMRC.objects.filter(date_range=(start, end), P_id=P_id).values_list('catSum')
+            values = CATandMRC.objects.filter(date__gte=start, P_id=P_id).values('date','catSum')
         elif type == 2:
-            values = PmExposure.objects.filter(date_range=(start, end), P_id=P_id).values_list('exposure')
-        else:
-            return message
-        keys = ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7',
-                'day8', 'day9', 'day10', 'day11', 'day12', 'day13', 'day14']
-        message = tools.dictPackage(keys, values)
+            values = PmExposure.objects.filter(date__gte=start, P_id=P_id).values_list('date','exposure')
+        # else:
+        #     return message
+        for v in values:
+            v['date']= str(v['date'])[5:10].replace("-","")
+        message.append(list(values))
+        print message
     except Exception, e:
         tools.exceptionRecord('select.py','getMsg2Weeks',e)
     return message
@@ -982,6 +988,7 @@ def getAppId(data):
     try:
         message = {}
         obj = AppInfo.objects.get(AI_id = data)
+        print obj
         message['S_id'] = obj.S_id
         message['date'] = str(obj.date)
         print str(obj.date),"%%%%%%"

@@ -4,7 +4,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 import demjson
-from db_method import insert,select,update,delete
+from db_method import insert,select,update,delete,soap
 from control_method import tools
 from django.shortcuts import render
 from django.contrib import auth
@@ -926,7 +926,7 @@ def app_addAppAttachment(request):
         message = {'result': '-1'}
         myFile = request.FILES['upload_file']
         print request.FILES
-
+        print request.GET.get('AI_id')
         obj = select.getAppId(request.GET.get('AI_id'))
         print obj
         S_id = int(obj['S_id'])
