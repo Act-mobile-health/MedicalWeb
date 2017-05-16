@@ -196,3 +196,14 @@ def deleteInvitation(data):
     except Exception, e:
         tools.exceptionRecord('delete.py','deleteInvitation',e)
         return False
+
+def deleteMC(id):
+
+    try:
+        obj = MedicineChange.objects.get(id = int(id))
+        MedicineRecord.objects.filter(MC_id=obj.MC_id).delete()
+        obj.delete()
+        return 0
+    except Exception, e:
+        tools.exceptionRecord('delete.py','deleteMC',e)
+        return -1

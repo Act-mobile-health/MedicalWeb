@@ -407,20 +407,16 @@ def addMedicineChange(data):
         return id
 
 #add MedicineRecord Table
-def addMedicineRecord(data):
-    id = -1
+def addMedicineRecord(myFile, id, sign):
+
     try:
-        # if data['date'] != '':
-        #     d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        # else:
-        #     d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = MedicineRecord(MC_id = data['MC_id'], medicine = data['medicine'])
+        newObj = MedicineRecord(MC_id = id, doc = myFile, sign = sign)
         newObj.save()
-        id = newObj.id
-        return True
+
+        return newObj.id
     except Exception, e:
         tools.exceptionRecord('insert.py','addMedicineRecord',e)
-        return False
+        return -1
 
 def addAppInfo(data):
     id = -1

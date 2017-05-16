@@ -792,7 +792,7 @@ class MedicineRegular(models.Model):
 
 
 class MedicineChange(models.Model):
-    change = models.CharField(max_length=2, null=False)
+    ch = models.CharField(max_length=2, null=False)
     P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(auto_now_add=True)
     MC_id = models.CharField(max_length=32, null=False)
@@ -806,9 +806,11 @@ class MedicineChange(models.Model):
 class MedicineRecord(models.Model):
     MC_id = models.CharField(max_length=32, null=False)
     medicine = models.CharField(max_length=20, null=False)
+    sign = models.CharField(max_length=2, null=False)# before: sign =0 after: sign = 1
     date = models.DateField(auto_now_add=True)
     name = models.CharField(max_length=50, null=False)
     producer = models.CharField(max_length=50, null=False)
+    doc = models.ImageField(upload_to="MR", null=True)
 
 class invitation(models.Model):
 

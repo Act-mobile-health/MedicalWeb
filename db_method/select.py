@@ -790,7 +790,6 @@ def getMsg2Weeks(P_id, type):
     from django.utils.timezone import now, timedelta
     end = now().date()
     start = end - timedelta(weeks=2)
-    print start,end,start +timedelta(days=1)
     temp = {}
     message =[]
     message.append(temp)
@@ -798,15 +797,14 @@ def getMsg2Weeks(P_id, type):
         temp[str(i+1)] = str(start + timedelta(days=i))[5:10].replace("-","")
     try:
         if type == 1:
-            values = CATandMRC.objects.filter(date__gte=start, P_id=P_id).values('date','catSum')
+            values = CATandMRC.objects.filter(date__gte=start, P_id=P_id).values('date', 'catSum', 'mrc')
         elif type == 2:
-            values = PmExposure.objects.filter(date__gte=start, P_id=P_id).values_list('date','exposure')
+            values = PmExposure.objects.filter(date__gte=start, P_id=P_id).values('date','exposure')
         # else:
         #     return message
         for v in values:
             v['date']= str(v['date'])[5:10].replace("-","")
         message.append(list(values))
-        print message
     except Exception, e:
         tools.exceptionRecord('select.py','getMsg2Weeks',e)
     return message
@@ -988,10 +986,10 @@ def getAppId(data):
     try:
         message = {}
         obj = AppInfo.objects.get(AI_id = data)
-        print obj
+        # print obj
         message['S_id'] = obj.S_id
         message['date'] = str(obj.date)
-        print str(obj.date),"%%%%%%"
+        # print str(obj.date),"%%%%%%"
         message['type'] = obj.type
         message['P_id'] = obj.P_id
         return message
@@ -1011,7 +1009,7 @@ def getOEH(P_id):
         for a in h:
             a['type'] = "2"
         q = list(chain(o,e,h))
-        print q
+        # print q
         q = sorted(q, key=lambda q:q['date'])
         # print q
         for a in q:
@@ -1020,3 +1018,55 @@ def getOEH(P_id):
     except Exception, e:
         tools.exceptionRecord('select.py', 'getOEH', e)
 
+def getMR(P_id):
+     try:
+        values = MedicineChange.objects.filter(P_id=P_id).values("MC_id","date","ch","id")
+        temp = list(values)
+        # print  temp
+        new = []
+        # print type(temp)
+        for v in temp:
+            # print type(v)
+            v['date'] = str(v['date'])
+            # print type(v['date']),v['date']
+            if(v['ch'] == "1"):
+                mr = MedicineRecord.objects.filter(MC_id=v['MC_id']).values("sign","doc")
+                v['info'] = list(mr)
+                new.append(v)
+        # print new
+
+        return new
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getMR', e)
+
+def getMReg(data):
+     try:
+        # start = datetime.date.today().replace(day=1)
+        values = MedicineRegular.objects.filter(P_id=data['P_id']).values("regular","date")
+        temp = list(values)
+        # print  temp,"temp in getmreg"
+        # print data
+        # print type(temp)
+        for v in temp:
+            # print type(v)
+            v['date'] = str(v['date'])
+
+        return temp
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getMReg', e)
+
+def getAcuteExac(data):
+     try:
+        # start = datetime.date.today().replace(day=1)
+        values = CATandMRC.objects.filter(P_id=data['P_id']).values("acuteExac","date")
+        temp = list(values)
+        print  temp,"temp in getAcuteExac"
+        print data
+        print type(temp)
+        for v in temp:
+            print type(v)
+            v['date'] = str(v['date'])
+
+        return temp
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getAcuteExac', e)

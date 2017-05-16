@@ -144,6 +144,12 @@ urlpatterns = [
 
 
     url(r'^i90/',view.getCat_MRCSum2Weeks),
+    url(r'^i91/',view.getExploure2Weeks),
+    url(r'^i92/',view.getMedicineRecord),
+    url(r'^i93/',view.deleteMC),
+    url(r'^i94/',view.getMedicineRegular),
+    url(r'^i95/',view.getAcuteExac),
+
 
     # url(r'^i18/',view.updatePatientInfo),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

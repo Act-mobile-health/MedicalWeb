@@ -788,6 +788,7 @@ def getExploure2Weeks(request, data, D_id):
     message = select.getMsg2Weeks(data['P_id'], 2)
     # message = tools.toString(message)
     js = json.dumps(message)
+    # print js
     return HttpResponse(js)
 
 
@@ -828,7 +829,7 @@ def app_addOrUpdateCATTable(request):
             message['id'] = update.updateCATandMRC(data)
         if message['id'] != -1:
             message['result'] = '0'
-        print message
+        # print message
         return HttpResponse(json.dumps(message))
 
 #APP interface 3
@@ -852,7 +853,7 @@ def app_addTrackInfoTable(request):
     if request.method == 'POST':
         data = request.POST
         myFile = request.FILES.get("myimage", None)
-        print data, "Trackkkkkkkkkkkk"
+        # print data, "Trackkkkkkkkkkkk"
         message = {'result': '-1'}
         if insert.addTrackInfo(data, myFile):
             message['result'] = '0'
@@ -864,7 +865,7 @@ def app_addTrackInfoTable(request):
 def app_addOrUpdateMedicineRegularTable(request):
     if request.method == 'POST':
         data = request.POST
-        print data,"Medicineeeeee"
+        # print data,"Medicineeeeee"
         message = {'result': '-1', 'id': '-1'}
         if data['id'] == 'null':
             message['id'] = insert.addMedicineRegular(data)
@@ -895,11 +896,13 @@ def app_addOrUpdateMedicineChangeTable(request):
 @csrf_exempt
 def app_addMedicineRecordTable(request):
     if request.method == 'POST':
-        data = request.POST
-        print data,"MRRRR"
+        # data = request.POST
+        myFile = request.FILES['upload_file']
+        print request.FILES
+        AI_id = request.GET.get('AI_id')
+        sign = request.GET.get('sign')
         message = {'result': '-1'}
-        if insert.addMedicineRecord(data):
-            message['result'] = '0'
+        message['result'] = insert.addMedicineRecord(myFile, AI_id, sign)
         return HttpResponse(json.dumps(message))
 
 #APP interface 8
@@ -925,15 +928,11 @@ def app_addAppAttachment(request):
     if request.method == 'POST':
         message = {'result': '-1'}
         myFile = request.FILES['upload_file']
-        print request.FILES
-        print request.GET.get('AI_id')
         obj = select.getAppId(request.GET.get('AI_id'))
-        print obj
         S_id = int(obj['S_id'])
         type = obj['type']
         date = obj['date']
         P_id = obj['P_id']
-        print date
         D_id = 0
         description = "from app"
         if not myFile:
@@ -1110,7 +1109,7 @@ def getUserId(request):
     D_id = request.session['_auth_user_id']
     message = {"userId":D_id}
     js = json.dumps(message)
-    print js
+    # print js
     return HttpResponse(js)
 
 @login_required
@@ -1120,5 +1119,43 @@ def selectunion(request,data,D_id):
     message = select.getOEH(data['P_id'])
     print type(list(message))
     js = json.dumps(list(message))
-    print js
+    # print js
     return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getMedicineRecord(request,data,D_id):
+    message = select.getMR(data['P_id'])
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(3)
+def deleteMC(request,data,D_id):
+    message = {"result":"-1"}
+    message['result'] = delete.deleteMC(data['id'])
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getMedicineRegular(request,data,D_id):
+    message = select.getMReg(data)
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getAcuteExac(request,data,D_id):
+    message = select.getAcuteExac(data)
+    js = json.dumps(message)
+    print js,"$$$$$$$"
+    return HttpResponse(js)
+
