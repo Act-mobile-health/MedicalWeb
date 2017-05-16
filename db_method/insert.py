@@ -426,14 +426,13 @@ def addAppInfo(data):
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         obj = AppInfo(P_id = data['P_id'], date = d, type = data['type'],AI_id = data['AI_id'])
-        print id
+        # print id
         if(data['type']=="0"):
             newObj = OutPatientServiceInfo(P_id = data['P_id'], date = d)
             newObj.save()
             obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
             obj1.o_time = str(int(obj1.o_time) + 1)
             obj1.save()
-            print obj1.o_time,"o###################000000"
             obj.S_id = newObj.id
         elif(data['type']=="1"):
             newObj = EmergCallInfo(P_id = data['P_id'], date = d)
@@ -451,7 +450,6 @@ def addAppInfo(data):
             obj.S_id = newObj.id
         obj.save()
         id = obj.id
-        print obj.S_id,"S_id"
         return str(id)
     except Exception, e:
         tools.exceptionRecord('insert.py','addAppInfo',e)

@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from control_method import tools
 from operator import attrgetter
 from itertools import chain
+from django.db.models import Q
 
 
 # 用户名/邮箱/手机号 重复性检验
@@ -1070,3 +1071,18 @@ def getAcuteExac(data):
         return temp
      except Exception, e:
         tools.exceptionRecord('select.py', 'getAcuteExac', e)
+
+def getAppInfo(data):
+     try:
+        start = datetime.date.today().replace(day=1)
+        print  start
+        values = AppInfo.objects.filter(Q(sign="1")|Q(sign="0",date_upload__gte=start)).values("P_id","date","date_upload","type","sign")
+        temp = list(values)
+        print  temp,"temp in getAppInfo"
+        for v in temp:
+            v['date'] = str(v['date'])
+            v['date_upload'] = str(v['date_upload'])
+
+        return temp
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getAppInfo', e)

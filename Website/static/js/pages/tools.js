@@ -150,3 +150,21 @@ function getIndex(list, value){
         }
     }
 }
+
+function patientNameParse(input){
+    var name = "";
+    $.ajax({
+        type:"GET",
+        url:"/i16/",
+        data:{P_id:input},
+        dataType:"json",
+        async:false,
+        success: function(json_data){
+            name = json_data['name'];
+        },
+        error: function(json_data){
+            errorProcess(json_data);
+        }
+    });
+    return name;
+}

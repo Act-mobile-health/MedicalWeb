@@ -1159,3 +1159,12 @@ def getAcuteExac(request,data,D_id):
     print js,"$$$$$$$"
     return HttpResponse(js)
 
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getAppInfo(request,data,D_id):
+
+    message = select.getAppInfo(data)
+    js = json.dumps(message)
+    print js,"$$$$$$$"
+    return HttpResponse(js)

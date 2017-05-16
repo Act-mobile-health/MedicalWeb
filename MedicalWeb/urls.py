@@ -149,6 +149,7 @@ urlpatterns = [
     url(r'^i93/',view.deleteMC),
     url(r'^i94/',view.getMedicineRegular),
     url(r'^i95/',view.getAcuteExac),
+    url(r'^i96/',view.getAppInfo),
 
 
     # url(r'^i18/',view.updatePatientInfo),

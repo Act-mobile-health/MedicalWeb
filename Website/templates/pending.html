@@ -152,54 +152,54 @@
 						<li>
 							<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
 								<i class="fa fa-bell"></i>
-								<span class="badge">3</span>
+								<span class="badge" id="sfSum"></span>
 							</a>
 							<ul class="dropdown-menu list-group">
 								<li class="dropdown-menu-header">
 									<strong>Notifications</strong>
 									<div class="progress progress-xs  progress-striped active">
-										<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-											60%
+										<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+											100%
 										</div>
 									</div>
 								</li>
 								<li class="list-item">
-									<a href="page-inbox.html">
+									<a href="/pending/">
 										<div class="pull-left">
-										   <i class="fa fa-envelope-o bk-fg-primary"></i>
+										   <i class="fa fa-medkit bk-fg-primary"></i>
 										</div>
 										<div class="media-body clearfix">
-											<div>Unread Message</div>
-											<h6>You have 10 unread message</h6>
+											<div style="color:#5cb85c">门诊记录</div>
+											<h6 id="outPat"></h6>
 										</div>
 									</a>
 								</li>
 								<li class="list-item">
-									<a href="#">
+									<a href="/pending/">
 										<div class="pull-left">
-										   <i class="fa fa-cogs bk-fg-primary"></i>
+										   <i class="fa fa-ambulance bk-fg-primary"></i>
 										</div>
 										<div class="media-body clearfix">
-											<div>New Settings</div>
-											<h6>There are new settings available</h6>
+											<div style="color:#f0ad4e">急诊记录</div>
+											<h6 id="emGen"></h6>
 										</div>
 									</a>
 								</li>
 								<li class="list-item">
-									<a href="#">
+									<a href="/pending/">
 										<div class="pull-left">
-										   <i class="fa fa-fire bk-fg-primary"></i>
+										   <i class="fa fa-hospital-o bk-fg-primary"></i>
 										</div>
 										<div class="media-body clearfix">
-											<div>Update</div>
-											<h6>There are new updates available</h6>
+											<div style="color:#d9534f">住院记录</div>
+											<h6 id="inHos"></h6>
 										</div>
 									</a>
 								</li>
 								<li class="list-item-last">
-									<a href="#">
-									  <h6>Unread notifications</h6>
-									  <span class="badge">15</span>
+									<a href="/pending/">
+									  <h6>尚未处理的随访记录</h6>
+									  <span class="badge" id="sum"></span>
 								   </a>
 								</li>
 							</ul>
@@ -273,29 +273,9 @@
 										</div>
 									</div>
 									<div class="divider2"></div>
-									<li class="active">
+									<li>
 										<a href="/">
 											<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
-										</a>
-									</li>
-									<li>
-										<a href="/patientInfos/">
-											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
-										</a>
-									</li>
-									<li>
-										<a href="/add/outpatientInfos/">
-											<i class="fa fa-table" aria-hidden="true"></i><span>添加门诊信息</span>
-										</a>
-									</li>
-									<li>
-										<a href="/add/emergencyInfos/">
-											<i class="fa fa-life-bouy" aria-hidden="true"></i><span>添加急诊信息</span>
-										</a>
-									</li>
-									<li>
-										<a href="/add/hospitalInfos/">
-											<i class="fa fa-font" aria-hidden="true"></i><span>添加住院信息</span>
 										</a>
 									</li>
 									<li>
@@ -303,17 +283,45 @@
 											<i class="fa fa-picture-o" aria-hidden="true"></i><span>待处理事项</span>
 										</a>
 									</li>
+									<li>
+										<a href="/patientInfos/">
+											<i class="fa fa-copy" aria-hidden="true"></i><span>患者汇总信息</span>
+										</a>
+									</li>
+									<li class="nav-parent">
+										<a >
+											<i class="fa fa-copy" aria-hidden="true"></i><span>添加随访记录</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/add/outpatientInfos/">
+													<span>添加门诊信息</span>
+												</a>
+											</li>
+											<li>
+												<a href="/add/emergencyInfos/">
+													<span>添加急诊信息</span>
+												</a>
+											</li>
+											<li>
+												<a href="/add/hospitalInfos/">
+													<span>添加住院信息</span>
+												</a>
+											</li>
+										</ul>
+									</li>
 									<li class="nav-parent">
 										<a >
 											<i class="fa fa-copy" aria-hidden="true"></i><span>实验组</span>
 										</a>
 										<ul class="nav nav-children" id="experimentGroup">
+											<li>
+												<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails">添加实验组</span></a>
+											</li>
 
 										</ul>
 									</li>
-									<li>
-										<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-picture-o" aria-hidden="true"></i> 添加实验组</span></a>
-									</li>
+
 									<li id="setting" style="display:none">
 										<a href="/setting/"><i class="fa fa-cog" aria-hidden="true"></i><span>管理面板</span></a>
 									</li>
@@ -345,7 +353,7 @@
 						<div class="pull-left">
 							<ol class="breadcrumb visible-sm visible-md visible-lg">
 								<li><a href=""><i class="icon fa fa-home"></i>Home</a></li>
-								<li class="active"><i class="fa fa-laptop"></i>首页</li>
+								<li class="active"><i class="fa fa-photo"></i>待处理事项</li>
 							</ol>
 						</div>
 						<div class="pull-right">
@@ -357,13 +365,13 @@
                         <div class="panel-heading bk-bg-primary">
                             <h6 ><i class="fa fa-table red"></i><span class="break"></span>患者预警信息</h6>
                             <div class="panel-actions">
-                                <a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+                                <!--<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>-->
                                 <a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
                                 <!--<a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>-->
                             </div>
                         </div>
                         <div class="panel-body ">
-                            <div class="row  col-lg-8 col-md-8">
+                            <div class="row" style="margin:0 auto;max-width:1000px">
                             <table class="table table-hover table-bordered " style="color:black;font-size:15px;">
                                 <thead>
                                 <tr>
@@ -371,7 +379,7 @@
                                     <th style="text-align:center;width:12%;">患者姓名</th>
                                     <th style="text-align:center;width:15%;">产生时间</th>
                                     <th style="text-align:center;">预警信息</th>
-                                    <th style="text-align:center;width:15%"></th>
+                                    <th style="text-align:center;width:15%">状态</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -391,33 +399,25 @@
                         <div class="panel-heading bk-bg-primary">
                             <h6><i class="fa fa-table red"></i><span class="break"></span>APP提交就诊信息</h6>
                             <div class="panel-actions">
-                                <a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+                                <!--<a href="#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>-->
                                 <a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
                                 <!--<a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>-->
                             </div>
                         </div>
                         <div class="panel-body">
-                            <div class="row  col-lg-8 col-md-8">
-                            <table class="table table-hover table-bordered " style="color:black;font-size:15px;">
+                            <div class="row" style="margin:0 auto;max-width:1000px">
+                            <table class="table table-hover table-bordered " style="color:black;font-size:15px;" id="appInfo">
                                 <thead>
                                 <tr>
                                     <th style="text-align:center;width:15%;">患者编号</th>
                                     <th style="text-align:center;width:12%;">患者姓名</th>
                                     <th style="text-align:center;width:15%;">提交时间</th>
                                     <th style="text-align:center;width:15%;">就诊时间</th>
-                                    <th style="text-align:center;">就诊类型</th>
-                                    <th style="text-align:center;width:15%"></th>
+                                    <th style="text-align:center;width:15%;">就诊类型</th>
+                                    <th style="text-align:center;width:15%">状态</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td style="text-align:center;">已处理</td>
-                                </tr>
                                 </tbody>
                             </table>
                             </div>
@@ -490,6 +490,7 @@
 		<script src="/static/js/pages/tools.js"></script>
 		<script src="/static/js/pages/group_sidebar.js"></script>
 		<script src="/static/js/pages/setting_sidebar.js"></script>
+		<script src="/static/js/pages/pending.js"></script>
 
 
 		<!-- end: JavaScript-->

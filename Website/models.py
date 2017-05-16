@@ -478,6 +478,7 @@ class WeatherInfo(models.Model):
 class OutPatientServiceInfo(models.Model):
     P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False)
+    date_add = models.DateField(auto_now_add=True)
     place = models.CharField(max_length=150, null=False)
     isStable = models.CharField(max_length=1, null=False)
     isSymptom = models.CharField(max_length=1, null=False)
@@ -502,6 +503,7 @@ class OutPatientServiceInfo(models.Model):
 class EmergCallInfo(models.Model):
     P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False)
+    date_add = models.DateField(auto_now_add=True)
     place = models.CharField(max_length=150, null=False)
     symptom = models.CharField(max_length=10, null=False)
     acuteExac = models.CharField(max_length=1)
@@ -527,6 +529,7 @@ class EmergCallInfo(models.Model):
 class InHospitalInfo(models.Model):
     P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False)
+    date_add = models.DateField(auto_now_add=True)
     place = models.CharField(max_length=150, null=False)
     commonIcu = models.CharField(max_length=1, null=False)
     symptom = models.CharField(max_length=10, null=False)
@@ -760,10 +763,12 @@ class WarningInfo(models.Model):
 
 class AppInfo(models.Model):
     date = models.DateField(blank=True)
+    date_upload = models.DateField(auto_now_add=True)
     P_id = models.CharField(max_length=12, null=False)
     type = models.CharField(max_length=5)
     AI_id = models.CharField(max_length=32, null=False)
     S_id = models.IntegerField()
+    sign = models.CharField(max_length=1, default="1")
 
 
 # created by CS@buaa, 2017/3/17

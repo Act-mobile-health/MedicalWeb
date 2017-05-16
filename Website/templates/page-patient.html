@@ -277,42 +277,49 @@
 										</a>
 									</li>
 									<li>
-										<a href="/patientInfos/">
-											<i class="fa fa-copy" aria-hidden="true"></i><span>患者信息</span>
-										</a>
-									</li>
-
-									<li>
-										<a href="/add/outpatientInfos/">
-											<i class="fa fa-table" aria-hidden="true"></i><span>添加门诊信息</span>
-										</a>
-									</li>
-									<li>
-										<a href="/add/emergencyInfos/">
-											<i class="fa fa-life-bouy" aria-hidden="true"></i><span>添加急诊信息</span>
-										</a>
-									</li>
-									<li>
-										<a href="/add/hospitalInfos/">
-											<i class="fa fa-font" aria-hidden="true"></i><span>添加住院信息</span>
-										</a>
-									</li>
-									<li>
 										<a href="/pending/">
 											<i class="fa fa-picture-o" aria-hidden="true"></i><span>待处理事项</span>
 										</a>
+									</li>
+									<li>
+										<a href="/patientInfos/">
+											<i class="fa fa-copy" aria-hidden="true"></i><span>患者汇总信息</span>
+										</a>
+									</li>
+									<li class="nav-parent">
+										<a >
+											<i class="fa fa-copy" aria-hidden="true"></i><span>添加随访记录</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/add/outpatientInfos/">
+													<span>添加门诊信息</span>
+												</a>
+											</li>
+											<li>
+												<a href="/add/emergencyInfos/">
+													<span>添加急诊信息</span>
+												</a>
+											</li>
+											<li>
+												<a href="/add/hospitalInfos/">
+													<span>添加住院信息</span>
+												</a>
+											</li>
+										</ul>
 									</li>
 									<li class="nav-parent">
 										<a >
 											<i class="fa fa-copy" aria-hidden="true"></i><span>实验组</span>
 										</a>
 										<ul class="nav nav-children" id="experimentGroup">
+											<li>
+												<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails">添加实验组</span></a>
+											</li>
 
 										</ul>
 									</li>
-									<li>
-										<a data-toggle="modal" onclick = "addExperimentGroup()" href="#ExperimentGroupDetails"><i class="fa fa-picture-o" aria-hidden="true"></i> 添加实验组</span></a>
-									</li>
+
 									<li id="setting" style="display:none">
 										<a href="/setting/"><i class="fa fa-cog" aria-hidden="true"></i><span>管理面板</span></a>
 									</li>
@@ -370,14 +377,13 @@
                                                     <th style="text-align:center">姓名</th>
                                                     <th style="text-align:center">性别</th>
                                                     <th style="text-align:center">年龄</th>
-                                                    <th style="text-align:center">民族</th>
+                                                    <!--<th style="text-align:center">民族</th>-->
                                                     <th style="text-align:center">入组时间</th>
                                                     <th style="text-align:center">手机</th>
-                                                    <th style="text-align:center">固定电话</th>
-                                                    <th style="text-align:center">门诊</th>
-                                                    <th style="text-align:center">急诊</th>
-                                                    <th style="text-align:center">住院</th>
+                                                    <!--<th style="text-align:center">固定电话</th>-->
+                                                    <th style="text-align:center">随访（门/急/住）</th>
                                                     <th style="text-align:center">健康状况</th>
+                                                    <th style="text-align:center">信息完整程度</th>
                                                     <th style="text-align:center">操作</th>
                                                 </tr>
                                                 </thead>

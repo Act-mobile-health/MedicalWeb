@@ -29,6 +29,8 @@ $(document).ready(function () {
     });
 })
     function appendAllPatientTable() {
+        var time;
+        var temp;
         $.ajax({
             type: "GET",
             url: "/i15/",
@@ -36,30 +38,44 @@ $(document).ready(function () {
             dataType: "json",
             success: function (json_data) {
                 $.each(json_data,function (index,item) {
+                time = parseInt(item.o_time) + parseInt(item.h_time) + parseInt(item.e_time);
+                temp = time.toString()+"("+item.o_time+"/"+item.e_time+"/"+item.h_time+")";
                 $("#patientInfoTable tbody").append(
                     "<tr>"+
                         "<td>"+item.P_id+"</td>"+
                         "<td>"+item.name+"</td>"+
                         "<td>"+SexParse(item.sex)+"</td>"+
                         "<td>"+item.age+"</td>"+
-                        "<td>"+item.nation+"</td>"+
+//                        "<td>"+item.nation+"</td>"+
                         "<td>"+item.registerTime+"</td>"+
                         "<td>"+item.cellphone+"</td>"+
-                        "<td>"+item.telephone+"</td>"+
-                        "<td style='background:red'>"+item.o_time+"</td>"+
-                        "<td style='background:#27dc27'>"+item.e_time+"</td>"+
-                        "<td style='background:#549ce8'>"+item.h_time+"</td>"+
-                        "<td>"+item.health+"</td>"+
+//                        "<td>"+item.telephone+"</td>"+
+                        "<td style='background:"+colorInfo(time, 0)+"'>"+temp+"</td>"+
+                        "<td style='color:"+colorInfo(time, 0)+"'>"+colorInfo(time, 1)+"</td>"+
+                        "<td>"+"56%"+"</td>"+
                         "<td><a href=\"/patientDetails/?P_id="+item.P_id+"\" style='color:black;'><u>查看详情</u></a></td>"+
                     "</tr>");
                 });
             },
             error:function(data){
-                    errorProcess(data);
+                errorProcess(data);
             }
         });
         
     }
     function clearAllPatientTable() {
         $("#patientInfoTable tbody").clean();
+    }
+
+    function colorInfo(input, index){
+        var a = [["#d9534f","高危"],["#f0ad4e","风险较大"],["#5cb85c","健康"]];
+        if(input > 5){
+            return a[0][index];
+        }
+        else if(input > 3){
+            return a[1][index];
+        }
+        else{
+            return a[2][index];
+        }
     }
