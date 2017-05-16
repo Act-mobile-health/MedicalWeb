@@ -13,6 +13,7 @@ import datetime
 
 class PatientInfo(models.Model):
     P_id = models.CharField(max_length=12, unique=True,null=False)
+    IDCardNum = models.CharField(max_length=20)
     sign = models.CharField(max_length=2)
     name = models.CharField(max_length=50)
     sex = models.CharField(max_length=2)
