@@ -12,6 +12,7 @@ import datetime
 
 
 class PatientInfo(models.Model):
+
     P_id = models.CharField(max_length=12, unique=True,null=False)
     IDCardNum = models.CharField(max_length=20)
     sign = models.CharField(max_length=2)
@@ -938,3 +939,17 @@ class Cardiogram(models.Model):
     isNormal = models.CharField(max_length=1)
     content = models.CharField(max_length=9)
     other = models.CharField(max_length=50)
+
+class MessageText(models.Model):
+    P_id = models.CharField(max_length=12, null=False)
+    content = models.CharField(max_length=200)
+    date = models.DateField(null=False)
+    date_upload = models.DateField(auto_now_add=True)
+    sign = models.CharField(max_length=1, default="1")
+
+class MessageAudio(models.Model):
+    P_id = models.CharField(max_length=12, null=False)
+    content = models.FileField(upload_to="AUDIO")
+    date = models.DateField(null=False)
+    date_upload = models.DateField(auto_now_add=True)
+    sign = models.CharField(max_length=1, default="1")

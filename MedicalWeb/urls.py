@@ -150,6 +150,8 @@ urlpatterns = [
     url(r'^i94/',view.getMedicineRegular),
     url(r'^i95/',view.getAcuteExac),
     url(r'^i96/',view.getAppInfo),
+    url(r'^i97/',view.getMessage),
+    url(r'^i98/',view.updateMessage),
 
 
     # url(r'^i18/',view.updatePatientInfo),

@@ -126,22 +126,6 @@ function for_userbox() {
     return message;
 }
 
-$(document).ready(function(){
-    try{
-        var temp = for_userbox();
-        a = document.getElementById("WebName")
-        a.innerHTML = "iBreathCare " + '<i class="fa fa-coffee"></i> ACT-BUAA';
-
-        b = document.getElementById("userName_s")
-        b.innerHTML = temp.userName;
-
-        c = document.getElementById("title_s")
-        c.innerHTML = temp.title;
-    }
-    catch(err){
-        console.log(err)
-    }
-})
 
 function getIndex(list, value){
     for(j=0;j<list.length;j++){

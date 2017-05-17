@@ -646,3 +646,17 @@ def updateCardiogram(data):
     except Exception, e:
         tools.exceptionRecord('update.py','updateCardiogram',e)
         return False
+
+def updateMessage(data):
+    try:
+        if(data['type'] == "0"):
+            obj = MessageText.objects.get(id = int(data['id']))
+        else:
+
+            obj = MessageAudio.objects.get(id = int(data['id']))
+        obj.sign = "0"
+        obj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMessage',e)
+        return False

@@ -1076,7 +1076,7 @@ def getAppInfo(data):
      try:
         start = datetime.date.today().replace(day=1)
         print  start
-        values = AppInfo.objects.filter(Q(sign="1")|Q(sign="0",date_upload__gte=start)).values("P_id","date","date_upload","type","sign")
+        values = AppInfo.objects.filter(Q(sign="1")|Q(sign="0",date_upload__gte=start)).values("id","P_id","date","date_upload","type","sign")
         temp = list(values)
         print  temp,"temp in getAppInfo"
         for v in temp:
@@ -1086,3 +1086,25 @@ def getAppInfo(data):
         return temp
      except Exception, e:
         tools.exceptionRecord('select.py', 'getAppInfo', e)
+
+def getMessage(data):
+     try:
+        start = datetime.date.today().replace(day=1)
+        text = MessageText.objects.filter(Q(sign="1")|Q(sign="0",date_upload__gte=start)).values("id","P_id","date","date_upload","content","sign")
+        for t in text:
+            t['type'] = "0"
+        audio = MessageAudio.objects.filter(Q(sign="1")|Q(sign="0",date_upload__gte=start)).values("id","P_id","date","date_upload","content","sign")
+        for a in audio:
+            a['type'] = "1"
+        q = list(chain(text,audio))
+        # print q
+        q = sorted(q, key=lambda q:q['date'])
+        print  q,"q in getMessage"
+        for v in q:
+            v['date'] = str(v['date'])
+            v['date_upload'] = str(v['date_upload'])
+
+        return q
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getMessage', e)
+        return -1

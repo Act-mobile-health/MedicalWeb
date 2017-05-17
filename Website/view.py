@@ -530,34 +530,6 @@ def deleteCEHInfo(request,data,D_id):
     js = json.dumps(message)
     return HttpResponse(js)
 
-# #接口26
-# @login_required
-@csrf_exempt
-# def updateCEHInfo(request):
-#     if request.method == 'POST':
-#         data = request.POST
-#         message = {'result':-1}
-#         
-#             D_id = request.session['_auth_user_id']
-#             id = int(data['id'])
-#             if int(data['type']) == 0:
-#                 result = update.updateOutPatientServiceInfo(id,data)
-#             elif int(data['type']) == 1:
-#                 result = update.updateEmergCallInfo(id,data)
-#             elif int(data['type']) == 2:
-#                 result = update.updateInHospitalInfo(id,data)
-#             else:
-#                 result = False
-#
-#             if result == True:
-#                 message['result'] = 0
-#
-#             # message = tools.toString(message)
-#             js = json.dumps(message)
-#             return HttpResponse(js)
-#         
-
-
 # 接口27
 @login_required
 @csrf_exempt
@@ -1163,8 +1135,27 @@ def getAcuteExac(request,data,D_id):
 @csrf_exempt
 @PermissionCheck(1)
 def getAppInfo(request,data,D_id):
-
     message = select.getAppInfo(data)
+    js = json.dumps(message)
+    print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getMessage(request,data,D_id):
+    message = select.getMessage(data)
+    js = json.dumps(message)
+    print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(3)
+def updateMessage(request,data,D_id):
+    message = {"result":"-1"}
+    if(update.updateMessage(data)):
+        message = {"result":"0"}
     js = json.dumps(message)
     print js,"$$$$$$$"
     return HttpResponse(js)
