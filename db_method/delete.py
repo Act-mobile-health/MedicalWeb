@@ -65,6 +65,11 @@ def deleteOutPatientServiceInfo(OPS_id):
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
         obj.o_time = str(int(obj.o_time) - 1)
         obj.save()
+        appinfo = AppInfo.objects.get(P_id = temp_Pid, type = "0", S_id = OPS_id)
+        if appinfo:
+            appinfo.sign = "0"
+            print appinfo.sign
+            appinfo.save()
         return True
     except Exception, e:
         tools.exceptionRecord('delete.py','deleteOutPatientServiceInfo',e)
@@ -90,6 +95,10 @@ def deleteEmergCallInfo(EC_id):
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
         obj.e_time = str(int(obj.e_time) - 1)
         obj.save()
+        appinfo = AppInfo.objects.get(P_id = temp_Pid, type = "0", S_id = EC_id)
+        if appinfo:
+            appinfo.sign = "0"
+            appinfo.save()
 
         return True
     except Exception, e:
@@ -116,6 +125,10 @@ def deleteInHospitalInfo(IH_id):
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
         obj.h_time = str(int(obj.h_time) - 1)
         obj.save()
+        appinfo = AppInfo.objects.get(P_id = temp_Pid, type = "0", S_id = IH_id)
+        if appinfo:
+            appinfo.sign = "0"
+            appinfo.save()
 
         return True
     except Exception, e:

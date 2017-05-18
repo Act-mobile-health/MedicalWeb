@@ -998,23 +998,39 @@ def getAppId(data):
         tools.exceptionRecord('select.py', 'getAppId', e)
         return -1
 
-def getOEH(P_id):
+def getOEHAll(P_id, para):
     try:
-        o = OutPatientServiceInfo.objects.filter(P_id=P_id).values("id","date","place")
+        o = OutPatientServiceInfo.objects.filter(P_id=P_id).values("id","date","place", "date_upload")
         for a in o:
             a['type'] = "0"
-        e = EmergCallInfo.objects.filter(P_id=P_id).values("id","date","place")
+        e = EmergCallInfo.objects.filter(P_id=P_id).values("id","date","place", "date_upload")
         for a in e:
             a['type'] = "1"
-        h = InHospitalInfo.objects.filter(P_id=P_id).values("id","date","place")
+        h = InHospitalInfo.objects.filter(P_id=P_id).values("id","date","place", "date_upload")
         for a in h:
             a['type'] = "2"
-        q = list(chain(o,e,h))
+
+        if(para =="4"):
+            q = list(chain(o,e,h))
+        elif(para=="0"):
+            q = list(o)
+        elif(para=="1"):
+            q = list(e)
+        elif(para=="2"):
+            q = list(h)
+
+        newAdded = AppInfo.objects.filter(P_id = P_id, sign = "1").values("S_id", "type")
+        temp = list(newAdded)
         # print q
         q = sorted(q, key=lambda q:q['date'])
         # print q
         for a in q:
             a['date'] = str(a['date'])
+            a['date_upload'] = str(a['date_upload'])
+            a['sign'] = "0"
+            for t in temp:
+                if(a['type'] == t['type'] and a['id'] == t['S_id']):
+                    a['sign'] = "1"
         return q
     except Exception, e:
         tools.exceptionRecord('select.py', 'getOEH', e)
@@ -1107,4 +1123,13 @@ def getMessage(data):
         return q
      except Exception, e:
         tools.exceptionRecord('select.py', 'getMessage', e)
+        return {"result":"-1"}
+
+def getPatientAppInfo(data):
+    try:
+        values = AppInfo.objects.filter(P_id = data['P_id'], sign ="1").count()
+        return values
+
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getPatientAppInfo', e)
         return -1

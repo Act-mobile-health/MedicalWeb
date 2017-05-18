@@ -1087,8 +1087,8 @@ def getUserId(request):
 @login_required
 @csrf_exempt
 @PermissionCheck(2)
-def selectunion(request,data,D_id):
-    message = select.getOEH(data['P_id'])
+def getOEHAll(request,data,D_id):
+    message = select.getOEHAll(data['P_id'], data['para'])
     print type(list(message))
     js = json.dumps(list(message))
     # print js
@@ -1156,6 +1156,16 @@ def updateMessage(request,data,D_id):
     message = {"result":"-1"}
     if(update.updateMessage(data)):
         message = {"result":"0"}
+    js = json.dumps(message)
+    print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getPatientAppInfoNum(request,data,D_id):
+    message = {}
+    message['result'] = select.getPatientAppInfo(data)
     js = json.dumps(message)
     print js,"$$$$$$$"
     return HttpResponse(js)

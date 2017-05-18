@@ -480,8 +480,8 @@ class WeatherInfo(models.Model):
 class OutPatientServiceInfo(models.Model):
     P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False)
-    date_add = models.DateField(auto_now_add=True)
-    place = models.CharField(max_length=150, null=False)
+    date_upload = models.DateField(auto_now_add=True)
+    place = models.CharField(max_length=150, null=False, default="未填写")
     isStable = models.CharField(max_length=1, null=False)
     isSymptom = models.CharField(max_length=1, null=False)
     symptom = models.CharField(max_length=10, null=False, )
@@ -505,8 +505,8 @@ class OutPatientServiceInfo(models.Model):
 class EmergCallInfo(models.Model):
     P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False)
-    date_add = models.DateField(auto_now_add=True)
-    place = models.CharField(max_length=150, null=False)
+    date_upload = models.DateField(auto_now_add=True)
+    place = models.CharField(max_length=150, null=False, default="未填写")
     symptom = models.CharField(max_length=10, null=False)
     acuteExac = models.CharField(max_length=1)
     disease = models.CharField(max_length=50, null=False)
@@ -531,8 +531,8 @@ class EmergCallInfo(models.Model):
 class InHospitalInfo(models.Model):
     P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(null=False)
-    date_add = models.DateField(auto_now_add=True)
-    place = models.CharField(max_length=150, null=False)
+    date_upload = models.DateField(auto_now_add=True)
+    place = models.CharField(max_length=150, null=False, default="未填写")
     commonIcu = models.CharField(max_length=1, null=False)
     symptom = models.CharField(max_length=10, null=False)
     acuteExac = models.CharField(max_length=1)

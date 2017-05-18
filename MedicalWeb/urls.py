@@ -47,7 +47,7 @@ urlpatterns = [
     url(r'^invite/$', invite),
 
 
-    url(r'^i1000/$', view.selectunion),
+    url(r'^i1000/$', view.getOEHAll),
     url(r'^time/$', time),
 
 
@@ -76,7 +76,7 @@ urlpatterns = [
     url(r'^i19/',view.addOrUpdateRelationInfo),
     url(r'^i20/',view.deleteRelation),
 
-    url(r'^i21/',view.getCEHAllInfo),
+    # url(r'^i21/',view.getCEHAllInfo),
     url(r'^i22/',view.addOrUpdateCEHInfo),
     url(r'^i23/',view.getCEHDetailedInfo),
     url(r'^i24/',view.deleteCEHInfo),
@@ -152,6 +152,9 @@ urlpatterns = [
     url(r'^i96/',view.getAppInfo),
     url(r'^i97/',view.getMessage),
     url(r'^i98/',view.updateMessage),
+
+
+    url(r'^i101/',view.getPatientAppInfoNum),
 
 
     # url(r'^i18/',view.updatePatientInfo),

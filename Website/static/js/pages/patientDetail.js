@@ -34,6 +34,7 @@ $(document).ready(function (e) {
 
     PatientDetailTable();
     showRelationInfo();
+    getAppInfoNum();
 
     $("#submitPatientInfobt").click(function () {
         submitChangePatient();
@@ -305,7 +306,7 @@ $(document).ready(function (e) {
     }
 
 
-    function GenerateTab1(index,type_t){
+    function GenerateTab1(index,type_t,date){
     type = type_t;
     var str_edit = "";
     var str_type = "";
@@ -335,7 +336,7 @@ $(document).ready(function (e) {
      str     = '<div class="col-lg-12">'+
 			   '<div class="panel bk-bg-white">'+
 			   '<div class="panel-heading bk-bg-primary">'+
-			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+temp_index+'</h6>'+
+			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+temp_index+"  ( 上传于"+date+" )"+'</h6>'+
 			   '<div class="panel-actions" style="display:block;">'+
 				'<a onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>'+
                 '<a data-toggle="modal" onclick = "editInfo('+index+','+type+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
@@ -810,11 +811,18 @@ $(document).ready(function (e) {
         temp = document.getElementById("follow_up");
         $.ajax({
             type:"GET",
-            url:"/i21/",
-            data:{"P_id":patientId,"type":type},
+            url:"/i1000/",
+            data:{"P_id":patientId,"para":type},
             dataType:"json",
             success:function (json_data) {
                 $.each(json_data,function (index,item){
+                    if(item.sign == "1"){
+                        new_str = "(未处理！)";
+                    }
+                    else{
+                        new_str = "";
+                    }
+                    console.log(item)
                     S_id.push(item.id);
                     if(index<3){
                         tt = "active";
@@ -824,13 +832,13 @@ $(document).ready(function (e) {
                         tt ="";
                     }
                     temp.innerHTML = temp.innerHTML+'<div class="timeline-row  '+tt+'">'+
-                    '<div class="timeline-time"><small style="color:black;">'+item['date']+'</small>'+item['place']+'</div>'+
+                    '<div class="timeline-time"><small style="color:black;">'+item['date']+'</small>'+item['place']+new_str+'</div>'+
                     '<div class="timeline-icon">'+
                     '<div class="'+colorForOEH(type_t)+'"><i class="'+iconForOEH(type_t)+'"></i></div>'+
                     '</div>'+
                     '<div class="panel timeline-content">'+
                     '<div class="panel-body">'+
-                    GenerateTab1(index, type)+GenerateTab2(index, type)+GenerateTab3(index, type)+GenerateTab4(index, type)+
+                    GenerateTab1(index, type, item['date_upload'])+GenerateTab2(index, type)+GenerateTab3(index, type)+GenerateTab4(index, type)+
                     '</div>'+
                     '</div>'+
                     '</div>';
@@ -842,8 +850,9 @@ $(document).ready(function (e) {
         });
     }
 
-    function showAll(){
+    function showAll(temp_new_sign){
         type_now = 4;
+        show_num = 3;
         S_id = [];
         $("#follow_up").empty();
         temp = document.getElementById("follow_up");
@@ -851,14 +860,24 @@ $(document).ready(function (e) {
         $.ajax({
             type:"GET",
             url:"/i1000/",
-            data:{"P_id":patientId},
+            data:{"P_id":patientId,"para":"4"},
             dataType:"json",
             success:function (json_data) {
                 $.each(json_data,function (index,item){
+                    if(item.sign == "1"){
+                        new_str = "(未处理！)";
+                    }
+                    else{
+                        new_str = "";
+                        if(temp_new_sign == "0"){
+                            show_num = show_num +1
+                            return true;
+                        }
+                    }
                     S_id.push(item.id);
                     type = parseInt(item['type']);
                     console.log(type,"type")
-                    if(index<3){
+                    if(index<show_num){
                         tt = "active";
                         console.log(tt);
                     }
@@ -866,13 +885,13 @@ $(document).ready(function (e) {
                         tt ="";
                     }
                     temp.innerHTML = temp.innerHTML+'<div class="timeline-row  '+tt+'">'+
-                    '<div class="timeline-time"><small style="color:black;">'+item['date']+'</small>'+item['place']+'</div>'+
+                    '<div class="timeline-time"><small style="color:black;">'+item['date']+'</small>'+item['place']+new_str+'</div>'+
                     '<div class="timeline-icon">'+
                     '<div class="'+colorForOEH(item['type'])+'"><i class="'+iconForOEH(item['type'])+'"></i></div>'+
                     '</div>'+
                     '<div class="panel timeline-content">'+
                     '<div class="panel-body">'+
-                    GenerateTab1(index, type)+GenerateTab2(index, type)+GenerateTab3(index, type)+GenerateTab4(index, type)+
+                    GenerateTab1(index, type, item['date_upload'])+GenerateTab2(index, type)+GenerateTab3(index, type)+GenerateTab4(index, type)+
                     '</div>'+
                     '</div>'+
                     '</div>';
@@ -1020,7 +1039,7 @@ $(document).ready(function (e) {
             showOne("2");
         }
         else{
-            showAll();
+            showAll("1");
         }
     }
 
@@ -1060,7 +1079,7 @@ $(document).ready(function (e) {
                 showOne("2");
             }
             else{
-                showAll();
+                showAll("1");
             }
         }
     }
@@ -1748,3 +1767,23 @@ $(document).ready(function (e) {
     }
 
 
+    function getAppInfoNum(){
+        $.ajax({
+            type:"GET",
+            url:"/i101/",
+            data:{P_id : patientId},
+            dataType:"json",
+            success: function(json_data){
+                console.log(json_data);
+                if(json_data['result']!="0"){
+                    $("#newAdded").html("+"+json_data['result']);
+                }
+                else{
+                    $("#newAdded").hide();
+                }
+            },
+            error: function(json_data){
+                errorProcess(json_data);
+            }
+        });
+    }

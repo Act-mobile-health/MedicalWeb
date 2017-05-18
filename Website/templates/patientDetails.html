@@ -303,7 +303,9 @@
                             <ul id="myTab" class="nav nav-tabs row text-center" >
                               <li role="presentation" class="active" style="width:120px"><a href="#1">患者详情</a></li>
                               <li role="presentation" style="width:120px"><a href="#2">家属信息</a></li>
-                              <li role="presentation" style="width:120px" onclick="showAll()"><a href="#3">随访记录</a></li>
+                              <li role="presentation" style="width:120px" onclick="showAll('1')"><a href="#3">随访记录</a>
+								<span class="badge" id="newAdded" style="position:absolute;top:-1px;right:-1px;
+								background:#d9534f;border-radius:35px;margin-top:5px;margin-right:3px"></span></li>
 								<!--<span class="badge1">+2</span>-->
                               <!--<li role="presentation" style="width:120px" onclick="showEmergency()"><a href="#4">急诊记录</a></li>-->
                               <!--<li role="presentation" style="width:120px" onclick="showAll()"><a href="#5">就诊记录</a></li>-->
@@ -326,7 +328,7 @@
 										随访及APP数据 <span class="caret"></span>
 									</a>
 									<ul class="dropdown-menu" role="menu" style="background:#7aa2ca;">
-										<li role="presentation" onclick="showAll()"><a href="#3">随访记录</a></li>
+										<li role="presentation" onclick="showAll('1')"><a href="#3">随访记录</a></li>
 										<li class="divider" ></li>
 										<li role="presentation" onclick="showAPP()"><a href="#4">APP数据</a></li>
 									</ul>
@@ -475,7 +477,10 @@
 
                             <div class="tab-pane fade" id="3">
                             <div style="margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
-								<button id="temp_all" onclick="showAll()" type="button" class="btn btn-info" style="width:150px;height:25px;padding:2px;font-size:14px;margin-left:40px;">显示全部随访记录</button>
+								<button id="temp_all" onclick="showAll('1')" type="button" class="btn btn-info" style="width:150px;height:25px;padding:2px;font-size:14px;margin-left:40px;">显示全部随访记录</button>
+                            </div>
+                            <div style="margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
+								<button id="temp_new" onclick="showAll('0')" type="button" class="btn btn-info" style="background:#de7171;width:180px;height:25px;padding:2px;font-size:14px;margin-left:40px;">只显示未处理的随访记录</button>
                             </div>
                             <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
                                 <a  data-toggle="modal" onclick="addInfo()" href="#OutPatientServiceInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加门诊</a>

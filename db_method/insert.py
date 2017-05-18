@@ -109,7 +109,10 @@ def addOutPatientServiceInfo(data):
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         print data
-        newObj = OutPatientServiceInfo(P_id = data['P_id'], date = d, place = data['place'],isSymptom = data['isSymptom'],
+        place_temp = data['place']
+        if(data['place'] ==''):
+            place_temp = "未填写"
+        newObj = OutPatientServiceInfo(P_id = data['P_id'], date = d, place = place_temp,isSymptom = data['isSymptom'],
                                        isStable = data['isStable'], symptom = tools.forCheckbox(data,'symptom'),
                                        physicalExam = data['physicalExam'], breathErr = data['breathErr'],
                                        acuteExac = data['acuteExac'], disease = data['disease'],
@@ -136,7 +139,10 @@ def addEmergCallInfo(data):
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
 
-        newObj = EmergCallInfo(P_id = data['P_id'], date = d, place = data['place'],
+        place_temp = data['place']
+        if(data['place'] ==''):
+            place_temp = "未填写"
+        newObj = EmergCallInfo(P_id = data['P_id'], date = d, place = place_temp,
                                symptom = tools.forCheckbox(data,'symptom'), acuteExac = data['acuteExac'],disease = data['disease'],
                                byxCheck = data['byxCheck'],byxResult = data['byxResult'], ycWcTreat = data['ycWcTreat'],
                                useAbt = data['useAbt'], abtType = data['abtType'], useJmzs = data['useJmzs'],
@@ -161,7 +167,10 @@ def addInHospitalInfo(data):
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         print data
-        newObj = InHospitalInfo(P_id = data['P_id'], date = d, place = data['place'],
+        place_temp = data['place']
+        if(data['place'] ==''):
+            place_temp = "未填写"
+        newObj = InHospitalInfo(P_id = data['P_id'], date = d, place = place_temp,
                                 commonIcu = data['commonIcu'], symptom = tools.forCheckbox(data,'symptom'),acuteExac = data['acuteExac'],
                                 disease = data['disease'],byxCheck = data['byxCheck'], byxResult = data['byxResult'],
                                 ycWcTreat = data['ycWcTreat'], useAbt = data['useAbt'],abtType = data['abtType'],
