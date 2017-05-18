@@ -824,10 +824,12 @@ def app_addOrUpdatePmExposureTable(request):
 def app_addTrackInfoTable(request):
     if request.method == 'POST':
         data = request.POST
-        myFile = request.FILES.get("myimage", None)
+        myFile = request.FILES["myfile"]
+        P_id = request.GET.get('P_id')
+        date = request.GET.get('date')
         # print data, "Trackkkkkkkkkkkk"
         message = {'result': '-1'}
-        if insert.addTrackInfo(data, myFile):
+        if insert.addTrackInfo(P_id, date, myFile):
             message['result'] = '0'
         return HttpResponse(json.dumps(message))
 
@@ -870,11 +872,12 @@ def app_addMedicineRecordTable(request):
     if request.method == 'POST':
         # data = request.POST
         myFile = request.FILES['upload_file']
-        print request.FILES
         AI_id = request.GET.get('AI_id')
         sign = request.GET.get('sign')
+        date = request.GET.get('date')
         message = {'result': '-1'}
-        message['result'] = insert.addMedicineRecord(myFile, AI_id, sign)
+        print date,sign,request.FILES['upload_file'],"addMedicineRecordTable"
+        message['result'] = insert.addMedicineRecord(date, myFile, AI_id, sign)
         return HttpResponse(json.dumps(message))
 
 #APP interface 8
@@ -916,6 +919,31 @@ def app_addAppAttachment(request):
         return HttpResponse(js)
 
 
+#APP interface 10
+@csrf_exempt
+def app_addMessageText(request):
+    if request.method == 'POST':
+        message = {'result': '-1'}
+        data = request.POST
+        if insert.addMessageText(data):
+            message['result'] = 0
+        js = json.dumps(message)
+        return HttpResponse(js)
+
+#APP interface 11
+@csrf_exempt
+def app_addMessageAudio(request):
+    if request.method == 'POST':
+        message = {'result': '-1'}
+        doc = request.FILES['upload_file']
+        P_id = request.GET.get('P_id')
+        date = request.GET.get('date')
+        if insert.addMessageAudio(date, P_id, doc):
+            message['result'] = 0
+        js = json.dumps(message)
+        return HttpResponse(js)
+
+
 # 接口43
 @login_required
 @csrf_exempt
@@ -941,21 +969,6 @@ def test(request):
 def test2(request):
 
     return render(request,"form-dropzone.html")
-
-@csrf_exempt
-def upload2(request):
-    if request.method == 'POST':
-        data = request.POST
-        print data
-        myFile = request.FILES['upload_file']
-        D_id = int("4")
-        message = {'result': -1}
-        obj = AttachInfo(type ="0", name = tools.md5(str(random.randint(0,9))+str(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))),doc = myFile,date = datetime.datetime.strptime("2016-04-08", "%Y-%m-%d").date(), D_id = D_id, S_id = int("1"), P_id = "0000000001")
-        obj.save()
-        print request.FILES,"FILES"
-        js = json.dumps(message)
-        return HttpResponse(js)
-
 
 @login_required
 @csrf_exempt

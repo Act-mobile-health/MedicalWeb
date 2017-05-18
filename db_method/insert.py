@@ -366,18 +366,18 @@ def addPmExposure(data):
 
 
 #add TrackInfo Table
-def addTrackInfo(data, doc):
+def addTrackInfo(P_id, date, doc):
     #TODO
     #如何存储file
     id = -1
     try:
-        if data['date'] != '':
-            d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        if date != '':
+            d = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = TrackInfo(P_id = data['P_id'], date = d, doc = doc)
+        newObj = TrackInfo(P_id = P_id, date = d, doc = doc)
         newObj.save()
-        id = newObj.id
+        # id = newObj.id
         return True
     except Exception, e:
         tools.exceptionRecord('insert.py','addTrackInfo',e)
@@ -416,10 +416,14 @@ def addMedicineChange(data):
         return id
 
 #add MedicineRecord Table
-def addMedicineRecord(myFile, id, sign):
+def addMedicineRecord(date, myFile, id, sign):
 
     try:
-        newObj = MedicineRecord(MC_id = id, doc = myFile, sign = sign)
+        if date != '':
+            d = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        else:
+            d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        newObj = MedicineRecord(MC_id = id, doc = myFile, sign = sign, date = d)
         newObj.save()
 
         return newObj.id
@@ -591,4 +595,28 @@ def addAirInfo(data):
         return True
     except Exception, e:
         tools.exceptionRecord('insert.py','addAirInfo',e)
+        return False
+
+def addMessageText(data):
+    try:
+        if data['date'] != '':
+            d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+        else:
+            d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        obj = MessageText(P_id = data['P_id'], date = d, content = data['content'], sign = "1")
+        obj.save()
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addMessageText',e)
+        return False
+
+def addMessageAudio(date, P_id, doc):
+    try:
+        if date != '':
+            d = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        else:
+            d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
+        obj = MessageAudio(P_id = P_id, date = d, content = doc, sign = "1")
+        obj.save()
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addMessageText',e)
         return False

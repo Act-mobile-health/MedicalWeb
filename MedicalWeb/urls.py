@@ -114,13 +114,14 @@ urlpatterns = [
     url(r'^i47/',view.app_addOrUpdateAppInfo),
 
     url(r'^i48/',view.app_addOrUpdateMedicineRegularTable),
+    url(r'^i49/',view.app_login),
     url(r'^i50/',view.app_addAppAttachment),
     url(r'^i52/',view.app_addOrUpdateMedicineChangeTable),
     url(r'^i53/',view.app_addMedicineRecordTable),
 
-    url(r'^i49/',view.app_login),
-    url(r'^i51/',view.upload2),
-
+    url(r'^i54/',view.app_addTrackInfoTable),
+    url(r'^i55/',view.app_addMessageText),
+    url(r'^i56/',view.app_addMessageAudio),
 
 
     url(r'^i60/',view.getInvitation),
