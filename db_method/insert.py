@@ -387,6 +387,7 @@ def addTrackInfo(P_id, date, doc):
 def addMedicineRegular(data):
     id = -1
     try:
+        print data,"MRRRRRRRRRRR"
         if data['date'] != '':
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
@@ -407,7 +408,7 @@ def addMedicineChange(data):
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = MedicineChange(P_id = data['P_id'], date = d, change = data['change'],MC_id = data['MC_id'])
+        newObj = MedicineChange(P_id = data['P_id'], date = d, ch = data['change'],MC_id = data['MC_id'])
         newObj.save()
         id = newObj.id
         return id
@@ -416,14 +417,10 @@ def addMedicineChange(data):
         return id
 
 #add MedicineRecord Table
-def addMedicineRecord(date, myFile, id, sign):
+def addMedicineRecord(myFile, id, sign):
 
     try:
-        if date != '':
-            d = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-        else:
-            d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = MedicineRecord(MC_id = id, doc = myFile, sign = sign, date = d)
+        newObj = MedicineRecord(MC_id = id, doc = myFile, sign = sign)
         newObj.save()
 
         return newObj.id
@@ -599,6 +596,8 @@ def addAirInfo(data):
 
 def addMessageText(data):
     try:
+
+
         if data['date'] != '':
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:

@@ -1572,12 +1572,20 @@ $(document).ready(function (e) {
                         '</tr>');
                         head_1 = 0;
                     }
+                    console.log(item)
+                    if(item.D_id = "0"){
+                        str_temp = patientNameParse(patientId);
+                    }
+                    else{
+                    console.log(item.D_id)
+                        str_temp = userNameParse(item.D_id);
+                    }
                     $("#"+temp+"-"+A_index+"-"+"AEtable tbody").append(
                         "<tr>"+
                             "<td>"+item.AE_id+"</td>"+
                             "<td>"+item.date+"</td>"+
                             "<td>"+AEtypeParse(item.AE_type)+"</td>"+
-                            "<td>"+userNameParse(item.D_id)+"</td>"+
+                            "<td>"+str_temp+"</td>"+
                             "<td>"+item.description+"</td>"+
                             "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
                             '<td><a  data-toggle="modal" href="#AccessoryExaminationDetails" onclick="editAE('+item.AE_id+')"><i class=\"fa fa-edit\"  style=\"color:black\"></i></td>'+
@@ -1601,6 +1609,7 @@ $(document).ready(function (e) {
             data: {P_id:patientId,type:type,S_id:S_id[A_index],kind:"1"},
             dataType: "json",
             success: function (json_data) {
+            console.log(json_data)
                 $.each(json_data,function (index,item) {
                     if(head_2 == 1){
                         $("#"+temp+"-"+A_index+"-"+"Atable caption").append("附件");
@@ -1615,11 +1624,18 @@ $(document).ready(function (e) {
                         '</tr>');
                         head_2 = 0;
                     }
+                    console.log(item)
+                    if(item.D_id = "0"){
+                        str_temp = patientNameParse(patientId);
+                    }
+                    else{
+                        str_temp = userNameParse(item.D_id);
+                    }
                     $("#"+temp+"-"+A_index+"-"+"Atable tbody").append(
                         "<tr>"+
                             "<td>"+item.A_id+"</td>"+
                             "<td>"+item.date+"</td>"+
-                            "<td>"+userNameParse(item.D_id)+"</td>"+
+                            "<td>"+str_temp+"</td>"+
                             "<td>"+item.description+"</td>"+
                             "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+item.doc+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
                             '<td><a  data-toggle="modal" href="#AttachInfoDetails" onclick="editA('+item.A_id+')"><i class=\"fa fa-edit\" style=\"color:black\"></i></td>'+

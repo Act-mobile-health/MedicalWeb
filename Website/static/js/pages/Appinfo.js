@@ -246,8 +246,9 @@ function showMR(){
         data: {P_id:patientId},
         dataType: "json",
         success: function (json_data) {
+        console.log(json_data)
             $.each(json_data,function (index,item) {
-//            console.log(item)
+            console.log(item)
                 for(p=0;p<item.info.length;p++){
 //            console.log(item.info[p])
                     if(item.info[p].sign == "0"){

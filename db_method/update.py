@@ -490,7 +490,7 @@ def updateMedicineChange(data):
         obj.P_id = data['P_id']
         if data['date'] != '':
             obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        obj.change = data['change']
+        obj.ch = data['change']
         obj.save()
         return int(data['id'])
     except Exception, e:

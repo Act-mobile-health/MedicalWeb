@@ -13,6 +13,7 @@ from django.conf import settings
 import datetime, random
 from django import forms
 import xlwt
+from django.utils.http import urlquote
 
 
 
@@ -823,11 +824,10 @@ def app_addOrUpdatePmExposureTable(request):
 @csrf_exempt
 def app_addTrackInfoTable(request):
     if request.method == 'POST':
-        data = request.POST
+        # data = request.POST
         myFile = request.FILES["myfile"]
         P_id = request.GET.get('P_id')
         date = request.GET.get('date')
-        # print data, "Trackkkkkkkkkkkk"
         message = {'result': '-1'}
         if insert.addTrackInfo(P_id, date, myFile):
             message['result'] = '0'
@@ -839,7 +839,6 @@ def app_addTrackInfoTable(request):
 def app_addOrUpdateMedicineRegularTable(request):
     if request.method == 'POST':
         data = request.POST
-        # print data,"Medicineeeeee"
         message = {'result': '-1', 'id': '-1'}
         if data['id'] == 'null':
             message['id'] = insert.addMedicineRegular(data)
@@ -855,7 +854,6 @@ def app_addOrUpdateMedicineRegularTable(request):
 def app_addOrUpdateMedicineChangeTable(request):
     if request.method == 'POST':
         data = request.POST
-        print data,"MCCCCCCCC"
         message = {'result': '-1', 'id': '-1'}
         if data['id'] == 'null':
             message['id'] = insert.addMedicineChange(data)
@@ -863,7 +861,6 @@ def app_addOrUpdateMedicineChangeTable(request):
             message['id'] = update.updateMedicineChange(data)
         if message['id'] != -1:
             message['result'] = '0'
-        print message
         return HttpResponse(json.dumps(message))
 
 #APP interface 7
@@ -871,13 +868,12 @@ def app_addOrUpdateMedicineChangeTable(request):
 def app_addMedicineRecordTable(request):
     if request.method == 'POST':
         # data = request.POST
-        myFile = request.FILES['upload_file']
-        AI_id = request.GET.get('AI_id')
+        AI_id = request.GET.get('MC_id')
         sign = request.GET.get('sign')
-        date = request.GET.get('date')
+        myFile = request.FILES['upload_file']
+        # date = request.GET.get('date')
         message = {'result': '-1'}
-        print date,sign,request.FILES['upload_file'],"addMedicineRecordTable"
-        message['result'] = insert.addMedicineRecord(date, myFile, AI_id, sign)
+        message['result'] = insert.addMedicineRecord(myFile, AI_id, sign)
         return HttpResponse(json.dumps(message))
 
 #APP interface 8
@@ -885,7 +881,6 @@ def app_addMedicineRecordTable(request):
 def app_addOrUpdateAppInfo(request):
     if request.method == 'POST':
         data = request.POST
-        print data
         message = {'result': '-1', 'id': '-1'}
         if data['id'] == 'null':
             message['id'] = insert.addAppInfo(data)
@@ -893,7 +888,6 @@ def app_addOrUpdateAppInfo(request):
             message['id'] = update.updateAppInfo(data)
         if message['id'] != -1:
             message['result'] = '0'
-        print message,"message#####################"
         return HttpResponse(json.dumps(message))
 
 
@@ -925,6 +919,9 @@ def app_addMessageText(request):
     if request.method == 'POST':
         message = {'result': '-1'}
         data = request.POST
+        print urlquote(data['content']).decode("utf-8")
+        print urlquote(data['content']).decode("gb2312")
+        print data,"app_addMessageText"
         if insert.addMessageText(data):
             message['result'] = 0
         js = json.dumps(message)
@@ -938,6 +935,7 @@ def app_addMessageAudio(request):
         doc = request.FILES['upload_file']
         P_id = request.GET.get('P_id')
         date = request.GET.get('date')
+        print P_id,date,'app_addMessageAudio'
         if insert.addMessageAudio(date, P_id, doc):
             message['result'] = 0
         js = json.dumps(message)
@@ -974,7 +972,6 @@ def test2(request):
 @csrf_exempt
 @PermissionCheck(1)
 def addInvitation(request,data,D_id):
-    print "wew"
     if insert.addInvitation(D_id,data):
         js = json.dumps({"result":"0"})
     else:
@@ -986,7 +983,6 @@ def addInvitation(request,data,D_id):
 @PermissionCheck(1)
 def getInvitation(request,data,D_id):
     message = select.getInvitation()
-    print message
     js = json.dumps(message)
     return HttpResponse(js)
 
@@ -1014,7 +1010,7 @@ def getUsers(request,data,D_id):
 @PermissionCheck(3)
 def getUserName(request, data, D_id):
     message = select.getUserName(int(data['D_id']))
-    print message
+    # print message
     js = json.dumps(message)
     return HttpResponse(js)
 
@@ -1025,7 +1021,7 @@ def getUserName(request, data, D_id):
 def editAEType(request, data, D_id):
     message = select.getAEType(data)
     js = json.dumps(message)
-    print js
+    # print js
     return HttpResponse(js)
 
 
@@ -1102,7 +1098,7 @@ def getUserId(request):
 @PermissionCheck(2)
 def getOEHAll(request,data,D_id):
     message = select.getOEHAll(data['P_id'], data['para'])
-    print type(list(message))
+    # print type(list(message))
     js = json.dumps(list(message))
     # print js
     return HttpResponse(js)
@@ -1141,7 +1137,7 @@ def getMedicineRegular(request,data,D_id):
 def getAcuteExac(request,data,D_id):
     message = select.getAcuteExac(data)
     js = json.dumps(message)
-    print js,"$$$$$$$"
+    # print js,"$$$$$$$"
     return HttpResponse(js)
 
 @login_required
@@ -1150,7 +1146,7 @@ def getAcuteExac(request,data,D_id):
 def getAppInfo(request,data,D_id):
     message = select.getAppInfo(data)
     js = json.dumps(message)
-    print js,"$$$$$$$"
+    # print js,"$$$$$$$"
     return HttpResponse(js)
 
 @login_required
@@ -1159,7 +1155,7 @@ def getAppInfo(request,data,D_id):
 def getMessage(request,data,D_id):
     message = select.getMessage(data)
     js = json.dumps(message)
-    print js,"$$$$$$$"
+    # print js,"$$$$$$$"
     return HttpResponse(js)
 
 @login_required
@@ -1170,7 +1166,7 @@ def updateMessage(request,data,D_id):
     if(update.updateMessage(data)):
         message = {"result":"0"}
     js = json.dumps(message)
-    print js,"$$$$$$$"
+    # print js,"$$$$$$$"
     return HttpResponse(js)
 
 @login_required
@@ -1180,5 +1176,5 @@ def getPatientAppInfoNum(request,data,D_id):
     message = {}
     message['result'] = select.getPatientAppInfo(data)
     js = json.dumps(message)
-    print js,"$$$$$$$"
+    # print js,"$$$$$$$"
     return HttpResponse(js)

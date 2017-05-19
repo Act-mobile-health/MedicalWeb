@@ -1039,7 +1039,7 @@ def getMR(P_id):
      try:
         values = MedicineChange.objects.filter(P_id=P_id).values("MC_id","date","ch","id")
         temp = list(values)
-        # print  temp
+        print  temp
         new = []
         # print type(temp)
         for v in temp:
@@ -1115,6 +1115,7 @@ def getMessage(data):
         q = list(chain(text,audio))
         # print q
         q = sorted(q, key=lambda q:q['date'])
+        q = sorted(q, key=lambda q:q['P_id'])
         print  q,"q in getMessage"
         for v in q:
             v['date'] = str(v['date'])
