@@ -1,6 +1,20 @@
+ (function ($) {
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2].replace("/","")); return null;
+    }
+  })(jQuery);
 $(document).ready(function(){
     showAppInfo();
     showMessage();
+    var temp = $.getUrlParam("now");
+    console.log(temp);
+    setTimeout(function(){
+    if(temp == "3"){
+        document.getElementById("3").scrollIntoView(true);
+    }
+    },300);
 
 });
 
@@ -12,7 +26,7 @@ function showAppInfo(){
         dataType:"json",
         success: function(json_data){
             $.each(json_data,function(index,item){
-
+console.log(item)
                 $("#appInfo tbody").append(
                 "<tr>"+
                 "<td style=\"text-align:center;\">"+item.P_id+"</td>"+

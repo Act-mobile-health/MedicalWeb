@@ -35,6 +35,7 @@ $(document).ready(function (e) {
     PatientDetailTable();
     showRelationInfo();
     getAppInfoNum();
+    appendPatientDetail();
 
     $("#submitPatientInfobt").click(function () {
         submitChangePatient();
@@ -73,6 +74,7 @@ $(document).ready(function (e) {
     });
 
     $("#submitEmergCallInfobt").click(function () {
+        console.log("AAA")
         submitInfo("1");
     })
 
@@ -339,7 +341,7 @@ $(document).ready(function (e) {
 			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+temp_index+"  ( 上传于"+date+" )"+'</h6>'+
 			   '<div class="panel-actions" style="display:block;">'+
 				'<a onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>'+
-                '<a data-toggle="modal" onclick = "editInfo('+index+','+type+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
+//                '<a data-toggle="modal" onclick = "editInfo('+index+','+type+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
 				'<a onclick = "deleteInfo('+index+','+type+')" class="btn-close"><i class="fa fa-times"></i></a>'+
 				'</div>'+
 				'</div>'+
@@ -353,14 +355,14 @@ $(document).ready(function (e) {
 				'</ul>'+
 				'<div class="tab-content">'+
 				'<div class="tab-pane" id="'+str_type+'-tab1">'+
-				'<div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">'+
-				'<table class="table table-bordered table-hover table-entire" id="'+str_type+'-table">'+
-				'<thead>'+
-				'</thead>'+
-				'<tbody>'+
-				'</tbody>'+
-				'</table>'+
-				'</div>'+
+//				'<div class="row col-lg-10 col-md-10 col-md-offset-1 table-responsive">'+
+//				'<table class="table table-bordered table-hover table-entire" id="'+str_type+'-table">'+
+//				'<thead>'+
+//				'</thead>'+
+//				'<tbody>'+
+//				'</tbody>'+
+//				'</table>'+
+//				'</div>'+
 				'</div>';
 
 		return str;
@@ -553,254 +555,666 @@ $(document).ready(function (e) {
 
     function showInHospitalInfo(index){
         type = 2;
-        var name = "hospital-"+index+"-table";
+        var name = "hospital-"+index+"-tab1";
         var str =  "";
-        var symptom = "";
-        $.ajax({
-            type:"GET",
-            url:"/i23/",
-            data:{"S_id":S_id[index],"type":2},
-            dataType:"json",
-            success:function (item) {
-                for (var i = 0;i<item.symptom.length;i++){
-                if(item.symptom[i]=="1")
-                    symptom += "咳嗽加重；";
-                if(item.symptom[i]=="2")
-                    symptom += "咳浓痰并痰量增加；";
-                if(item.symptom[i]=="3")
-                    symptom += "呼吸困难加重；";
-                if(item.symptom[i]=="4")
-                    symptom += "发热；";
-                if(item.symptom[i]=="5")
-                    symptom += "上呼吸道感染症状；";
-                if(item.symptom[i]=="6")
-                    symptom += "意识障碍；";
-            }
-            str='<tr>'+
-                '<td class="table-small">日期</td>'+
-                '<td class="table-small" >'+item.date+'</td>'+
-                '<td class="table-small">地点</td>'+
-                '<td class="table-small">'+item.place+'</td>'+
-                '<td class="table-small">症状为</td>'+
-                '<td>'+symptom+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>是否为慢阻肺急性加重</td>'+
-                '<td>'+analyseRadio(item.acuteExac)+'</td>'+
-                '<td>加重与大气污染是否有关</td>'+
-                '<td>'+analyseRadio(item.airRelate)+'</td>'+
-                '<td>若为其他疾病，类型为</td>'+
-                '<td>'+item.disease+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>住院病房类型</td>'+
-                '<td>'+analyseRadio(item.commonIcu)+'</td>'+
-                '<td>病原学检查</td>'+
-                '<td>'+analyseRadio(item.byxCheck)+'</td>'+
-                '<td>阳性结果为</td>'+
-                '<td>'+item.byxResult+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>有创/无创呼吸治疗</td>'+
-                '<td>'+analyseRadio(item.ycWcTreat)+'</td>'+
-                '<td>是否使用抗生素</td>'+
-                '<td>'+analyseRadio(item.useAbt)+'</td>'+
-                '<td>抗生素类型</td>'+
-                '<td>'+item.abtType+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>是否使用静脉激素</td>'+
-                '<td>'+analyseRadio(item.useJmzs)+'</td>'+
-                '<td>住院时长</td>'+
-                '<td>'+item.hospitalDays+'</td>'+
-                '<td>医嘱信息</td>'+
-                '<td>'+item.docAdvice+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>是否调整治疗方案</td>'+
-                '<td>'+analyseRadio(item.treatMethod)+'</td>'+
-                '<td></td>'+
-                '<td></td>'+
-                '<td>调整药物为</td>'+
-                '<td>'+item.medicine+'</td>'+
-                '</tr>';
-            $("#"+name+" tbody").html(str);
-            },
-            error:function (data) {
-                errorProcess(data);
-            }
-        });
+        str='<div class="row">'+
+            '<form class="form-horizontal" id = "InHospitalInfo" method="post" role="form">'+
+                '<div class="col-md-6">'+
+                    '<div class="panel panel-success">'+
+                        '<div class="panel-heading" style="text-align:center">'+
+                            '<h6><i class="fa fa-indent red"></i>基本信息</h6>'+
+                        '</div>'+
+                        '<div class="panel-body">'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">编号</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="id" class="form-control" readonly>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">就诊时间</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="date" name="date" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">就诊地点</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="place" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">住院病房类型</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="commonIcu" value="1">'+
+                            '<label> 普通病房</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="commonIcu" value="2">'+
+                            '<label> ICU</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">症状为</label>'+
+                    '<div class="col-md-9">'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="1">'+
+                        '<label for=""> 咳嗽加重</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="2">'+
+                        '<label for=""> 咳浓痰并痰量增加</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="3">'+
+                        '<label for=""> 发热</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="4">'+
+                        '<label for=""> 呼吸困难加重</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="5">'+
+                        '<label for=""> 上呼吸道感染症状</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="6">'+
+                        '<label for=""> 意识障碍</label>'+
+                    '</div>'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否为慢阻肺急性加重</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="acuteExac" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="acuteExac" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">诊断疾病为</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="disease" class="form-control" placeholder="age">'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">病原体检查</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="byxCheck" value="1">'+
+                            '<label> 有</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="byxCheck" value="2">'+
+                            '<label> 无</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">阳性结果为</label>'+
+                    '<div class="col-md-9">'+
+                        '<textarea class="form-control" style="width:250px;height:60px;text-align:left;" name="byxResult"></textarea>'+
+                    '</div>'+
+                '</div>'+
+             '</div>'+
+             '</div>'+
+             '</div>'+
+            '<div class="col-md-6">'+
+            '<div class="panel panel-primary">'+
+                '<div class="panel-heading" style="text-align:center">'+
+                    '<h6><i class="fa fa-indent red"></i>其他信息</h6>'+
+                '</div>'+
+                '<div class="panel-body">'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">呼吸治疗</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="ycWcTreat" value="1">'+
+                            '<label> 无创</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="ycWcTreat" value="2">'+
+                            '<label> 有创</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否使用抗生素</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useAbt" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useAbt" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">抗生素种类为</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="abtType" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否使用静脉激素</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useJmzs" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useJmzs" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">住院时长（天）</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="hospitalDays" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">慢阻肺急性加重是否与大气污染有关</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="airRelate" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="airRelate" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否调整治疗方案</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="treatMethod" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="treatMethod" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">调整药物为</label>'+
+                    '<div class="col-md-9">'+
+                        '<textarea class="form-control" style="width:250px;height:60px;text-align:left;" name="medicine"></textarea>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">医嘱信息</label>'+
+                    '<div class="col-md-9">'+
+                        '<textarea class="form-control" style="width:250px;height:60px;text-align:left;" name="docAdvice"></textarea>'+
+                    '</div>'+
+                '</div>'+
+             '</div>'+
+             '</div>'+
+             '</div>'+
+            '<div class="pull-right" style="margin-right:20px;">'+
+                '<button type="button" onclick="submitInfo(2)" class="btn btn-primary">保存</button>'+
+            '</div>'+
+        '</form>'+
+        '</div>';
+        $("#"+name).html(str);
+        editInfo(index,type);
+
     }
 
     function showOutPatientServiceInfo(index){
         type = 0;
-        var name = "outpatient-"+index+"-table";
+        var name = "outpatient-"+index+"-tab1";
         var str =  "";
-        $.ajax({
-           type:"GET",
-            url:"/i23/",
-            data:{"S_id":S_id[index],"type":0},
-            dataType:"json",
-            success:function (item) {
-                var isStable = "";
-                var isSymptom = analyseRadio(item.isSymptom);
-                var symptom = "";
-                for (var i = 0;i<item.symptom.length;i++){
-                    if(item.symptom[i]=="1")
-                        symptom += "咳嗽加重；";
-                    if(item.symptom[i]=="2")
-                        symptom += "咳浓痰并痰量增加；";
-                    if(item.symptom[i]=="3")
-                        symptom += "呼吸困难加重；";
+        str='<div class="row">'+
+            '<form class="form-horizontal" id = "OutPatientServiceInfo" method="post" role="form">'+
+                '<div class="col-md-6">'+
+                    '<div class="panel panel-success">'+
+                        '<div class="panel-heading" style="text-align:center">'+
+                            '<h6><i class="fa fa-indent red"></i>基本信息</h6>'+
+                        '</div>'+
+                        '<div class="panel-body">'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">编号</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="id" class="form-control" readonly>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">就诊时间</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="date" name="date" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">就诊地点</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="place" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">就诊原因</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="isStable" value="1">'+
+                            '<label> 稳定期随访</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="isStable" value="2">'+
+                            '<label> 急性期加重</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否有症状</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="isSymptom" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="isSymptom" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">症状为</label>'+
+                    '<div class="col-md-9">'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="1">'+
+                        '<label for=""> 咳嗽加重</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="2">'+
+                        '<label for=""> 咳浓痰并痰量增加</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="3">'+
+                        '<label for=""> 呼吸困难加重</label>'+
+                    '</div>'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">查体是否正常</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="physicalExam" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="physicalExam" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">呼吸系统异常表现为</label>'+
+                    '<div class="col-md-9">'+
+                        '<textarea class="form-control" style="width:250px;height:60px;text-align:left;" name="breathErr"></textarea>'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否为慢阻肺急性加重</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="acuteExac" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="acuteExac" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+             '</div>'+
+             '</div>'+
+             '</div>'+
+            '<div class="col-md-6">'+
+            '<div class="panel panel-primary">'+
+                '<div class="panel-heading" style="text-align:center">'+
+                    '<h6><i class="fa fa-indent red"></i>其他信息</h6>'+
+                '</div>'+
+                '<div class="panel-body">'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">诊断疾病为</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="disease" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否使用抗生素</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useAbt" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useAbt" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">抗生素种类为</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="abtType" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否使用静脉激素</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useJmzs" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useJmzs" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否住院治疗</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="hospital" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="hospital" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">慢阻肺急性加重是否与大气污染有关</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="airRelate" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="airRelate" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否调整治疗方案</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="treatMethod" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="treatMethod" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">调整药物为</label>'+
+                    '<div class="col-md-9">'+
+                        '<textarea class="form-control" style="width:250px;height:60px;text-align:left;" name="medicine"></textarea>'+
+                    '</div>'+
+                '</div>'+
+             '</div>'+
+             '</div>'+
+             '</div>'+
+            '<div class="pull-right" style="margin-right:20px;">'+
+                '<button type="button" onclick="submitInfo(0)" class="btn btn-primary">保存</button>'+
+            '</div>'+
+        '</form>'+
+        '</div>';
+        $("#"+name).html(str);
+        editInfo(index,type);
 
-                }
-                if(item.isStable=="1")
-                    isStable = "稳定期随访";
-                else if(item.isStable=="2")
-                    isStable = "急性期就诊";
-
-                var physicalExam = analyseRadio(item.physicalExam);
-                var acuteExac = analyseRadio(item.acuteExac);
-                var useAbt = analyseRadio(item.useAbt);
-                var useJmzs = analyseRadio(item.useJmzs);
-                var hospital =analyseRadio(item.hospital);
-                var airRelate =analyseRadio(item.airRelate);
-                var treatMethod = analyseRadio(item.treatMethod);
-                str = '<tr>'+
-                    '<td class="table-small">编号</td>'+
-                    '<td class="table-small">'+item.OPS_id+'</td>'+
-                    '<td class="table-small">日期</td>'+
-                    '<td class="table-small">'+item.date+'</td>'+
-                    '<td class="table-small">地点</td>'+
-                    '<td class="table-small">'+item.place+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td class="table-small">就诊原因</td>'+
-                    '<td>'+isStable+'</td>'+
-                    '<td>症状有无</td>'+
-                    '<td class="table-small">'+isSymptom+'</td>'+
-                    '<td>症状为</td>'+
-                    '<td>'+symptom+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>是否继续住院治疗</td>'+
-                    '<td>'+hospital+'</td>'+
-                    '<td>查体是否正常</td>'+
-                    '<td>'+physicalExam+'</td>'+
-                    '<td>查体异常表现</td>'+
-                    '<td>'+item.breathErr+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>是否为慢阻肺急性加重</td>'+
-                    '<td>'+acuteExac+'</td>'+
-                    '<td>加重与大气污染是否有关</td>'+
-                    '<td>'+airRelate+'</td>'+
-                    '<td>若为其他疾病，类型为</td>'+
-                    '<td>'+item.disease+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>是否使用静脉激素</td>'+
-                    '<td>'+useJmzs+'</td>'+
-                    '<td>是否使用抗生素</td>'+
-                    '<td>'+useAbt+'</td>'+
-                    '<td>抗生素类型</td>'+
-                    '<td>'+item.abtType+'</td>'+
-                    '</tr>'+
-                    '<tr>'+
-                    '<td>是否调整治疗方案</td>'+
-                    '<td>'+treatMethod+'</td>'+
-                    '<td></td>'+
-                    '<td></td>'+
-                    '<td>调整药物为</td>'+
-                    '<td>'+item.medicine+'</td>'+
-                    '</tr>';
-                $("#"+name+" tbody").html(str);
-            },
-            error:function (data) {
-                errorProcess(data);
-            }
-        });
     }
 
     function showEmergCallInfo(index){
         type = 1;
-        var name = "emergency-"+index+"-table";
+//        var name = "emergency-"+index+"-table";
+        var name = "emergency-"+index+"-tab1";
         var str =  "";
-        var symptom = "";
-        $.ajax({
-           type:"GET",
-            url:"/i23/",
-            data:{"S_id":S_id[index],"type":1},
-            dataType:"json",
-            success:function (item) {
-                for (var i = 0;i<item.symptom.length;i++){
-                if(item.symptom[i]=="1")
-                    symptom += "咳嗽加重；";
-                if(item.symptom[i]=="2")
-                    symptom += "咳浓痰并痰量增加；";
-                if(item.symptom[i]=="3")
-                    symptom += "呼吸困难加重；";
-                if(item.symptom[i]=="4")
-                    symptom += "发热；";
-                if(item.symptom[i]=="5")
-                    symptom += "上呼吸道感染症状；";
-                if(item.symptom[i]=="6")
-                    symptom += "意识障碍；";
-            }
-            str='<tr>'+
-                '<td class="table-small">日期</td>'+
-                '<td class="table-small" >'+item.date+'</td>'+
-                '<td class="table-small">地点</td>'+
-                '<td class="table-small">'+item.place+'</td>'+
-                '<td class="table-small">症状为</td>'+
-                '<td>'+symptom+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>是否为慢阻肺急性加重</td>'+
-                '<td>'+analyseRadio(item.acuteExac)+'</td>'+
-                '<td>加重与大气污染是否有关</td>'+
-                '<td>'+analyseRadio(item.airRelate)+'</td>'+
-                '<td>若为其他疾病，类型为</td>'+
-                '<td>'+item.disease+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>是否继续住院治疗</td>'+
-                '<td>'+analyseRadio(item.hospital)+'</td>'+
-                '<td>病原学检查</td>'+
-                '<td>'+analyseRadio(item.byxCheck)+'</td>'+
-                '<td>阳性结果为</td>'+
-                '<td>'+item.byxResult+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>有创/无创呼吸治疗</td>'+
-                '<td>'+analyseRadio(item.ycWcTreat)+'</td>'+
-                '<td>是否使用抗生素</td>'+
-                '<td>'+analyseRadio(item.useAbt)+'</td>'+
-                '<td>抗生素类型</td>'+
-                '<td>'+item.abtType+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>是否使用静脉激素</td>'+
-                '<td>'+analyseRadio(item.useJmzs)+'</td>'+
-                '<td>急诊方式</td>'+
-                '<td>'+analyseRadio(item.ecMethod)+'</td>'+
-                '<td>如果住院，时长为</td>'+
-                '<td>'+item.ecDate+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>是否调整治疗方案</td>'+
-                '<td>'+analyseRadio(item.treatMethod)+'</td>'+
-                '<td></td>'+
-                '<td></td>'+
-                '<td>调整药物为</td>'+
-                '<td>'+item.medicine+'</td>'+
-                '</tr>';
-                $("#"+name+" tbody").html(str);
-            },
-            error:function (data) {
-                errorProcess(data);
-            }
-        });
+        str='<div class="row">'+
+            '<form class="form-horizontal" id = "EmergCallInfo" method="post" role="form">'+
+                '<div class="col-md-6">'+
+                    '<div class="panel panel-success">'+
+                        '<div class="panel-heading" style="text-align:center">'+
+                            '<h6><i class="fa fa-indent red"></i>基本信息</h6>'+
+                        '</div>'+
+                        '<div class="panel-body">'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">编号</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="id" class="form-control" readonly>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">就诊时间</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="date" name="date" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">就诊地点</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="place" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">症状为</label>'+
+                    '<div class="col-md-9">'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="1">'+
+                        '<label for=""> 咳嗽加重</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="2">'+
+                        '<label for=""> 咳浓痰并痰量增加</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="3">'+
+                        '<label for=""> 发热</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="4">'+
+                        '<label for=""> 呼吸困难加重</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="5">'+
+                        '<label for=""> 上呼吸道感染症状</label>'+
+                    '</div>'+
+                    '<div class="checkbox-custom checkbox-inline">'+
+                        '<input type="checkbox" name="symptom" value="6">'+
+                        '<label for=""> 意识障碍</label>'+
+                    '</div>'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否为慢阻肺急性加重</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="acuteExac" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="acuteExac" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">诊断疾病为</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="disease" class="form-control" placeholder="age">'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">病原体检查</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="byxCheck" value="1">'+
+                            '<label> 有</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="byxCheck" value="2">'+
+                            '<label> 无</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">阳性结果为</label>'+
+                    '<div class="col-md-9">'+
+                        '<textarea class="form-control" style="width:250px;height:60px;text-align:left;" name="byxResult"></textarea>'+
+                    '</div>'+
+                '</div>'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">呼吸治疗</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="ycWcTreat" value="1">'+
+                            '<label> 无创</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="ycWcTreat" value="2">'+
+                            '<label> 有创</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+
+             '</div>'+
+             '</div>'+
+             '</div>'+
+            '<div class="col-md-6">'+
+            '<div class="panel panel-primary">'+
+                '<div class="panel-heading" style="text-align:center">'+
+                    '<h6><i class="fa fa-indent red"></i>其他信息</h6>'+
+                '</div>'+
+                '<div class="panel-body">'+
+                 '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否使用抗生素</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useAbt" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useAbt" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">抗生素种类为</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="abtType" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否使用静脉激素</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useJmzs" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="useJmzs" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">急诊方式</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="ecMethod" value="1">'+
+                            '<label> 流水</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="ecMethod" value="2">'+
+                            '<label> 留观</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="ecMethod" value="3">'+
+                            '<label> 急诊病房</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否住院治疗</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="hospital" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="hospital" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">急诊住院时长（天）</label>'+
+                    '<div class="col-md-9">'+
+                        '<input type="text" name="ecDate" class="form-control">'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">慢阻肺急性加重是否与大气污染有关</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="airRelate" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="airRelate" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">是否调整治疗方案</label>'+
+                    '<div class="col-md-9">'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="treatMethod" value="1">'+
+                            '<label> 是</label>'+
+                        '</div>'+
+                        '<div class="radio-custom radio-inline">'+
+                            '<input type="radio" name="treatMethod" value="2">'+
+                            '<label> 否</label>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="col-md-3 control-label">调整药物为</label>'+
+                    '<div class="col-md-9">'+
+                        '<textarea class="form-control" style="width:250px;height:60px;text-align:left;" name="medicine"></textarea>'+
+                    '</div>'+
+                '</div>'+
+             '</div>'+
+             '</div>'+
+             '</div>'+
+            '<div class="pull-right" style="margin-right:20px;">'+
+                '<button type="button" onclick="submitInfo(1)" class="btn btn-primary">保存</button>'+
+            '</div>'+
+        '</form>'+
+        '</div>';
+        $("#"+name).html(str);
+        editInfo(index,type);
     }
 
     function showOne(type_t){
