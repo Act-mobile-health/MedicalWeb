@@ -8,6 +8,12 @@ $(document).ready(function(){
     $("#searchbt").click(function(){
         searchPatient($("#P_id").val());
     });
+    forWizard("acuteExac", "disease", 0);
+    forWizard("byxCheck", "byxResult", 1);
+    forWizard("useAbt", "useAbtconfirm", 1);
+    forWizard_ecDate();
+    forWizard("hospital", "treatMethod", 0);
+    forWizard("treatMethod", "medicine", 1);
 
 //    var p1 = document.getElementById("eminfos");
 //    if(window.innerWidth>1600){
@@ -24,6 +30,24 @@ $(document).ready(function(){
 //	}
 
 });
+
+function forWizard_ecDate(){
+    $(".mycheckbox").change(function(){
+        var val=$('input:radio[name="ecMethod"]:checked').val();
+        console.log(val);
+        if(val){
+            if(val == 3)
+            {
+            console.log("AAA")
+               $("#ecDate").show();
+            }
+            else
+            {
+               $("#ecDate").hide();
+            }
+        }
+    })
+}
 
 function submitEmergencyInfo(){
     if(confirm("确定提交？")==1){

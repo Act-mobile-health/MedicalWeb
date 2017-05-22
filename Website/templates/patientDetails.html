@@ -651,28 +651,40 @@
                             </div>
 
                             <div class="tab-pane fade" id="3">
-                            <div style="margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
-								<button id="temp_all" onclick="showAll('1')" type="button" class="btn btn-info" style="width:150px;height:25px;padding:2px;font-size:14px;margin-left:40px;">显示全部随访记录</button>
-                            </div>
-                            <div style="margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
-								<button id="temp_new" onclick="showAll('0')" type="button" class="btn btn-info" style="background:#de7171;width:180px;height:25px;padding:2px;font-size:14px;margin-left:40px;">只显示未处理的随访记录</button>
-                            </div>
-                            <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
-                                <a  data-toggle="modal" onclick="addInfo()" href="#OutPatientServiceInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加门诊</a>
-								<button id="showOutpaBt" onclick="showOne('0')" type="button" class="btn btn-success" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示门诊</button>
-                            </div>
-                            <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
-                                <a  data-toggle="modal" onclick="addInfo()" href="#EmergCallInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加急诊</a>
-								<button id="showEmBt" onclick="showOne('1')" type="button" class="btn btn-warning" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示急诊</button>
-                            </div>
-                            <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1000px;">
-                                <a  data-toggle="modal" onclick="addInfo()" href="#InHospitalInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加住院</a>
-								<button id="showInhoBt" onclick="showOne('2')" type="button" class="btn btn-danger" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示住院</button>
-                            </div>
-                            <!--<div id="hospital">-->
-							<div class="timeline animated" id="follow_up">
+                                <div style="text-indent: 1em;margin: 8px auto;position:relative;max-width:2000px;width: 1200px;">
+                                    <a  data-toggle="modal" onclick="addInfo()" href="#OutPatientServiceInfoDetails" class="mylabel"
+                                        style="color:#5cb85c!important;display:inline"><i class="glyphicon glyphicon-plus"></i> 新门诊</a>
+                                    <a  data-toggle="modal" onclick="addInfo()" href="#EmergCallInfoDetails" class="mylabel"
+                                        style="color:#f0ad4e!important;display:inline"><i class="glyphicon glyphicon-plus"></i> 新急诊</a>
+                                    <a  data-toggle="modal" onclick="addInfo()" href="#InHospitalInfoDetails" class="mylabel"
+                                        style="color:#d9534f!important;display:inline"><i class="glyphicon glyphicon-plus"></i> 新住院</a>
+                                    <div class="dropdown" style="display:inline">
+                                        <button type="button" class="btn btn-info dropdown-toggle" style="padding:0 3px;margin-bottom:4px;margin-left:10px" data-toggle="dropdown">选择要显示记录
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="1" href="#" onclick="showOne('0')" style="color:#5cb85c">门诊记录</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="2" href="#" onclick="showOne('1')" style="color:#f0ad4e">急诊记录</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="3" href="#" onclick="showOne('2')" style="color:#d9534f">住院记录</a>
+                                            </li>
+                                            <li role="presentation" class="divider" style="background:#269abc"></li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="4" href="#" onclick="showAll('1')">全部随访记录</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="5" href="#" onclick="showAll('0')" style="color:#de7171">未处理随访记录</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
 
-                            </div>
+                                <div class="timeline animated" id="follow_up">
+                                </div>
                             </div>
 
                             <div class="tab-pane fade" id="4">
@@ -1883,63 +1895,63 @@
 										<thead >
 										<tr>
 											<th style="text-align:center;">在下列情况您出现打盹或者睡着（不仅仅是感觉疲劳）的可能性为</th>
-											<th style="text-align:center;background:#75d875">从不（0分）</th>
-											<th style="text-align:center;background:#a8bf2b">很少（1分）</th>
-											<th style="text-align:center;background:#bf8b2b">有时（2分）</th>
-											<th style="text-align:center;background:#e84413">经常（3分）</th>
+											<th style="text-align:center;background:#75d875">从不<br>（0分）</th>
+											<th style="text-align:center;background:#a8bf2b">很少<br>（1分）</th>
+											<th style="text-align:center;background:#bf8b2b">有时<br>（2分）</th>
+											<th style="text-align:center;background:#e84413">经常<br>（3分）</th>
 										</tr>
 										</thead>
 										<tbody>
-										<tr>
+										<tr class="sum">
 											<td>坐着读书时</td>
 											<td><input type="radio" name="ess1"  value="1"></td>
 											<td><input type="radio" name="ess1"  value="2"></td>
 											<td><input type="radio" name="ess1"  value="3"></td>
 											<td><input type="radio" name="ess1"  value="4"></td>
 										</tr>
-										<tr>
+										<tr class="sum">
 											<td>看电视时</td>
 											<td><input type="radio" name="ess2"  value="1"></td>
 											<td><input type="radio" name="ess2"  value="2"></td>
 											<td><input type="radio" name="ess2"  value="3"></td>
 											<td><input type="radio" name="ess2"  value="4"></td>
 										</tr>
-										<tr>
+										<tr class="sum">
 											<td>在公共场合坐着不动时（如在剧院或者参加会议）</td>
 											<td><input type="radio" name="ess3"  value="1"></td>
 											<td><input type="radio" name="ess3"  value="2"></td>
 											<td><input type="radio" name="ess3"  value="3"></td>
 											<td><input type="radio" name="ess3"  value="4"></td>
 										</tr>
-										<tr>
+										<tr class="sum">
 											<td>乘车旅行持续1小时躺下休息时</td>
 											<td><input type="radio" name="ess4"  value="1"></td>
 											<td><input type="radio" name="ess4"  value="2"></td>
 											<td><input type="radio" name="ess4"  value="3"></td>
 											<td><input type="radio" name="ess4"  value="4"></td>
 										</tr>
-										<tr>
+										<tr class="sum">
 											<td>条件允许下，下午躺着休息时</td>
 											<td><input type="radio" name="ess5"  value="1"></td>
 											<td><input type="radio" name="ess5"  value="2"></td>
 											<td><input type="radio" name="ess5"  value="3"></td>
 											<td><input type="radio" name="ess5"  value="4"></td>
 										</tr>
-										<tr>
+										<tr class="sum">
 											<td>坐着和别人谈话时</td>
 											<td><input type="radio" name="ess6"  value="1"></td>
 											<td><input type="radio" name="ess6"  value="2"></td>
 											<td><input type="radio" name="ess6"  value="3"></td>
 											<td><input type="radio" name="ess6"  value="4"></td>
 										</tr>
-										<tr>
+										<tr class="sum">
 											<td>午饭后（未饮酒）安静坐着时</td>
 											<td><input type="radio" name="ess7"  value="1"></td>
 											<td><input type="radio" name="ess7"  value="2"></td>
 											<td><input type="radio" name="ess7"  value="3"></td>
 											<td><input type="radio" name="ess7"  value="4"></td>
 										</tr>
-										<tr>
+										<tr class="sum">
 											<td>开车外出，因交通阻塞而等待或等信号灯的几分钟时间内</td>
 											<td><input type="radio" name="ess8"  value="1"></td>
 											<td><input type="radio" name="ess8"  value="2"></td>
@@ -1948,9 +1960,9 @@
 										</tr>
 										<tr>
 											<td>总分</td>
-											<td><input type="text" name="score" class="col-lg-12 col-md-12" style="width:80px;text-align:center"/></td>
-											<td>编码</td>
-											<td><input name="ESS_id" type = "text" style="width:70px;text-align:center;" readonly/></td>
+											<td><input type="text" name="score" class="col-lg-12 col-md-12" style="width:80px;text-align:center" readonly/></td>
+											<td></td>
+											<td><input name="ESS_id" type = "text" style="display:none;width:70px;text-align:center;" readonly/></td>
 											<td></td>
 										</tr>
 										</tbody>
@@ -2001,9 +2013,9 @@
 
                             </div>
                             <div class="row">
-                                <h4 class="myquestion">1.您睡觉打呼噜吗？（最好问家人或同屋的人)</h4>
+                                <h4 class="myquestion">1. 您睡觉打呼噜吗？（最好问家人或同屋的人)</h4>
                             </div>
-                            <div class="row">
+                            <div class="row mbq1">
                                 <div class="radio col-sm-1">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q1"  value="1" >是
@@ -2024,30 +2036,30 @@
 
                             <div>
                             <div class="row">
-                                <h4 class="myquestion">2.如果您打呼噜，您鼾声有多响亮？</h4>
+                                <h4 class="myquestion">2. 如果您打呼噜，您鼾声有多响亮？</h4>
                             </div>
-                            <div class="row">
-                                <div class="radio col-sm-2">
+                            <div class="row mbq1">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q2"  value="1" >比正常呼吸时响
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q2"  value="2">同说话一样声响
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q2"  value="3">比说话更声响
                                   </label>
                                 </div>
-                                <div class="radio col-sm-3">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q2"  value="4">非常响，其他房间都能听到
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q2"  value="5">不知道
                                   </label>
@@ -2057,30 +2069,30 @@
 
                             <div>
                             <div class="row">
-                                <h4 class="myquestion">3.您打呼噜的次数多吗？</h4>
+                                <h4 class="myquestion">3. 您打呼噜的次数多吗？</h4>
                             </div>
-                            <div class="row">
-                                <div class="radio col-sm-2">
+                            <div class="row mbq1">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q3"  value="1" >几乎每天
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q3"  value="2">一周3-4次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q3"  value="3">一周1-2次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q3"  value="4">一个月1-3次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-3">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q3"  value="5">没有或几乎没有/不知道
                                   </label>
@@ -2090,20 +2102,20 @@
 
                             <div>
                             <div class="row">
-                                <h4 class="myquestion">4.您的鼾声影响其他人吗？</h4>
+                                <h4 class="myquestion">4. 您的鼾声影响其他人吗？</h4>
                             </div>
-                            <div class="row">
-                                <div class="radio col-sm-2">
+                            <div class="row mbq1">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q4"  value="1" >是的
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q4"  value="2">不影响
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q4"  value="3">不知道
                                   </label>
@@ -2113,35 +2125,40 @@
 
                             <div>
                             <div class="row">
-                                <h4 class="myquestion">5.您在睡觉时，您的家属或朋友注意到您有呼吸间歇/停止现象吗？</h4>
+                                <h4 class="myquestion">5. 您在睡觉时，您的家属或朋友注意到您有呼吸间歇/停止现象吗？</h4>
                             </div>
-                            <div class="row">
-                                <div class="radio col-sm-2">
+                            <div class="row mbq1">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q5"  value="1" >几乎每天都有
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q5"  value="2">一周3-4次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q5"  value="3">一周1-2次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q5"  value="4">一个月1-2次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-3">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q5"  value="5">没有或几乎没有/不知道
                                   </label>
                                 </div>
                             </div>
+                            </div>
+                            <div class="row">
+                                <div class="myquestion" style="margin-left:30px !important;font-weight:bold">第一部分得分(如果大于等于2，则为阳性)
+                                    <input type="text" name="sum_1"  class="myinput" style="margin-left:5px;padding-left:10px;width:100px" readonly>
+                                </div>
                             </div>
                             </div>
                             </div>
@@ -2156,30 +2173,30 @@
 
                             <div>
                             <div class="row">
-                                <h4 class="myquestion">6.您早晨醒来后感觉睡觉不解乏吗？</h4>
+                                <h4 class="myquestion">6. 您早晨醒来后感觉睡觉不解乏吗？</h4>
                             </div>
-                            <div class="row">
-                                <div class="radio col-sm-2">
+                            <div class="row mbq2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q6"  value="1" >几乎每天都有
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q6"  value="2">一周3-4次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q6"  value="3">一周1-2次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q6"  value="4">一个月1-2次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-3">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q6"  value="5">没有或几乎没有/不知道
                                   </label>
@@ -2189,30 +2206,30 @@
 
                             <div>
                             <div class="row">
-                                <h4 class="myquestion">7.白天您还会有疲劳，乏力或精力不够吗？</h4>
+                                <h4 class="myquestion">7. 白天您还会有疲劳，乏力或精力不够吗？</h4>
                             </div>
-                            <div class="row">
-                                <div class="radio col-sm-2">
+                            <div class="row mbq2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q7"  value="1" >几乎每天都有
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q7"  value="2">一周3-4次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q7"  value="3">一周1-2次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q7"  value="4">一个月1-2次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-3">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q7"  value="5">没有或几乎没有/不知道
                                   </label>
@@ -2222,15 +2239,15 @@
 
                             <div>
                             <div class="row">
-                                <h8 class="myquestion">8.当您开车的时候、等待付水电煤气费、医院就诊排队等候中、在家坐在椅子上看电视时会打盹或者睡觉吗？</h8>
+                                <h8 class="myquestion">8. 当您开车的时候、等待付水电煤气费、医院就诊排队等候中、在家坐在椅子上看电视时会打盹或者睡觉吗？</h8>
                             </div>
-                            <div class="row">
-                                <div class="radio col-sm-1">
+                            <div class="row mbq2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q8"  value="1" >是
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q8"  value="2">否
                                   </label>
@@ -2240,35 +2257,40 @@
 
                             <div>
                             <div class="row">
-                                <h4 class="myquestion">9.如果您存在打盹或睡觉，这种现象多吗？</h4>
+                                <h4 class="myquestion">9. 如果您存在打盹或睡觉，这种现象多吗？</h4>
                             </div>
-                            <div class="row">
-                                <div class="radio col-sm-2">
+                            <div class="row mbq2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q9"  value="1" >几乎每天都有
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q9"  value="2">一周3-4次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q9"  value="3">一周1-2次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-2">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q9"  value="4">一个月1-2次
                                   </label>
                                 </div>
-                                <div class="radio col-sm-3">
+                                <div class="radio col-sm-4">
                                   <label class="mycheckbox">
                                     <input type="radio" name="q9"  value="5">没有或几乎没有/不知道
                                   </label>
                                 </div>
                             </div>
+                            </div>
+                            <div class="row">
+                                <div class="myquestion" style="margin-left:30px !important;font-weight:bold">第二部分得分(如果大于等于2，则为阳性)
+                                    <input type="text" name="sum_2"  class="myinput" style="margin-left:5px;padding-left:10px;width:100px" readonly>
+                                </div>
                             </div>
 
 
@@ -2284,15 +2306,15 @@
                                 <div class="panel-body">
                                     <div>
                                     <div class="row">
-                                        <h8 class="myquestion">10.您有高血压吗？</h8>
+                                        <h8 class="myquestion">10. 您有高血压吗？</h8>
                                     </div>
                                     <div class="row">
-                                        <div class="radio col-sm-1">
+                                        <div class="radio col-sm-4">
                                           <label class="mycheckbox">
                                             <input type="radio" name="q10"  value="1" >是
                                           </label>
                                         </div>
-                                        <div class="radio col-sm-2">
+                                        <div class="radio col-sm-4">
                                           <label class="mycheckbox">
                                             <input type="radio" name="q10"  value="2">否
                                           </label>
@@ -2302,24 +2324,16 @@
 
                                     <div>
                                     <div class="row">
-                                        <h8 class="myquestion">11.BMI = 体重/(身高*身高) = </h8>
-                                        <input type="text" name ="BMI" class="myinput">
+                                        <h8 class="myquestion">11. BMI = 体重/(身高*身高) = </h8>
+                                        <input type="text" name ="BMI" class="myinput" style="width:100px;padding-left:10px">
                                     </div>
                                     </div>
-
+                                    <div class="row">
+                                        <div class="myquestion" style="margin-left:30px !important;font-weight:bold;margin-top:15px">第三部分(如果回答"是"，或身体质量指数(BMI)大于25，则为阳性)
+                                        </div>
+                                    </div>
                                 </div>
                                 </div>
-
-                            <div class = "row">
-								<div class="col-md-12 col-lg-12">
-									<div class="row">
-										<label class="mylabel">第一部分得分</label>
-										<label class="mylabel">第二部分得分</label>
-										<label class="mylabel">第三部分得分</label>
-										<label class="mylabel">总分</label>
-									</div>
-								</div>
-                            </div>
                             </div>
                         </div>
 
@@ -2329,7 +2343,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" id="submitMBQbt" class="btn btn-primary" data-dismiss="modal">保存 修改</button>
+						<button type="button" id="submitMBQbt" class="btn btn-primary" data-dismiss="modal">保存</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -3896,13 +3910,787 @@
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
+
+        <div class="modal fade" id="OutPatientServiceInfoDetails">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">门诊记录</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="padding-left:25px;padding-right:20px">
+                        <form class="form-horizontal" id = "-OutPatientServiceInfo" method="post" role="form">
+							<div class="panel panel-primary" ><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    基本信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+
+							<div class="row ">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:140px" >0.1. 编号</label>
+                                    <input type="text" style="width:160px;" class="myinput" name="id" readonly>
+                                </div>
+							</div>
+
+                            <div class="row ">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:140px" >0.2. 就诊时间</label>
+                                    <input type="date" style="width:160px;" class="myinput" name="date" placeholder="请选择">
+                                </div>
+                                <div class="form-inline myblockposition">
+                                    <label  class="mylabel2" style="width:140px" >0.3. 就诊地点</label>
+                                    <input type="text" style="width:160px;" class="myinput" name="place" placeholder="请输入就诊地点">
+                                </div>
+                            </div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >0.4. 就诊原因</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="isStable"  value="1" >稳定期随访
+								  </label>
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="isStable"  value="2">急性期加重
+								  </label>
+								</div>
+                            </div>
+							</div>
+							</div>
+							<div class="panel panel-success" id="p2"><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    检查信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+							<div class="row">
+                                <h4 class="mylabel2" >1. 症状</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="isSymptom"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="isSymptom"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div id="symptom" style="display:none;margin-left:20px;text-indent:2em">
+								<div class="row">
+									<h4 class="mylabel2" >1.1. 症状为</h4>
+								</div>
+								<div class="row">
+									<div class="checkbox">
+									  <label class="mycheckbox" style="width:150px">
+										<input type="checkbox" name="symptom"  value="1" >咳嗽加重
+									  </label>
+									  <label class="mycheckbox" style="width:200px">
+										<input type="checkbox" name="symptom"  value="2" checked>咳浓痰并痰量增加
+									  </label>
+									  <label class="mycheckbox" style="width:200px;">
+										<input type="checkbox" name="symptom"  value="3">呼吸困难加重
+									  </label>
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="row">
+                                <h4 class="mylabel2" >2. 呼吸系统查体是否正常</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="physicalExam"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="physicalExam"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div id="breathErr" style="display:none;margin-left:20px;text-indent:2em">
+								<div class="row">
+									<h4 class="mylabel2" >2.1. 异常表现为</h4>
+								</div>
+								<div class="row" style="text-indent:2em">
+									<div class="myblockposition">
+										<textarea class="myinput" style="min-width:300px;height:60px;text-align:left;margin:0 auto" name="breathErr"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+                                <h4 class="mylabel2" >3.1. 诊断为慢阻肺急性加重</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="acuteExac"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="acuteExac"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row " id="disease-o" style="display:none;margin-left:10px">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:150px" >3.1.1 诊断疾病为</label>
+                                    <input style="width:140px;" class="myinput" name="disease">
+                                </div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >4.1. 使用抗生素</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useAbt"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useAbt"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row" id="abtType" style="display:none;margin-left:10px">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:160px" >4.1.1. 抗生素种类为</label>
+                                    <input style="width:140px;" class="myinput" name="abtType">
+                                </div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >4.2. 使用静脉激素</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useJmzs"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useJmzs"  value="2">否
+								  </label>
+								</div>
+                            </div>
+							</div>
+							</div>
+							<div class="panel panel-info" id="p3"><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    诊断信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+
+							<div class="row">
+                                <h4 class="mylabel2" >5. 住院继续治疗</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="hospital"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="hospital"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >6. 慢阻肺急性加重与大气污染有关</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="airRelate"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="airRelate"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >7. 是否调整长期治疗方案</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="treatMethod"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="treatMethod"  value="2">否
+								  </label>
+								</div>
+                            </div>
+							<div id="medicine-o" style="display:none;margin-left:10px">
+								<div class="row">
+									<h4 class="mylabel2" >7.1 调整药物为</h4>
+								</div>
+								<div class="row" style="text-indent:2em">
+									<div class="myblockposition">
+										<textarea class="myinput" style="width:300px;height:60px;text-align:left;margin-left:25px" name="medicine"></textarea>
+									</div>
+								</div>
+							</div>
+							</div>
+							</div>
+                        </form>
+                    </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" onclick = "submitInfo('',0)" class="btn btn-primary" data-dismiss="modal">提交</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div class="modal fade" id="EmergCallInfoDetails">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">急诊记录</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="padding-left:25px;padding-right:20px">
+						<form class="form-horizontal" id = "-EmergCallInfo" method="post" role="form">
+							<div class="panel panel-primary" ><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    基本信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+							<div class="row ">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:140px" >0.1. 编号</label>
+                                    <input type="text" style="width:160px;" class="myinput" name="id" readonly>
+                                </div>
+							</div>
+
+                            <div class="row ">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:140px" >0.2. 就诊时间</label>
+                                    <input type="date" style="width:160px;" class="myinput" name="date" placeholder="请选择">
+                                </div>
+                                <div class="form-inline myblockposition">
+                                    <label  class="mylabel2" style="width:140px" >0.3. 就诊地点</label>
+                                    <input type="text" style="width:160px;" class="myinput" name="place" placeholder="请输入就诊地点">
+                                </div>
+                            </div>
+							</div>
+							</div>
+							<div class="panel panel-success"><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    检查信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+
+							<div class="row">
+                                <h4 class="mylabel2" >1. 症状为</h4>
+                            </div>
+							<div>
+								<div class="row" style="padding-left:50px">
+									<div class="checkbox">
+									  <label class="mycheckbox" style="width:150px">
+										<input type="checkbox" name="symptom"  value="1" >咳嗽加重
+									  </label>
+									  <label class="mycheckbox" style="width:200px">
+										<input type="checkbox" name="symptom"  value="2">咳浓痰并痰量增加
+									  </label>
+									  <label class="mycheckbox" style="width:200px;">
+										<input type="checkbox" name="symptom"  value="3">发热
+									  </label>
+									</div>
+								</div>
+								<div class="row" style="padding-left:50px">
+									<div class="checkbox">
+									  <label class="mycheckbox" style="width:150px">
+										<input type="checkbox" name="symptom"  value="4" >呼吸困难加重
+									  </label>
+									  <label class="mycheckbox" style="width:200px">
+										<input type="checkbox" name="symptom"  value="5">上呼吸道感染症状
+									  </label>
+									  <label class="mycheckbox" style="width:200px;">
+										<input type="checkbox" name="symptom"  value="6">意识障碍
+									  </label>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >2. 诊断为慢阻肺急性加重</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="acuteExac"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="acuteExac"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row ">
+                                <div class="form-inline myblockposition" style="display:none;text-indent:2em" id="disease">
+                                    <label class="mylabel2" style="width:150px" >2.1. 诊断疾病为</label>
+                                    <input style="width:120px;" class="myinput" name="disease">
+                                </div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >3. 病原体检查</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="byxCheck"  value="1" >有
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="byxCheck"  value="2">无
+								  </label>
+								</div>
+                            </div>
+							<div id="byxResult" style="display:none;margin-left:20px;text-indent:5em">
+							<div class="row">
+                                <h4 class="mylabel2" >3.1. 阳性结果为</h4>
+                            </div>
+                            <div class="row">
+								<div class="myblockposition">
+									<textarea class="myinput" style="margin:0 auto;max-width:600px;min-width:200px;height:60px;text-align:left;" name="byxResult"></textarea>
+								</div>
+                            </div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >4.1. 呼吸治疗方案</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="ycWcTreat"  value="1" >无创
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="ycWcTreat"  value="2">有创
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >4.2. 使用抗生素</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useAbt"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useAbt"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row ">
+                                <div class="form-inline myblockposition" id="useAbtconfirm" style="display:none;margin-left:20px">
+                                    <label class="mylabel2" style="width:160px" >4.2.1. 抗生素种类为</label>
+                                    <input style="width:110px;" class="myinput" name="abtType">
+                                </div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >4.3. 使用静脉激素</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useJmzs"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useJmzs"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >5.1 急诊方式</h4>
+                            </div>
+                            <div class="row" style="padding-left:50px">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="ecMethod"  value="1" >流水
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="ecMethod"  value="2">留观
+								  </label>
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="ecMethod"  value="3">急诊病房
+								  </label>
+								</div>
+                            </div>
+							<div class="row ">
+                                <div class="form-inline myblockposition" style="display:none;margin-left:20px" id="ecDate">
+                                    <label class="mylabel2" style="width:205px" >5.1.1. 急诊住院时长（天）</label>
+                                    <input style="width:60px;" class="myinput" name="ecDate">
+                                </div>
+							</div>
+							</div>
+							</div>
+							<div class="panel panel-info"><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    诊断信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+
+							<div class="row">
+                                <h4 class="mylabel2" >6.1. 继续住院治疗</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="hospital"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="hospital"  value="2">否
+								  </label>
+								</div>
+                            </div>
+							<div style="display:none;margin-left:20px" id="treatMethod">
+								<div class="row">
+									<h4 class="mylabel2" >6.1. 出院后是否调整长期治疗方案</h4>
+								</div>
+								<div class="row" style="text-indent:2em">
+									<div class="radio">
+									  <label class="mycheckbox" style="width:100px">
+										<input type="radio" name="treatMethod"  value="1" >是
+									  </label>
+									  <label class="mycheckbox" style="width:100px">
+										<input type="radio" name="treatMethod"  value="2" checked>否
+									  </label>
+									</div>
+								</div>
+							</div>
+
+							<div style="display:none;margin-left:20px" id="medicine">
+								<div class="row">
+									<h4 class="mylabel2" >6.2.1. 调整药物为</h4>
+								</div>
+								<div class="row" style="text-indent:2em">
+									<div class="myblockposition">
+										<textarea class="myinput" style="width:300px;height:60px;text-align:left;margin-left:25px" name="medicine"></textarea>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >7. 慢阻肺急性加重与大气污染有关</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="airRelate"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="airRelate"  value="2">否
+								  </label>
+								</div>
+                            </div>
+							</div>
+							</div>
+                        </form>
+					</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" onclick = "submitInfo('',1)" class="btn btn-primary" data-dismiss="modal">提交</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div class="modal fade" id="InHospitalInfoDetails">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">住院记录</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="padding-left:25px;padding-right:20px">
+						<form class="form-horizontal" id = "-InHospitalInfo" method="post" role="form">
+							{% csrf_token %}
+							<div class="panel panel-primary" ><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    基本信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+
+							<div class="row ">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:140px" >0.1. 编号</label>
+                                    <input type="text" style="width:160px;" class="myinput" name="id" readonly>
+                                </div>
+							</div>
+                            <div class="row ">
+                                <div class="form-inline myblockposition">
+									<label class="control-label mylabel2" style="width:140px" >0.1.1. 姓名</label>
+									<input type="text" class="myinput" id="name"  style="width:160px;" readonly>
+								</div>
+                            </div>
+                            <div class="row ">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:140px" >0.2. 就诊时间</label>
+                                    <input type="date" style="width:160px;" class="myinput" name="date" placeholder="请选择">
+                                </div>
+                                <div class="form-inline myblockposition">
+                                    <label  class="mylabel2" style="width:140px" >0.3. 就诊地点</label>
+                                    <input type="text" style="width:160px;" class="myinput" name="place" placeholder="请输入就诊地点">
+                                </div>
+                            </div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >0.4. 住院病房类型</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:140px">
+									<input type="radio" name="commonIcu"  value="1" >普通病房
+								  </label>
+								  <label class="mycheckbox" style="width:140px">
+									<input type="radio" name="commonIcu"  value="2">ICU
+								  </label>
+								</div>
+                            </div>
+							</div>
+							</div>
+							<div class="panel panel-success"><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    检查信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+
+							<div class="row">
+                                <h4 class="mylabel2" >1. 症状为</h4>
+                            </div>
+							<div>
+								<div class="row" style="padding-left:50px">
+									<div class="checkbox">
+									  <label class="mycheckbox"  style="width:150px">
+										<input type="checkbox" name="symptom"  value="1" >咳嗽加重
+									  </label>
+									  <label class="mycheckbox" style="width:200px">
+										<input type="checkbox" name="symptom"  value="2">咳浓痰并痰量增加
+									  </label>
+									  <label class="mycheckbox" style="width:200px;">
+										<input type="checkbox" name="symptom"  value="3">发热
+									  </label>
+									</div>
+								</div>
+								<div class="row" style="padding-left:50px">
+									<div class="checkbox">
+									  <label class="mycheckbox" style="width:150px">
+										<input type="checkbox" name="symptom"  value="4" >呼吸困难加重
+									  </label>
+									  <label class="mycheckbox" style="width:200px">
+										<input type="checkbox" name="symptom"  value="5">上呼吸道感染症状
+									  </label>
+									  <label class="mycheckbox" style="width:200px;">
+										<input type="checkbox" name="symptom"  value="6">意识障碍
+									  </label>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >2. 诊断为慢阻肺急性加重</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="acuteExac"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="acuteExac"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row" id="disease-h" style="display:none;margin-left:20px;">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:130px" >2.1. 诊断疾病为</label>
+                                    <input style="width:160px;margin-left:40px;" class="myinput" name="disease">
+                                </div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >3. 病原体检查</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="byxCheck"  value="1" >有
+								  </label>
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="byxCheck"  value="2">无
+								  </label>
+								</div>
+                            </div>
+							<div id="byxResult-h" style="display:none;margin-left:20px;">
+								<div class="row">
+									<h4 class="mylabel2" >3.1. 阳性结果为</h4>
+								</div>
+								<div class="row" style="text-indent:2em">
+									<div class="myblockposition">
+										<textarea class="myinput" style="min-width:300px;height:60px;text-align:left;margin:0 auto" name="byxResult"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+                                <h4 class="mylabel2" >4.1. 呼吸治疗方案</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="ycWcTreat"  value="1" >无创
+								  </label>
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="ycWcTreat"  value="2">有创
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >4.2. 使用抗生素</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useAbt"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useAbt"  value="2">否
+								  </label>
+								</div>
+                            </div>
+
+							<div class="row" id="abtType-h" style="display:none;margin-left:10px;">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:170px" >4.2.1. 抗生素种类为</label>
+                                    <input style="width:140px;" class="myinput" name="abtType">
+                                </div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >4.3. 使用静脉激素</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useJmzs"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:100px">
+									<input type="radio" name="useJmzs"  value="2">否
+								  </label>
+								</div>
+                            </div>
+							</div>
+							</div>
+							<div class="panel panel-info"><!--text-center-->
+                            <div class="panel-heading">
+                                <h3 class="panel-title mylabel">
+                                    诊断信息
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+
+							<div class="row ">
+                                <div class="form-inline myblockposition">
+                                    <label class="mylabel2" style="width:170px" >5. 住院时长（天）</label>
+                                    <input style="width:100px;" class="myinput" name="hospitalDays">
+                                </div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >6. 是否调整治疗方案</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="treatMethod"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="treatMethod"  value="2">否
+								  </label>
+								</div>
+                            </div>
+							<div id="medicine-h" style="display:none;margin-left:20px;">
+								<div class="row">
+									<h4 class="mylabel2" >6.1. 调整药物为</h4>
+								</div>
+								<div class="row" style="text-indent:2em">
+									<div class="myblockposition">
+										<textarea class="myinput" style="max-width:600px;min-width:300px;height:60px;text-align:left;margin:0 auto" name="medicine"></textarea>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+                                <h4 class="mylabel2" >7. 慢阻肺急性加重是否与大气污染有关</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+                                <div class="radio">
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="airRelate"  value="1" >是
+								  </label>
+								  <label class="mycheckbox" style="width:150px">
+									<input type="radio" name="airRelate"  value="2">否
+								  </label>
+								</div>
+                            </div>
+							<div class="row">
+                                <h4 class="mylabel2" >8. 医嘱信息</h4>
+                            </div>
+                            <div class="row" style="text-indent:2em">
+								<div class="myblockposition">
+									<textarea class="myinput" style="min-width:300px;height:60px;text-align:left;margin:0 auto" name="docAdvice"></textarea>
+								</div>
+                            </div>
+							</div>
+							</div>
+                        </form>
+					</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" onclick = "submitInfo('',2)" class="btn btn-primary" data-dismiss="modal">提交</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 		<!-- start: JavaScript-->
 
-		<!-- Vendor JS-->
-		<!--<script src="/static/plugins/d3/js/d3.min.js"></script>-->
-		<!--<script src="/static/plugins/xcharts/js/xcharts.min.js"></script>-->
-
-		<!-- Plugins JS-->
 		<script src="/static/plugins/dropzone/js/dropzone.min.js"></script>
 
 		<!-- Theme JS -->
@@ -3941,13 +4729,9 @@
         <script src="/static/js/pages/Appinfo.js"></script>
 		<script src="/static/js/pages/setting_top.js"></script>
 
-
-		<script src="/static/js/pages/form-dropzone.js"></script>
-
         <!--<script src="/static/js/pages/charts-xcharts.js"></script>-->
 
 		<!-- end: JavaScript-->
-
 
 	</body>
 

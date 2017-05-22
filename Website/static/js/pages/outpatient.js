@@ -8,6 +8,11 @@ $(document).ready(function(){
     $("#searchbt").click(function(){
         searchPatient($("#P_id").val());
     });
+    forWizard("isSymptom", "symptom", 1);
+    forWizard("physicalExam", "breathErr", 0);
+    forWizard("acuteExac", "disease", 0);
+    forWizard("useAbt", "abtType", 1);
+    forWizard("treatMethod", "medicine", 1);
 
 //    var p1 = document.getElementById("outinfos");
 //    if(window.innerWidth>1600){

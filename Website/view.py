@@ -479,6 +479,7 @@ def getCEHDetailedInfo(request,data,D_id):
 @PermissionCheck(2)
 def addOrUpdateCEHInfo(request,data,D_id):
     message = {'result':-1}
+    print data
 
     if data['id'] == '':
         if int(data['type']) == 0:

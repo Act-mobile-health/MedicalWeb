@@ -8,6 +8,11 @@ $(document).ready(function(){
     $("#searchbt").click(function(){
         searchPatient($("#P_id").val());
     });
+    forWizard("acuteExac", "disease", 0);
+    forWizard("byxCheck", "byxResult", 1);
+    forWizard("useAbt", "abtType", 1);
+    forWizard("hospital", "treatMethod", 0);
+    forWizard("treatMethod", "medicine", 1);
 
 //    var p1 = document.getElementById("hosinfos");
 //    if(window.innerWidth>1600){

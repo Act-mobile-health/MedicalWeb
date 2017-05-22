@@ -1,14 +1,14 @@
 .mylabel{
     color:black !important;
-    font-weight:bold !important;
-    font-size:16px !important;
+    font-weight:normal !important;
+    font-size:15px !important;
     text-align:center !important;
 }
 
 .mylabel2{
     color:black !important;
-    font-weight:bold !important;
-    font-size:16px !important;
+    font-weight:normal !important;
+    font-size:15px !important;
     text-align:left !important;
     text-indent:2em;
 }
@@ -17,12 +17,10 @@
 
 .myinput{
     border:1px solid #584f4f !important;
-    border-radius:8px !important;
-    font-size:16px !important;
-    padding-top:6px !important;
-    padding-bottom:6px !important;
-    text-align:center;
-    height:34px;
+    font-size:15px !important;
+    padding-bottom:0px !important;
+    height:30px;
+    vertical-align:bottom;
 }
 .mycheckbox{
     color:black !important;
@@ -95,4 +93,12 @@
     right: 2px;
     top: 3px;
     border-radius:12px !important;
+}
+
+.sum{
+}
+
+.mbq1{
+}
+.mbq2{
 }

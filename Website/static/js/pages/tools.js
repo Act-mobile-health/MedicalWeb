@@ -152,3 +152,32 @@ function patientNameParse(input){
     });
     return name;
 }
+
+function forWizard(key, w, sign){
+    $(".mycheckbox").change(function(){
+        var val=$('input:radio[name='+key+']:checked').val();
+        if(val){
+        console.log(val,key,sign);
+            if(sign==1){
+                if(val == 1)
+                {
+                   $("#"+w).show();
+                }
+                else
+                {
+                   $("#"+w).hide();
+                }
+            }
+            else{
+                if(val == 2)
+                {
+                   $("#"+w).show();
+                }
+                else
+                {
+                   $("#"+w).hide();
+                }
+            }
+        }
+    })
+}

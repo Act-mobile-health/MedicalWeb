@@ -36,6 +36,32 @@ $(document).ready(function (e) {
     showRelationInfo();
     getAppInfoNum();
     appendPatientDetail();
+    calculateCATSum();
+    calculateMBQSum1();
+    calculateMBQSum2();
+
+//    for emergency
+    forWizard("acuteExac", "disease", 0);
+    forWizard("byxCheck", "byxResult", 1);
+    forWizard("useAbt", "useAbtconfirm", 1);
+    forWizard_ecDate();
+    forWizard("hospital", "treatMethod", 0);
+    forWizard("treatMethod", "medicine", 1);
+
+//    for outpatient
+    forWizard("isSymptom", "symptom", 1);
+    forWizard("physicalExam", "breathErr", 0);
+    forWizard("acuteExac", "disease-o", 0);
+    forWizard("useAbt", "abtType", 1);
+    forWizard("treatMethod", "medicine-o", 1);
+
+//    for inhospital
+    forWizard("acuteExac", "disease-h", 0);
+    forWizard("byxCheck", "byxResult-h", 1);
+    forWizard("useAbt", "abtType-h", 1);
+    forWizard("hospital", "treatMethod-h", 0);
+    forWizard("treatMethod", "medicine-h", 1);
+
 
     $("#submitPatientInfobt").click(function () {
         submitChangePatient();
@@ -69,21 +95,39 @@ $(document).ready(function (e) {
         submitAorAE("1");
     })
 
-    $("#submitOutPatientServiceInfobt").click(function () {
-       submitInfo("0");
-    });
-
-    $("#submitEmergCallInfobt").click(function () {
-        console.log("AAA")
-        submitInfo("1");
-    })
-
-    $("#submitInHospitalInfobt").click(function () {
-        submitInfo("2");
-    })
+//    $("#submitOutPatientServiceInfobt").click(function () {
+//       submitInfo("0");
+//    });
+//
+//    $("#submitEmergCallInfobt").click(function () {
+//        console.log("AAA")
+//        submitInfo("1");
+//    })
+//
+//    $("#submitInHospitalInfobt").click(function () {
+//        submitInfo("2");
+//    })
 
 
 })
+
+function forWizard_ecDate(){
+    $(".mycheckbox").change(function(){
+        var val=$('input:radio[name="ecMethod"]:checked').val();
+        console.log(val);
+        if(val){
+            if(val == 3)
+            {
+            console.log("AAA")
+               $("#ecDate").show();
+            }
+            else
+            {
+               $("#ecDate").hide();
+            }
+        }
+    })
+}
 
     //查看患者个人信息
     function PatientDetailTable() {
@@ -558,7 +602,7 @@ $(document).ready(function (e) {
         var name = "hospital-"+index+"-tab1";
         var str =  "";
         str='<div class="row">'+
-            '<form class="form-horizontal" id = "InHospitalInfo" method="post" role="form">'+
+            '<form class="form-horizontal" id = "'+name+'-InHospitalInfo" method="post" role="form">'+
                 '<div class="col-md-6">'+
                     '<div class="panel panel-success">'+
                         '<div class="panel-heading" style="text-align:center">'+
@@ -626,7 +670,7 @@ $(document).ready(function (e) {
                     '</div>'+
                 '</div>'+
                  '<div class="form-group">'+
-                    '<label class="col-md-3 control-label">是否为慢阻肺急性加重</label>'+
+                    '<label class="col-md-3 control-label">诊断为慢阻肺急性加重</label>'+
                     '<div class="col-md-9">'+
                         '<div class="radio-custom radio-inline">'+
                             '<input type="radio" name="acuteExac" value="1">'+
@@ -686,7 +730,7 @@ $(document).ready(function (e) {
                     '</div>'+
                 '</div>'+
                  '<div class="form-group">'+
-                    '<label class="col-md-3 control-label">是否使用抗生素</label>'+
+                    '<label class="col-md-3 control-label">使用抗生素</label>'+
                     '<div class="col-md-9">'+
                         '<div class="radio-custom radio-inline">'+
                             '<input type="radio" name="useAbt" value="1">'+
@@ -705,7 +749,7 @@ $(document).ready(function (e) {
                     '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
-                    '<label class="col-md-3 control-label">是否使用静脉激素</label>'+
+                    '<label class="col-md-3 control-label">使用静脉激素</label>'+
                     '<div class="col-md-9">'+
                         '<div class="radio-custom radio-inline">'+
                             '<input type="radio" name="useJmzs" value="1">'+
@@ -724,7 +768,7 @@ $(document).ready(function (e) {
                     '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
-                    '<label class="col-md-3 control-label">慢阻肺急性加重是否与大气污染有关</label>'+
+                    '<label class="col-md-3 control-label">慢阻肺急性加重与大气污染有关</label>'+
                     '<div class="col-md-9">'+
                         '<div class="radio-custom radio-inline">'+
                             '<input type="radio" name="airRelate" value="1">'+
@@ -737,7 +781,7 @@ $(document).ready(function (e) {
                     '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
-                    '<label class="col-md-3 control-label">是否调整治疗方案</label>'+
+                    '<label class="col-md-3 control-label">调整治疗方案</label>'+
                     '<div class="col-md-9">'+
                         '<div class="radio-custom radio-inline">'+
                             '<input type="radio" name="treatMethod" value="1">'+
@@ -765,12 +809,12 @@ $(document).ready(function (e) {
              '</div>'+
              '</div>'+
             '<div class="pull-right" style="margin-right:20px;">'+
-                '<button type="button" onclick="submitInfo(2)" class="btn btn-primary">保存</button>'+
+                '<button type="button" onclick="submitInfo(\''+name+'\',2)" class="btn btn-primary">保存</button>'+
             '</div>'+
         '</form>'+
         '</div>';
         $("#"+name).html(str);
-        editInfo(index,type);
+        editInfo(index,type, name);
 
     }
 
@@ -779,7 +823,7 @@ $(document).ready(function (e) {
         var name = "outpatient-"+index+"-tab1";
         var str =  "";
         str='<div class="row">'+
-            '<form class="form-horizontal" id = "OutPatientServiceInfo" method="post" role="form">'+
+            '<form class="form-horizontal" id = "'+name+'-OutPatientServiceInfo" method="post" role="form">'+
                 '<div class="col-md-6">'+
                     '<div class="panel panel-success">'+
                         '<div class="panel-heading" style="text-align:center">'+
@@ -818,7 +862,7 @@ $(document).ready(function (e) {
                     '</div>'+
                 '</div>'+
                  '<div class="form-group">'+
-                    '<label class="col-md-3 control-label">是否有症状</label>'+
+                    '<label class="col-md-3 control-label">症状</label>'+
                     '<div class="col-md-9">'+
                         '<div class="radio-custom radio-inline">'+
                             '<input type="radio" name="isSymptom" value="1">'+
@@ -848,7 +892,7 @@ $(document).ready(function (e) {
                     '</div>'+
                 '</div>'+
                  '<div class="form-group">'+
-                    '<label class="col-md-3 control-label">查体是否正常</label>'+
+                    '<label class="col-md-3 control-label">呼吸系统查体是否正常</label>'+
                     '<div class="col-md-9">'+
                         '<div class="radio-custom radio-inline">'+
                             '<input type="radio" name="physicalExam" value="1">'+
@@ -861,13 +905,13 @@ $(document).ready(function (e) {
                     '</div>'+
                 '</div>'+
                 '<div class="form-group">'+
-                    '<label class="col-md-3 control-label">呼吸系统异常表现为</label>'+
+                    '<label class="col-md-3 control-label">异常表现为</label>'+
                     '<div class="col-md-9">'+
                         '<textarea class="form-control" style="width:250px;height:60px;text-align:left;" name="breathErr"></textarea>'+
                     '</div>'+
                 '</div>'+
                  '<div class="form-group">'+
-                    '<label class="col-md-3 control-label">是否为慢阻肺急性加重</label>'+
+                    '<label class="col-md-3 control-label">诊断为慢阻肺急性加重</label>'+
                     '<div class="col-md-9">'+
                         '<div class="radio-custom radio-inline">'+
                             '<input type="radio" name="acuteExac" value="1">'+
@@ -975,12 +1019,12 @@ $(document).ready(function (e) {
              '</div>'+
              '</div>'+
             '<div class="pull-right" style="margin-right:20px;">'+
-                '<button type="button" onclick="submitInfo(0)" class="btn btn-primary">保存</button>'+
+                '<button type="button" onclick="submitInfo(\''+name+'\',0)" class="btn btn-primary">保存</button>'+
             '</div>'+
         '</form>'+
         '</div>';
         $("#"+name).html(str);
-        editInfo(index,type);
+        editInfo(index,type, name);
 
     }
 
@@ -990,7 +1034,7 @@ $(document).ready(function (e) {
         var name = "emergency-"+index+"-tab1";
         var str =  "";
         str='<div class="row">'+
-            '<form class="form-horizontal" id = "EmergCallInfo" method="post" role="form">'+
+            '<form class="form-horizontal" id = "'+name+'-EmergCallInfo" method="post" role="form">'+
                 '<div class="col-md-6">'+
                     '<div class="panel panel-success">'+
                         '<div class="panel-heading" style="text-align:center">'+
@@ -1209,12 +1253,12 @@ $(document).ready(function (e) {
              '</div>'+
              '</div>'+
             '<div class="pull-right" style="margin-right:20px;">'+
-                '<button type="button" onclick="submitInfo(1)" class="btn btn-primary">保存</button>'+
+                '<button type="button" onclick="submitInfo(\''+name+'\',1)" class="btn btn-primary">保存</button>'+
             '</div>'+
         '</form>'+
         '</div>';
         $("#"+name).html(str);
-        editInfo(index,type);
+        editInfo(index,type, name);
     }
 
     function showOne(type_t){
@@ -1344,7 +1388,7 @@ $(document).ready(function (e) {
 //
 //}).call(this);
 
-    function editInfo(index, type_t){
+    function editInfo(index, type_t, name){
         type = type_t;
         $.ajax({
            type:"GET",
@@ -1354,63 +1398,63 @@ $(document).ready(function (e) {
             success:function (json_data) {
                 var item = json_data;
                 if(type==0){
-                    $("#OutPatientServiceInfo input[name='id']").val(item.OPS_id);
-                    $("#OutPatientServiceInfo input[name='date']").val(item.date);
-                    $("#OutPatientServiceInfo input[name='place']").val(item.place);
-                    $("#OutPatientServiceInfo input[name='isStable'][value='"+item.isStable+"']").attr('checked',true);
-                    $("#OutPatientServiceInfo input[name='isSymptom'][value='"+item.isSymptom+"']").attr("checked",true);
-                    analyzeCheckBox("OutPatientServiceInfo","symptom",item.symptom);
-                    $("#OutPatientServiceInfo input[name='physicalExam'][value='"+item.physicalExam+"']").attr("checked",true);
-                    $("#OutPatientServiceInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
-                    $("#OutPatientServiceInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
-                    $("#OutPatientServiceInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
-                    $("#OutPatientServiceInfo textarea[name='breathErr']").val(item.breathErr);
-                    $("#OutPatientServiceInfo input[name='disease']").val(item.disease);
-                    $("#OutPatientServiceInfo input[name='abtType']").val(item.abtType);
-                    $("#OutPatientServiceInfo input[name='hospital'][value='"+item.hospital+"']").attr("checked",true);
-                    $("#OutPatientServiceInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
-                    $("#OutPatientServiceInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
-                    $("#OutPatientServiceInfo textarea[name='medicine']").val(item.medicine);
+                    $("#"+name+"-OutPatientServiceInfo input[name='id']").val(item.OPS_id);
+                    $("#"+name+"-OutPatientServiceInfo input[name='date']").val(item.date);
+                    $("#"+name+"-OutPatientServiceInfo input[name='place']").val(item.place);
+                    $("#"+name+"-OutPatientServiceInfo input[name='isStable'][value='"+item.isStable+"']").attr('checked',true);
+                    $("#"+name+"-OutPatientServiceInfo input[name='isSymptom'][value='"+item.isSymptom+"']").attr("checked",true);
+                    analyzeCheckBox(name+"-OutPatientServiceInfo","symptom",item.symptom);
+                    $("#"+name+"-OutPatientServiceInfo input[name='physicalExam'][value='"+item.physicalExam+"']").attr("checked",true);
+                    $("#"+name+"-OutPatientServiceInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
+                    $("#"+name+"-OutPatientServiceInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
+                    $("#"+name+"-OutPatientServiceInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
+                    $("#"+name+"-OutPatientServiceInfo textarea[name='breathErr']").val(item.breathErr);
+                    $("#"+name+"-OutPatientServiceInfo input[name='disease']").val(item.disease);
+                    $("#"+name+"-OutPatientServiceInfo input[name='abtType']").val(item.abtType);
+                    $("#"+name+"-OutPatientServiceInfo input[name='hospital'][value='"+item.hospital+"']").attr("checked",true);
+                    $("#"+name+"-OutPatientServiceInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
+                    $("#"+name+"-OutPatientServiceInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
+                    $("#"+name+"-OutPatientServiceInfo textarea[name='medicine']").val(item.medicine);
                 }
                 else if(type==1){
-                    $("#EmergCallInfo input[name='id']").val(item.EC_id);
-                    $("#EmergCallInfo input[name='date']").val(item.date);
-                    $("#EmergCallInfo input[name='place']").val(item.place);
-                    analyzeCheckBox("EmergCallInfo","symptom",item.symptom);
-                    $("#EmergCallInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
-                    $("#EmergCallInfo input[name='disease']").val(item.disease);
-                    $("#EmergCallInfo input[name='byxCheck'][value='"+item.byxCheck+"']").attr('checked',true);
-                    $("#EmergCallInfo textarea[name='byxResult']").val(item.byxResult);
-                    $("#EmergCallInfo input[name='ycWcTreat'][value='"+item.ycWcTreat+"']").attr("checked",true);
-                    $("#EmergCallInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
-                    $("#EmergCallInfo input[name='abtType']").val(item.abtType);
-                    $("#EmergCallInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
-                    $("#EmergCallInfo input[name='ecMethod'][value='"+item.ecMethod+"']").attr("checked",true);
-                    $("#EmergCallInfo input[name='ecDate']").val(item.ecDate);
-                    $("#EmergCallInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
-                    $("#EmergCallInfo input[name='hospital'][value='"+item.hospital+"']").attr("checked",true);
-                    $("#EmergCallInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
-                    $("#EmergCallInfo textarea[name='medicine']").val(item.medicine);
+                    $("#"+name+"-EmergCallInfo input[name='id']").val(item.EC_id);
+                    $("#"+name+"-EmergCallInfo input[name='date']").val(item.date);
+                    $("#"+name+"-EmergCallInfo input[name='place']").val(item.place);
+                    analyzeCheckBox(name+"-EmergCallInfo","symptom",item.symptom);
+                    $("#"+name+"-EmergCallInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
+                    $("#"+name+"-EmergCallInfo input[name='disease']").val(item.disease);
+                    $("#"+name+"-EmergCallInfo input[name='byxCheck'][value='"+item.byxCheck+"']").attr('checked',true);
+                    $("#"+name+"-EmergCallInfo textarea[name='byxResult']").val(item.byxResult);
+                    $("#"+name+"-EmergCallInfo input[name='ycWcTreat'][value='"+item.ycWcTreat+"']").attr("checked",true);
+                    $("#"+name+"-EmergCallInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
+                    $("#"+name+"-EmergCallInfo input[name='abtType']").val(item.abtType);
+                    $("#"+name+"-EmergCallInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
+                    $("#"+name+"-EmergCallInfo input[name='ecMethod'][value='"+item.ecMethod+"']").attr("checked",true);
+                    $("#"+name+"-EmergCallInfo input[name='ecDate']").val(item.ecDate);
+                    $("#"+name+"-EmergCallInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
+                    $("#"+name+"-EmergCallInfo input[name='hospital'][value='"+item.hospital+"']").attr("checked",true);
+                    $("#"+name+"-EmergCallInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
+                    $("#"+name+"-EmergCallInfo textarea[name='medicine']").val(item.medicine);
                 }
                 else if(type==2){
-                    $("#InHospitalInfo input[name='id']").val(item.IH_id);
-                    $("#InHospitalInfo input[name='date']").val(item.date);
-                    $("#InHospitalInfo input[name='place']").val(item.place);
-                    $("#InHospitalInfo input[name='commonIcu'][value='"+item.commonIcu+"']").attr("checked",true);
-                    analyzeCheckBox("InHospitalInfo","symptom",item.symptom);
-                    $("#InHospitalInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
-                    $("#InHospitalInfo input[name='disease']").val(item.disease);
-                    $("#InHospitalInfo input[name='byxCheck'][value='"+item.byxCheck+"']").attr('checked',true);
-                    $("#InHospitalInfo textarea[name='byxResult']").val(item.byxResult);
-                    $("#InHospitalInfo input[name='ycWcTreat'][value='"+item.ycWcTreat+"']").attr("checked",true);
-                    $("#InHospitalInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
-                    $("#InHospitalInfo input[name='abtType']").val(item.abtType);
-                    $("#InHospitalInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
-                    $("#InHospitalInfo input[name='hospitalDays']").val(item.hospitalDays);
-                    $("#InHospitalInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
-                    $("#InHospitalInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
-                    $("#InHospitalInfo textarea[name='medicine']").val(item.medicine);
-                    $("#InHospitalInfo textarea[name='docAdvice']").val(item.docAdvice);
+                    $("#"+name+"-InHospitalInfo input[name='id']").val(item.IH_id);
+                    $("#"+name+"-InHospitalInfo input[name='date']").val(item.date);
+                    $("#"+name+"-InHospitalInfo input[name='place']").val(item.place);
+                    $("#"+name+"-InHospitalInfo input[name='commonIcu'][value='"+item.commonIcu+"']").attr("checked",true);
+                    analyzeCheckBox(name+"-InHospitalInfo","symptom",item.symptom);
+                    $("#"+name+"-InHospitalInfo input[name='acuteExac'][value='"+item.acuteExac+"']").attr("checked",true);
+                    $("#"+name+"-InHospitalInfo input[name='disease']").val(item.disease);
+                    $("#"+name+"-InHospitalInfo input[name='byxCheck'][value='"+item.byxCheck+"']").attr('checked',true);
+                    $("#"+name+"-InHospitalInfo textarea[name='byxResult']").val(item.byxResult);
+                    $("#"+name+"-InHospitalInfo input[name='ycWcTreat'][value='"+item.ycWcTreat+"']").attr("checked",true);
+                    $("#"+name+"-InHospitalInfo input[name='useAbt'][value='"+item.useAbt+"']").attr("checked",true);
+                    $("#"+name+"-InHospitalInfo input[name='abtType']").val(item.abtType);
+                    $("#"+name+"-InHospitalInfo input[name='useJmzs'][value='"+item.useJmzs+"']").attr("checked",true);
+                    $("#"+name+"-InHospitalInfo input[name='hospitalDays']").val(item.hospitalDays);
+                    $("#"+name+"-InHospitalInfo input[name='treatMethod'][value='"+item.treatMethod+"']").attr("checked",true);
+                    $("#"+name+"-InHospitalInfo input[name='airRelate'][value='"+item.airRelate+"']").attr("checked",true);
+                    $("#"+name+"-InHospitalInfo textarea[name='medicine']").val(item.medicine);
+                    $("#"+name+"-InHospitalInfo textarea[name='docAdvice']").val(item.docAdvice);
                 }
             },
             error:function (data) {
@@ -1457,17 +1501,17 @@ $(document).ready(function (e) {
         }
     }
 
-    function submitInfo(type_t){
+    function submitInfo(name, type_t){
         type = type_t;
         var str = "";
         if(type==0){
-            str = $("#OutPatientServiceInfo").serialize()+"&P_id="+patientId+"&type="+type;
+            str = $("#"+name+"-OutPatientServiceInfo").serialize()+"&P_id="+patientId+"&type="+type;
         }
         else if(type==1){
-            str = $("#EmergCallInfo").serialize()+"&P_id="+patientId+"&type="+type;
+            str = $("#"+name+"-EmergCallInfo").serialize()+"&P_id="+patientId+"&type="+type;
         }
         else{
-            str = $("#InHospitalInfo").serialize()+"&P_id="+patientId+"&type="+type;
+            str = $("#"+name+"-InHospitalInfo").serialize()+"&P_id="+patientId+"&type="+type;
         }
         if (confirm("确定提交吗？")){
             $.ajax({
@@ -1527,7 +1571,7 @@ $(document).ready(function (e) {
                     if(head==1){
                     $(str+c_index+"-clinictable thead").append('<tr>'+
                        '<th class="table-small tlabel5" style="text-align:center">编号</th>'+
-                        '<th class="tlabel5" style="text-align:center;width:70px;">就诊日期</th>'+
+                        '<th class="tlabel5" style="text-align:center;width:100px;">就诊日期</th>'+
                         '<th class="tlabel5" style="text-align:center;width:110px;">慢阻肺诊断级别</th>'+
                         '<th class = "tlabel5"style="text-align:center">服用药品及用量</th>'+
                         '<th class="table-small tlabel5" style="text-align:center">编辑</th>'+
@@ -1900,6 +1944,37 @@ $(document).ready(function (e) {
                 $("#MBQ input[name=q10][value='"+item.q10+"']").attr('checked',true);
                 $("#MBQ input[name='BMI']").val(item.BMI);
                 $("#MBQ input[name='MBQ_id']").val(item.MBQ_id);
+
+                var sum = 0;
+                if($('input:radio[name=q1]:checked').val()=="1"){
+                    sum = sum + 1;
+                }
+                if($('input:radio[name=q2]:checked').val()=="3"||$('input:radio[name=q2]:checked').val()=="4"){
+                    sum = sum + 1;
+                }
+                if($('input:radio[name=q3]:checked').val()=="1"||$('input:radio[name=q3]:checked').val()=="2"){
+                    sum = sum + 1;
+                }
+                if($('input:radio[name=q4]:checked').val()=="1"){
+                    sum = sum + 1;
+                }
+                if($('input:radio[name=q5]:checked').val()=="1"||$('input:radio[name=q5]:checked').val()=="2"){
+                    sum = sum + 2;
+                }
+                console.log(sum);
+                $("#MBQ input[name='sum_1']").val(sum);
+                var sum = 0;
+                if($('input:radio[name=q6]:checked').val()=="1"||$('input:radio[name=q6]:checked').val()=="2"){
+                    sum = sum + 1;
+                }
+                if($('input:radio[name=q8]:checked').val()=="1"){
+                    sum = sum + 1;
+                }
+                if($('input:radio[name=q7]:checked').val()=="1"||$('input:radio[name=q7]:checked').val()=="2"){
+                    sum = sum + 1;
+                }
+                console.log(sum);
+                $("#MBQ input[name='sum_2']").val(sum);
             },
             error:function(data){
                 errorProcess(data);
@@ -2215,5 +2290,57 @@ $(document).ready(function (e) {
             error: function(json_data){
                 errorProcess(json_data);
             }
+        });
+    }
+
+    function calculateCATSum(){
+        $(".sum").change(function(){
+            var sum = 0;
+            for(ii=1;ii<9;ii++){
+                sum = sum + parseInt($('input:radio[name=ess'+ii.toString()+']:checked').val())-1;
+            }
+            console.log(sum);
+            $("#ESS input[name='score']").val(sum);
+        });
+    }
+
+    function calculateMBQSum1(){
+        $(".mbq1").change(function(){
+            var sum = 0;
+            if($('input:radio[name=q1]:checked').val()=="1"){
+                sum = sum + 1;
+            }
+            if($('input:radio[name=q2]:checked').val()=="3"||$('input:radio[name=q2]:checked').val()=="4"){
+                sum = sum + 1;
+            }
+            if($('input:radio[name=q3]:checked').val()=="1"||$('input:radio[name=q3]:checked').val()=="2"){
+                sum = sum + 1;
+            }
+            if($('input:radio[name=q4]:checked').val()=="1"){
+                sum = sum + 1;
+            }
+            if($('input:radio[name=q5]:checked').val()=="1"||$('input:radio[name=q5]:checked').val()=="2"){
+                sum = sum + 2;
+            }
+            console.log(sum);
+            $("#MBQ input[name='sum_1']").val(sum);
+
+        });
+    }
+    function calculateMBQSum2(){
+        $(".mbq2").change(function(){
+            var sum = 0;
+            if($('input:radio[name=q6]:checked').val()=="1"||$('input:radio[name=q6]:checked').val()=="2"){
+                sum = sum + 1;
+            }
+            if($('input:radio[name=q8]:checked').val()=="1"){
+                sum = sum + 1;
+            }
+            if($('input:radio[name=q7]:checked').val()=="1"||$('input:radio[name=q7]:checked').val()=="2"){
+                sum = sum + 1;
+            }
+            console.log(sum);
+            $("#MBQ input[name='sum_2']").val(sum);
+
         });
     }
