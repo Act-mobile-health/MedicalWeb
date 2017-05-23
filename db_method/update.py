@@ -528,7 +528,7 @@ def updateAppInfo(data):
         obj = AppInfo.objects.get(id = int(data['id']))
         if data['date'] != '':
             obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        obj.P_id = data['P_id']
+        # obj.P_id = data['P_id']
         # obj.type = data['type']
         return int(data['id'])
     except Exception, e:

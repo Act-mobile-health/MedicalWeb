@@ -919,9 +919,14 @@ def app_addAppAttachment(request):
 def app_addMessageText(request):
     if request.method == 'POST':
         message = {'result': '-1'}
+        # data = {}
+        # data['P_id'] = request.GET.get("P_id")
+        # data['date'] = request.GET.get("date")
+        # data['content'] = request.GET.get("content")
         data = request.POST
-        print urlquote(data['content']).decode("utf-8")
-        print urlquote(data['content']).decode("gb2312")
+        print data
+        # print urlquote(data['content']).decode("utf-8")
+        # print urlquote(data['content']).decode("gb2312")
         print data,"app_addMessageText"
         if insert.addMessageText(data):
             message['result'] = 0
@@ -1140,6 +1145,27 @@ def getAcuteExac(request,data,D_id):
     js = json.dumps(message)
     # print js,"$$$$$$$"
     return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getMC_calendar(request,data,D_id):
+    message = select.getMC_calendar(data)
+    js = json.dumps(message)
+    print js,"$$$$$$$"
+    return HttpResponse(js)
+
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getAI_calendar(request,data,D_id):
+    message = {}
+    message = select.getAI_calendar(data)
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
 
 @login_required
 @csrf_exempt

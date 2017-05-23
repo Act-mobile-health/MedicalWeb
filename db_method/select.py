@@ -1097,6 +1097,7 @@ def getMessage(data):
         # print q
         q = sorted(q, key=lambda q:q['date'])
         q = sorted(q, key=lambda q:q['P_id'])
+        q = sorted(q, key=lambda q:q['sign'], reverse=True)
         print  q,"q in getMessage"
         for v in q:
             v['date'] = str(v['date'])
@@ -1115,3 +1116,35 @@ def getPatientAppInfo(data):
     except Exception, e:
         tools.exceptionRecord('select.py', 'getPatientAppInfo', e)
         return -1
+
+
+def getMC_calendar(data):
+     try:
+        # start = datetime.date.today().replace(day=1)
+        values = MedicineChange.objects.filter(P_id=data['P_id']).exclude(ch = "0").values("ch","date")
+        temp = list(values)
+        print temp,"temp in getMC_calendar"
+        print data
+        print type(temp)
+        for v in temp:
+            print type(v)
+            v['date'] = str(v['date'])
+
+        return temp
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getMC_calendar', e)
+
+
+def getAI_calendar(data):
+     try:
+        # start = datetime.date.today().replace(day=1)
+        # print  start
+        values = AppInfo.objects.filter(P_id = data['P_id']).values("date","type","sign")
+        temp = list(values)
+        print  temp,"temp in getAI_calendar"
+        for v in temp:
+            v['date'] = str(v['date'])
+
+        return temp
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getAI_calendar', e)

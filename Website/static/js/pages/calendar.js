@@ -62,7 +62,7 @@ function calendar(){
 		    dataType:"json",
             async: false,
             success:function(json_data){
-                console.log(json_data);
+//                console.log(json_data);
                 $.each(json_data,function (index,item) {
                 var mess = new Array();
                     mess['title'] = preHead(item.acuteExac)+"急性加重";
@@ -77,6 +77,58 @@ function calendar(){
                 errorProcess(json_data);
             }
 		});
+
+		$.ajax({
+		    url:"/i99/",
+		    type:"GET",
+		    data:{P_id:patientId},
+		    dataType:"json",
+            async: false,
+            success:function(json_data){
+//                console.log(json_data);
+                $.each(json_data,function (index,item) {
+                var mess = new Array();
+                    mess['title'] = str4MC(item.ch);
+					mess['start'] = item.date;
+					mess['allDay'] = true;
+					mess['className'] = "fc-event-warning";
+				event.push(mess);
+//				console.log(event);
+
+                });
+            },
+            error: function(json_data){
+                errorProcess(json_data);
+            }
+		});
+
+		$.ajax({
+		    url:"/i102/",
+		    type:"GET",
+		    data:{P_id:patientId},
+		    dataType:"json",
+            async: false,
+            success:function(json_data){
+//                console.log(json_data);
+                $.each(json_data,function (index,item) {
+                    var mess = new Array();
+//                    console.log(item,item['type'])
+//                    console.log(item.type);
+//                    console.log(str4AI("0"))
+                    mess['title'] = str4AI(item.type);
+					mess['start'] = item.date;
+					mess['allDay'] = true;
+					mess['className'] = "fc-event-info";
+				    event.push(mess);
+//				console.log(event);
+
+                });
+            },
+            error: function(json_data){
+                errorProcess(json_data);
+            }
+		});
+
 
 		$calendar.fullCalendar({
 			header: {
@@ -216,3 +268,23 @@ function preHead(input){
     }
 }
 // info success warning primary
+function str4MC(input){
+    if(input=="1"){
+        return "今日换药";
+    }
+    else if(input=="2"){
+        return "今日停用药";
+    }
+}
+
+function str4AI(input){
+    if(input=="0"){
+        return "今日有新的门诊记录";
+    }
+    else if(input=="1"){
+        return "今日有新的急诊记录";
+    }
+    else if(input=="2"){
+        return "今日有新的住院记录";
+    }
+}
