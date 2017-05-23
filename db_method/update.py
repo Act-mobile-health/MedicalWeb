@@ -72,6 +72,7 @@ def updateExpGroup(G_id, name, info, date):
 def updatePatientInfo(data):
     #TODO
     try:
+
         print data,data['name'],type(data['name'])
         print "#############"
         patient = PatientInfo.objects.get(P_id= data['P_id'])
@@ -90,14 +91,22 @@ def updatePatientInfo(data):
         patient.career = data['career']
         patient.marriage = data['marriage']
 
+        patient.IDCardNum = data['IDCardNum']
+
         patient.province_h = data['province_h']
-        patient.city_h = data['city_h']
-        patient.county_h = data['county_h']
-        patient.detail_h = data['detail_h']
+
+        if data['city_h']!=u"请输入市":
+            patient.city_h = data['city_h']
+        if data['county_h']!= u"请输入区":
+            patient.county_h = data['county_h']
+        if data['detail_h']!= "":
+            patient.detail_h = data['detail_h']
 
         patient.province = data['province']
-        patient.city = data['city']
-        patient.county = data['county']
+        if data['city']!=u"请输入市":
+            patient.city = data['city']
+        if data['county']!= u"请输入区":
+            patient.county = data['county']
 
         patient.activityAddr1 = data['activityAddr1']
         patient.activityAddr2 = data['activityAddr2']

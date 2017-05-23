@@ -63,7 +63,7 @@ def addPatientInfo(data):
             d = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = PatientInfo(P_id = data['P_id'], sign = data['sign'], name = data['name'], sex = data['sex'],
+        newObj = PatientInfo(P_id = data['P_id'], sign = data['sign'], name = data['name'], sex = data['sex'],IDCardNum = data['IDCardNum'],
                                  birthday = d, age = int(data['age']), nation = data['nation'], height = data['height'],
                                  weight = data['weight'], education = data['education'], career = data['career'],
                                  marriage = data['marriage'], province_h = data['province_h'], city_h = data['city_h'],

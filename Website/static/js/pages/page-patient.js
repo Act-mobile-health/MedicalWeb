@@ -4,12 +4,11 @@
 $(document).ready(function () {
     appendAllPatientTable();
     $("#refresh").click(function () {
-        clearAllPatientTable();
         appendAllPatientTable();
     });
 
     $("#PatientInfobt").click(function () {
-        if(confirm("确定修改吗？")){
+        if(confirm("确定提交吗？")){
             $.ajax({
                 type: "POST",
                 url: "/i17/",
@@ -17,8 +16,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (data) {
                     successProcess(data);
-                    appendUserInfoTable();
-                    appendUserDetailForm();
+                    appendAllPatientTable();
                 },
                 error:function(data){
                     errorProcess(data);
@@ -31,6 +29,7 @@ $(document).ready(function () {
     function appendAllPatientTable() {
         var time;
         var temp;
+        $("#patientInfoTable tbody").empty();
         $.ajax({
             type: "GET",
             url: "/i15/",
@@ -46,7 +45,7 @@ $(document).ready(function () {
                         "<td>"+item.name+"</td>"+
                         "<td>"+SexParse(item.sex)+"</td>"+
                         "<td>"+item.age+"</td>"+
-//                        "<td>"+item.nation+"</td>"+
+                        "<td>"+item.IDCardNum+"</td>"+
                         "<td>"+item.registerTime+"</td>"+
                         "<td>"+item.cellphone+"</td>"+
 //                        "<td>"+item.telephone+"</td>"+
@@ -62,9 +61,6 @@ $(document).ready(function () {
             }
         });
         
-    }
-    function clearAllPatientTable() {
-        $("#patientInfoTable tbody").clean();
     }
 
     function colorInfo(input, index){

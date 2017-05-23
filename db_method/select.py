@@ -207,8 +207,8 @@ def getPatientsBasicInfo():
     # TODO
     try:
 
-        values = PatientInfo.objects.all().values_list('P_id','name','sex','age', 'nation', 'registerTime', 'telephone', 'cellphone')
-        keys = ['P_id', 'name', 'sex','age', 'nation', 'registerTime', 'telephone', 'cellphone']
+        values = PatientInfo.objects.all().values_list('P_id','name','sex','age', 'nation', 'registerTime', 'telephone', 'cellphone', 'IDCardNum')
+        keys = ['P_id', 'name', 'sex','age', 'nation', 'registerTime', 'telephone', 'cellphone', 'IDCardNum']
         for value in values:
             message = tools.dictPackage(keys, value)
             time = MedicalVisit.objects.get(P_id=message['P_id'])
@@ -272,9 +272,10 @@ def getPatientDetailedInfo(P_id):
         value.append(obj.telephone)
         value.append(obj.cellphone)
         value.append(obj.partnerPhone)
+        value.append(obj.IDCardNum)
         keys = ['id','P_id','sign','name','sex','birthday','age','nation','height','weight','registerTime','education',
                 'career','marriage','province_h','city_h','county_h','detail_h','province','city','county','activityAddr1','activityAddr2','actionAddr',
-                'diastolicPressure','systolicPressure','neckCircu','payment','telephone','cellphone','partnerPhone']
+                'diastolicPressure','systolicPressure','neckCircu','payment','telephone','cellphone','partnerPhone','IDCardNum']
         message = tools.dictPackage(keys, value)
 
         # group_id = PatientGroup.objects.get(P_id = P_id).G_id
@@ -1071,6 +1072,9 @@ def getAppInfo(data):
         print  start
         values = AppInfo.objects.filter(Q(sign="1")|Q(sign="0",date_upload__gte=start)).values("id","P_id","date","date_upload","type","sign")
         temp = list(values)
+        temp = sorted(temp, key=lambda temp:temp['date_upload'])
+        temp = sorted(temp, key=lambda temp:temp['P_id'])
+        temp = sorted(temp, key=lambda temp:temp['sign'], reverse=True)
         print  temp,"temp in getAppInfo"
         for v in temp:
             v['date'] = str(v['date'])

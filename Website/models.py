@@ -837,6 +837,7 @@ class invitation(models.Model):
 # table33
 
 
+
 class LungFunc(models.Model):
     AE_id = models.IntegerField(null=False)
     P_id = models.CharField(max_length=12, null=False)

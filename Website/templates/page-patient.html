@@ -318,7 +318,7 @@
                                                     <th style="text-align:center">姓名</th>
                                                     <th style="text-align:center">性别</th>
                                                     <th style="text-align:center">年龄</th>
-                                                    <!--<th style="text-align:center">民族</th>-->
+                                                    <th style="text-align:center">身份证号</th>
                                                     <th style="text-align:center">入组时间</th>
                                                     <th style="text-align:center">手机</th>
                                                     <!--<th style="text-align:center">固定电话</th>-->
@@ -389,6 +389,12 @@
                             </div>
 
                             <div class="row ">
+                                <div class="form-group col-lg-6 col-md-6 myblockposition">
+                                    <label class="col-sm-3 control-label mylabel">身份证号</label>
+                                    <div class="col-sm-6">
+                                      <input type="text" class="form-control myinput" name="IDCardNum" placeholder="请输入身份证号">
+                                    </div>
+                                </div>
 								<div class="col-lg-6 col-md-6 myblockposition" style="margin-top:0;">
 									<label class="col-sm-3 control-label mylabel">签署知情同意书</label>
 									<div class="radio col-sm-3">
@@ -667,19 +673,12 @@
                                     </div>
 								</div>
                             </div>
-
-							<div class = "row">
-								<div class="col-md-11 col-lg-11">
-									<div class="pull-right">
-										<button type="submit" id="PatientInfobt" class="btn btn-primary">提交</button>
-									</div>
-								</div>
-                            </div>
                         </form>
                     </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="button"  class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button"  class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="submit" id="PatientInfobt" class="btn btn-primary" data-dismiss="modal">提交</button>
                     </div>
                 </div>
             </div>

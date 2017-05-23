@@ -32,7 +32,7 @@ $(document).ready(function (e) {
 	$("#myTabSmall").hide();
 	}
 
-    PatientDetailTable();
+//    PatientDetailTable();
     showRelationInfo();
     getAppInfoNum();
     appendPatientDetail();
@@ -174,6 +174,7 @@ function forWizard_ecDate(){
                 $("#groupInfo").html(item.groupInfo);
                 $("#payment").html(paymentParse(item.payment));
                 $("#sex").html(SexParse(item.sex));
+                $("#IDCardNum").html(SexParse(item.IDCardNum));
             },
             error: function (data) {
                 errorProcess(data);
@@ -195,7 +196,7 @@ function forWizard_ecDate(){
                     errorProcess(data);
                 }
             });
-            PatientDetailTable();
+            appendPatientDetail();
         }
     }
 
@@ -224,10 +225,14 @@ function forWizard_ecDate(){
                 $("#PatientInfo input[name='registerTime']").val(item.registerTime);
                 $("#PatientInfo input[name='birthday']").val(item.birthday);
 
+                $("#PatientInfo input[name='homeAddr']").val(item.province_h+item.city_h+item.county_h+item.detail_h);
+
                 $("#PatientInfo select[name='province_h'] option[value='"+item.province_h+"']").attr('selected',true);
                 $("#PatientInfo select[name='city_h'] option[value='"+item.city_h+"']").attr('selected',true);
                 $("#PatientInfo select[name='county_h'] option[value='"+item.county_h+"']").attr('selected',true);
-                $("#PatientInfo input[name='detail_h']").val(item.detail_h);
+//                $("#PatientInfo input[name='detail_h']").val(item.detail_h);
+
+                $("#PatientInfo input[name='birthAddr']").val(item.province+item.city+item.county);
 
                 $("#PatientInfo select[name='province'] option[value='"+item.province+"']").attr('selected',true);
                 $("#PatientInfo select[name='city'] option[value='"+item.city+"']").attr('selected',true);
@@ -244,7 +249,9 @@ function forWizard_ecDate(){
                 $("#PatientInfo input[name='partnerPhone']").val(item.partnerPhone);
 
                 $("#PatientInfo input[name='payment'][value='" + item.payment + "']").attr('checked', true);
+
                 $("#PatientInfo input[name='sex'][value='" + item.sex + "']").attr('checked', true);
+                $("#PatientInfo input[name='IDCardNum']").val(item.IDCardNum);
             },
             error:function(data){
                 errorProcess(data);
@@ -352,12 +359,16 @@ function forWizard_ecDate(){
     }
 
 
-    function GenerateTab1(index,type_t,date){
+    function GenerateTab1(index,type_t,date,sign){
     type = type_t;
     var str_edit = "";
     var str_type = "";
     var temp_name = "";
     var temp_show = "";
+    var str_color = "";
+    if(sign=="1"){
+        str_color = 'style="background:#e63b3b!important;"';
+    }
     if(type==0){
         str_edit = "OutPatientServiceInfoDetails";
         str_type = "outpatient-"+index;
@@ -381,7 +392,7 @@ function forWizard_ecDate(){
     var  str = "";
      str     = '<div class="col-lg-12">'+
 			   '<div class="panel bk-bg-white">'+
-			   '<div class="panel-heading bk-bg-primary">'+
+			   '<div class="panel-heading bk-bg-primary" '+str_color+'>'+
 			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+temp_index+"  ( 上传于"+date+" )"+'</h6>'+
 			   '<div class="panel-actions" style="display:block;">'+
 				'<a onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>'+
@@ -1265,6 +1276,7 @@ function forWizard_ecDate(){
         type = parseInt(type_t);
         type_now = type;
         S_id = [];
+        var color = "black";
         $("#follow_up").empty();
         temp = document.getElementById("follow_up");
         $.ajax({
@@ -1276,9 +1288,11 @@ function forWizard_ecDate(){
                 $.each(json_data,function (index,item){
                     if(item.sign == "1"){
                         new_str = "(未处理！)";
+//                        color = "#e63b3b";
                     }
                     else{
                         new_str = "";
+                        color = "black";
                     }
                     console.log(item)
                     S_id.push(item.id);
@@ -1290,13 +1304,13 @@ function forWizard_ecDate(){
                         tt ="";
                     }
                     temp.innerHTML = temp.innerHTML+'<div class="timeline-row  '+tt+'">'+
-                    '<div class="timeline-time"><small style="color:black;">'+item['date']+'</small>'+item['place']+new_str+'</div>'+
+                    '<div class="timeline-time" style="color:'+color+'"><small style="color:black;">'+item['date']+'</small>'+item['place']+new_str+'</div>'+
                     '<div class="timeline-icon">'+
                     '<div class="'+colorForOEH(type_t)+'"><i class="'+iconForOEH(type_t)+'"></i></div>'+
                     '</div>'+
                     '<div class="panel timeline-content">'+
                     '<div class="panel-body">'+
-                    GenerateTab1(index, type, item['date_upload'])+GenerateTab2(index, type)+GenerateTab3(index, type)+GenerateTab4(index, type)+
+                    GenerateTab1(index, type, item['date_upload'], item.sign)+GenerateTab2(index, type)+GenerateTab3(index, type)+GenerateTab4(index, type)+
                     '</div>'+
                     '</div>'+
                     '</div>';
@@ -1315,6 +1329,7 @@ function forWizard_ecDate(){
         show_num = 3;
         S_id = [];
         var indexForZero = 0;
+        var color = "black";
         $("#follow_up").empty();
         temp = document.getElementById("follow_up");
         console.log("inside")
@@ -1327,9 +1342,11 @@ function forWizard_ecDate(){
                 $.each(json_data,function (index,item){
                     if(item.sign == "1"){
                         new_str = "(未处理！)";
+//                        color = "#e63b3b";
                     }
                     else{
                         new_str = "";
+                        color = "black";
                         if(temp_new_sign == "0"){
                             indexForZero = indexForZero +1
                             return true;
@@ -1346,13 +1363,13 @@ function forWizard_ecDate(){
                         tt ="";
                     }
                     temp.innerHTML = temp.innerHTML+'<div class="timeline-row  '+tt+'">'+
-                    '<div class="timeline-time"><small style="color:black;">'+item['date']+'</small>'+item['place']+new_str+'</div>'+
+                    '<div class="timeline-time" style="color:'+color+'"><small style="color:black;">'+item['date']+'</small>'+item['place']+new_str+'</div>'+
                     '<div class="timeline-icon">'+
                     '<div class="'+colorForOEH(item['type'])+'"><i class="'+iconForOEH(item['type'])+'"></i></div>'+
                     '</div>'+
                     '<div class="panel timeline-content">'+
                     '<div class="panel-body">'+
-                    GenerateTab1(index-indexForZero, type, item['date_upload'])+GenerateTab2(index-indexForZero, type)+
+                    GenerateTab1(index-indexForZero, type, item['date_upload'], item.sign)+GenerateTab2(index-indexForZero, type)+
                     GenerateTab3(index-indexForZero, type)+GenerateTab4(index-indexForZero, type)+
                     '</div>'+
                     '</div>'+
@@ -2348,4 +2365,8 @@ function forWizard_ecDate(){
             $("#MBQ input[name='sum_2']").val(sum);
 
         });
+    }
+
+    function showAddr(id){
+        $("#"+id).show();
     }

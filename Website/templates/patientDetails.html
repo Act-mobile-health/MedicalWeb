@@ -378,6 +378,12 @@
 												</div>
 											</div>
 										</div>
+                                         <div class="form-group">
+											<label class="col-md-3 control-label">身份证号</label>
+											<div class="col-md-9">
+												<input type="text" name="IDCardNum" class="form-control" placeholder="身份证号">
+											</div>
+										</div>
 
 										<div class="form-group">
 											<label class="col-md-3 control-label">就医时间</label>
@@ -487,6 +493,20 @@
 
                                         <div class="form-group">
 											<label class="col-md-3 control-label">家庭住址</label>
+											<div class="col-md-9">
+												<!--<input type="text" name="homeAddr" class="form-control">-->
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="homeAddr" readonly>
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" onclick="showAddr('homeAddr')" style="width:50px;padding-left:5px;padding-right:5px">
+                                                            修改
+                                                        </button>
+                                                    </span>
+                                                </div>
+											</div>
+										</div>
+                                        <div class="form-group" id="homeAddr" style="display:none">
+											<label class="col-md-3 control-label"></label>
 											<div class="col-md-2" style="margin-left:padding-left:0;padding-right:0"  >
                                                 <select class="form-control" name="province_h" id="province_h"></select>
                                             </div>
@@ -500,8 +520,22 @@
                                                 <input type="text" class="form-control" name="detail_h" id="detail_h">
                                             </div>
 										</div>
-										<div class="form-group">
+
+                                        <div class="form-group">
 											<label class="col-md-3 control-label">籍贯</label>
+											<div class="col-md-9">
+												<div class="input-group">
+                                                    <input type="text" class="form-control" name="birthAddr" readonly>
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" onclick="showAddr('birthAddr')" style="width:50px;padding-left:5px;padding-right:5px">
+                                                            修改
+                                                        </button>
+                                                    </span>
+											    </div>
+										    </div>
+                                        </div>
+										<div class="form-group" id="birthAddr" style="display:none">
+											<label class="col-md-3 control-label"></label>
 											<div class="col-md-2" style="margin-left:padding-left:0;padding-right:0"  >
                                                 <select class="form-control" name="province" id="province"></select>
                                             </div>
