@@ -1301,6 +1301,8 @@ function forWizard_ecDate(){
                     '</div>'+
                     '</div>';
                 });
+
+            console.log(S_id);
             },
             error:function (data) {
                 errorProcess(data);
@@ -1312,6 +1314,7 @@ function forWizard_ecDate(){
         type_now = 4;
         show_num = 3;
         S_id = [];
+        var indexForZero = 0;
         $("#follow_up").empty();
         temp = document.getElementById("follow_up");
         console.log("inside")
@@ -1328,14 +1331,14 @@ function forWizard_ecDate(){
                     else{
                         new_str = "";
                         if(temp_new_sign == "0"){
-                            show_num = show_num +1
+                            indexForZero = indexForZero +1
                             return true;
                         }
                     }
                     S_id.push(item.id);
                     type = parseInt(item['type']);
                     console.log(type,"type")
-                    if(index<show_num){
+                    if(index-indexForZero<show_num){
                         tt = "active";
                         console.log(tt);
                     }
@@ -1349,7 +1352,8 @@ function forWizard_ecDate(){
                     '</div>'+
                     '<div class="panel timeline-content">'+
                     '<div class="panel-body">'+
-                    GenerateTab1(index, type, item['date_upload'])+GenerateTab2(index, type)+GenerateTab3(index, type)+GenerateTab4(index, type)+
+                    GenerateTab1(index-indexForZero, type, item['date_upload'])+GenerateTab2(index-indexForZero, type)+
+                    GenerateTab3(index-indexForZero, type)+GenerateTab4(index-indexForZero, type)+
                     '</div>'+
                     '</div>'+
                     '</div>';
