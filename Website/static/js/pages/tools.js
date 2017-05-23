@@ -181,3 +181,32 @@ function forWizard(key, w, sign){
         }
     })
 }
+
+function forWizard_v(key, w, sign, form){
+    $(".mycheckbox").change(function(){
+        var val=$('#'+form+' input:radio[name='+key+']:checked').val();
+        if(val){
+        console.log(val,key,sign);
+            if(sign==1){
+                if(val == 1)
+                {
+                   $("#"+w).show();
+                }
+                else
+                {
+                   $("#"+w).hide();
+                }
+            }
+            else{
+                if(val == 2)
+                {
+                   $("#"+w).show();
+                }
+                else
+                {
+                   $("#"+w).hide();
+                }
+            }
+        }
+    })
+}

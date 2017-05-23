@@ -41,26 +41,26 @@ $(document).ready(function (e) {
     calculateMBQSum2();
 
 //    for emergency
-    forWizard("acuteExac", "disease", 0);
-    forWizard("byxCheck", "byxResult", 1);
-    forWizard("useAbt", "useAbtconfirm", 1);
+    forWizard_v("acuteExac", "disease", 0, "-EmergCallInfo");
+    forWizard_v("byxCheck", "byxResult", 1, "-EmergCallInfo");
+    forWizard_v("useAbt", "useAbtconfirm", 1, "-EmergCallInfo");
     forWizard_ecDate();
-    forWizard("hospital", "treatMethod", 0);
-    forWizard("treatMethod", "medicine", 1);
+    forWizard_v("hospital", "treatMethod", 0, "-EmergCallInfo");
+    forWizard_v("treatMethod", "medicine", 1, "-EmergCallInfo");
 
 //    for outpatient
-    forWizard("isSymptom", "symptom", 1);
-    forWizard("physicalExam", "breathErr", 0);
-    forWizard("acuteExac", "disease-o", 0);
-    forWizard("useAbt", "abtType", 1);
-    forWizard("treatMethod", "medicine-o", 1);
+    forWizard_v("isSymptom", "symptom", 1, "-OutPatientServiceInfo");
+    forWizard_v("physicalExam", "breathErr", 0, "-OutPatientServiceInfo");
+    forWizard_v("acuteExac", "disease-o", 0, "-OutPatientServiceInfo");
+    forWizard_v("useAbt", "abtType", 1, "-OutPatientServiceInfo");
+    forWizard_v("treatMethod", "medicine-o", 1, "-OutPatientServiceInfo");
 
 //    for inhospital
-    forWizard("acuteExac", "disease-h", 0);
-    forWizard("byxCheck", "byxResult-h", 1);
-    forWizard("useAbt", "abtType-h", 1);
-    forWizard("hospital", "treatMethod-h", 0);
-    forWizard("treatMethod", "medicine-h", 1);
+    forWizard_v("acuteExac", "disease-h", 0, "-InHospitalInfo");
+    forWizard_v("byxCheck", "byxResult-h", 1, "-InHospitalInfo");
+    forWizard_v("useAbt", "abtType-h", 1, "-InHospitalInfo");
+    forWizard_v("hospital", "treatMethod-h", 0, "-InHospitalInfo");
+    forWizard_v("treatMethod", "medicine-h", 1, "-InHospitalInfo");
 
 
     $("#submitPatientInfobt").click(function () {
@@ -113,7 +113,7 @@ $(document).ready(function (e) {
 
 function forWizard_ecDate(){
     $(".mycheckbox").change(function(){
-        var val=$('input:radio[name="ecMethod"]:checked').val();
+        var val=$('#-EmergCallInfo input:radio[name="ecMethod"]:checked').val();
         console.log(val);
         if(val){
             if(val == 3)
@@ -1390,6 +1390,7 @@ function forWizard_ecDate(){
 
     function editInfo(index, type_t, name){
         type = type_t;
+        console.log(S_id)
         $.ajax({
            type:"GET",
             url:"/i23/",
