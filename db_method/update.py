@@ -82,7 +82,7 @@ def updatePatientInfo(data):
         patient.sex = data['sex']
         if data['birthday'] != '':
             patient.birthday = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
-        patient.age = data['age']
+        patient.age = int(data['age'])
         patient.nation = data['nation']
         patient.height = data['height']
         patient.weight = data['weight']
@@ -429,8 +429,8 @@ def updateCATandMRC(data):
         obj.cat6 = data['cat6']
         obj.cat7 = data['cat7']
         obj.cat8 = data['cat8']
-        obj.catSum = data['catSum']
-        obj.mrc = data['mrc']
+        obj.catSum = int(data['catSum'])
+        obj.mrc = int(data['mrc'])
         obj.acuteExac = data['acuteExac']
         obj.save()
         return int(data['id'])
@@ -546,7 +546,7 @@ def updateLungFunc(data):
         obj.RV_TLC2 = data['RV_TLC2']
         obj.RV_TLC3 = data['RV_TLC3']
         obj.FEV1change = data['FEV1change']
-        obj.GOLD = data['GOLD']
+        obj.GOLD = int(data['GOLD'])
         obj.save()
         return True
     except Exception, e:

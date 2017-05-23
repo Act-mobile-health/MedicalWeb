@@ -20,7 +20,7 @@ class PatientInfo(models.Model):
     sex = models.CharField(max_length=2)
     password = models.CharField(max_length=50,default="000000")
     birthday = models.DateField(blank=True)
-    age = models.CharField(max_length=10)
+    age = models.IntegerField()
     nation = models.CharField(max_length=15, blank=True)
     height = models.CharField(max_length=50)
     weight = models.CharField(max_length=50)
@@ -138,8 +138,8 @@ class CATandMRC(models.Model):
     cat6 = models.CharField(max_length=2)
     cat7 = models.CharField(max_length=2)
     cat8 = models.CharField(max_length=2)
-    catSum = models.CharField(max_length=3)
-    mrc = models.CharField(max_length=2)
+    catSum = models.IntegerField(default=0)
+    mrc = models.IntegerField(default=0)
     acuteExac = models.CharField(max_length=1)
 
 
@@ -721,9 +721,9 @@ class AccessoryExamination(models.Model):
 
 class MedicalVisit(models.Model):
     #MV_id = models.CharField(max_length=32, primary_key=True)
-    o_time = models.CharField(max_length=5,default="0")
-    e_time = models.CharField(max_length=5,default="0")
-    h_time = models.CharField(max_length=5,default="0")
+    o_time = models.IntegerField(default=0)
+    e_time = models.IntegerField(default=0)
+    h_time = models.IntegerField(default=0)
     P_id = models.CharField(max_length=12, unique=True, null=False)
 
 
@@ -744,6 +744,11 @@ class HealthyCondition(models.Model):
 class DiseaseType(models.Model):
     #DT_id = models.CharField(max_length=32, primary_key=True)
     P_id = models.CharField(max_length=12, null=False)
+    date = models.DateField(auto_now_add=True)
+    first = models.CharField(max_length=2)
+    second = models.CharField(max_length=3)
+    third = models.CharField(max_length=3)
+    fourth = models.CharField(max_length=3)
     # TODO: need to finish
     #
     #
@@ -850,7 +855,7 @@ class LungFunc(models.Model):
     RV_TLC2 = models.CharField(max_length=20)
     RV_TLC3 = models.CharField(max_length=20)
     FEV1change = models.CharField(max_length=20)
-    GOLD = models.CharField(max_length=1)
+    GOLD = models.IntegerField()
 
 
 # created by CS@buaa, 2017/4/16

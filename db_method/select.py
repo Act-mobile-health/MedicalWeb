@@ -206,30 +206,7 @@ def getPatientsBasicInfo():
     message = {}
     # TODO
     try:
-        # group_ids = GroupInfo.objects.filter(D_id = D_id).values_list('id')
-        # for group_id in group_ids:
-        #     patient_ids = PatientGroup.objects.filter(G_id=group_id)
-        #     keys = ['P_id', 'name', 'sex', 'age', 'cellphone']
-        #     for patient_id in patient_ids:
-        #         obj = PatientInfo.objects.get(P_id=patient_id)
-        #         value = []
-        #         value.append(obj.P_id)
-        #         value.append(obj.name)
-        #         value.append(obj.sex)
-        #         value.append(obj.age)
-        #         value.append(obj.cellphone)
-        #         message = tools.dictPackage(keys, value)
-        #
-        #         times = MedicalVisit.objects.get(P_id=patient_id)
-        #         message['o_time'] = times.o_time
-        #         message['e_time'] = times.e_time
-        #         message['h_time'] = times.h_time
-        #
-        #         # TODO
-        #         # healthStatus
-        #
-        #         list.append(message)
-        #
+
         values = PatientInfo.objects.all().values_list('P_id','name','sex','age', 'nation', 'registerTime', 'telephone', 'cellphone')
         keys = ['P_id', 'name', 'sex','age', 'nation', 'registerTime', 'telephone', 'cellphone']
         for value in values:
@@ -893,7 +870,7 @@ def getAEType(data):
             value.append(obj.RV_TLC2)
             value.append(obj.RV_TLC3)
             value.append(obj.FEV1change)
-            value.append(obj.GOLD)
+            value.append(str(obj.GOLD))
             keys = ['head', 'date', 'AE_id', 'FVC1', 'FVC2', 'FVC3', 'FEV11', 'FEV12', 'FEV13', 'FEV1_FVC1', 'FEV1_FVC2', 'FEV1_FVC3',
                     'RV_TLC1', 'RV_TLC2', 'RV_TLC3', 'FEV1change', 'GOLD']
             message = tools.dictPackage(keys, value)

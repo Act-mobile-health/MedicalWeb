@@ -64,7 +64,7 @@ def addPatientInfo(data):
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         newObj = PatientInfo(P_id = data['P_id'], sign = data['sign'], name = data['name'], sex = data['sex'],
-                                 birthday = d, age = data['age'], nation = data['nation'], height = data['height'],
+                                 birthday = d, age = int(data['age']), nation = data['nation'], height = data['height'],
                                  weight = data['weight'], education = data['education'], career = data['career'],
                                  marriage = data['marriage'], province_h = data['province_h'], city_h = data['city_h'],
                                  county_h = data['county_h'], detail_h = data['detail_h'], province = data['province'],
@@ -75,7 +75,7 @@ def addPatientInfo(data):
                                  payment = data['payment'], telephone = data['telephone'],
                                  cellphone = data['cellphone'], partnerPhone = data['partnerPhone'])
         newObj.save()
-        newM = MedicalVisit(P_id=data['P_id'],o_time="0",e_time="0",h_time="0")
+        newM = MedicalVisit(P_id=data['P_id'],o_time=0,e_time=0,h_time=0)
         newM.save()
         #TODO
         #table25~table32
@@ -122,7 +122,7 @@ def addOutPatientServiceInfo(data):
         newObj.save()
 
         obj = MedicalVisit.objects.get(P_id = data['P_id'])
-        obj.o_time = str(int(obj.o_time) + 1)
+        obj.o_time = obj.o_time + 1
         obj.save()
 
         return True
@@ -151,7 +151,7 @@ def addEmergCallInfo(data):
         newObj.save()
 
         obj = MedicalVisit.objects.get(P_id=data['P_id'])
-        obj.e_time = str(int(obj.e_time) + 1)
+        obj.e_time = obj.e_time + 1
         obj.save()
 
         return True
@@ -180,7 +180,7 @@ def addInHospitalInfo(data):
         newObj.save()
 
         obj = MedicalVisit.objects.get(P_id=data['P_id'])
-        obj.h_time = str(int(obj.h_time) + 1)
+        obj.h_time = obj.h_time + 1
         obj.save()
 
         return True
@@ -339,7 +339,7 @@ def addCATandMRC(data):
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         newObj = CATandMRC(P_id = data['P_id'], date = d, cat1 = data['cat1'], cat2 = data['cat2'], cat3 = data['cat3'],
                            cat4 = data['cat4'], cat5 = data['cat5'], cat6 = data['cat6'], cat7 = data['cat7'],
-                           cat8 = data['cat8'], catSum = data['catSum'], mrc = data['mrc'],
+                           cat8 = data['cat8'], catSum = int(data['catSum']), mrc = int(data['mrc']),
                            acuteExac = data['acuteExac'])
         newObj.save()
         id = newObj.id
@@ -441,21 +441,21 @@ def addAppInfo(data):
             newObj = OutPatientServiceInfo(P_id = data['P_id'], date = d)
             newObj.save()
             obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
-            obj1.o_time = str(int(obj1.o_time) + 1)
+            obj1.o_time = obj1.o_time + 1
             obj1.save()
             obj.S_id = newObj.id
         elif(data['type']=="1"):
             newObj = EmergCallInfo(P_id = data['P_id'], date = d)
             newObj.save()
             obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
-            obj1.e_time = str(int(obj1.e_time) + 1)
+            obj1.e_time = obj1.e_time + 1
             obj1.save()
             obj.S_id = newObj.id
         elif(data['type']=="2"):
             newObj = InHospitalInfo(P_id = data['P_id'], date = d)
             newObj.save()
             obj1 = MedicalVisit.objects.get(P_id = data['P_id'])
-            obj1.h_time = str(int(obj1.h_time) + 1)
+            obj1.h_time = obj1.h_time + 1
             obj1.save()
             obj.S_id = newObj.id
         obj.save()

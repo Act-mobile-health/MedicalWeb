@@ -63,13 +63,13 @@ def deleteOutPatientServiceInfo(OPS_id):
             deleteAccessoryExamination(v.id)
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
-        obj.o_time = str(int(obj.o_time) - 1)
+        obj.o_time = obj.o_time - 1
         obj.save()
-        appinfo = AppInfo.objects.get(P_id = temp_Pid, type = "0", S_id = OPS_id)
+        appinfo = AppInfo.objects.filter(P_id = temp_Pid, type = "0", S_id = OPS_id)
         if appinfo:
-            appinfo.sign = "0"
-            print appinfo.sign
-            appinfo.save()
+            appinfo_t = AppInfo.objects.get(P_id = temp_Pid, type = "0", S_id = OPS_id)
+            appinfo_t.sign = "0"
+            appinfo_t.save()
         return True
     except Exception, e:
         tools.exceptionRecord('delete.py','deleteOutPatientServiceInfo',e)
@@ -93,12 +93,13 @@ def deleteEmergCallInfo(EC_id):
             deleteAccessoryExamination(v.id)
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
-        obj.e_time = str(int(obj.e_time) - 1)
+        obj.e_time = obj.e_time - 1
         obj.save()
-        appinfo = AppInfo.objects.get(P_id = temp_Pid, type = "0", S_id = EC_id)
+        appinfo = AppInfo.objects.filter(P_id = temp_Pid, type = "1", S_id = EC_id)
         if appinfo:
-            appinfo.sign = "0"
-            appinfo.save()
+            appinfo_t = AppInfo.objects.get(P_id = temp_Pid, type = "1", S_id = EC_id)
+            appinfo_t.sign = "0"
+            appinfo_t.save()
 
         return True
     except Exception, e:
@@ -123,13 +124,17 @@ def deleteInHospitalInfo(IH_id):
             deleteAccessoryExamination(v.id)
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
-        obj.h_time = str(int(obj.h_time) - 1)
+        obj.h_time = obj.h_time - 1
         obj.save()
-        appinfo = AppInfo.objects.get(P_id = temp_Pid, type = "0", S_id = IH_id)
+        print "1111"
+        appinfo = AppInfo.objects.filter(P_id = temp_Pid, type = "2", S_id = IH_id)
+        print appinfo
+        print "1212"
         if appinfo:
-            appinfo.sign = "0"
-            appinfo.save()
-
+            appinfo_t = AppInfo.objects.get(P_id = temp_Pid, type = "2", S_id = IH_id)
+            appinfo_t.sign = "0"
+            appinfo_t.save()
+        print "2222"
         return True
     except Exception, e:
         tools.exceptionRecord('delete.py','deleteInHospitalInfo',e)
