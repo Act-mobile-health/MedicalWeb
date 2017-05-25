@@ -1024,7 +1024,7 @@ def getMR(P_id):
             # print type(v)
             v['date'] = str(v['date'])
             # print type(v['date']),v['date']
-            if(v['ch'] == "1"):
+            if(v['ch'] == "1" or v['ch'] == "2"):
                 mr = MedicineRecord.objects.filter(MC_id=v['MC_id']).values("sign","doc")
                 v['info'] = list(mr)
                 new.append(v)
