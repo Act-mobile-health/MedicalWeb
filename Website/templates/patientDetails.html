@@ -6,6 +6,13 @@
     	<meta charset="UTF-8" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <!--for map add byzyc @0525-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!--<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>-->
+        <script src="http://webapi.amap.com/maps?v=1.3&key=c93e1e293e5b1c3dc581f3ff633144d3&plugin=AMap.Autocomplete,AMap.PlaceSearch,AMap.Walking,AMap.Riding"></script>
+        <!--<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>-->
+    <!--for map add byzyc @0525-->
+
 
 		<title>首页</title>
 
@@ -55,6 +62,7 @@
 
 		<link href="/static/css/mycss1.css" rel="stylesheet" />
 		<link href="/static/css/mycss.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/static/css/map.css">
 		<!--<link href="/static/css/styles.css" media="all" rel="stylesheet">-->
 
 	</head>
@@ -735,6 +743,21 @@
                                         </div>
                                     </div>
 							    </div>
+
+                                <div class="panel col-xs-12">
+                                    <div class="panel-heading bk-bg-primary">
+										<h6><i class="fa fa-tags red "></i>患者活动轨迹</h6>
+										<div class="panel-actions" style="display:block;">
+											<a onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>
+										</div>
+									</div>
+                                    <div class="panel-body" style="margin:0 auto;max-width:1200px;height:550px">
+                                        <div id="container">
+
+                                        </div>
+                                    </div>
+							    </div>
+
 								<div class="panel col-xs-12">
 									<div class="panel-heading bk-bg-primary">
 										<h6><i class="fa fa-tags red "></i>CAT</h6>
@@ -4757,6 +4780,7 @@
         <script src="/static/js/pages/Appinfo.js"></script>
 		<script src="/static/js/pages/setting_top.js"></script>
 
+        <script src="/static/js/pages/map.js"></script>
         <!--<script src="/static/js/pages/charts-xcharts.js"></script>-->
 
 		<!-- end: JavaScript-->

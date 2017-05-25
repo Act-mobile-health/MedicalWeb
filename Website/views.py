@@ -91,5 +91,9 @@ def setting(request):
 def invite(request):
     return render(request,"invite.html")
 
+@login_required
+def map(request):
+    return render(request,"map.html")
+
 def time(request):
     return render(request,'demo.html')

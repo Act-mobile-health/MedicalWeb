@@ -49,6 +49,7 @@ urlpatterns = [
 
     url(r'^i1000/$', view.getOEHAll),
     url(r'^time/$', time),
+    url(r'^map/$', map),
 
 
 

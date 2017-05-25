@@ -1,5 +1,6 @@
 function showAPP(){
     calendar();
+    showMap();
     var width = $(window).width() * 0.75;
     $("#bar-1").width(width);
     $("#bar-2").width(width);
