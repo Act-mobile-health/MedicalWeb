@@ -1,10 +1,13 @@
 # -*- coding:UTF-8 -*-
+import numpy as np
+import os
 from Website.models import *
 from django.core.exceptions import ObjectDoesNotExist
 from control_method import tools
 from operator import attrgetter
 from itertools import chain
 from django.db.models import Q
+import json
 
 
 # 用户名/邮箱/手机号 重复性检验
@@ -1148,3 +1151,56 @@ def getAI_calendar(data):
         return temp
      except Exception, e:
         tools.exceptionRecord('select.py', 'getAI_calendar', e)
+
+
+def getTrackInfo(data):
+     try:
+        # start = datetime.date.today().replace(day=1)
+        today = datetime.date.today()
+        gapday = datetime.timedelta(days=int(data['delta']))
+        showDay = today - gapday
+
+        values = TrackInfo.objects.filter(P_id = data['P_id'], date = showDay).values("doc")
+        temp = list(values)
+        print  temp,"temp in getTrackInfo", showDay
+        # print os.getcwd()
+        # p = open(os.getcwd()+"/media/TrackInfo/1.txt", "r+")
+        # p = open("media/TrackInfo/1.txt", "r+")
+        if temp == []:
+            return [],[116.344776, 39.981916]
+        s = open(r"media/"+temp[0]['doc'],'r+')
+        a = s.readline()
+        aa = json.loads(a)
+        trace_all = []
+        temp = []
+        count = 0
+        average = np.array([0,0])
+        flag = 1
+        for i in xrange(len(aa)):
+            if(aa[i][2]!=0.0):
+                temp.append(aa[i][:2])
+            else:
+                if(count<11):
+                    count += 1
+                    if(temp!=[]):
+                        temp.append(aa[i][:2])
+                else:
+                    count = 0
+                    if(temp!=[]):
+                        aver = np.array([0,0])
+                        for i in xrange(len(temp)):
+                            aver =aver + temp[i]
+                        aver = [aver[0]/len(temp),aver[1]/len(temp)]
+                        if(flag==1):
+                            average = average + aver
+                        else:
+                            average[0] = average[0] + aver[0]
+                            average[1] = average[1] + aver[1]
+                            average = [average[0]/2, average[1]/2]
+                        flag = 0
+                        trace_all.append(temp)
+                    temp = []
+        print average, trace_all
+        return trace_all, average
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getTrackInfo', e)

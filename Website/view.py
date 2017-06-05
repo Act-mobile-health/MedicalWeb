@@ -1205,3 +1205,12 @@ def getPatientAppInfoNum(request,data,D_id):
     js = json.dumps(message)
     # print js,"$$$$$$$"
     return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getTrackInfo(request,data,D_id):
+    message = {}
+    message['paths'], message['center'] = select.getTrackInfo(data)[0], select.getTrackInfo(data)[1]
+    js = json.dumps(message)
+    return HttpResponse(js)
