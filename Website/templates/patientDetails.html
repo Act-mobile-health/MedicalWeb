@@ -592,35 +592,16 @@
 										</div>
                                         <div class="form-group">
 											<label class="col-md-3 control-label">医疗支付方式</label>
-											<div class="col-md-9">
-											<div class="radio-custom radio-inline">
-												<input type="radio" name="payment" value="1">
-												<label> 城镇居民基本保险</label>
-											</div>
-											<div class="radio-custom radio-inline">
-												<input type="radio" name="payment" value="2">
-												<label> 城镇职工基本保险</label>
-											</div>
-											<div class="radio-custom radio-inline">
-												<input type="radio" name="payment" value="3">
-												<label> 新型农村合作医疗</label>
-											</div>
-											<div class="radio-custom radio-inline">
-												<input type="radio" name="payment" value="4">
-												<label> 商业医疗保险</label>
-											</div>
-											<div class="radio-custom radio-inline">
-												<input type="radio" name="payment" value="5">
-												<label> 全公费</label>
-											</div>
-											<div class="radio-custom radio-inline">
-												<input type="radio" name="payment" value="6">
-												<label> 全自费</label>
-											</div>
-											<div class="radio-custom radio-inline">
-												<input type="radio" name="payment" value="7">
-												<label> 其他</label>
-											</div>
+                                            <div class="col-md-9">
+												<select class="form-control" name="payment">
+                                                    <option value="1">城镇居民基本保险</option>
+                                                    <option value="2">城镇职工基本保险</option>
+                                                    <option value="3">新型农村合作医疗</option>
+                                                    <option value="4">商业医疗保险</option>
+                                                    <option value="5">全公费</option>
+                                                    <option value="6">全自费</option>
+                                                    <option value="7">其他</option>
+                                              </select>
 											</div>
 										</div>
 
@@ -643,13 +624,54 @@
 												<span class="help-block">指经喉结节点的颈部水平围长</span>
 											</div>
 										</div>
-                                     </div>
-                                     </div>
-                                     </div>
                                     <div class="pull-right" style="margin-right:50px;">
                                         <button type="button" id="submitPatientInfobt" class="btn btn-primary">保存</button>
                                     </div>
+                                     </div>
+                                     </div>
+                                     </div>
                                 </form>
+                                </div>
+                                <div class="row">
+                                    <form class="form-horizontal" id = "DiseaseType" method = "post" role="form">
+                                        <div class="col-md-6">
+                                            <div class="panel">
+                                                <div class="panel-heading bk-bg-primary">
+                                                    <h6><i class="fa fa-indent red"></i>疾病信息</h6>
+                                                </div>
+								                <div class="panel-body">
+                                                    <div class="row" id="diseasePanel">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-default" type="button" onclick="showAddr('newDiv')" style="width:50px;padding-left:5px;padding-right:5px;margin-right:20px">
+                                                            添加
+                                                        </button>
+                                                    </div>
+                                                    <div class="form-group" id="newDiv" style="display:none">
+                                                        <label class="col-md-2 control-label">新疾病</label>
+                                                        <div class="col-md-6" id="newD">
+
+                                                        </div>
+                                                        <button class="btn btn-default" type="button" onclick="showAddr('subDiv')" style="padding-left:5px;padding-right:5px;margin-right:20px">
+                                                            添加二级诊断
+                                                        </button>
+
+
+                                                    </div>
+
+                                                    <div class="form-group" id="subDiv" style="display:none">
+                                                        <label class="col-md-2 control-label">诊断</label>
+                                                        <div class="col-md-6" id="subD">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="pull-right" style="margin-right:10px;">
+                                                        <button type="button" id="submitDiseasebt" class="btn btn-primary">保存</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
 
@@ -4781,6 +4803,7 @@
 		<script src="/static/js/pages/setting_top.js"></script>
 
         <script src="/static/js/pages/map.js"></script>
+        <script src="/static/js/pages/typeSelect.js"></script>
         <!--<script src="/static/js/pages/charts-xcharts.js"></script>-->
 
 		<!-- end: JavaScript-->

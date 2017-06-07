@@ -40,6 +40,11 @@ $(document).ready(function (e) {
     calculateMBQSum1();
     calculateMBQSum2();
 
+    // for diseaseType
+    diseaseType1("newD");
+    diseaseType2("subD");
+    showDisease();
+
 //    for emergency
     forWizard_v("acuteExac", "disease", 0, "-EmergCallInfo");
     forWizard_v("byxCheck", "byxResult", 1, "-EmergCallInfo");
@@ -93,6 +98,10 @@ $(document).ready(function (e) {
 
     $("#submitAttachInfobt").click(function () {
         submitAorAE("1");
+    })
+
+    $("#submitDiseasebt").click(function () {
+        submitDisease();
     })
 
 //    $("#submitOutPatientServiceInfobt").click(function () {
@@ -201,6 +210,7 @@ function forWizard_ecDate(){
     }
 
     function appendPatientDetail() {
+//    console.log(patientId)
         $.ajax({
             type:"GET",
             url:'/i16/',
@@ -248,7 +258,8 @@ function forWizard_ecDate(){
                 $("#PatientInfo input[name='cellphone']").val(item.cellphone);
                 $("#PatientInfo input[name='partnerPhone']").val(item.partnerPhone);
 
-                $("#PatientInfo input[name='payment'][value='" + item.payment + "']").attr('checked', true);
+//                $("#PatientInfo input[name='payment'][value='" + item.payment + "']").attr('checked', true);
+                $("#PatientInfo select[name='payment'] option[value='"+item.payment+"']").attr('selected',true);
 
                 $("#PatientInfo input[name='sex'][value='" + item.sex + "']").attr('checked', true);
                 $("#PatientInfo input[name='IDCardNum']").val(item.IDCardNum);
@@ -2369,4 +2380,83 @@ function forWizard_ecDate(){
 
     function showAddr(id){
         $("#"+id).show();
+    }
+
+    function submitDisease(){
+        str = $("#DiseaseType").serialize()+"&P_id="+patientId;
+        if(confirm("确定提交")==1) {
+            $.ajax({
+                url:"/i106/",
+                type:"POST",
+                data:str,
+                dataType:"json",
+                success: function(json_data){
+                    successProcess(json_data);
+                },
+                error: function(json_data){
+                    errorProcess(json_data);
+                }
+            });
+            showDisease();
+        }
+    }
+
+    function showDisease(){
+//    console.log(patientId)
+        $("#diseasePanel").empty();
+        $.ajax({
+            type:"GET",
+            url:"/i107/",
+            data:{P_id:patientId},
+            dataType:"json",
+            success: function(json_data){
+            console.log(json_data)
+                $.each(json_data, function(index, data){
+                    str_name = data['first']+ forDisease(data['second'])+ forDisease(data['third'])+ forDisease(data['fourth'])
+                    + forDisease(data['subFirst'])+forDisease(data['subSecond'])+ forDisease(data['subThird'])+ forDisease(data['subFourth']);
+                    str = '<div class="form-group">'+
+                        '<label class="col-md-2 control-label"></label>'+
+                        '<div class="col-md-9">'+
+                            '<!--<input type="text" name="homeAddr" class="form-control">-->'+
+                            '<div class="input-group">'+
+                                '<input type="text" class="form-control" value= "'+str_name+'"readonly>'+
+                                '<span class="input-group-btn">'+
+                                    '<button class="btn btn-default" type="button" onclick="deleteDisease('+data['id']+')"'+
+                                    'style="width:50px;padding-left:5px;padding-right:5px" >删除</button>'+
+                                '</span>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>';
+                    $("#diseasePanel").append(str);
+                });
+            },
+            error: function(json_data){
+                errorProcess(json_data);
+            }
+        });
+    }
+
+    function forDisease(input){
+        if(input != ""){
+            return ">"+input
+        }
+        return input
+    }
+
+    function deleteDisease(id){
+        if(confirm("确定删除")==1) {
+            $.ajax({
+                url:"/i108/",
+                type:"GET",
+                data:{id:id},
+                dataType:"json",
+                success: function(json_data){
+                    successProcess(json_data);
+                },
+                error: function(json_data){
+                    errorProcess(json_data);
+                }
+            });
+            showDisease();
+        }
     }

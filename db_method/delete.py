@@ -225,3 +225,13 @@ def deleteMC(id):
     except Exception, e:
         tools.exceptionRecord('delete.py','deleteMC',e)
         return -1
+
+def deleteDiseaseType(data):
+
+    try:
+        obj = DiseaseType.objects.get(id = int(data['id']))
+        obj.delete()
+        return 0
+    except Exception, e:
+        tools.exceptionRecord('delete.py','deleteMC',e)
+        return -1

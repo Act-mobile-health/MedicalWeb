@@ -745,13 +745,15 @@ class DiseaseType(models.Model):
     #DT_id = models.CharField(max_length=32, primary_key=True)
     P_id = models.CharField(max_length=12, null=False)
     date = models.DateField(auto_now_add=True)
-    first = models.CharField(max_length=2)
-    second = models.CharField(max_length=3)
-    third = models.CharField(max_length=3)
-    fourth = models.CharField(max_length=3)
-    # TODO: need to finish
-    #
-    #
+    first = models.CharField(max_length=20)
+    second = models.CharField(max_length=20)
+    third = models.CharField(max_length=20)
+    fourth = models.CharField(max_length=20)
+
+    subFirst = models.CharField(max_length=20)
+    subSecond = models.CharField(max_length=20)
+    subThird = models.CharField(max_length=20)
+    subFourth = models.CharField(max_length=20)
 
 
 # created by JK@buaa, 2017/3/17

@@ -1214,3 +1214,34 @@ def getTrackInfo(request,data,D_id):
     message['paths'], message['center'] = select.getTrackInfo(data)[0], select.getTrackInfo(data)[1]
     js = json.dumps(message)
     return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def addDiseaseType(request,data,D_id):
+    message = {}
+    message['result'] = "-1"
+    message['result'] = insert.addDiseaseType(data)
+    js = json.dumps(message)
+    print js
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getDiseaseType(request,data,D_id):
+    message = []
+    message = select.getDiseaseType(data)
+    js = json.dumps(message)
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(3)
+def deleteDiseaseType(request,data,D_id):
+    message = {}
+    message['result'] = "-1"
+    message['result'] = delete.deleteDiseaseType(data)
+    js = json.dumps(message)
+    print js
+    return HttpResponse(js)

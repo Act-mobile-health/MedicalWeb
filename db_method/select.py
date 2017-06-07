@@ -1204,3 +1204,14 @@ def getTrackInfo(data):
         return trace_all, average
      except Exception, e:
         tools.exceptionRecord('select.py', 'getTrackInfo', e)
+
+def getDiseaseType(data):
+    try:
+        print data
+        values = DiseaseType.objects.filter(P_id = data['P_id']).values("id", "first", "second", "third", "fourth", "subFirst",
+                                                                        "subSecond", "subThird", "subFourth")
+        temp = list(values)
+        return temp
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getDiseaseType', e)
+        return False

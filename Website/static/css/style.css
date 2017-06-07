@@ -14,7 +14,6 @@
   --page-head:#48a0a5;
 }
 */
-
 :root {
   --sidebar-base: #19945f;
   --sidebar-head:#245d45;
@@ -29,6 +28,7 @@
   --sidebar-shadow:#49d095;
   --page-head:#247753;
 }
+
 /*
 :root {
   --sidebar-base: #34495E;
@@ -44,8 +44,8 @@
   --sidebar-shadow:#435D78;
   --page-head:#2D3F51;
 }
-*/
 
+*/
 html,
 body {
 background: #ecedf0;

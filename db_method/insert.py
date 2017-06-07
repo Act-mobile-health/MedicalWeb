@@ -420,6 +420,7 @@ def addMedicineChange(data):
 def addMedicineRecord(myFile, id, sign):
 
     try:
+        print id,"$$$$$$$$$$$$$id"
         newObj = MedicineRecord(MC_id = id, doc = myFile, sign = sign)
         newObj.save()
 
@@ -619,3 +620,46 @@ def addMessageAudio(date, P_id, doc):
     except Exception, e:
         tools.exceptionRecord('insert.py','addMessageText',e)
         return False
+
+
+def addDiseaseType(data):
+    try:
+        if 'first' not in data or data['first'] == u'请选择':
+            return "-1"
+        else:
+            first = data['first']
+        if 'second' not in data:
+            second = ""
+        else:
+            second = data['second']
+        if 'third' not in data:
+            third = ""
+        else:
+            third = data['third']
+        if 'fourth' not in data:
+            fourth = ""
+        else:
+            fourth = data['fourth']
+        if 'subFirst' not in data or data['subFirst'] == u'请选择':
+            subFirst = ""
+        else:
+            subFirst = data['subFirst']
+        if 'subSecond' not in data:
+            subSecond = ""
+        else:
+            subSecond = data['subSecond']
+        if 'subThird' not in data:
+            subThird = ""
+        else:
+            subThird = data['subThird']
+        if 'subFourth' not in data:
+            subFourth = ""
+        else:
+            subFourth = data['subFourth']
+        obj = DiseaseType(P_id = data['P_id'], first = first, second = second, third = third, fourth= fourth,
+                          subFirst = subFirst, subSecond = subSecond, subThird = subThird, subFourth = subFourth)
+        obj.save()
+        return "0"
+    except Exception, e:
+        tools.exceptionRecord('insert.py','addDiseaseType',e)
+        return "-1"

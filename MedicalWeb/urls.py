@@ -162,5 +162,8 @@ urlpatterns = [
 
 
     url(r'^i105/',view.getTrackInfo),
+    url(r'^i106/',view.addDiseaseType),
+    url(r'^i107/',view.getDiseaseType),
+    url(r'^i108/',view.deleteDiseaseType),
     # url(r'^i18/',view.updatePatientInfo),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
