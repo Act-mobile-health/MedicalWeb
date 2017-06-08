@@ -803,7 +803,7 @@ def app_addOrUpdateCATTable(request):
             message['id'] = update.updateCATandMRC(data)
         if message['id'] != -1:
             message['result'] = '0'
-        # print message
+        print message
         return HttpResponse(json.dumps(message))
 
 #APP interface 3
