@@ -1,12 +1,12 @@
-
+/*
 :root{
     --panel-head:#2d6f53 !important;
 }
-/*
+*/
+
 :root{
     --panel-head:#34495E !important;
 }
-*/
 
 .bk-round {
   border-radius: 50% !important;

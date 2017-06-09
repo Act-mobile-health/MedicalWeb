@@ -771,6 +771,7 @@ def getOneDetailedAccessoryExamination(AE_id):
 def getMsg2Weeks(P_id, type):
     from django.utils.timezone import now, timedelta
     end = now().date()
+    # end = datetime.datetime.strptime('2017-05-16', "%Y-%m-%d").date()
     start = end - timedelta(weeks=2)
     temp = {}
     message =[]
