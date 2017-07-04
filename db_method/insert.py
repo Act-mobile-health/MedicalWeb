@@ -601,8 +601,7 @@ def addAirInfo(data):
 
 def addMessageText(data):
     try:
-
-
+        print data
         if data['date'] != '':
             d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         else:
