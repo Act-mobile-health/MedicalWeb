@@ -1,5 +1,6 @@
 # -*- coding:UTF-8 -*-
 from django.http import HttpResponse,HttpResponseRedirect
+from django.http import StreamingHttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -1245,3 +1246,35 @@ def deleteDiseaseType(request,data,D_id):
     js = json.dumps(message)
     print js
     return HttpResponse(js)
+
+
+@csrf_exempt
+def appVersion(request):
+    # do something...
+    message = {}
+    message['result'] = "1.1"
+    js = json.dumps(message)
+    print js
+    return HttpResponse(js)
+
+# @csrf_exempt
+# def appUpdate(request):
+#     # do something...
+#     with open('./media/TrackInfo/temp.txt') as f:
+#         c = f.read()
+#     return HttpResponse(c)
+
+@csrf_exempt
+def appUpdate(request):
+    def file_iterator(file_name, chunk_size=512):
+        with open(file_name) as f:
+            while True:
+                c = f.read(chunk_size)
+                if c:
+                    yield c
+                else:
+                    break
+
+    the_file_name = './media/TrackInfo/temp.txt'
+    response = StreamingHttpResponse(file_iterator(the_file_name))
+    return response
