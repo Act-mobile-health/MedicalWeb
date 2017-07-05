@@ -798,7 +798,7 @@ class AppAttachment(models.Model):
 class MedicineRegular(models.Model):
     regular = models.CharField(max_length=2, null=False)
     P_id = models.CharField(max_length=12, null=False)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
 
 
 # created by CS@buaa, 2017/3/17
@@ -808,7 +808,7 @@ class MedicineRegular(models.Model):
 class MedicineChange(models.Model):
     ch = models.CharField(max_length=2, null=False)
     P_id = models.CharField(max_length=12, null=False)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     MC_id = models.CharField(max_length=32, null=False)
 
 
@@ -821,7 +821,7 @@ class MedicineRecord(models.Model):
     MC_id = models.CharField(max_length=32, null=False)
     medicine = models.CharField(max_length=20, null=False)
     sign = models.CharField(max_length=2, null=False)# before: sign =0 after: sign = 1
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
     name = models.CharField(max_length=50, null=False)
     producer = models.CharField(max_length=50, null=False)
     doc = models.ImageField(upload_to="MR", null=True)

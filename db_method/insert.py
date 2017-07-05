@@ -397,6 +397,7 @@ def addMedicineRegular(data):
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         newObj = MedicineRegular(P_id = data['P_id'], date = d, regular = data['regular'])
+        print d, newObj.date
         newObj.save()
         id = newObj.id
         return id
@@ -413,6 +414,7 @@ def addMedicineChange(data):
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         newObj = MedicineChange(P_id = data['P_id'], date = d, ch = data['change'],MC_id = data['MC_id'])
+        print d, newObj.date
         newObj.save()
         id = newObj.id
         return id
