@@ -1001,13 +1001,13 @@ var city = [
 function areaSelection(sheng, shi, qu){
     // 循环第一步,把省循环进select
 	for (var i = 0; i < city.length; i++) {
-		sheng.options[sheng.length] = new Option(city[i].name);
+		sheng.options[sheng.length] = new Option(city[i].name, city[i].name);
 		// 循环第二步,把所有的市都循环进select
 		sheng.onchange = function(){
 			shi.options.length = 0;
 			shi.options[shi.length] = new Option("请输入市");
 			for (var j = 0; j < city[sheng.selectedIndex-1].city.length; j++) {
-				shi.options[shi.length] = new Option(city[sheng.selectedIndex-1].city[j].name)
+				shi.options[shi.length] = new Option(city[sheng.selectedIndex-1].city[j].name, city[sheng.selectedIndex-1].city[j].name)
 			}
 
 		}
@@ -1015,7 +1015,7 @@ function areaSelection(sheng, shi, qu){
 			qu.options.length = 0;
 			qu.options[qu.length] = new Option("请输入区");
 			for (var k = 0; k < city[sheng.selectedIndex-1].city[shi.selectedIndex-1].area.length; k++) {
-				qu.options[qu.length] = new Option(city[sheng.selectedIndex-1].city[shi.selectedIndex-1].area[k]);
+				qu.options[qu.length] = new Option(city[sheng.selectedIndex-1].city[shi.selectedIndex-1].area[k],city[sheng.selectedIndex-1].city[shi.selectedIndex-1].area[k]);
 			};
 		}
 	}

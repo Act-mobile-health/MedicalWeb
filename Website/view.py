@@ -1,10 +1,11 @@
 # -*- coding:UTF-8 -*-
 from django.http import HttpResponse,HttpResponseRedirect
+from django.http import StreamingHttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 import demjson
-from db_method import insert,select,update,delete
+from db_method import insert,select,update,delete,soap
 from control_method import tools
 from django.shortcuts import render
 from django.contrib import auth
@@ -13,6 +14,7 @@ from django.conf import settings
 import datetime, random
 from django import forms
 import xlwt
+from django.utils.http import urlquote
 
 
 
@@ -446,9 +448,10 @@ def getCEHAllInfo(request,data,D_id):
     elif int(data['type']) == 1:
         message = select.getPatientAllEmergCallInfos(data['P_id'])
     elif int(data['type']) == 2:
-        message = select.getPatientAllInHospitalInfos( data['P_id'])
+        message = select.getPatientAllInHospitalInfos(data['P_id'])
 
     # message = tools.toString(message)
+    print message
     js = json.dumps(message)
     return HttpResponse(js)
 
@@ -477,6 +480,7 @@ def getCEHDetailedInfo(request,data,D_id):
 @PermissionCheck(2)
 def addOrUpdateCEHInfo(request,data,D_id):
     message = {'result':-1}
+    print data
 
     if data['id'] == '':
         if int(data['type']) == 0:
@@ -528,34 +532,6 @@ def deleteCEHInfo(request,data,D_id):
     # message = tools.toString(message)
     js = json.dumps(message)
     return HttpResponse(js)
-
-# #接口26
-# @login_required
-@csrf_exempt
-# def updateCEHInfo(request):
-#     if request.method == 'POST':
-#         data = request.POST
-#         message = {'result':-1}
-#         
-#             D_id = request.session['_auth_user_id']
-#             id = int(data['id'])
-#             if int(data['type']) == 0:
-#                 result = update.updateOutPatientServiceInfo(id,data)
-#             elif int(data['type']) == 1:
-#                 result = update.updateEmergCallInfo(id,data)
-#             elif int(data['type']) == 2:
-#                 result = update.updateInHospitalInfo(id,data)
-#             else:
-#                 result = False
-#
-#             if result == True:
-#                 message['result'] = 0
-#
-#             # message = tools.toString(message)
-#             js = json.dumps(message)
-#             return HttpResponse(js)
-#         
-
 
 # 接口27
 @login_required
@@ -674,11 +650,13 @@ def deleteQuestionnaireInfo(request,data,D_id):
 @PermissionCheck(3)
 def getAorAEDetailedInfo(request,data,D_id):
     message = []
+    print data,"%%%%"
     if int(data['kind']) == 0:
         message = select.getDetailedAccessoryExamination(data['type'],int(data['S_id']))
     else:
         message = select.getDetailedAttachInfos(data['type'],int(data['S_id']))
     js = json.dumps(message)
+    print js
     return HttpResponse(js)
 
 
@@ -785,6 +763,7 @@ def getExploure2Weeks(request, data, D_id):
     message = select.getMsg2Weeks(data['P_id'], 2)
     # message = tools.toString(message)
     js = json.dumps(message)
+    # print js
     return HttpResponse(js)
 
 
@@ -847,11 +826,12 @@ def app_addOrUpdatePmExposureTable(request):
 @csrf_exempt
 def app_addTrackInfoTable(request):
     if request.method == 'POST':
-        data = request.POST
-        myFile = request.FILES.get("myimage", None)
-        print data, "Trackkkkkkkkkkkk"
+        # data = request.POST
+        myFile = request.FILES["myfile"]
+        P_id = request.GET.get('P_id')
+        date = request.GET.get('date')
         message = {'result': '-1'}
-        if insert.addTrackInfo(data, myFile):
+        if insert.addTrackInfo(P_id, date, myFile):
             message['result'] = '0'
         return HttpResponse(json.dumps(message))
 
@@ -861,7 +841,6 @@ def app_addTrackInfoTable(request):
 def app_addOrUpdateMedicineRegularTable(request):
     if request.method == 'POST':
         data = request.POST
-        print data,"Medicineeeeee"
         message = {'result': '-1', 'id': '-1'}
         if data['id'] == 'null':
             message['id'] = insert.addMedicineRegular(data)
@@ -877,7 +856,6 @@ def app_addOrUpdateMedicineRegularTable(request):
 def app_addOrUpdateMedicineChangeTable(request):
     if request.method == 'POST':
         data = request.POST
-        print data,"MCCCCCCCC"
         message = {'result': '-1', 'id': '-1'}
         if data['id'] == 'null':
             message['id'] = insert.addMedicineChange(data)
@@ -885,18 +863,19 @@ def app_addOrUpdateMedicineChangeTable(request):
             message['id'] = update.updateMedicineChange(data)
         if message['id'] != -1:
             message['result'] = '0'
-        print message
         return HttpResponse(json.dumps(message))
 
 #APP interface 7
 @csrf_exempt
 def app_addMedicineRecordTable(request):
     if request.method == 'POST':
-        data = request.POST
-        print data,"MRRRR"
+        # data = request.POST
+        AI_id = request.GET.get('MC_id')
+        sign = request.GET.get('sign')
+        myFile = request.FILES['upload_file']
+        # date = request.GET.get('date')
         message = {'result': '-1'}
-        if insert.addMedicineRecord(data):
-            message['result'] = '0'
+        message['result'] = insert.addMedicineRecord(myFile, AI_id, sign)
         return HttpResponse(json.dumps(message))
 
 #APP interface 8
@@ -904,7 +883,6 @@ def app_addMedicineRecordTable(request):
 def app_addOrUpdateAppInfo(request):
     if request.method == 'POST':
         data = request.POST
-        print data
         message = {'result': '-1', 'id': '-1'}
         if data['id'] == 'null':
             message['id'] = insert.addAppInfo(data)
@@ -921,20 +899,51 @@ def app_addAppAttachment(request):
     if request.method == 'POST':
         message = {'result': '-1'}
         myFile = request.FILES['upload_file']
-        print request.FILES
-
-        obj = select.getAppId(request.GET.get('AI_id', ''))
+        obj = select.getAppId(request.GET.get('AI_id'))
         S_id = int(obj['S_id'])
         type = obj['type']
         date = obj['date']
         P_id = obj['P_id']
-        print date
         D_id = 0
         description = "from app"
         if not myFile:
             js = json.dumps(message)
             return HttpResponse(js)
         if insert.addAttachInfo2(P_id, D_id, S_id, description, myFile, type, date):
+            message['result'] = 0
+        js = json.dumps(message)
+        return HttpResponse(js)
+
+
+#APP interface 10
+@csrf_exempt
+def app_addMessageText(request):
+    if request.method == 'POST':
+        message = {'result': '-1'}
+        # data = {}
+        # data['P_id'] = request.GET.get("P_id")
+        # data['date'] = request.GET.get("date")
+        # data['content'] = request.GET.get("content")
+        data = request.POST
+        print data
+        # print urlquote(data['content']).decode("utf-8")
+        # print urlquote(data['content']).decode("gb2312")
+        print data,"app_addMessageText"
+        if insert.addMessageText(data):
+            message['result'] = 0
+        js = json.dumps(message)
+        return HttpResponse(js)
+
+#APP interface 11
+@csrf_exempt
+def app_addMessageAudio(request):
+    if request.method == 'POST':
+        message = {'result': '-1'}
+        doc = request.FILES['upload_file']
+        P_id = request.GET.get('P_id')
+        date = request.GET.get('date')
+        print P_id,date,'app_addMessageAudio'
+        if insert.addMessageAudio(date, P_id, doc):
             message['result'] = 0
         js = json.dumps(message)
         return HttpResponse(js)
@@ -966,26 +975,10 @@ def test2(request):
 
     return render(request,"form-dropzone.html")
 
-@csrf_exempt
-def upload2(request):
-    if request.method == 'POST':
-        data = request.POST
-        print data
-        myFile = request.FILES['upload_file']
-        D_id = int("4")
-        message = {'result': -1}
-        obj = AttachInfo(type ="0", name = tools.md5(str(random.randint(0,9))+str(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))),doc = myFile,date = datetime.datetime.strptime("2016-04-08", "%Y-%m-%d").date(), D_id = D_id, S_id = int("1"), P_id = "0000000001")
-        obj.save()
-        print request.FILES,"FILES"
-        js = json.dumps(message)
-        return HttpResponse(js)
-
-
 @login_required
 @csrf_exempt
 @PermissionCheck(1)
 def addInvitation(request,data,D_id):
-    print "wew"
     if insert.addInvitation(D_id,data):
         js = json.dumps({"result":"0"})
     else:
@@ -997,7 +990,6 @@ def addInvitation(request,data,D_id):
 @PermissionCheck(1)
 def getInvitation(request,data,D_id):
     message = select.getInvitation()
-    print message
     js = json.dumps(message)
     return HttpResponse(js)
 
@@ -1025,7 +1017,7 @@ def getUsers(request,data,D_id):
 @PermissionCheck(3)
 def getUserName(request, data, D_id):
     message = select.getUserName(int(data['D_id']))
-    print message
+    # print message
     js = json.dumps(message)
     return HttpResponse(js)
 
@@ -1036,7 +1028,7 @@ def getUserName(request, data, D_id):
 def editAEType(request, data, D_id):
     message = select.getAEType(data)
     js = json.dumps(message)
-    print js
+    # print js
     return HttpResponse(js)
 
 
@@ -1105,5 +1097,186 @@ def getUserId(request):
     D_id = request.session['_auth_user_id']
     message = {"userId":D_id}
     js = json.dumps(message)
+    # print js
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def getOEHAll(request,data,D_id):
+    message = select.getOEHAll(data['P_id'], data['para'])
+    # print type(list(message))
+    js = json.dumps(list(message))
+    # print js
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getMedicineRecord(request,data,D_id):
+    message = select.getMR(data['P_id'])
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(3)
+def deleteMC(request,data,D_id):
+    message = {"result":"-1"}
+    message['result'] = delete.deleteMC(data['id'])
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getMedicineRegular(request,data,D_id):
+    message = select.getMReg(data)
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getAcuteExac(request,data,D_id):
+    message = select.getAcuteExac(data)
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getMC_calendar(request,data,D_id):
+    message = select.getMC_calendar(data)
+    js = json.dumps(message)
+    print js,"$$$$$$$"
+    return HttpResponse(js)
+
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getAI_calendar(request,data,D_id):
+    message = {}
+    message = select.getAI_calendar(data)
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getAppInfo(request,data,D_id):
+    message = select.getAppInfo(data)
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getMessage(request,data,D_id):
+    message = select.getMessage(data)
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(3)
+def updateMessage(request,data,D_id):
+    message = {"result":"-1"}
+    if(update.updateMessage(data)):
+        message = {"result":"0"}
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getPatientAppInfoNum(request,data,D_id):
+    message = {}
+    message['result'] = select.getPatientAppInfo(data)
+    js = json.dumps(message)
+    # print js,"$$$$$$$"
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getTrackInfo(request,data,D_id):
+    message = {}
+    message['paths'], message['center'] = select.getTrackInfo(data)[0], select.getTrackInfo(data)[1]
+    js = json.dumps(message)
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(2)
+def addDiseaseType(request,data,D_id):
+    message = {}
+    message['result'] = "-1"
+    message['result'] = insert.addDiseaseType(data)
+    js = json.dumps(message)
     print js
     return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(1)
+def getDiseaseType(request,data,D_id):
+    message = []
+    message = select.getDiseaseType(data)
+    js = json.dumps(message)
+    return HttpResponse(js)
+
+@login_required
+@csrf_exempt
+@PermissionCheck(3)
+def deleteDiseaseType(request,data,D_id):
+    message = {}
+    message['result'] = "-1"
+    message['result'] = delete.deleteDiseaseType(data)
+    js = json.dumps(message)
+    print js
+    return HttpResponse(js)
+
+
+@csrf_exempt
+def appVersion(request):
+    # do something...
+    message = {}
+    message['result'] = "1.1"
+    js = json.dumps(message)
+    print js
+    return HttpResponse(js)
+
+# @csrf_exempt
+# def appUpdate(request):
+#     # do something...
+#     with open('./media/TrackInfo/temp.txt') as f:
+#         c = f.read()
+#     return HttpResponse(c)
+
+@csrf_exempt
+def appUpdate(request):
+    def file_iterator(file_name, chunk_size=512):
+        with open(file_name) as f:
+            while True:
+                c = f.read(chunk_size)
+                if c:
+                    yield c
+                else:
+                    break
+
+    the_file_name = './media/appUpdate/Android/temp.apk'
+    response = StreamingHttpResponse(file_iterator(the_file_name))
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
+    return response

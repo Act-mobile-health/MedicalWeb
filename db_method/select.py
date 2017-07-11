@@ -1,7 +1,13 @@
 # -*- coding:UTF-8 -*-
+import numpy as np
+import os
 from Website.models import *
 from django.core.exceptions import ObjectDoesNotExist
 from control_method import tools
+from operator import attrgetter
+from itertools import chain
+from django.db.models import Q
+import json
 
 
 # 用户名/邮箱/手机号 重复性检验
@@ -203,32 +209,9 @@ def getPatientsBasicInfo():
     message = {}
     # TODO
     try:
-        # group_ids = GroupInfo.objects.filter(D_id = D_id).values_list('id')
-        # for group_id in group_ids:
-        #     patient_ids = PatientGroup.objects.filter(G_id=group_id)
-        #     keys = ['P_id', 'name', 'sex', 'age', 'cellphone']
-        #     for patient_id in patient_ids:
-        #         obj = PatientInfo.objects.get(P_id=patient_id)
-        #         value = []
-        #         value.append(obj.P_id)
-        #         value.append(obj.name)
-        #         value.append(obj.sex)
-        #         value.append(obj.age)
-        #         value.append(obj.cellphone)
-        #         message = tools.dictPackage(keys, value)
-        #
-        #         times = MedicalVisit.objects.get(P_id=patient_id)
-        #         message['o_time'] = times.o_time
-        #         message['e_time'] = times.e_time
-        #         message['h_time'] = times.h_time
-        #
-        #         # TODO
-        #         # healthStatus
-        #
-        #         list.append(message)
-        #
-        values = PatientInfo.objects.all().values_list('P_id','name','sex','age', 'nation', 'registerTime', 'telephone', 'cellphone')
-        keys = ['P_id', 'name', 'sex','age', 'nation', 'registerTime', 'telephone', 'cellphone']
+
+        values = PatientInfo.objects.all().values_list('P_id','name','sex','age', 'nation', 'registerTime', 'telephone', 'cellphone', 'IDCardNum')
+        keys = ['P_id', 'name', 'sex','age', 'nation', 'registerTime', 'telephone', 'cellphone', 'IDCardNum']
         for value in values:
             message = tools.dictPackage(keys, value)
             time = MedicalVisit.objects.get(P_id=message['P_id'])
@@ -292,9 +275,10 @@ def getPatientDetailedInfo(P_id):
         value.append(obj.telephone)
         value.append(obj.cellphone)
         value.append(obj.partnerPhone)
+        value.append(obj.IDCardNum)
         keys = ['id','P_id','sign','name','sex','birthday','age','nation','height','weight','registerTime','education',
                 'career','marriage','province_h','city_h','county_h','detail_h','province','city','county','activityAddr1','activityAddr2','actionAddr',
-                'diastolicPressure','systolicPressure','neckCircu','payment','telephone','cellphone','partnerPhone']
+                'diastolicPressure','systolicPressure','neckCircu','payment','telephone','cellphone','partnerPhone','IDCardNum']
         message = tools.dictPackage(keys, value)
 
         # group_id = PatientGroup.objects.get(P_id = P_id).G_id
@@ -383,18 +367,18 @@ def getBasicQuestionnaireInfos(type,S_id):
 
 #获取某个病人所有的门诊的个数
 def getPatientAllOutPatientServiceInfos(P_id):
-    list = []
-    message = {}
+    q = []
     try:
-        values=OutPatientServiceInfo.objects.filter(P_id = P_id).values_list('id')
-        keys = ['OPS_id']
-        for value in values:
-            message = tools.dictPackage(keys,value)
-            list.append(message)
+        values=OutPatientServiceInfo.objects.filter(P_id = P_id).values('id','date','place')
+        q = list(values)
+        print q
+        q = sorted(q, key=lambda q:q['date'])
+        for a in q:
+            a['date'] = str(a['date'])
     except Exception,e:
         tools.exceptionRecord('select.py','getPatientAllOutPatientServiceInfos',e)
 
-    return list
+    return q
 
 #获取某个病人某个的门诊的详细信息
 def getPatientDetailedOutPatientServiceInfos(S_id):
@@ -433,18 +417,18 @@ def getPatientDetailedOutPatientServiceInfos(S_id):
 
 #获取某个病人所有的急诊的个数
 def getPatientAllEmergCallInfos(P_id):
-    list = []
-    message = {}
+    q = []
     try:
-        values=EmergCallInfo.objects.filter(P_id = P_id).values_list('id')
-        keys = ['EC_id']
-        for value in values:
-            message = tools.dictPackage(keys, value)
-            list.append(message)
+        values=EmergCallInfo.objects.filter(P_id = P_id).values('id','date','place')
+        q = list(values)
+        print q
+        q = sorted(q, key=lambda q:q['date'])
+        for a in q:
+            a['date'] = str(a['date'])
     except Exception, e:
         tools.exceptionRecord('select.py', 'getPatientAllEmergCallInfos', e)
 
-    return list
+    return q
 
 # 获取某个病人某个的急诊的详细信息
 def getPatientDetailedEmergCallInfos(S_id):
@@ -485,18 +469,18 @@ def getPatientDetailedEmergCallInfos(S_id):
 
 #获取某个病人所有的住院的个数
 def getPatientAllInHospitalInfos(P_id):
-    list = []
-    message = {}
+    q = []
     try:
-        values=InHospitalInfo.objects.filter(P_id = P_id).values_list('id')
-        keys = ['IH_id']
-        for value in values:
-            message = tools.dictPackage(keys,value)
-            list.append(message)
+        values=InHospitalInfo.objects.filter(P_id = P_id).values('id','date','place')
+        q = list(values)
+        print q
+        q = sorted(q, key=lambda q:q['date'])
+        for a in q:
+            a['date'] = str(a['date'])
     except Exception,e:
         tools.exceptionRecord('select.py','getPatientAllInHospitalInfos',e)
 
-    return list
+    return q
 
 #获取某个病人某个的住院的详细信息
 def getPatientDetailedInHospitalInfos(S_id):
@@ -787,18 +771,23 @@ def getOneDetailedAccessoryExamination(AE_id):
 def getMsg2Weeks(P_id, type):
     from django.utils.timezone import now, timedelta
     end = now().date()
+    # end = datetime.datetime.strptime('2017-05-16', "%Y-%m-%d").date()
     start = end - timedelta(weeks=2)
-    message={}
+    temp = {}
+    message =[]
+    message.append(temp)
+    for i in xrange(15):
+        temp[str(i+1)] = str(start + timedelta(days=i))[5:10].replace("-","")
     try:
         if type == 1:
-            values = CATandMRC.objects.filter(date_range=(start, end), P_id=P_id).values_list('catSum')
+            values = CATandMRC.objects.filter(date__gte=start, P_id=P_id).values('date', 'catSum', 'mrc')
         elif type == 2:
-            values = PmExposure.objects.filter(date_range=(start, end), P_id=P_id).values_list('exposure')
-        else:
-            return message
-        keys = ['day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7',
-                'day8', 'day9', 'day10', 'day11', 'day12', 'day13', 'day14']
-        message = tools.dictPackage(keys, values)
+            values = PmExposure.objects.filter(date__gte=start, P_id=P_id).values('date','exposure')
+        # else:
+        #     return message
+        for v in values:
+            v['date']= str(v['date'])[5:10].replace("-","")
+        message.append(list(values))
     except Exception, e:
         tools.exceptionRecord('select.py','getMsg2Weeks',e)
     return message
@@ -886,7 +875,7 @@ def getAEType(data):
             value.append(obj.RV_TLC2)
             value.append(obj.RV_TLC3)
             value.append(obj.FEV1change)
-            value.append(obj.GOLD)
+            value.append(str(obj.GOLD))
             keys = ['head', 'date', 'AE_id', 'FVC1', 'FVC2', 'FVC3', 'FEV11', 'FEV12', 'FEV13', 'FEV1_FVC1', 'FEV1_FVC2', 'FEV1_FVC3',
                     'RV_TLC1', 'RV_TLC2', 'RV_TLC3', 'FEV1change', 'GOLD']
             message = tools.dictPackage(keys, value)
@@ -980,12 +969,250 @@ def getAppId(data):
     try:
         message = {}
         obj = AppInfo.objects.get(AI_id = data)
+        # print obj
         message['S_id'] = obj.S_id
         message['date'] = str(obj.date)
-        print str(obj.date),"%%%%%%"
+        # print str(obj.date),"%%%%%%"
         message['type'] = obj.type
         message['P_id'] = obj.P_id
         return message
     except Exception, e:
         tools.exceptionRecord('select.py', 'getAppId', e)
         return -1
+
+def getOEHAll(P_id, para):
+    try:
+        o = OutPatientServiceInfo.objects.filter(P_id=P_id).values("id","date","place", "date_upload")
+        for a in o:
+            a['type'] = "0"
+        e = EmergCallInfo.objects.filter(P_id=P_id).values("id","date","place", "date_upload")
+        for a in e:
+            a['type'] = "1"
+        h = InHospitalInfo.objects.filter(P_id=P_id).values("id","date","place", "date_upload")
+        for a in h:
+            a['type'] = "2"
+
+        if(para =="4"):
+            q = list(chain(o,e,h))
+        elif(para=="0"):
+            q = list(o)
+        elif(para=="1"):
+            q = list(e)
+        elif(para=="2"):
+            q = list(h)
+
+        newAdded = AppInfo.objects.filter(P_id = P_id, sign = "1").values("S_id", "type")
+        temp = list(newAdded)
+        # print q
+        q = sorted(q, key=lambda q:q['date'])
+        # print q
+        for a in q:
+            a['date'] = str(a['date'])
+            a['date_upload'] = str(a['date_upload'])
+            a['sign'] = "0"
+            for t in temp:
+                if(a['type'] == t['type'] and a['id'] == t['S_id']):
+                    a['sign'] = "1"
+        return q
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getOEH', e)
+
+def getMR(P_id):
+     try:
+        values = MedicineChange.objects.filter(P_id=P_id).values("MC_id","date","ch","id")
+        temp = list(values)
+        print  temp
+        new = []
+        # print type(temp)
+        for v in temp:
+            # print type(v)
+            v['date'] = str(v['date'])
+            # print type(v['date']),v['date']
+            if(v['ch'] == "1" or v['ch'] == "2"):
+                mr = MedicineRecord.objects.filter(MC_id=v['MC_id']).values("sign","doc")
+                v['info'] = list(mr)
+                new.append(v)
+        # print new
+
+        return new
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getMR', e)
+
+def getMReg(data):
+     try:
+        # start = datetime.date.today().replace(day=1)
+        values = MedicineRegular.objects.filter(P_id=data['P_id']).values("regular","date")
+        temp = list(values)
+        # print  temp,"temp in getmreg"
+        # print data
+        # print type(temp)
+        for v in temp:
+            # print type(v)
+            v['date'] = str(v['date'])
+
+        return temp
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getMReg', e)
+
+def getAcuteExac(data):
+     try:
+        # start = datetime.date.today().replace(day=1)
+        values = CATandMRC.objects.filter(P_id=data['P_id']).values("acuteExac","date")
+        temp = list(values)
+        print  temp,"temp in getAcuteExac"
+        print data
+        print type(temp)
+        for v in temp:
+            print type(v)
+            v['date'] = str(v['date'])
+
+        return temp
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getAcuteExac', e)
+
+def getAppInfo(data):
+     try:
+        start = datetime.date.today().replace(day=1)
+        print  start
+        values = AppInfo.objects.filter(Q(sign="1")|Q(sign="0",date_upload__gte=start)).values("id","P_id","date","date_upload","type","sign")
+        temp = list(values)
+        temp = sorted(temp, key=lambda temp:temp['date_upload'])
+        temp = sorted(temp, key=lambda temp:temp['P_id'])
+        temp = sorted(temp, key=lambda temp:temp['sign'], reverse=True)
+        print  temp,"temp in getAppInfo"
+        for v in temp:
+            v['date'] = str(v['date'])
+            v['date_upload'] = str(v['date_upload'])
+
+        return temp
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getAppInfo', e)
+
+def getMessage(data):
+     try:
+        start = datetime.date.today().replace(day=1)
+        text = MessageText.objects.filter(Q(sign="1")|Q(sign="0",date_upload__gte=start)).values("id","P_id","date","date_upload","content","sign")
+        for t in text:
+            t['type'] = "0"
+        audio = MessageAudio.objects.filter(Q(sign="1")|Q(sign="0",date_upload__gte=start)).values("id","P_id","date","date_upload","content","sign")
+        for a in audio:
+            a['type'] = "1"
+        q = list(chain(text,audio))
+        # print q
+        q = sorted(q, key=lambda q:q['date'])
+        q = sorted(q, key=lambda q:q['P_id'])
+        q = sorted(q, key=lambda q:q['sign'], reverse=True)
+        print  q,"q in getMessage"
+        for v in q:
+            v['date'] = str(v['date'])
+            v['date_upload'] = str(v['date_upload'])
+
+        return q
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getMessage', e)
+        return {"result":"-1"}
+
+def getPatientAppInfo(data):
+    try:
+        values = AppInfo.objects.filter(P_id = data['P_id'], sign ="1").count()
+        return values
+
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getPatientAppInfo', e)
+        return -1
+
+
+def getMC_calendar(data):
+     try:
+        # start = datetime.date.today().replace(day=1)
+        values = MedicineChange.objects.filter(P_id=data['P_id']).exclude(ch = "0").values("ch","date")
+        temp = list(values)
+        print temp,"temp in getMC_calendar"
+        print data
+        print type(temp)
+        for v in temp:
+            print type(v)
+            v['date'] = str(v['date'])
+
+        return temp
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getMC_calendar', e)
+
+
+def getAI_calendar(data):
+     try:
+        # start = datetime.date.today().replace(day=1)
+        # print  start
+        values = AppInfo.objects.filter(P_id = data['P_id']).values("date","type","sign")
+        temp = list(values)
+        print  temp,"temp in getAI_calendar"
+        for v in temp:
+            v['date'] = str(v['date'])
+
+        return temp
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getAI_calendar', e)
+
+
+def getTrackInfo(data):
+     try:
+        # start = datetime.date.today().replace(day=1)
+        today = datetime.date.today()
+        gapday = datetime.timedelta(days=int(data['delta']))
+        showDay = today - gapday
+
+        values = TrackInfo.objects.filter(P_id = data['P_id'], date = showDay).values("doc")
+        temp = list(values)
+        print  temp,"temp in getTrackInfo", showDay
+        # print os.getcwd()
+        # p = open(os.getcwd()+"/media/TrackInfo/1.txt", "r+")
+        # p = open("media/TrackInfo/1.txt", "r+")
+        if temp == []:
+            return [],[116.344776, 39.981916]
+        s = open(r"media/"+temp[0]['doc'],'r+')
+        a = s.readline()
+        aa = json.loads(a)
+        trace_all = []
+        temp = []
+        count = 0
+        average = np.array([0,0])
+        flag = 1
+        for i in xrange(len(aa)):
+            if(aa[i][2]!=0.0):
+                temp.append(aa[i][:2])
+            else:
+                if(count<11):
+                    count += 1
+                    if(temp!=[]):
+                        temp.append(aa[i][:2])
+                else:
+                    count = 0
+                    if(temp!=[]):
+                        aver = np.array([0,0])
+                        for i in xrange(len(temp)):
+                            aver =aver + temp[i]
+                        aver = [aver[0]/len(temp),aver[1]/len(temp)]
+                        if(flag==1):
+                            average = average + aver
+                        else:
+                            average[0] = average[0] + aver[0]
+                            average[1] = average[1] + aver[1]
+                            average = [average[0]/2, average[1]/2]
+                        flag = 0
+                        trace_all.append(temp)
+                    temp = []
+        print average, trace_all
+        return trace_all, average
+     except Exception, e:
+        tools.exceptionRecord('select.py', 'getTrackInfo', e)
+
+def getDiseaseType(data):
+    try:
+        print data
+        values = DiseaseType.objects.filter(P_id = data['P_id']).values("id", "first", "second", "third", "fourth", "subFirst",
+                                                                        "subSecond", "subThird", "subFourth")
+        temp = list(values)
+        return temp
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'getDiseaseType', e)
+        return False

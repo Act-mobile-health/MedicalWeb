@@ -6,40 +6,26 @@ $(document).ready(function(){
     });
 
     $("#searchbt").click(function(){
-        console.log($("#P_id").val());
-        console.log("!111");
         searchPatient($("#P_id").val());
     });
+    forWizard("isSymptom", "symptom", 1);
+    forWizard("physicalExam", "breathErr", 0);
+    forWizard("acuteExac", "disease", 0);
+    forWizard("useAbt", "abtType", 1);
+    forWizard("treatMethod", "medicine", 1);
 
-    var p1 = document.getElementById("outinfos");
-    if(window.innerWidth>1600){
-        p1.setAttribute("class", "row col-md-offset-3 col-md-6");
-	}
-	else if(window.innerWidth>1300){
-        p1.setAttribute("class", "row col-md-offset-2 col-md-8");
-	}
-	else if(window.innerWidth>1100){
-        p1.setAttribute("class", "row col-md-offset-1 col-md-10");
-	}
-	else{
-        p1.setAttribute("class", "row");
-	}
-
+//    var p1 = document.getElementById("outinfos");
 //    if(window.innerWidth>1600){
-//        var p1 = document.getElementById("p1");
-//        p1.style.width = "70%"
-//        var p2 = document.getElementById("p2");
-//        p2.style.width = "70%"
-//        var p3 = document.getElementById("p3");
-//        p3.style.width = "70%"
+//        p1.setAttribute("class", "row col-md-offset-3 col-md-6");
 //	}
-//	else if(window.innerWidth>1000){
-//        var p1 = document.getElementById("p1");
-//        p1.style.width = "80%"
-//        var p2 = document.getElementById("p2");
-//        p2.style.width = "80%"
-//        var p3 = document.getElementById("p3");
-//        p3.style.width = "80%"
+//	else if(window.innerWidth>1300){
+//        p1.setAttribute("class", "row col-md-offset-2 col-md-8");
+//	}
+//	else if(window.innerWidth>1100){
+//        p1.setAttribute("class", "row col-md-offset-1 col-md-10");
+//	}
+//	else{
+//        p1.setAttribute("class", "row");
 //	}
 
 });
@@ -58,7 +44,6 @@ function submitOutpatientInfo(){
                 errorProcess(data);
             }
         });
-        return false;
     }
 }
 
@@ -72,7 +57,7 @@ function searchPatient(P_id){
             $("#name").val(data.name);
         },
         error:function(data){
-                errorProcess(data);
+            errorProcess(data);
         }
     });
 }

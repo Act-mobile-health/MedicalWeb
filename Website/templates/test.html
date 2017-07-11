@@ -22,20 +22,36 @@
     }
 }) ;
 
-     function a(){
-     $.post("/"("#1")
 
-     }
     </script>
 </head>
 <body>
-<img src="/static/1.jpg" alt="My image"/>
+<!--<img src="/static/1.jpg" alt="My image"/>-->
 <div id="city">
-    <form class="form" method="post" role="form" id="1">
+    <!--<form class="form" method="post" role="form" id="1">-->
+        {%csrf_token%}
         <input type ="file" name="img">
         <button onclick ="a()">upload</button>
-    </form>
+    <!--</form>-->
     <p>aaaa</p>
 </div>
 </body>
 </html>
+<script>
+    function a(){
+     $.ajax({
+            type:"GET",
+            url:"/i1000/",
+            data:{"P_id":"0000000001"},
+            dataType:"json",
+            success:function (json_data) {
+				$.each(json_data,function (index,item){
+					console.log(item);
+				});
+            },
+            error:function (json_data) {
+                console.log(json_data);
+            }
+        });
+     }
+</script>

@@ -47,6 +47,11 @@ urlpatterns = [
     url(r'^invite/$', invite),
 
 
+    url(r'^i1000/$', view.getOEHAll),
+    url(r'^time/$', time),
+    url(r'^map/$', map),
+
+
 
 
 
@@ -72,7 +77,7 @@ urlpatterns = [
     url(r'^i19/',view.addOrUpdateRelationInfo),
     url(r'^i20/',view.deleteRelation),
 
-    url(r'^i21/',view.getCEHAllInfo),
+    # url(r'^i21/',view.getCEHAllInfo),
     url(r'^i22/',view.addOrUpdateCEHInfo),
     url(r'^i23/',view.getCEHDetailedInfo),
     url(r'^i24/',view.deleteCEHInfo),
@@ -110,13 +115,14 @@ urlpatterns = [
     url(r'^i47/',view.app_addOrUpdateAppInfo),
 
     url(r'^i48/',view.app_addOrUpdateMedicineRegularTable),
+    url(r'^i49/',view.app_login),
     url(r'^i50/',view.app_addAppAttachment),
     url(r'^i52/',view.app_addOrUpdateMedicineChangeTable),
     url(r'^i53/',view.app_addMedicineRecordTable),
 
-    url(r'^i49/',view.app_login),
-    url(r'^i51/',view.upload2),
-
+    url(r'^i54/',view.app_addTrackInfoTable),
+    url(r'^i55/',view.app_addMessageText),
+    url(r'^i56/',view.app_addMessageAudio),
 
 
     url(r'^i60/',view.getInvitation),
@@ -136,6 +142,34 @@ urlpatterns = [
     url(r'^i76/',view.updateUCG),
     url(r'^i77/',view.updateCardiogram),
     url(r'^i100/',view.getUserId),
+
+
+
+    url(r'^i90/',view.getCat_MRCSum2Weeks),
+    url(r'^i91/',view.getExploure2Weeks),
+    url(r'^i92/',view.getMedicineRecord),
+    url(r'^i93/',view.deleteMC),
+    url(r'^i94/',view.getMedicineRegular),
+    url(r'^i95/',view.getAcuteExac),
+    url(r'^i96/',view.getAppInfo),
+    url(r'^i97/',view.getMessage),
+    url(r'^i98/',view.updateMessage),
+    url(r'^i99/',view.getMC_calendar),
+    url(r'^i102/',view.getAI_calendar),
+
+
+    url(r'^i101/',view.getPatientAppInfoNum),
+
+
+    url(r'^i105/',view.getTrackInfo),
+    url(r'^i106/',view.addDiseaseType),
+    url(r'^i107/',view.getDiseaseType),
+    url(r'^i108/',view.deleteDiseaseType),
+
+
+    url(r'^i3000/',view.appVersion),
+    # url(r'^i3002/',view.appVersion2),
+    url(r'^i3001/',view.appUpdate),
 
     # url(r'^i18/',view.updatePatientInfo),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

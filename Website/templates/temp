@@ -1,0 +1,647 @@
+<div class="panel">
+                                    <div class="panel-heading bk-bg-primary">
+										<div class="row">
+										<div class="col-md-2 col-sm-2 col-xs-4 text-left ">
+                                        <h6><i class="fa fa-table red"></i><span class="break"></span>详细信息</h6>
+										</div>
+                                        <div class="panel-actions col-md-4 col-sm-4 col-xs-4 text-right" style="display:block">
+                                            <!--<a href="#" id="refresh" onclick="PatientDetailTable()"><i class="fa fa-rotate-right"></i></a>-->
+                                            <a  data-toggle="modal" onclick="appendPatientDetail()" href="#PatientInfoDetails"><i class="fa fa-edit"></i></a>
+                                            <!--<a href="#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>-->
+                                        </div>
+											</div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="table-responsive table-bordered table-hover table-entire" >
+                                            <table class="table table-striped" id="patientInfoTable">
+                                                <thead>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="tlabel1">受试者编号</td>
+                                                    <td id="P_id"></td>
+                                                    <td class="tlabel2">签署知情同意书</td>
+                                                    <td id="sign"></td>
+                                                    <td class="tlabel3">注册时间</td>
+                                                    <td id="registerTime"></td>
+                                                    <td class="tlabel4">照片</td>
+                                                    <td ></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="tlabel1">姓名</td>
+                                                    <td id="name"></td>
+                                                    <td class="tlabel2">性别</td>
+                                                    <td id="sex"></td>
+                                                    <td class="tlabel3">出生日期</td>
+                                                    <td id="birthday"></td>
+                                                    <td class="tlabel4">年龄</td>
+                                                    <td id="age"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="tlabel1">身高</td>
+                                                    <td id="height"></td>
+                                                    <td class="tlabel2">体重</td>
+                                                    <td id="weight"></td>
+                                                    <td class="tlabel3">民族</td>
+                                                    <td id="nation"></td>
+                                                    <td class="tlabel4">籍贯</td>
+                                                    <td id="birthAddr"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="tlabel1">学历</td>
+                                                    <td id="education"></td>
+                                                    <td class="tlabel2">职业</td>
+                                                    <td id="career"></td>
+                                                    <td class="tlabel3">婚姻状况</td>
+                                                    <td id="marriage"></td>
+                                                    <td class="tlabel4">医疗支付方式</td>
+                                                    <td id="payment"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="tlabel1">家庭地址</td>
+                                                    <td id="homeAddr"></td>
+                                                    <td class="tlabel2">最大活动半径</td>
+                                                    <td id="actionAddr"></td>
+                                                    <td class="tlabel3">活动地址1</td>
+                                                    <td id="activityAddr1"></td>
+                                                    <td class="tlabel4">活动地址2</td>
+                                                    <td id="activityAddr2"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="tlabel1">舒张压</td>
+                                                    <td id="diastolicPressure"></td>
+                                                    <td class="tlabel2">收缩压</td>
+                                                    <td id="systolicPressure"></td>
+                                                    <td class="tlabel3">颈围</td>
+                                                    <td id="neckCircu"></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="tlabel1">固定电话</td>
+                                                    <td id="telephone"></td>
+                                                    <td class="tlabel2">手机</td>
+                                                    <td id="cellphone"></td>
+                                                    <td class="tlabel3">同住人联系方式</td>
+                                                    <td id="partnerPhone"></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                     </div>
+                                    </div>
+                                </div>
+		<!-- Modal Dialog -->
+
+
+        <!--<div class="modal fade" id="PatientInfoDetails">-->
+            <!--<div class="modal-dialog  modal-lg">-->
+                <!--<div class="modal-content">-->
+                    <!--<div class="modal-header">-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                        <!--<h4 class="modal-title">详情/编辑</h4>-->
+                    <!--</div>-->
+                    <!--<div class="modal-body">-->
+						<!--<div>-->
+                        <!--<form class="form-horizontal" id = "PatientInfo" method="post" role="form">-->
+							<!--{% csrf_token %}-->
+                            <!--<div class="row ">-->
+								<!--<div class="form-group col-lg-6 col-md-6 myblockposition" style="display:none;">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">编号</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                      <!--<input type="text" class="form-control myinput" name="id" readonly>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">患者编号</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                      <!--<input type="text" class="form-control myinput" name="P_id" readonly>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">姓名</label>-->
+                                    <!--<div class="col-sm-6">-->
+                                      <!--<input type="text" class="form-control myinput" name="name" >-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+								<!--<div class="col-lg-6 col-md-6 myblockposition" style="margin-top:0;">-->
+									<!--<label class="col-sm-3 control-label mylabel">签署知情同意书</label>-->
+									<!--<div class="radio col-sm-3">-->
+									  <!--<label class="mycheckbox">-->
+										<!--<input type="radio" name="sign" value="1" >是-->
+									  <!--</label>-->
+									<!--</div>-->
+									<!--<div class="radio col-sm-3">-->
+									  <!--<label class="mycheckbox">-->
+										<!--<input type="radio" name="sign" value="2">否-->
+									  <!--</label>-->
+									<!--</div>-->
+								<!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel" >就医时间</label>-->
+                                    <!--<div class="col-sm-6">-->
+                                      <!--<input type="date" class="form-control myinput" name="registerTime" placeholder="请选择">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label  class="col-sm-3  control-label mylabel">出生日期</label>-->
+                                    <!--<div class="col-sm-6">-->
+                                      <!--<input type="date" class="form-control myinput" name="birthday" placeholder="请选择">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+							<!--<div class="row ">-->
+								<!--<div class="col-lg-6 col-md-6 myblockposition" style="margin-top:0;">-->
+									<!--<label class="col-sm-3 control-label mylabel">性别</label>-->
+									<!--<div class="radio col-sm-3">-->
+									  <!--<label class="mycheckbox">-->
+										<!--<input type="radio" name="sex" value="1">男-->
+									  <!--</label>-->
+									<!--</div>-->
+									<!--<div class="radio col-sm-3">-->
+									  <!--<label class="mycheckbox">-->
+										<!--<input type="radio" name="sex" value="2">女-->
+									  <!--</label>-->
+									<!--</div>-->
+								<!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">年龄</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                      <!--<input type="text" class="form-control myinput" name="age"  placeholder="请输入患者年龄">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">民族</label>-->
+                                    <!--<div class="col-sm-6">-->
+                                      <!--<input type="text" class="form-control myinput" name="nation" placeholder="请输入患者民族">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">身高</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                      <!--<input type="text" class="form-control myinput" name="height">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">体重</label>-->
+                                    <!--<div class="col-sm-6">-->
+                                      <!--<input type="text" class="form-control myinput" name="weight">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">舒张压</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                      <!--<input type="text" class="form-control myinput" name="diastolicPressure">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">收缩压</label>-->
+                                    <!--<div class="col-sm-6">-->
+                                      <!--<input type="text" class="form-control myinput" name="systolicPressure">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">颈围</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                      <!--<input type="text" class="form-control myinput" name="neckCircu"  data-toggle="tooltip" data-placement="top" title="指经喉结节点的颈部水平围长">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">学历</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                       <!--<select class="form-control myinput" name="education">-->
+                                            <!--<option value="1">小学</option>-->
+                                            <!--<option value="2">初中</option>-->
+                                            <!--<option value="3">高中/中专</option>-->
+                                            <!--<option value="4">大学专科（大专）</option>-->
+                                            <!--<option value="5">大学本科（大本）</option>-->
+                                            <!--<option value="6">研究生（硕士/博士）</option>-->
+                                      <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">职业</label>-->
+                                    <!--<div class="col-sm-6">-->
+                                       <!--<select class="form-control myinput" name="career">-->
+                                            <!--<option value="1">农、林、牧、渔、水利业</option>-->
+                                            <!--<option value="2">工业</option>-->
+                                            <!--<option value="3">地质普查和勘探业</option>-->
+                                            <!--<option value="4">建筑业</option>-->
+                                            <!--<option value="5">交通运输业、邮电通信业</option>-->
+                                            <!--<option value="6">商业、公共饮食业、物资供应和仓储业</option>-->
+                                            <!--<option value="7">房地产管理、公用事业、居民服务和咨询服务业</option>-->
+                                            <!--<option value="8">卫生、体育和社会福利事业</option>-->
+                                            <!--<option value="9">教育、文化艺术和广播电视业</option>-->
+                                            <!--<option value="10">科学研究和综合技术服务业</option>-->
+                                            <!--<option value="11">金融、保险业</option>-->
+                                            <!--<option value="12">国家机关、党政机关和社会团体</option>-->
+                                            <!--<option value="13">其他行业</option>-->
+                                      <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">婚姻状况</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                       <!--<select class="form-control myinput" name="marriage">-->
+                                            <!--<option value="1">未婚</option>-->
+                                            <!--<option value="2">已婚</option>-->
+                                            <!--<option value="3">离异</option>-->
+                                            <!--<option value="4">丧偶</option>-->
+                                      <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-9 col-md-9 myblockposition">-->
+                                    <!--<label class="col-sm-2 control-label mylabel">家庭住址</label>-->
+                                    <!--<div class="col-sm-2" style="margin-left:padding-left:0;padding-right:0"  >-->
+                                      <!--<select class="form-control myinput" name="province_h" id="province_h"></select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2" style="padding-left:0;padding-right:0" >-->
+                                      <!--<select class="form-control myinput" name="city_h" id="city_h"></select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2" style="padding-left:0;padding-right:0" >-->
+                                      <!--<select class="form-control myinput" name="county_h" id="county_h"></select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-2" style="padding-left:0;padding-right:0" >-->
+                                      <!--<input type="text" class="form-control myinput" name="detail_h" id="detail_h">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">籍贯</label>-->
+                                    <!--<div class="col-sm-3" style="margin-left:padding-left:0;padding-right:0"  >-->
+                                      <!--<select class="form-control myinput" name="province" id="province"></select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-3" style="padding-left:0;padding-right:0" >-->
+                                      <!--<select class="form-control myinput" name="city" id="city"></select>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-3" style="padding-left:0;padding-right:0" >-->
+                                      <!--<select class="form-control myinput" name="county" id="county"></select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">经常活动地址1</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                      <!--<input type="text" class="form-control myinput" name="activityAddr1">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">经常活动地址2</label>-->
+                                    <!--<div class="col-sm-6">-->
+                                      <!--<input type="text" class="form-control myinput" name="activityAddr2">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">最大活动半径</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                      <!--<input type="text" class="form-control myinput" name="actionAddr" readonly>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">固定电话</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                      <!--<input type="text" class="form-control myinput" name="telephone">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">手机</label>-->
+                                    <!--<div class="col-sm-6">-->
+                                      <!--<input type="text" class="form-control myinput" name="cellphone">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+
+                            <!--<div class="row ">-->
+                                <!--<div class="form-group col-lg-6 col-md-6 myblockposition">-->
+                                    <!--<label class="col-sm-3 control-label mylabel">同住人联系方式</label>-->
+                                    <!--<div class="col-sm-6" >-->
+                                      <!--<input type="text" class="form-control myinput" name="partnerPhone">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+							<!--<div class="row ">-->
+								<!--<div class="col-lg-12 col-md-12 myblockposition" style="margin-top:0%;">-->
+									<!--<label class="col-sm-2 control-label mylabel">医疗支付方式</label>-->
+									<!--<div class="checkbox col-sm-3">-->
+									  <!--<label class="mycheckbox">-->
+										<!--<input type="radio" name="payment" value="1">城镇居民基本保险-->
+									  <!--</label>-->
+									<!--</div>-->
+									<!--<div class="checkbox col-sm-3">-->
+									  <!--<label class="mycheckbox">-->
+										<!--<input type="radio" name="payment" value="2">城镇职工基本保险-->
+									  <!--</label>-->
+									<!--</div>-->
+									<!--<div class="checkbox col-sm-3">-->
+									  <!--<label class="mycheckbox">-->
+										<!--<input type="radio" name="payment" value="3">新型农村合作医疗-->
+									  <!--</label>-->
+									<!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="row ">-->
+                                <!--<div class="col-lg-12 col-md-12 myblockposition" style="margin-top:0;">-->
+                                    <!--<label class="col-sm-2 control-label mylabel"></label>-->
+                                    <!--<div class="checkbox col-sm-3">-->
+                                      <!--<label class="mycheckbox">-->
+                                        <!--<input type="radio" name="payment" value="4">商业医疗保险-->
+                                      <!--</label>-->
+                                    <!--</div>-->
+                                    <!--<div class="checkbox col-sm-2">-->
+                                      <!--<label class="mycheckbox">-->
+                                        <!--<input type="radio" name="payment" value="5">全公费-->
+                                      <!--</label>-->
+                                    <!--</div>-->
+                                    <!--<div class="checkbox col-sm-2">-->
+                                      <!--<label class="mycheckbox">-->
+                                        <!--<input type="radio" name="payment" value="6">全自费-->
+                                      <!--</label>-->
+                                    <!--</div>-->
+                                    <!--<div class="checkbox col-sm-2">-->
+                                      <!--<label class="mycheckbox">-->
+                                        <!--<input type="radio" name="payment" value="7">其他-->
+                                      <!--</label>-->
+                                    <!--</div>-->
+								<!--</div>-->
+                            <!--</div>-->
+
+                        <!--</form>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="modal-footer">-->
+                         <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+                         <!--<button type="button" id="submitPatientInfobt" class="btn btn-default" data-dismiss="modal">提交</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+//            str='<tr>'+
+//                '<td class="table-small">日期</td>'+
+//                '<td class="table-small" >'+item.date+'</td>'+
+//                '<td class="table-small">地点</td>'+
+//                '<td class="table-small">'+item.place+'</td>'+
+//                '<td class="table-small">症状为</td>'+
+//                '<td>'+symptom+'</td>'+
+//                '</tr>'+
+//                '<tr>'+
+//                '<td>是否为慢阻肺急性加重</td>'+
+//                '<td>'+analyseRadio(item.acuteExac)+'</td>'+
+//                '<td>加重与大气污染是否有关</td>'+
+//                '<td>'+analyseRadio(item.airRelate)+'</td>'+
+//                '<td>若为其他疾病，类型为</td>'+
+//                '<td>'+item.disease+'</td>'+
+//                '</tr>'+
+//                '<tr>'+
+//                '<td>是否继续住院治疗</td>'+
+//                '<td>'+analyseRadio(item.hospital)+'</td>'+
+//                '<td>病原学检查</td>'+
+//                '<td>'+analyseRadio(item.byxCheck)+'</td>'+
+//                '<td>阳性结果为</td>'+
+//                '<td>'+item.byxResult+'</td>'+
+//                '</tr>'+
+//                '<tr>'+
+//                '<td>有创/无创呼吸治疗</td>'+
+//                '<td>'+analyseRadio(item.ycWcTreat)+'</td>'+
+//                '<td>是否使用抗生素</td>'+
+//                '<td>'+analyseRadio(item.useAbt)+'</td>'+
+//                '<td>抗生素类型</td>'+
+//                '<td>'+item.abtType+'</td>'+
+//                '</tr>'+
+//                '<tr>'+
+//                '<td>是否使用静脉激素</td>'+
+//                '<td>'+analyseRadio(item.useJmzs)+'</td>'+
+//                '<td>急诊方式</td>'+
+//                '<td>'+analyseRadio(item.ecMethod)+'</td>'+
+//                '<td>如果住院，时长为</td>'+
+//                '<td>'+item.ecDate+'</td>'+
+//                '</tr>'+
+//                '<tr>'+
+//                '<td>是否调整治疗方案</td>'+
+//                '<td>'+analyseRadio(item.treatMethod)+'</td>'+
+//                '<td></td>'+
+//                '<td></td>'+
+//                '<td>调整药物为</td>'+
+//                '<td>'+item.medicine+'</td>'+
+//                '</tr>';
+
+$.ajax({
+           type:"GET",
+            url:"/i23/",
+            data:{"S_id":S_id[index],"type":0},
+            dataType:"json",
+            success:function (item) {
+                var isStable = "";
+                var isSymptom = analyseRadio(item.isSymptom);
+                var symptom = "";
+                for (var i = 0;i<item.symptom.length;i++){
+                    if(item.symptom[i]=="1")
+                        symptom += "咳嗽加重；";
+                    if(item.symptom[i]=="2")
+                        symptom += "咳浓痰并痰量增加；";
+                    if(item.symptom[i]=="3")
+                        symptom += "呼吸困难加重；";
+
+                }
+                if(item.isStable=="1")
+                    isStable = "稳定期随访";
+                else if(item.isStable=="2")
+                    isStable = "急性期就诊";
+
+                var physicalExam = analyseRadio(item.physicalExam);
+                var acuteExac = analyseRadio(item.acuteExac);
+                var useAbt = analyseRadio(item.useAbt);
+                var useJmzs = analyseRadio(item.useJmzs);
+                var hospital =analyseRadio(item.hospital);
+                var airRelate =analyseRadio(item.airRelate);
+                var treatMethod = analyseRadio(item.treatMethod);
+                str = '<tr>'+
+                    '<td class="table-small">编号</td>'+
+                    '<td class="table-small">'+item.OPS_id+'</td>'+
+                    '<td class="table-small">日期</td>'+
+                    '<td class="table-small">'+item.date+'</td>'+
+                    '<td class="table-small">地点</td>'+
+                    '<td class="table-small">'+item.place+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                    '<td class="table-small">就诊原因</td>'+
+                    '<td>'+isStable+'</td>'+
+                    '<td>症状有无</td>'+
+                    '<td class="table-small">'+isSymptom+'</td>'+
+                    '<td>症状为</td>'+
+                    '<td>'+symptom+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                    '<td>是否继续住院治疗</td>'+
+                    '<td>'+hospital+'</td>'+
+                    '<td>查体是否正常</td>'+
+                    '<td>'+physicalExam+'</td>'+
+                    '<td>查体异常表现</td>'+
+                    '<td>'+item.breathErr+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                    '<td>是否为慢阻肺急性加重</td>'+
+                    '<td>'+acuteExac+'</td>'+
+                    '<td>加重与大气污染是否有关</td>'+
+                    '<td>'+airRelate+'</td>'+
+                    '<td>若为其他疾病，类型为</td>'+
+                    '<td>'+item.disease+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                    '<td>是否使用静脉激素</td>'+
+                    '<td>'+useJmzs+'</td>'+
+                    '<td>是否使用抗生素</td>'+
+                    '<td>'+useAbt+'</td>'+
+                    '<td>抗生素类型</td>'+
+                    '<td>'+item.abtType+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                    '<td>是否调整治疗方案</td>'+
+                    '<td>'+treatMethod+'</td>'+
+                    '<td></td>'+
+                    '<td></td>'+
+                    '<td>调整药物为</td>'+
+                    '<td>'+item.medicine+'</td>'+
+                    '</tr>';
+                $("#"+name+" tbody").html(str);
+            },
+            error:function (data) {
+                errorProcess(data);
+            }
+        });
+var str =  "";
+        var symptom = "";
+        $.ajax({
+            type:"GET",
+            url:"/i23/",
+            data:{"S_id":S_id[index],"type":2},
+            dataType:"json",
+            success:function (item) {
+                for (var i = 0;i<item.symptom.length;i++){
+                if(item.symptom[i]=="1")
+                    symptom += "咳嗽加重；";
+                if(item.symptom[i]=="2")
+                    symptom += "咳浓痰并痰量增加；";
+                if(item.symptom[i]=="3")
+                    symptom += "呼吸困难加重；";
+                if(item.symptom[i]=="4")
+                    symptom += "发热；";
+                if(item.symptom[i]=="5")
+                    symptom += "上呼吸道感染症状；";
+                if(item.symptom[i]=="6")
+                    symptom += "意识障碍；";
+            }
+            str='<tr>'+
+                '<td class="table-small">日期</td>'+
+                '<td class="table-small" >'+item.date+'</td>'+
+                '<td class="table-small">地点</td>'+
+                '<td class="table-small">'+item.place+'</td>'+
+                '<td class="table-small">症状为</td>'+
+                '<td>'+symptom+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>是否为慢阻肺急性加重</td>'+
+                '<td>'+analyseRadio(item.acuteExac)+'</td>'+
+                '<td>加重与大气污染是否有关</td>'+
+                '<td>'+analyseRadio(item.airRelate)+'</td>'+
+                '<td>若为其他疾病，类型为</td>'+
+                '<td>'+item.disease+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>住院病房类型</td>'+
+                '<td>'+analyseRadio(item.commonIcu)+'</td>'+
+                '<td>病原学检查</td>'+
+                '<td>'+analyseRadio(item.byxCheck)+'</td>'+
+                '<td>阳性结果为</td>'+
+                '<td>'+item.byxResult+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>有创/无创呼吸治疗</td>'+
+                '<td>'+analyseRadio(item.ycWcTreat)+'</td>'+
+                '<td>是否使用抗生素</td>'+
+                '<td>'+analyseRadio(item.useAbt)+'</td>'+
+                '<td>抗生素类型</td>'+
+                '<td>'+item.abtType+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>是否使用静脉激素</td>'+
+                '<td>'+analyseRadio(item.useJmzs)+'</td>'+
+                '<td>住院时长</td>'+
+                '<td>'+item.hospitalDays+'</td>'+
+                '<td>医嘱信息</td>'+
+                '<td>'+item.docAdvice+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>是否调整治疗方案</td>'+
+                '<td>'+analyseRadio(item.treatMethod)+'</td>'+
+                '<td></td>'+
+                '<td></td>'+
+                '<td>调整药物为</td>'+
+                '<td>'+item.medicine+'</td>'+
+                '</tr>';
+            $("#"+name+" tbody").html(str);
+            },
+            error:function (data) {
+                errorProcess(data);
+            }
+        });
+
+ <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1200px;">
+                                <a  data-toggle="modal" onclick="addInfo()" href="#OutPatientServiceInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加门诊</a>
+								<button id="showOutpaBt" onclick="showOne('0')" type="button" class="btn btn-success" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示门诊</button>
+                            </div>
+                                <div style="margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1200px;">
+								<button id="temp_all" onclick="showAll('1')" type="button" class="btn btn-info" style="width:150px;height:25px;padding:2px;font-size:14px;margin-left:40px;">显示全部随访记录</button>
+                            </div>
+                            <div style="margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1200px;">
+								<button id="temp_new" onclick="showAll('0')" type="button" class="btn btn-info" style="background:#de7171;width:180px;height:25px;padding:2px;font-size:14px;margin-left:40px;">只显示未处理的随访记录</button>
+                            </div>
+                            <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1200px;">
+                                <a  data-toggle="modal" onclick="addInfo()" href="#EmergCallInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加急诊</a>
+								<button id="showEmBt" onclick="showOne('1')" type="button" class="btn btn-warning" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示急诊</button>
+                            </div>
+                            <div style="text-indent: 1em;margin: 8px auto;vertical-align:bottom;position:relative;max-width: 2000px;width: 1200px;">
+                                <a  data-toggle="modal" onclick="addInfo()" href="#InHospitalInfoDetails" class="mylabel" style="vertical-align: bottom"><i class="glyphicon glyphicon-plus" style="vertical-align:middle"></i> 添加住院</a>
+								<button id="showInhoBt" onclick="showOne('2')" type="button" class="btn btn-danger" style="width:80px;height:25px;padding:2px;font-size:14px;margin-left:15px;">只显示住院</button>
+                            </div>

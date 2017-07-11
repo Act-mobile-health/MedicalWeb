@@ -8,20 +8,25 @@ $(document).ready(function(){
     $("#searchbt").click(function(){
         searchPatient($("#P_id").val());
     });
+    forWizard("acuteExac", "disease", 0);
+    forWizard("byxCheck", "byxResult", 1);
+    forWizard("useAbt", "abtType", 1);
+    forWizard("hospital", "treatMethod", 0);
+    forWizard("treatMethod", "medicine", 1);
 
-    var p1 = document.getElementById("hosinfos");
-    if(window.innerWidth>1600){
-        p1.setAttribute("class", "row col-md-offset-3 col-md-6");
-	}
-	else if(window.innerWidth>1300){
-        p1.setAttribute("class", "row col-md-offset-2 col-md-8");
-	}
-	else if(window.innerWidth>1100){
-        p1.setAttribute("class", "row col-md-offset-1 col-md-10");
-	}
-	else{
-        p1.setAttribute("class", "row");
-	}
+//    var p1 = document.getElementById("hosinfos");
+//    if(window.innerWidth>1600){
+//        p1.setAttribute("class", "row col-md-offset-3 col-md-6");
+//	}
+//	else if(window.innerWidth>1300){
+//        p1.setAttribute("class", "row col-md-offset-2 col-md-8");
+//	}
+//	else if(window.innerWidth>1100){
+//        p1.setAttribute("class", "row col-md-offset-1 col-md-10");
+//	}
+//	else{
+//        p1.setAttribute("class", "row");
+//	}
 
 });
 

@@ -126,19 +126,87 @@ function for_userbox() {
     return message;
 }
 
-$(document).ready(function(){
-    try{
-        var temp = for_userbox();
-        a = document.getElementById("WebName")
-        a.innerHTML = "iBreathCare " + '<i class="fa fa-coffee"></i> ACT-BUAA';
 
-        b = document.getElementById("userName_s")
-        b.innerHTML = temp.userName;
+function getIndex(list, value){
+    for(j=0;j<list.length;j++){
+        if(list[j] == value){
+            return j;
+        }
+    }
+}
 
-        c = document.getElementById("title_s")
-        c.innerHTML = temp.title;
-    }
-    catch(err){
-        console.log(err)
-    }
-})
+function patientNameParse(input){
+    var name = "";
+    $.ajax({
+        type:"GET",
+        url:"/i16/",
+        data:{P_id:input},
+        dataType:"json",
+        async:false,
+        success: function(json_data){
+            name = json_data['name'];
+        },
+        error: function(json_data){
+            errorProcess(json_data);
+        }
+    });
+    return name;
+}
+
+function forWizard(key, w, sign){
+    $(".mycheckbox").change(function(){
+        var val=$('input:radio[name='+key+']:checked').val();
+        if(val){
+        console.log(val,key,sign);
+            if(sign==1){
+                if(val == 1)
+                {
+                   $("#"+w).show();
+                }
+                else
+                {
+                   $("#"+w).hide();
+                }
+            }
+            else{
+                if(val == 2)
+                {
+                   $("#"+w).show();
+                }
+                else
+                {
+                   $("#"+w).hide();
+                }
+            }
+        }
+    })
+}
+
+function forWizard_v(key, w, sign, form){
+    $(".mycheckbox").change(function(){
+        var val=$('#'+form+' input:radio[name='+key+']:checked').val();
+        if(val){
+        console.log(val,key,sign);
+            if(sign==1){
+                if(val == 1)
+                {
+                   $("#"+w).show();
+                }
+                else
+                {
+                   $("#"+w).hide();
+                }
+            }
+            else{
+                if(val == 2)
+                {
+                   $("#"+w).show();
+                }
+                else
+                {
+                   $("#"+w).hide();
+                }
+            }
+        }
+    })
+}

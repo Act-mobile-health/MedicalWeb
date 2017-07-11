@@ -72,6 +72,7 @@ def updateExpGroup(G_id, name, info, date):
 def updatePatientInfo(data):
     #TODO
     try:
+
         print data,data['name'],type(data['name'])
         print "#############"
         patient = PatientInfo.objects.get(P_id= data['P_id'])
@@ -82,7 +83,7 @@ def updatePatientInfo(data):
         patient.sex = data['sex']
         if data['birthday'] != '':
             patient.birthday = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
-        patient.age = data['age']
+        patient.age = int(data['age'])
         patient.nation = data['nation']
         patient.height = data['height']
         patient.weight = data['weight']
@@ -90,14 +91,22 @@ def updatePatientInfo(data):
         patient.career = data['career']
         patient.marriage = data['marriage']
 
+        patient.IDCardNum = data['IDCardNum']
+
         patient.province_h = data['province_h']
-        patient.city_h = data['city_h']
-        patient.county_h = data['county_h']
-        patient.detail_h = data['detail_h']
+
+        if data['city_h']!=u"请输入市":
+            patient.city_h = data['city_h']
+        if data['county_h']!= u"请输入区":
+            patient.county_h = data['county_h']
+        if data['detail_h']!= "":
+            patient.detail_h = data['detail_h']
 
         patient.province = data['province']
-        patient.city = data['city']
-        patient.county = data['county']
+        if data['city']!=u"请输入市":
+            patient.city = data['city']
+        if data['county']!= u"请输入区":
+            patient.county = data['county']
 
         patient.activityAddr1 = data['activityAddr1']
         patient.activityAddr2 = data['activityAddr2']
@@ -429,8 +438,8 @@ def updateCATandMRC(data):
         obj.cat6 = data['cat6']
         obj.cat7 = data['cat7']
         obj.cat8 = data['cat8']
-        obj.catSum = data['catSum']
-        obj.mrc = data['mrc']
+        obj.catSum = int(data['catSum'])
+        obj.mrc = int(data['mrc'])
         obj.acuteExac = data['acuteExac']
         obj.save()
         return int(data['id'])
@@ -490,7 +499,7 @@ def updateMedicineChange(data):
         obj.P_id = data['P_id']
         if data['date'] != '':
             obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        obj.change = data['change']
+        obj.ch = data['change']
         obj.save()
         return int(data['id'])
     except Exception, e:
@@ -519,7 +528,7 @@ def updateAppInfo(data):
         obj = AppInfo.objects.get(id = int(data['id']))
         if data['date'] != '':
             obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        obj.P_id = data['P_id']
+        # obj.P_id = data['P_id']
         # obj.type = data['type']
         return int(data['id'])
     except Exception, e:
@@ -546,7 +555,7 @@ def updateLungFunc(data):
         obj.RV_TLC2 = data['RV_TLC2']
         obj.RV_TLC3 = data['RV_TLC3']
         obj.FEV1change = data['FEV1change']
-        obj.GOLD = data['GOLD']
+        obj.GOLD = int(data['GOLD'])
         obj.save()
         return True
     except Exception, e:
@@ -645,4 +654,18 @@ def updateCardiogram(data):
         return True
     except Exception, e:
         tools.exceptionRecord('update.py','updateCardiogram',e)
+        return False
+
+def updateMessage(data):
+    try:
+        if(data['type'] == "0"):
+            obj = MessageText.objects.get(id = int(data['id']))
+        else:
+
+            obj = MessageAudio.objects.get(id = int(data['id']))
+        obj.sign = "0"
+        obj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMessage',e)
         return False

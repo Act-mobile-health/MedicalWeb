@@ -63,8 +63,13 @@ def deleteOutPatientServiceInfo(OPS_id):
             deleteAccessoryExamination(v.id)
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
-        obj.o_time = str(int(obj.o_time) - 1)
+        obj.o_time = obj.o_time - 1
         obj.save()
+        appinfo = AppInfo.objects.filter(P_id = temp_Pid, type = "0", S_id = OPS_id)
+        if appinfo:
+            appinfo_t = AppInfo.objects.get(P_id = temp_Pid, type = "0", S_id = OPS_id)
+            appinfo_t.sign = "0"
+            appinfo_t.save()
         return True
     except Exception, e:
         tools.exceptionRecord('delete.py','deleteOutPatientServiceInfo',e)
@@ -88,8 +93,13 @@ def deleteEmergCallInfo(EC_id):
             deleteAccessoryExamination(v.id)
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
-        obj.e_time = str(int(obj.e_time) - 1)
+        obj.e_time = obj.e_time - 1
         obj.save()
+        appinfo = AppInfo.objects.filter(P_id = temp_Pid, type = "1", S_id = EC_id)
+        if appinfo:
+            appinfo_t = AppInfo.objects.get(P_id = temp_Pid, type = "1", S_id = EC_id)
+            appinfo_t.sign = "0"
+            appinfo_t.save()
 
         return True
     except Exception, e:
@@ -114,9 +124,17 @@ def deleteInHospitalInfo(IH_id):
             deleteAccessoryExamination(v.id)
 
         obj = MedicalVisit.objects.get(P_id = temp_Pid)
-        obj.h_time = str(int(obj.h_time) - 1)
+        obj.h_time = obj.h_time - 1
         obj.save()
-
+        print "1111"
+        appinfo = AppInfo.objects.filter(P_id = temp_Pid, type = "2", S_id = IH_id)
+        print appinfo
+        print "1212"
+        if appinfo:
+            appinfo_t = AppInfo.objects.get(P_id = temp_Pid, type = "2", S_id = IH_id)
+            appinfo_t.sign = "0"
+            appinfo_t.save()
+        print "2222"
         return True
     except Exception, e:
         tools.exceptionRecord('delete.py','deleteInHospitalInfo',e)
@@ -196,3 +214,24 @@ def deleteInvitation(data):
     except Exception, e:
         tools.exceptionRecord('delete.py','deleteInvitation',e)
         return False
+
+def deleteMC(id):
+
+    try:
+        obj = MedicineChange.objects.get(id = int(id))
+        MedicineRecord.objects.filter(MC_id=obj.MC_id).delete()
+        obj.delete()
+        return 0
+    except Exception, e:
+        tools.exceptionRecord('delete.py','deleteMC',e)
+        return -1
+
+def deleteDiseaseType(data):
+
+    try:
+        obj = DiseaseType.objects.get(id = int(data['id']))
+        obj.delete()
+        return 0
+    except Exception, e:
+        tools.exceptionRecord('delete.py','deleteMC',e)
+        return -1
