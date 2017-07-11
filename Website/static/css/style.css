@@ -13,7 +13,7 @@
   --sidebar-shadow:#36e2c3;
   --page-head:#48a0a5;
 }
-*/
+
 
 :root {
   --sidebar-base: #19945f;
@@ -29,8 +29,9 @@
   --sidebar-shadow:#49d095;
   --page-head:#247753;
 }
+*/
 /*
-
+*/
 :root {
   --sidebar-base: #34495E;
   --sidebar-head:#111!important;
@@ -44,7 +45,7 @@
   --sidebar-active-b:none;
   --sidebar-shadow:#435D78;
   --page-head:#2D3F51;
-}*/
+}
 
 html,
 body {
