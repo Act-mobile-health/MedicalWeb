@@ -1102,7 +1102,7 @@ def getUserId(request):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(2)
+@PermissionCheck(3)
 def getOEHAll(request,data,D_id):
     message = select.getOEHAll(data['P_id'], data['para'])
     # print type(list(message))
@@ -1112,7 +1112,7 @@ def getOEHAll(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getMedicineRecord(request,data,D_id):
     message = select.getMR(data['P_id'])
     js = json.dumps(message)
@@ -1131,7 +1131,7 @@ def deleteMC(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getMedicineRegular(request,data,D_id):
     message = select.getMReg(data)
     js = json.dumps(message)
@@ -1140,7 +1140,7 @@ def getMedicineRegular(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getAcuteExac(request,data,D_id):
     message = select.getAcuteExac(data)
     js = json.dumps(message)
@@ -1149,7 +1149,7 @@ def getAcuteExac(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getMC_calendar(request,data,D_id):
     message = select.getMC_calendar(data)
     js = json.dumps(message)
@@ -1159,7 +1159,7 @@ def getMC_calendar(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getAI_calendar(request,data,D_id):
     message = {}
     message = select.getAI_calendar(data)
@@ -1170,7 +1170,7 @@ def getAI_calendar(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getAppInfo(request,data,D_id):
     message = select.getAppInfo(data)
     js = json.dumps(message)
@@ -1179,7 +1179,7 @@ def getAppInfo(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getMessage(request,data,D_id):
     message = select.getMessage(data)
     js = json.dumps(message)
@@ -1199,7 +1199,7 @@ def updateMessage(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getPatientAppInfoNum(request,data,D_id):
     message = {}
     message['result'] = select.getPatientAppInfo(data)
@@ -1209,7 +1209,7 @@ def getPatientAppInfoNum(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getTrackInfo(request,data,D_id):
     message = {}
     message['paths'], message['center'] = select.getTrackInfo(data)[0], select.getTrackInfo(data)[1]
@@ -1229,7 +1229,7 @@ def addDiseaseType(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getDiseaseType(request,data,D_id):
     message = []
     message = select.getDiseaseType(data)
@@ -1252,7 +1252,7 @@ def deleteDiseaseType(request,data,D_id):
 def appVersion(request):
     # do something...
     message = {}
-    message['result'] = "1.1"
+    message['result'] = "1.0"
     js = json.dumps(message)
     print js
     return HttpResponse(js)
