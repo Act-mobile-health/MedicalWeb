@@ -347,10 +347,10 @@ def addCATandMRC(data):
                            acuteExac = data['acuteExac'])
         newObj.save()
         id = newObj.id
-        return id
+        return [id, "0"]
     except Exception, e:
         tools.exceptionRecord('insert.py','addCATandMRC',e)
-        return id
+        return [id, "-1"]
 
 #add PmExposure Table
 def addPmExposure(data):
@@ -363,10 +363,10 @@ def addPmExposure(data):
         newObj = PmExposure(P_id = data['P_id'], date = d, exposure = data['exposure'])
         newObj.save()
         id = newObj.id
-        return id
+        return [id, "0"]
     except Exception, e:
         tools.exceptionRecord('insert.py','addPmExposure',e)
-        return id
+        return [id, "-1"]
 
 
 #add TrackInfo Table
@@ -400,10 +400,10 @@ def addMedicineRegular(data):
         print d, newObj.date
         newObj.save()
         id = newObj.id
-        return id
+        return [id, "0"]
     except Exception, e:
         tools.exceptionRecord('insert.py','addMedicineRegular',e)
-        return id
+        return [id, "-1"]
 
 #add MedicineChange Table
 def addMedicineChange(data):
@@ -417,20 +417,18 @@ def addMedicineChange(data):
         print d, newObj.date
         newObj.save()
         id = newObj.id
-        return id
+        return [id, "0"]
     except Exception, e:
         tools.exceptionRecord('insert.py','addMedicineChange',e)
-        return id
+        return [id, "-1"]
 
 #add MedicineRecord Table
 def addMedicineRecord(myFile, id, sign):
-
     try:
-        print id,"$$$$$$$$$$$$$id"
         newObj = MedicineRecord(MC_id = id, doc = myFile, sign = sign)
         newObj.save()
-
-        return newObj.id
+        id = newObj.id
+        return 0
     except Exception, e:
         tools.exceptionRecord('insert.py','addMedicineRecord',e)
         return -1
@@ -467,10 +465,10 @@ def addAppInfo(data):
             obj.S_id = newObj.id
         obj.save()
         id = obj.id
-        return str(id)
+        return [id, "0"]
     except Exception, e:
         tools.exceptionRecord('insert.py','addAppInfo',e)
-        return str(id)
+        return [id, "-1"]
 
 
 def addInvitation(D_id,data):

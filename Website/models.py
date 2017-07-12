@@ -783,12 +783,12 @@ class AppInfo(models.Model):
 # created by CS@buaa, 2017/3/17
 # table29
 
-
-class AppAttachment(models.Model):
-    name = models.CharField(max_length=10, null=False)
-    P_id = models.CharField(max_length=12, null=False)
-    AI_id = models.IntegerField(null=False)
-    dir = models.CharField(max_length=50, null=False)
+#
+# class AppAttachment(models.Model):
+#     name = models.CharField(max_length=10, null=False)
+#     P_id = models.CharField(max_length=12, null=False)
+#     AI_id = models.IntegerField(null=False)
+#     dir = models.CharField(max_length=50, null=False)
 
 
 # created by CS@buaa, 2017/3/17
@@ -816,14 +816,13 @@ class MedicineChange(models.Model):
 # created by CS@buaa, 2017/3/17
 # table32
 
-
 class MedicineRecord(models.Model):
     MC_id = models.CharField(max_length=32, null=False)
-    medicine = models.CharField(max_length=20, null=False)
+    # medicine = models.CharField(max_length=20, null=False)
     sign = models.CharField(max_length=2, null=False)# before: sign =0 after: sign = 1
-    date = models.DateField(null=False, default=datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date())
-    name = models.CharField(max_length=50, null=False)
-    producer = models.CharField(max_length=50, null=False)
+    date = models.DateField(auto_now_add=True)
+    # name = models.CharField(max_length=50, null=False)
+    # producer = models.CharField(max_length=50, null=False)
     doc = models.ImageField(upload_to="MR", null=True)
 
 class invitation(models.Model):
