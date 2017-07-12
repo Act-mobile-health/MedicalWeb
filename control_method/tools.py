@@ -206,3 +206,4 @@ def WordToPinyin(data):
     elif data == '奥体中心':
         result = 'aoTiZhongXin'
     return result
+

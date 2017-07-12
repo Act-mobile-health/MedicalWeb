@@ -1216,3 +1216,46 @@ def getDiseaseType(data):
     except Exception, e:
         tools.exceptionRecord('select.py', 'getDiseaseType', e)
         return False
+
+############ check for whether exist #############
+
+def checkRecordExistForApp(data, table):
+    try:
+        print data ,"check for cat"
+        values = []
+        if data['id'] != 'null' :
+            return True
+        else:
+            date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+            if table == "CATandMRC":
+                values = CATandMRC.objects.filter(P_id = data['P_id'], date = date)
+            elif table=="PmPmExposure":
+                values = PmExposure.objects.filter(P_id = data['P_id'], date = date)
+            elif table=="MedicineRegular":
+                values = MedicineRegular.objects.filter(P_id = data['P_id'], date = date)
+            elif table=="MedicineChange":
+                values = MedicineChange.objects.filter(P_id = data['P_id'], date = date)
+            elif table=="AppInfo":
+                values = AppInfo.objects.filter(P_id = data['P_id'], date = date)
+
+            if len(list(values)) > 0:
+                return True
+            else:
+                return False
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'checkRecordExistForApp', e)
+        return False
+
+def checkMedicineRecordExist(id, sign):
+    try:
+        print id, sign ,"check for MR"
+        values = []
+        values = MedicineRecord.objects.filter(MC_id = id, sign = sign)
+        if len(list(values)) > 0:
+            return True
+        else:
+            return False
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'checkRecordExistForApp', e)
+        return False
+

@@ -426,10 +426,14 @@ def updateAccessoryExamination(AE_id, D_id, S_id, data, doc):
 #update CAT && MRC Table
 def updateCATandMRC(data):
     try:
-        obj = CATandMRC.objects.get(id = int(data['id']))
-        obj.P_id = data['P_id']
+        date= datetime.datetime.strptime("1970-07-30", "%Y-%m-%d").date()
         if data['date'] != '':
-            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+            date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+            print date
+        if data['id'] != "null":
+            obj = CATandMRC.objects.get(id = int(data['id']))
+        else:
+            obj = CATandMRC.objects.get(P_id = data['P_id'], date = date)
         obj.cat1 = data['cat1']
         obj.cat2 = data['cat2']
         obj.cat3 = data['cat3']
@@ -442,24 +446,90 @@ def updateCATandMRC(data):
         obj.mrc = int(data['mrc'])
         obj.acuteExac = data['acuteExac']
         obj.save()
-        return int(data['id'])
+        return [int(obj.id), "0"]
     except Exception, e:
         tools.exceptionRecord('update.py','updateCATandMRC',e)
-        return -1
+        return [-1, "-1"]
 
 #update PmExposure Table
 def updatePmExposure(data):
     try:
-        obj = PmExposure.objects.get(id = int(data['id']))
-        obj.P_id = data['P_id']
+        date= datetime.datetime.strptime("1970-07-30", "%Y-%m-%d").date()
         if data['date'] != '':
-            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+            date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+            print date
+        if data['id'] != "null":
+            obj = PmExposure.objects.get(id = int(data['id']))
+        else:
+            obj = PmExposure.objects.get(P_id = data['P_id'], date = date)
         obj.exposure = data['exposure']
         obj.save()
-        return int(data['id'])
+        return [int(obj.id), "0"]
     except Exception, e:
         tools.exceptionRecord('update.py','updatePmExposure',e)
+        return [-1, "-1"]
+
+#update MedicineRegular Table
+def updateMedicineRegular(data):
+    try:
+        date= datetime.datetime.strptime("1970-07-30", "%Y-%m-%d").date()
+        if data['date'] != '':
+            date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+            print date
+        if data['id'] != "null":
+            obj = MedicineRegular.objects.get(id = int(data['id']))
+        else:
+            obj = MedicineRegular.objects.get(P_id = data['P_id'], date = date)
+        obj.regular = data['regular']
+        obj.save()
+        return [int(obj.id), "0"]
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMedicineRegular',e)
+        return [-1, "-1"]
+
+#update MedicineChange Table
+def updateMedicineChange(data):
+    try:
+        date= datetime.datetime.strptime("1970-07-30", "%Y-%m-%d").date()
+        if data['date'] != '':
+            date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+            print date
+        if data['id'] != "null":
+            obj = MedicineChange.objects.get(id = int(data['id']))
+        else:
+            obj = MedicineChange.objects.get(P_id = data['P_id'], date = date)
+        obj.ch = data['change']
+        obj.save()
+        return [int(obj.id), "0"]
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMedicineChange',e)
+        return [-1, "-1"]
+
+#update MedicineRecord Table
+def updateMedicineRecord(doc, id, sign):
+    try:
+        obj = MedicineRecord.objects.get(MC_id = id, sign = sign)
+        obj.doc = doc
+        return 0
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateMedicineRecord',e)
         return -1
+
+def updateAppInfo(data):
+    try:
+        date= datetime.datetime.strptime("1970-07-30", "%Y-%m-%d").date()
+        if data['date'] != '':
+            date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+            print date
+        if data['id'] != "null":
+            obj = AppInfo.objects.get(id = int(data['id']))
+        else:
+            obj = AppInfo.objects.get(P_id = data['P_id'], date = date)
+            # do nothing...
+        return [int(obj.id), "0"]
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateAppInfo',e)
+        return [-1, "-1"]
 
 #update TrackInfo Table
 def updateTrackInfo(data):
@@ -476,65 +546,6 @@ def updateTrackInfo(data):
     except Exception, e:
         tools.exceptionRecord('update.py','updateTrackInfo',e)
         return -1
-
-
-#update MedicineRegular Table
-def updateMedicineRegular(data):
-    try:
-        obj = MedicineRegular.objects.get(id = int(data['id']))
-        obj.P_id = data['P_id']
-        if data['date'] != '':
-            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        obj.regular = data['regular']
-        obj.save()
-        return int(data['id'])
-    except Exception, e:
-        tools.exceptionRecord('update.py','updateMedicineRegular',e)
-        return -1
-
-#update MedicineChange Table
-def updateMedicineChange(data):
-    try:
-        obj = MedicineChange.objects.get(id = int(data['id']))
-        obj.P_id = data['P_id']
-        if data['date'] != '':
-            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        obj.ch = data['change']
-        obj.save()
-        return int(data['id'])
-    except Exception, e:
-        tools.exceptionRecord('update.py','updateMedicineChange',e)
-        return -1
-
-#update MedicineRecord Table
-def updateMedicineRecord(data):
-    try:
-        obj = MedicineRecord.objects.get(id = int(data['id']))
-        obj.MC_id = data['MC_id']
-        if data['date'] != '':
-            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        obj.medicine = data['medicine']
-        obj.name = data['name']
-        obj.producer = data['producer']
-        obj.save()
-        return int(data['id'])
-    except Exception, e:
-        tools.exceptionRecord('update.py','updateMedicineRecord',e)
-        return -1
-
-def updateAppInfo(data):
-    id = -1
-    try:
-        obj = AppInfo.objects.get(id = int(data['id']))
-        if data['date'] != '':
-            obj.date= datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
-        # obj.P_id = data['P_id']
-        # obj.type = data['type']
-        return int(data['id'])
-    except Exception, e:
-        tools.exceptionRecord('update.py','updateAppInfo',e)
-        return -1
-
 
 def updateLungFunc(data):
     try:

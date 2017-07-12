@@ -17,6 +17,19 @@ import xlwt
 from django.utils.http import urlquote
 
 
+def AppLoginCheck():
+    def deco(func):
+        def wrapper(request):
+            if request.method == 'POST':
+                data = request.POST
+            else:
+                data = request.GET
+            if data['P_id'] =='':
+                js = json.dumps({'result': '-1', 'id': '-1'})
+                return HttpResponse(js)
+            return func(request,data)
+        return wrapper
+    return deco
 
 def PermissionCheck(function_type = 1):
     def deco(func):
@@ -778,177 +791,6 @@ def getPatientName(request,data,D_id):
     return HttpResponse(js)
 
 
-
-#APP interface 1
-@csrf_exempt
-def app_login(request):
-    if request.method == 'POST':
-        data = request.POST
-        print data
-        message = {}
-        message['result'] = select.patientLogin(data['P_id'],data['password'])
-        print message
-        return HttpResponse(json.dumps(message))
-
-
-#APP interface 2
-@csrf_exempt
-def app_addOrUpdateCATTable(request):
-    if request.method == 'POST':
-        data = request.POST
-        print data,"CATTTTTTTTTTTTTTTT"
-        message = {'result':'-1','id':'-1'}
-        if data['id'] == 'null':
-            message['id'] = insert.addCATandMRC(data)
-        else:
-            message['id'] = update.updateCATandMRC(data)
-        if message['id'] != -1:
-            message['result'] = '0'
-        print message
-        return HttpResponse(json.dumps(message))
-
-#APP interface 3
-@csrf_exempt
-def app_addOrUpdatePmExposureTable(request):
-    if request.method == 'POST':
-        data = request.POST
-        print data, "PMEEEEEEEEEEEEEE"
-        message = {'result': '-1', 'id': '-1'}
-        if data['id'] == 'null':
-            message['id'] = insert.addPmExposure(data)
-        else:
-            message['id'] = update.updatePmExposure(data)
-        if message['id'] != -1:
-            message['result'] = '0'
-        return HttpResponse(json.dumps(message))
-
-#APP interface 4
-@csrf_exempt
-def app_addTrackInfoTable(request):
-    if request.method == 'POST':
-        # data = request.POST
-        myFile = request.FILES["myfile"]
-        P_id = request.GET.get('P_id')
-        date = request.GET.get('date')
-        message = {'result': '-1'}
-        if insert.addTrackInfo(P_id, date, myFile):
-            message['result'] = '0'
-        return HttpResponse(json.dumps(message))
-
-
-#APP interface 5
-@csrf_exempt
-def app_addOrUpdateMedicineRegularTable(request):
-    if request.method == 'POST':
-        data = request.POST
-        message = {'result': '-1', 'id': '-1'}
-        if data['id'] == 'null':
-            message['id'] = insert.addMedicineRegular(data)
-        else:
-            message['id'] = update.updateMedicineRegular(data)
-        if message['id'] != -1:
-            message['result'] = '0'
-        return HttpResponse(json.dumps(message))
-
-
-#APP interface 6
-@csrf_exempt
-def app_addOrUpdateMedicineChangeTable(request):
-    if request.method == 'POST':
-        data = request.POST
-        message = {'result': '-1', 'id': '-1'}
-        if data['id'] == 'null':
-            message['id'] = insert.addMedicineChange(data)
-        else:
-            message['id'] = update.updateMedicineChange(data)
-        if message['id'] != -1:
-            message['result'] = '0'
-        return HttpResponse(json.dumps(message))
-
-#APP interface 7
-@csrf_exempt
-def app_addMedicineRecordTable(request):
-    if request.method == 'POST':
-        # data = request.POST
-        AI_id = request.GET.get('MC_id')
-        sign = request.GET.get('sign')
-        myFile = request.FILES['upload_file']
-        # date = request.GET.get('date')
-        message = {'result': '-1'}
-        message['result'] = insert.addMedicineRecord(myFile, AI_id, sign)
-        return HttpResponse(json.dumps(message))
-
-#APP interface 8
-@csrf_exempt
-def app_addOrUpdateAppInfo(request):
-    if request.method == 'POST':
-        data = request.POST
-        message = {'result': '-1', 'id': '-1'}
-        if data['id'] == 'null':
-            message['id'] = insert.addAppInfo(data)
-        else:
-            message['id'] = update.updateAppInfo(data)
-        if message['id'] != -1:
-            message['result'] = '0'
-        return HttpResponse(json.dumps(message))
-
-
-#APP interface 9
-@csrf_exempt
-def app_addAppAttachment(request):
-    if request.method == 'POST':
-        message = {'result': '-1'}
-        myFile = request.FILES['upload_file']
-        obj = select.getAppId(request.GET.get('AI_id'))
-        S_id = int(obj['S_id'])
-        type = obj['type']
-        date = obj['date']
-        P_id = obj['P_id']
-        D_id = 0
-        description = "from app"
-        if not myFile:
-            js = json.dumps(message)
-            return HttpResponse(js)
-        if insert.addAttachInfo2(P_id, D_id, S_id, description, myFile, type, date):
-            message['result'] = 0
-        js = json.dumps(message)
-        return HttpResponse(js)
-
-
-#APP interface 10
-@csrf_exempt
-def app_addMessageText(request):
-    if request.method == 'POST':
-        message = {'result': '-1'}
-        # data = {}
-        # data['P_id'] = request.GET.get("P_id")
-        # data['date'] = request.GET.get("date")
-        # data['content'] = request.GET.get("content")
-        data = request.POST
-        print data
-        # print urlquote(data['content']).decode("utf-8")
-        # print urlquote(data['content']).decode("gb2312")
-        print data,"app_addMessageText"
-        if insert.addMessageText(data):
-            message['result'] = 0
-        js = json.dumps(message)
-        return HttpResponse(js)
-
-#APP interface 11
-@csrf_exempt
-def app_addMessageAudio(request):
-    if request.method == 'POST':
-        message = {'result': '-1'}
-        doc = request.FILES['upload_file']
-        P_id = request.GET.get('P_id')
-        date = request.GET.get('date')
-        print P_id,date,'app_addMessageAudio'
-        if insert.addMessageAudio(date, P_id, doc):
-            message['result'] = 0
-        js = json.dumps(message)
-        return HttpResponse(js)
-
-
 # 接口43
 @login_required
 @csrf_exempt
@@ -1102,7 +944,7 @@ def getUserId(request):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(2)
+@PermissionCheck(3)
 def getOEHAll(request,data,D_id):
     message = select.getOEHAll(data['P_id'], data['para'])
     # print type(list(message))
@@ -1112,7 +954,7 @@ def getOEHAll(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getMedicineRecord(request,data,D_id):
     message = select.getMR(data['P_id'])
     js = json.dumps(message)
@@ -1131,7 +973,7 @@ def deleteMC(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getMedicineRegular(request,data,D_id):
     message = select.getMReg(data)
     js = json.dumps(message)
@@ -1140,7 +982,7 @@ def getMedicineRegular(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getAcuteExac(request,data,D_id):
     message = select.getAcuteExac(data)
     js = json.dumps(message)
@@ -1149,7 +991,7 @@ def getAcuteExac(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getMC_calendar(request,data,D_id):
     message = select.getMC_calendar(data)
     js = json.dumps(message)
@@ -1159,7 +1001,7 @@ def getMC_calendar(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getAI_calendar(request,data,D_id):
     message = {}
     message = select.getAI_calendar(data)
@@ -1170,7 +1012,7 @@ def getAI_calendar(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getAppInfo(request,data,D_id):
     message = select.getAppInfo(data)
     js = json.dumps(message)
@@ -1179,7 +1021,7 @@ def getAppInfo(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getMessage(request,data,D_id):
     message = select.getMessage(data)
     js = json.dumps(message)
@@ -1199,7 +1041,7 @@ def updateMessage(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getPatientAppInfoNum(request,data,D_id):
     message = {}
     message['result'] = select.getPatientAppInfo(data)
@@ -1209,7 +1051,7 @@ def getPatientAppInfoNum(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getTrackInfo(request,data,D_id):
     message = {}
     message['paths'], message['center'] = select.getTrackInfo(data)[0], select.getTrackInfo(data)[1]
@@ -1229,7 +1071,7 @@ def addDiseaseType(request,data,D_id):
 
 @login_required
 @csrf_exempt
-@PermissionCheck(1)
+@PermissionCheck(3)
 def getDiseaseType(request,data,D_id):
     message = []
     message = select.getDiseaseType(data)
@@ -1248,21 +1090,185 @@ def deleteDiseaseType(request,data,D_id):
     return HttpResponse(js)
 
 
+############### APP interfaces #################
+
+
+#APP interface 1
+@csrf_exempt
+def app_login(request):
+    if request.method == 'POST':
+        data = request.POST
+        print data
+        message = {}
+        message['result'] = select.patientLogin(data['P_id'],data['password'])
+        print message
+        return HttpResponse(json.dumps(message))
+
+
+#APP interface 2
+@csrf_exempt
+@AppLoginCheck()
+def app_addOrUpdateCATTable(request, data):
+    # print data,"CATTTTTTTTTTTTTTTT"
+    message = {'result':'-1','id':'-1'}
+    if select.checkRecordExistForApp(data, "CATandMRC"):
+        result = update.updateCATandMRC(data)
+    else:
+        result = insert.addCATandMRC(data)
+    message['id'] = result[0]
+    message['result'] = result[1]
+    print message
+    return HttpResponse(json.dumps(message))
+
+#APP interface 3
+@csrf_exempt
+@AppLoginCheck()
+def app_addOrUpdatePmExposureTable(request, data):
+    print data, "PMEEEEEEEEEEEEEE"
+    message = {'result': '-1', 'id': '-1'}
+    if select.checkRecordExistForApp(data, "PmExposure"):
+        result = update.updatePmExposure(data)
+    else:
+        result = insert.addPmExposure(data)
+    message['id'] = result[0]
+    message['result'] = result[1]
+    print message
+    return HttpResponse(json.dumps(message))
+
+#APP interface 5
+@csrf_exempt
+@AppLoginCheck()
+def app_addOrUpdateMedicineRegularTable(request, data):
+    message = {'result': '-1', 'id': '-1'}
+    if select.checkRecordExistForApp(data, "MedicineRegular"):
+        result = update.updateMedicineRegular(data)
+    else:
+        result = insert.addMedicineRegular(data)
+
+    message['id'] = result[0]
+    message['result'] = result[1]
+    print message
+    return HttpResponse(json.dumps(message))
+
+
+#APP interface 6
+@csrf_exempt
+@AppLoginCheck()
+def app_addOrUpdateMedicineChangeTable(request, data):
+    message = {'result': '-1', 'id': '-1'}
+    if select.checkRecordExistForApp(data, "MedicineChange"):
+        result = update.updateMedicineChange(data)
+    else:
+        result = insert.addMedicineChange(data)
+    message['id'] = result[0]
+    message['result'] = result[1]
+    print message
+    return HttpResponse(json.dumps(message))
+
+#APP interface 7 ######do not upload P_id
+@csrf_exempt
+def app_addMedicineRecordTable(request):
+    if request.method == 'POST':
+        # data = request.POST
+        MC_id = request.GET.get('MC_id')
+        sign = request.GET.get('sign')
+        myFile = request.FILES['upload_file']
+        # date = request.GET.get('date')
+        message = {'result': '-1'}
+        if select.checkMedicineRecordExist(MC_id, sign):
+            message['result'] = update.updateMedicineRecord(myFile, MC_id, sign)
+        else:
+            message['result'] = insert.addMedicineRecord(myFile, MC_id, sign)
+        return HttpResponse(json.dumps(message))
+
+#APP interface 8
+@csrf_exempt
+@AppLoginCheck()
+def app_addOrUpdateAppInfo(request, data):
+    message = {'result': '-1', 'id': '-1'}
+    if select.checkRecordExistForApp(data, "AppInfo"):
+        result = update.updateAppInfo(data)
+    else:
+        result = insert.addAppInfo(data)
+
+    message['id'] = result[0]
+    message['result'] = result[1]
+    print message
+    return HttpResponse(json.dumps(message))
+
+
+#APP interface 4
+@csrf_exempt
+@AppLoginCheck()
+def app_addTrackInfoTable(request, data):
+    if request.method == 'POST':
+        # data = request.POST
+        myFile = request.FILES["myfile"]
+        P_id = request.GET.get('P_id')
+        date = request.GET.get('date')
+        message = {'result': '-1'}
+        if insert.addTrackInfo(P_id, date, myFile):
+            message['result'] = '0'
+        return HttpResponse(json.dumps(message))
+
+
+#APP interface 9
+@csrf_exempt
+def app_addAppAttachment(request):
+    if request.method == 'POST':
+        message = {'result': '-1'}
+        myFile = request.FILES['upload_file']
+        obj = select.getAppId(request.GET.get('AI_id'))
+        S_id = int(obj['S_id'])
+        type = obj['type']
+        date = obj['date']
+        P_id = obj['P_id']
+        D_id = 0
+        description = "from app"
+        if not myFile:
+            js = json.dumps(message)
+            return HttpResponse(js)
+        if insert.addAttachInfo2(P_id, D_id, S_id, description, myFile, type, date):
+            message['result'] = 0
+        js = json.dumps(message)
+        return HttpResponse(js)
+
+
+#APP interface 10
+@csrf_exempt
+def app_addMessageText(request):
+    if request.method == 'POST':
+        message = {'result': '-1'}
+        data = request.POST
+        if insert.addMessageText(data):
+            message['result'] = 0
+        js = json.dumps(message)
+        return HttpResponse(js)
+
+#APP interface 11
+@csrf_exempt
+def app_addMessageAudio(request):
+    if request.method == 'POST':
+        message = {'result': '-1'}
+        doc = request.FILES['upload_file']
+        P_id = request.GET.get('P_id')
+        date = request.GET.get('date')
+        print P_id,date,'app_addMessageAudio'
+        if insert.addMessageAudio(date, P_id, doc):
+            message['result'] = 0
+        js = json.dumps(message)
+        return HttpResponse(js)
+
+
 @csrf_exempt
 def appVersion(request):
     # do something...
     message = {}
-    message['result'] = "1.1"
+    message['result'] = "1.0"
     js = json.dumps(message)
     print js
     return HttpResponse(js)
 
-# @csrf_exempt
-# def appUpdate(request):
-#     # do something...
-#     with open('./media/TrackInfo/temp.txt') as f:
-#         c = f.read()
-#     return HttpResponse(c)
 
 @csrf_exempt
 def appUpdate(request):
