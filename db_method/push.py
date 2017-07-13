@@ -3,7 +3,7 @@ import jpush
 from jpush import common
 
 P_id = "110000000091"
-MESSAGE = u"你好as!!!"
+MESSAGE = u"你好!!!"
 def a():
     TAG = P_id
     app_key = "8f1da9d68218066965ad2157"
