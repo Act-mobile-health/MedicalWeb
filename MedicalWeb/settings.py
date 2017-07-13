@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'Website',
     'corsheaders',
     'django_crontab',
+    'django_extensions',
 ]
 
 CRONJOBS = (

@@ -510,6 +510,7 @@ def updateMedicineRecord(doc, id, sign):
     try:
         obj = MedicineRecord.objects.get(MC_id = id, sign = sign)
         obj.doc = doc
+        obj.save()
         return 0
     except Exception, e:
         tools.exceptionRecord('update.py','updateMedicineRecord',e)
