@@ -1,4 +1,4 @@
-(function( $ ) {
+function calendar(){
 
 	'use strict';
 
@@ -30,11 +30,110 @@
 		var d = date.getDate();
 		var m = date.getMonth();
 		var y = date.getFullYear();
+		var event = [];
+		$.ajax({
+		    url:"/i94/",
+		    type:"GET",
+		    data:{P_id:patientId},
+		    dataType:"json",
+            async: false,
+            success:function(json_data){
+//                console.log(json_data);
+                $.each(json_data,function (index,item) {
+                var mess = new Array();
+                    mess['title'] = preHead(item.regular)+"规律用药";
+					mess['start'] = item.date;
+					mess['allDay'] = true;
+					mess['className'] = color(item.regular, 0);
+				event.push(mess);
+//				console.log(event);
+
+                });
+            },
+            error: function(json_data){
+                errorProcess(json_data);
+            }
+		});
+
+		$.ajax({
+		    url:"/i95/",
+		    type:"GET",
+		    data:{P_id:patientId},
+		    dataType:"json",
+            async: false,
+            success:function(json_data){
+//                console.log(json_data);
+                $.each(json_data,function (index,item) {
+                var mess = new Array();
+                    mess['title'] = preHead(item.acuteExac)+"急性加重";
+					mess['start'] = item.date;
+					mess['allDay'] = true;
+					mess['className'] = color(item.acuteExac,1);
+				event.push(mess);
+
+                });
+            },
+            error: function(json_data){
+                errorProcess(json_data);
+            }
+		});
+
+		$.ajax({
+		    url:"/i99/",
+		    type:"GET",
+		    data:{P_id:patientId},
+		    dataType:"json",
+            async: false,
+            success:function(json_data){
+//                console.log(json_data);
+                $.each(json_data,function (index,item) {
+                var mess = new Array();
+                    mess['title'] = str4MC(item.ch);
+					mess['start'] = item.date;
+					mess['allDay'] = true;
+					mess['className'] = "fc-event-warning";
+				event.push(mess);
+//				console.log(event);
+
+                });
+            },
+            error: function(json_data){
+                errorProcess(json_data);
+            }
+		});
+
+		$.ajax({
+		    url:"/i102/",
+		    type:"GET",
+		    data:{P_id:patientId},
+		    dataType:"json",
+            async: false,
+            success:function(json_data){
+//                console.log(json_data);
+                $.each(json_data,function (index,item) {
+                    var mess = new Array();
+//                    console.log(item,item['type'])
+//                    console.log(item.type);
+//                    console.log(str4AI("0"))
+                    mess['title'] = str4AI(item.type);
+					mess['start'] = item.date;
+					mess['allDay'] = true;
+					mess['className'] = "fc-event-info";
+				    event.push(mess);
+//				console.log(event);
+
+                });
+            },
+            error: function(json_data){
+                errorProcess(json_data);
+            }
+		});
+
 
 		$calendar.fullCalendar({
 			header: {
 				left: 'title',
-				right: 'prev,today,next,basicDay,basicWeek,month'
+				right: 'prev,today,next,basicWeek,month'
 			},
 
 			timeFormat: 'h:mm',
@@ -70,53 +169,54 @@
 				}
 
 			},
-			events: [
-				{
-					title: 'All Day Event',
-					start: new Date(y, m, 5)
-				},
-				{
-					title: 'Long Event',
-					start: new Date(y, m, d-6),
-					end: new Date(y, m, d-1)
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d-4, 17, 0),
-					allDay: false
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d+10, 16, 0),
-					allDay: false
-				},
-				{
-					title: 'Meeting',
-					start: new Date(y, m, d, 9, 29),
-					allDay: false
-				},
-				{
-					title: 'Lunch',
-					start: new Date(y, m, d, 11, 0),
-					end: new Date(y, m, d, 13, 0),
-					allDay: false,
-					className: 'fc-event-danger'
-				},
-				{
-					title: 'Birthday Party',
-					start: new Date(y, m, d+2, 20, 0),
-					end: new Date(y, m, d+2, 23, 30),
-					allDay: false
-				},
-				{
-					title: 'Click for Google',
-					start: new Date(y, m, 27),
-					end: new Date(y, m, 28),
-					url: 'http://google.com/'
-				}
-			]
+			events: event
+//[
+//				{
+//					title: 'All Day Event',
+//					start: new Date(y, m, 5)
+//				},
+//				{
+//					title: 'Long Event',
+//					start: new Date(y, m, d-6),
+//					end: new Date(y, m, d-1)
+//				},
+//				{
+//					id: 999,
+//					title: 'Repeating Event',
+//					start: new Date(y, m, d-4, 17, 0),
+//					allDay: false
+//				},
+//				{
+//					id: 999,
+//					title: 'Repeating Event',
+//					start: new Date(y, m, d+10, 16, 0),
+//					allDay: false
+//				},
+//				{
+//					title: 'Meeting',
+//					start: new Date(y, m, d, 9, 29),
+//					allDay: false
+//				},
+//				{
+//					title: 'Lunch',
+//					start: new Date(y, m, d, 11, 0),
+//					end: new Date(y, m, d, 13, 0),
+//					allDay: false,
+//					className: 'fc-event-danger'
+//				},
+//				{
+//					title: 'Birthday Party',
+//					start: new Date(y, m, d+2, 20, 0),
+//					end: new Date(y, m, d+2, 23, 30),
+//					allDay: false
+//				},
+//				{
+//					title: 'Click for Google',
+//					start: new Date(y, m, 27),
+//					end: new Date(y, m, 28),
+//					url: 'http://google.com/'
+//				}
+//			]
 		});
 
 		// FIX INPUTS TO BOOTSTRAP VERSIONS
@@ -139,5 +239,52 @@
 		initCalendar();
 		initCalendarDragNDrop();
 	});
+}
 
-}).apply(this, [ jQuery ]);
+function color(input, sign){
+    if(sign == 0){
+        if(input=="0"){
+            return "fc-event-danger";
+        }
+        else{
+            return "fc-event-success";
+        }
+    }
+    else{
+        if(input=="1"){
+            return "fc-event-danger";
+        }
+        else{
+            return "fc-event-success";
+        }
+    }
+}
+function preHead(input){
+    if(input=="1"){
+        return "今日";
+    }
+    else{
+        return "今日未";
+    }
+}
+// info success warning primary
+function str4MC(input){
+    if(input=="1"){
+        return "今日换药";
+    }
+    else if(input=="2"){
+        return "今日停用药";
+    }
+}
+
+function str4AI(input){
+    if(input=="0"){
+        return "今日有新的门诊记录";
+    }
+    else if(input=="1"){
+        return "今日有新的急诊记录";
+    }
+    else if(input=="2"){
+        return "今日有新的住院记录";
+    }
+}

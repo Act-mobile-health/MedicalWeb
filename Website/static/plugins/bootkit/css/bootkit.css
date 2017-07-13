@@ -1,3 +1,13 @@
+/*
+:root{
+    --panel-head:#2d6f53 !important;
+}
+*/
+
+:root{
+    --panel-head:#34495E !important;
+}
+
 .bk-round {
   border-radius: 50% !important;
 }
@@ -480,7 +490,7 @@ a:not(.btn).bk-bg-very-light-gray.bk-bg-lighten:hover {
   background-color: #dddddd;
 }
 .bk-bg-primary {
-  background-color: #34495E !important;
+  background-color: var(--panel-head);/*#34495E !important;*/
   color: #ffffff;
 }
 .bk-bg-primary.bk-bg-darken a:not(.btn) {

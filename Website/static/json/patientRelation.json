@@ -1,0 +1,6 @@
+[
+  {"R_id":"12312","name":"name","sex":"1","telephone":"12345678912","cellphone":"12345678912",
+    "weChat":"125575663","mail":"11111@qq.com","homeAddr":"海淀"},
+  {"R_id":"12322","name":"wangcai","sex":"2","telephone":"98765432198","cellphone":"45612317892",
+  "weChat":"9764312","mail":"33333@qq.com","homeAddr":"朝阳"}
+]
