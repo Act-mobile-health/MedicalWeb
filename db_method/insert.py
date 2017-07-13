@@ -60,7 +60,10 @@ def addPatientToExpGroup(G_id, data):
 def addPatientInfo(data):
     try:
         if data['birthday'] != '':
-            d = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
+            if  type(data['birthday'])!= type(datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()):
+                d = datetime.datetime.strptime(data['birthday'], "%Y-%m-%d").date()
+            else:
+                d = data['birthday']
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         if data['age']=='':
@@ -338,7 +341,10 @@ def addCATandMRC(data):
     id = -1
     try:
         if data['date'] != '':
-            d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+            if  type(data['date'])!= type(datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()):
+                d = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
+            else:
+                d = data['date']
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
         newObj = CATandMRC(P_id = data['P_id'], date = d, cat1 = data['cat1'], cat2 = data['cat2'], cat3 = data['cat3'],
