@@ -3105,7 +3105,7 @@ position: relative;
 box-shadow: none;
 -moz-box-shadow: none;
 -webkit-box-shadow: none; 
-line-height: 47px; 
+/*line-height: 47px;*/
 }
 .panel .panel-heading .panel-title {
 line-height: 45px;
@@ -3128,6 +3128,8 @@ height: 40px;
 font-size: 0;
 }
 .panel .panel-heading .panel-actions i {
+/*add by zyc*/
+vertical-align: super;
 display: inline-block;
 text-align: center;
 width: 34px;
@@ -4365,7 +4367,7 @@ margin-bottom: 20px !important;
           display: inline-block;
           margin-right: 10px; }
       .timeline .timeline-row .timeline-icon {
-        top: 52px;
+        top: 35px;
         left: -2px;
         margin-left: 0; }
       .timeline .timeline-row .timeline-content {

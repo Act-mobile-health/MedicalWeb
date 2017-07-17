@@ -1004,8 +1004,8 @@ def getOEHAll(P_id, para):
         newAdded = AppInfo.objects.filter(P_id = P_id, sign = "1").values("S_id", "type")
         temp = list(newAdded)
         # print q
-        q = sorted(q, key=lambda q:q['date'])
-        # print q
+        q = sorted(q, key=lambda q:q['date'], reverse=True) # descending
+        print q
         for a in q:
             a['date'] = str(a['date'])
             a['date_upload'] = str(a['date_upload'])

@@ -93,6 +93,10 @@ html, body {
 	font-size: 12px;
 }
 
+.amap-controls, .amap-toolbar, .amap-copyright, .amap-logo, .amap-scalecontrol{
+    z-index : 2 !important;
+}
+
 #myPageTop {
 	position: absolute;
 	top: 5px;

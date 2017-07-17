@@ -402,7 +402,7 @@ function forWizard_ecDate(){
     temp_index = temp_index.toString();
     var  str = "";
      str     = '<div class="col-lg-12">'+
-			   '<div class="panel bk-bg-white">'+
+			   '<div class="panel bk-bg-white" style="margin-bottom:2px;">'+
 			   '<div class="panel-heading bk-bg-primary" '+str_color+'>'+
 			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+temp_index+"  ( 上传于"+date+" )"+'</h6>'+
 			   '<div class="panel-actions" style="display:block;">'+
@@ -1287,6 +1287,7 @@ function forWizard_ecDate(){
         type = parseInt(type_t);
         type_now = type;
         S_id = [];
+        show_num = 6;
         var color = "black";
         $("#follow_up").empty();
         temp = document.getElementById("follow_up");
@@ -1298,7 +1299,7 @@ function forWizard_ecDate(){
             success:function (json_data) {
                 $.each(json_data,function (index,item){
                     if(item.sign == "1"){
-                        new_str = "(未处理！)";
+                        new_str = " (注意：此条记录尚未处理！)";
 //                        color = "#e63b3b";
                     }
                     else{
@@ -1307,7 +1308,7 @@ function forWizard_ecDate(){
                     }
                     console.log(item)
                     S_id.push(item.id);
-                    if(index<3){
+                    if(index<show_num){
                         tt = "active";
 //                        console.log(tt);
                     }
@@ -1315,13 +1316,14 @@ function forWizard_ecDate(){
                         tt ="";
                     }
                     temp.innerHTML = temp.innerHTML+'<div class="timeline-row  '+tt+'">'+
-                    '<div class="timeline-time" style="color:'+color+'"><small style="color:black;">'+item['date']+'</small>'+item['place']+new_str+'</div>'+
+                    '<div class="timeline-time" style="color:'+color+'"><small style="color:black;">'+ "就诊日期： " +item['date']+" 就诊医院： "+item['place']+new_str+'</small>'+'</div>'+
                     '<div class="timeline-icon">'+
                     '<div class="'+colorForOEH(type_t)+'"><i class="'+iconForOEH(type_t)+'"></i></div>'+
                     '</div>'+
-                    '<div class="panel timeline-content">'+
-                    '<div class="panel-body">'+
-                    GenerateTab1(index, type, item['date_upload'], item.sign)+GenerateTab2(index, type)+GenerateTab3(index, type)+GenerateTab4(index, type)+
+                    '<div class="panel timeline-content" style="margin-bottom:10px;">'+
+                    '<div class="panel-body" style="padding-top:5px;">'+
+                    GenerateTab1(index, type, item['date_upload'], item.sign)+GenerateTab2(index, type)+
+                    GenerateTab3(index, type)+GenerateTab4(index, type)+
                     '</div>'+
                     '</div>'+
                     '</div>';
@@ -1337,7 +1339,7 @@ function forWizard_ecDate(){
 
     function showAll(temp_new_sign){
         type_now = 4;
-        show_num = 3;
+        show_num = 6;
         S_id = [];
         var indexForZero = 0;
         var color = "black";
@@ -1352,7 +1354,7 @@ function forWizard_ecDate(){
             success:function (json_data) {
                 $.each(json_data,function (index,item){
                     if(item.sign == "1"){
-                        new_str = "(未处理！)";
+                        new_str = " (注意：此条记录尚未处理！)";
 //                        color = "#e63b3b";
                     }
                     else{
@@ -1374,12 +1376,12 @@ function forWizard_ecDate(){
                         tt ="";
                     }
                     temp.innerHTML = temp.innerHTML+'<div class="timeline-row  '+tt+'">'+
-                    '<div class="timeline-time" style="color:'+color+'"><small style="color:black;">'+item['date']+'</small>'+item['place']+new_str+'</div>'+
+                    '<div class="timeline-time" style="color:'+color+'"><small style="color:black;">'+ "就诊日期： " +item['date']+" 就诊医院： "+item['place']+new_str+'</small>'+'</div>'+
                     '<div class="timeline-icon">'+
                     '<div class="'+colorForOEH(item['type'])+'"><i class="'+iconForOEH(item['type'])+'"></i></div>'+
                     '</div>'+
-                    '<div class="panel timeline-content">'+
-                    '<div class="panel-body">'+
+                    '<div class="panel timeline-content" style="margin-bottom:10px;">'+
+                    '<div class="panel-body" style="padding-top:5px;">'+
                     GenerateTab1(index-indexForZero, type, item['date_upload'], item.sign)+GenerateTab2(index-indexForZero, type)+
                     GenerateTab3(index-indexForZero, type)+GenerateTab4(index-indexForZero, type)+
                     '</div>'+
