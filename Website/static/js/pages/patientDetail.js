@@ -406,12 +406,12 @@ function forWizard_ecDate(){
 			   '<div class="panel-heading bk-bg-primary" '+str_color+'>'+
 			   '<h6><i class="fa fa-tags red "></i>'+temp_name+'记录'+temp_index+"  ( 上传于"+date+" )"+'</h6>'+
 			   '<div class="panel-actions" style="display:block;">'+
-				'<a onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>'+
+				'<a onclick="updown($(this))"><i class="fa fa-chevron-down"></i></a>'+
 //                '<a data-toggle="modal" onclick = "editInfo('+index+','+type+')" href="#'+str_edit+'"><i class="fa fa-edit"></i></a>'+
 				'<a onclick = "deleteInfo('+index+','+type+')" class="btn-close"><i class="fa fa-times"></i></a>'+
 				'</div>'+
 				'</div>'+
-				'<div class="panel-body">'+
+				'<div class="panel-body" style="display:none">'+
 				'<div id="'+str_type+'-tab'+'" class="wizard-type1">'+
 				'<ul class="steps nav nav-pills">'+
 				'<li><a href="#'+str_type+'-tab1" onclick = "'+temp_show+'('+index+')" data-toggle="tab"><span class="badge badge-info"><i class="fa fa-star"></i></span> 详细信息</a></li>'+
@@ -1287,7 +1287,7 @@ function forWizard_ecDate(){
         type = parseInt(type_t);
         type_now = type;
         S_id = [];
-        show_num = 6;
+        show_num = 8;
         var color = "black";
         $("#follow_up").empty();
         temp = document.getElementById("follow_up");
@@ -1339,7 +1339,7 @@ function forWizard_ecDate(){
 
     function showAll(temp_new_sign){
         type_now = 4;
-        show_num = 6;
+        show_num = 8;
         S_id = [];
         var indexForZero = 0;
         var color = "black";

@@ -5,9 +5,16 @@
         if (r != null) return unescape(r[2].replace("/","")); return null;
     }
   })(jQuery);
+
+ var id = 0;
+ var P_id = "";
+ var type = "";
 $(document).ready(function(){
     showAppInfo();
     showMessage();
+    $("#replybt").click(function(){
+        submitReplyMessage(id,type,P_id);
+    })
     var temp = $.getUrlParam("now");
     console.log(temp);
     setTimeout(function(){
@@ -26,7 +33,7 @@ function showAppInfo(){
         dataType:"json",
         success: function(json_data){
             $.each(json_data,function(index,item){
-console.log(item)
+//console.log(item)
                 $("#appInfo tbody").append(
                 "<tr>"+
                 "<td style=\"text-align:center;\">"+item.P_id+"</td>"+
@@ -54,18 +61,15 @@ function showMessage(){
         dataType:"json",
         success: function(json_data){
             $.each(json_data, function(index, item){
-                var str_temp = "onclick =\"messageProcessed("+item.id+","+item.type+")\"" + 'href = \"\"';
-                if(item.sign=="0"){
-                    str_temp = ""
-                }
+                var str_temp = "onclick =\"messageProcessed("+item.id+","+item.type+",'"+item.P_id+"')\"";
                 $("#message tbody").append(
                 "<tr>"+
                 "<td style=\"text-align:center;\">"+item.P_id+"</td>"+
                 "<td style=\"text-align:center;\">"+patientNameParse(item.P_id)+"</td>"+
-                "<td style=\"text-align:center;\">"+item.date_upload+"</td>"+
+//                "<td style=\"text-align:center;\">"+item.date_upload+"</td>"+
                 "<td style=\"text-align:center;\">"+item.date+"</td>"+
                 "<td style=\"text-align:center;\">"+parseMessage(item.id, item.type, item.content)+"</td>"+
-                "<td style=\"text-align:center;\"><a "+str_temp+" style=\"color:"+
+                "<td style=\"text-align:center;\"><a data-toggle=\"modal\" href=\"#MessageReplyDetails\" "+str_temp+" style=\"color:"+
                 parseSignColor(item.sign)+"\"><u>"+parseSign(item.sign)+"</u></a></td>"+
                 "</tr>");
             });
@@ -76,22 +80,33 @@ function showMessage(){
     });
 }
 
-function messageProcessed(id, type){
-    if(confirm("确定已经处理过该留言？")){
-        $.ajax({
-            type:"GET",
+
+function messageProcessed(id_t, type_t, P_id_t){
+console.log(P_id_t)
+    id = id_t;
+    type = type_t;
+    P_id = P_id_t;
+    console.log(P_id)
+}
+
+function submitReplyMessage(id,type,P_id){
+console.log(id,type,P_id)
+    $.ajax({
+            type:"POST",
             url:"/i98/",
-            data:{id: id, type:type},
+            data:$("#MessageReply").serialize()+"&P_id="+P_id+"&id="+id+"&type="+type,
             dataType:"json",
+            async: false,
             success: function(json_data){
                 console.log(json_data);
                 successProcess(json_data);
             },
             error: function(json_data){
+            console.log(P_id)
                 errorProcess(json_data);
             }
-        })
-    }
+        });
+        showMessage();
 }
 
 function audioBegin(dir){
@@ -122,7 +137,7 @@ function parseSign(input){
         return "未处理";
     }
     else{
-        return "已处理";
+        return "已回复";
     }
 }
 

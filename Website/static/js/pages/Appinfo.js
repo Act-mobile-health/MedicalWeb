@@ -22,7 +22,7 @@ function showAPP(){
         dataType:"json",
         async: false,
         success:function (json_data) {
-            for(i=1;i<16;i++){
+            for(i=1;i<Object.keys(json_data[0]).length;i++){
                 x[i-1] = json_data[0][i.toString()]
                 y[i-1] = -1;
                 z[i-1] = -1;
@@ -49,7 +49,8 @@ function showAPP(){
         dataType:"json",
         async: false,
         success:function (json_data) {
-            for(i=1;i<16;i++){
+        console.log(Object.keys(json_data[0]).length)
+            for(i=1;i<Object.keys(json_data[0]).length;i++){
                 x_pm[i-1] = json_data[0][i.toString()]
                 y_pm[i-1] = -1;
             }

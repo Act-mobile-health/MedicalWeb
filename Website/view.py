@@ -15,7 +15,7 @@ import datetime, random
 from django import forms
 import xlwt
 from django.utils.http import urlquote
-
+from db_method import push
 
 def AppLoginCheck():
     def deco(func):
@@ -1031,11 +1031,13 @@ def getMessage(request,data,D_id):
 @login_required
 @csrf_exempt
 @PermissionCheck(3)
-def updateMessage(request,data,D_id):
+def replyMessage(request,data,D_id):
+    print data
     message = {"result":"-1"}
-    if(update.updateMessage(data)):
+    if(update.replyMessage(data)):
         message = {"result":"0"}
     js = json.dumps(message)
+    push.reply(data['P_id'],data['message'])
     # print js,"$$$$$$$"
     return HttpResponse(js)
 
@@ -1088,6 +1090,7 @@ def deleteDiseaseType(request,data,D_id):
     js = json.dumps(message)
     print js
     return HttpResponse(js)
+
 
 
 ############### APP interfaces #################
@@ -1286,3 +1289,4 @@ def appUpdate(request):
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
     return response
+

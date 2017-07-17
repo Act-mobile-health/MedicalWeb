@@ -8,6 +8,7 @@ from operator import attrgetter
 from itertools import chain
 from django.db.models import Q
 import json
+from django.utils.timezone import now, timedelta
 
 
 # 用户名/邮箱/手机号 重复性检验
@@ -219,6 +220,7 @@ def getPatientsBasicInfo():
             message['o_time'] = time.o_time
             message['e_time'] = time.e_time
             message['h_time'] = time.h_time
+            message['percent'] = str(checkForInfoCompPercent(message['P_id']))
             list.append(message)
     except Exception, e:
         tools.exceptionRecord('select.py','getPatientsBasicInfo',e)
@@ -769,14 +771,14 @@ def getOneDetailedAccessoryExamination(AE_id):
 # get the message of a patient for the last 2 weeks
 # type = 1 is CAT and MRC sum, type = 2 is explosure
 def getMsg2Weeks(P_id, type):
-    from django.utils.timezone import now, timedelta
     end = now().date()
+    num = 2
     # end = datetime.datetime.strptime('2017-05-16', "%Y-%m-%d").date()
-    start = end - timedelta(weeks=2)
+    start = end - timedelta(weeks=num)
     temp = {}
     message =[]
     message.append(temp)
-    for i in xrange(15):
+    for i in xrange(num*7 + 1):
         temp[str(i+1)] = str(start + timedelta(days=i))[5:10].replace("-","")
     try:
         if type == 1:
@@ -1259,3 +1261,16 @@ def checkMedicineRecordExist(id, sign):
         tools.exceptionRecord('select.py', 'checkRecordExistForApp', e)
         return False
 
+
+def checkForInfoCompPercent(P_id):
+    try:
+        end = now().date()
+        start = end - timedelta(days=30)
+        cat = CATandMRC.objects.filter(date__gte=start, P_id=P_id).values()
+        medicineRegular = MedicineRegular.objects.filter(date__gte=start, P_id=P_id).values()
+        sum = len(cat) + len(medicineRegular)
+        percent = sum/60.0 * 100
+        return float('%.2f' % percent)
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'checkForInfoCompPercent', e)
+        return 0

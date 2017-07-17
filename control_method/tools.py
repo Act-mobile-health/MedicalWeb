@@ -10,7 +10,7 @@ def forCheckbox(data, attr, sign=0):
     if sign == 1:
         temp = data
     else:
-        temp = dict(data.iterlists())
+        temp = dict(data.iterlists()) # for list of the checkbox
     json_data = temp[attr]
     # print json_data
     tempstr = ''
@@ -73,10 +73,6 @@ def toString(message):
             if type(i) != str:
                 message[i] = str(message[i])
     return message
-
-
-
-
 
 def getFields():
     keys=[]
@@ -215,7 +211,7 @@ def WordToPinyin(data):
 
 def existCheck(names, data):
     data_out = {}
-    temp = dict(data.iterlists())
+    temp = dict(data.iterlists()) # for list of the checkbox
     # print temp,type(temp),"aaaa",temp['symptom']
     for a in names:
         if a not in temp:
