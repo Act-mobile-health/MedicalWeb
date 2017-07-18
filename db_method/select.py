@@ -1035,7 +1035,7 @@ def getMR(P_id):
                 mr = MedicineRecord.objects.filter(MC_id=v['MC_id']).values("sign","doc")
                 v['info'] = list(mr)
                 new.append(v)
-        # print new
+        print new
 
         return new
      except Exception, e:

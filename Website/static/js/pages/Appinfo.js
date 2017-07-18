@@ -238,7 +238,10 @@ function showAPP(){
     myChart3.setOption(option_pm);
 }
 function showMR(){
-    var before,after;
+    var before = "";
+    var after = "";
+    var str_before = "";
+    var str_after = "";
     var lamb = 1;
     $("#medicineChange tbody").empty();
 //    $("#medicineChange thead").empty();
@@ -272,21 +275,37 @@ function showMR(){
 //                    '</tr>');
 //                    lamb = 0;
 //                }
+                if(before!=""){
+                    str_before = '<td><a class="pics" data-toggle="modal" href="#imageDetails" onclick="showAorAEImage(\''+before+'\')">'+
+                        '<img class="thumb" src="/media/'+before+'" width="75px" height="75px"/>'+
+						'<span><img src="/media/'+before+'" width="800px" height="570px" title="换药前"/></span></a></td>';
+                }
+                else{
+                    str_before = "<td style='vertical-align:middle;color:black;'>未上传</td>";
+                }
+                if(after!=""){
+                    str_after = '<td><a class="pics" data-toggle="modal" href="#imageDetails" onclick="showAorAEImage(\''+after+'\')">'+
+                        '<img class="thumb" src="/media/'+after+'" width="75px" height="75px"/>'+
+						'<span><img src="/media/'+after+'" width="800px" height="570px" title="换药后"/></span></a></td>';
+                }
+                else{
+                    str_after = "<td style='vertical-align:middle;color:black;'>未上传</td>";
+                }
+                console.log(before, after);
+                console.log(str_after,str_before)
                 $("#medicineChange tbody").append(
                     "<tr>"+
                         "<td style='vertical-align:middle;color:black;'>"+item.date.replace("-","").replace("-","")+"</td>"+
 //                        "<td>"+patientId+"</td>"+
-                        '<td><a class="pics" data-toggle="modal" href="#imageDetails" onclick="showAorAEImage(\''+before+'\')">'+
-                        '<img class="thumb" src="/media/'+before+'" width="75px" height="75px"/>'+
-						'<span><img src="/media/'+before+'" width="800px" height="570px" title="换药前"/></span></a>'+
-                        '<td><a class="pics" data-toggle="modal" href="#imageDetails" onclick="showAorAEImage(\''+after+'\')">'+
-                        '<img class="thumb" src="/media/'+after+'" width="75px" height="75px"/>'+
-						'<span><img src="/media/'+after+'" width="800px" height="570px" title="换药后"/></span></a>'+
+                        str_before+
+                        str_after+
+                    "</tr>"
 //                        "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+before+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
 //                        "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+after+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
 //                        '<td><a  data-toggle="modal" href="#" onclick="deleteMC('+item.id+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
-                    "</tr>"
-                )
+                );
+                before = "";
+                after = "";
             });
         },
         error:function(data){
