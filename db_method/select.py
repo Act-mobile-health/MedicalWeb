@@ -1024,6 +1024,7 @@ def getMR(P_id):
      try:
         values = MedicineChange.objects.filter(P_id=P_id).values("MC_id","date","ch","id")
         temp = list(values)
+        temp = sorted(temp, key=lambda temp:temp['date'], reverse=True)
         print  temp
         new = []
         # print type(temp)
