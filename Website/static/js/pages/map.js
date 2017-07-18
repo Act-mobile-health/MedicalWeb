@@ -15,8 +15,8 @@ function showMap() {
         dataType:"json",
         async: false,
         success:function (json_data) {
-//            paths = json_data['paths']
-//            center_all = json_data['center']
+            paths = json_data['paths']
+            center_all = json_data['center']
         },
         error:function(json_data){
         console.log(json_data)

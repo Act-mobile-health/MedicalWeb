@@ -1056,7 +1056,8 @@ def getPatientAppInfoNum(request,data,D_id):
 @PermissionCheck(3)
 def getTrackInfo(request,data,D_id):
     message = {}
-    message['paths'], message['center'] = select.getTrackInfo(data)[0], select.getTrackInfo(data)[1]
+    temp = select.getTrackInfo(data)
+    message['paths'], message['center'] = temp[0], temp[1]
     js = json.dumps(message)
     return HttpResponse(js)
 
@@ -1179,9 +1180,10 @@ def app_addMedicineRecordTable(request):
         # date = request.GET.get('date')
         message = {'result': '-1'}
         if select.checkMedicineRecordExist(MC_id, sign):
-            message['result'] = update.updateMedicineRecord(myFile, MC_id, sign)
+            message['result'] = str(update.updateMedicineRecord(myFile, MC_id, sign))
         else:
-            message['result'] = insert.addMedicineRecord(myFile, MC_id, sign)
+            message['result'] = str(insert.addMedicineRecord(myFile, MC_id, sign))
+        print message
         return HttpResponse(json.dumps(message))
 
 #APP interface 8
