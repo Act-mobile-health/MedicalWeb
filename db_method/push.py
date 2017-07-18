@@ -12,7 +12,7 @@ def reply(P_id, MESSAGE):
     push = _jpush.create_push()
     # if you set the logging level to "DEBUG",it will show the debug logging.
     _jpush.set_logging("DEBUG")
-    push.audience = jpush.tag(TAG)
+    push.audience = jpush.alias(TAG)
     # push.audience = jpush.all_
     push.notification = jpush.notification(alert=MESSAGE)
     push.platform = jpush.all_

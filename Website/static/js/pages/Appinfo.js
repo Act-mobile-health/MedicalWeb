@@ -22,7 +22,8 @@ function showAPP(){
         dataType:"json",
         async: false,
         success:function (json_data) {
-            for(i=1;i<Object.keys(json_data[0]).length;i++){
+        console.log(Object.keys(json_data[0]).length);
+            for(i=1;i<Object.keys(json_data[0]).length+1;i++){
                 x[i-1] = json_data[0][i.toString()]
                 y[i-1] = -1;
                 z[i-1] = -1;
@@ -50,11 +51,11 @@ function showAPP(){
         async: false,
         success:function (json_data) {
         console.log(Object.keys(json_data[0]).length)
-            for(i=1;i<Object.keys(json_data[0]).length;i++){
+            for(i=1;i<Object.keys(json_data[0]).length+1;i++){
                 x_pm[i-1] = json_data[0][i.toString()]
                 y_pm[i-1] = -1;
             }
-//            console.log(json_data[1].length)
+            console.log(x_pm)
             for(i=0;i<json_data[1].length;i=i+1){
                 temp = json_data[1][i]['exposure'];
                 index = getIndex(x_pm,json_data[1][i]['date'])
@@ -240,8 +241,8 @@ function showMR(){
     var before,after;
     var lamb = 1;
     $("#medicineChange tbody").empty();
-    $("#medicineChange thead").empty();
-    $("#medicineChange caption").empty();
+//    $("#medicineChange thead").empty();
+//    $("#medicineChange caption").empty();
     $.ajax({
         type: "GET",
         url: "/i92/",
@@ -260,24 +261,30 @@ function showMR(){
                         after = item.info[p].doc;
                     }
                 }
-                if(lamb == 1){
-                    $("#medicineChange caption").append("换药记录");
-                    $("#medicineChange thead").append('<tr>'+
-                    '<th class="table-small" style="text-align:center;background:#72a9e2;">日期</th>'+
-                    '<th class="table-small" style="text-align:center;background:#72a9e2;">患者编号</th>'+
-                    '<th class="table-small" style="text-align:center;background:#72a9e2;">换药前</th>'+
-                    '<th class="table-small" style="text-align:center;background:#72a9e2;">换药后</th>'+
-                    '<th class="table-small" style="text-align:center;background:#72a9e2;">删除</th>'+
-                    '</tr>');
-                    lamb = 0;
-                }
+//                if(lamb == 1){
+//                    $("#medicineChange caption").append("换药记录");
+//                    $("#medicineChange thead").append('<tr>'+
+//                    '<th class="table-small" style="text-align:center;background:#72a9e2;">日期</th>'+
+//                    '<th class="table-small" style="text-align:center;background:#72a9e2;">患者编号</th>'+
+//                    '<th class="table-small" style="text-align:center;background:#72a9e2;">换药前</th>'+
+//                    '<th class="table-small" style="text-align:center;background:#72a9e2;">换药后</th>'+
+//                    '<th class="table-small" style="text-align:center;background:#72a9e2;">删除</th>'+
+//                    '</tr>');
+//                    lamb = 0;
+//                }
                 $("#medicineChange tbody").append(
                     "<tr>"+
-                        "<td>"+item.date+"</td>"+
-                        "<td>"+patientId+"</td>"+
-                        "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+before+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
-                        "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+after+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
-                        '<td><a  data-toggle="modal" href="#" onclick="deleteMC('+item.id+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
+                        "<td style='vertical-align:middle;color:black;'>"+item.date.replace("-","").replace("-","")+"</td>"+
+//                        "<td>"+patientId+"</td>"+
+                        '<td><a class="pics" data-toggle="modal" href="#imageDetails" onclick="showAorAEImage(\''+before+'\')">'+
+                        '<img class="thumb" src="/media/'+before+'" width="75px" height="75px"/>'+
+						'<span><img src="/media/'+before+'" width="800px" height="570px" title="换药前"/></span></a>'+
+                        '<td><a class="pics" data-toggle="modal" href="#imageDetails" onclick="showAorAEImage(\''+after+'\')">'+
+                        '<img class="thumb" src="/media/'+after+'" width="75px" height="75px"/>'+
+						'<span><img src="/media/'+after+'" width="800px" height="570px" title="换药后"/></span></a>'+
+//                        "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+before+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
+//                        "<td><a  data-toggle=\"modal\" href=\"#imageDetails\" onclick=\"showAorAEImage('"+after+"')\">"+"<i class=\"fa fa-search\"  style=\"color:black\">"+"</td>"+
+//                        '<td><a  data-toggle="modal" href="#" onclick="deleteMC('+item.id+')"><i class=\"fa fa-times\"  style=\"color:black\"></td>'+
                     "</tr>"
                 )
             });

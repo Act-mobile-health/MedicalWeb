@@ -772,7 +772,7 @@ def getOneDetailedAccessoryExamination(AE_id):
 # type = 1 is CAT and MRC sum, type = 2 is explosure
 def getMsg2Weeks(P_id, type):
     end = now().date()
-    num = 2
+    num = 3
     # end = datetime.datetime.strptime('2017-05-16', "%Y-%m-%d").date()
     start = end - timedelta(weeks=num)
     temp = {}
@@ -780,6 +780,7 @@ def getMsg2Weeks(P_id, type):
     message.append(temp)
     for i in xrange(num*7 + 1):
         temp[str(i+1)] = str(start + timedelta(days=i))[5:10].replace("-","")
+    print temp, len(temp)
     try:
         if type == 1:
             values = CATandMRC.objects.filter(date__gte=start, P_id=P_id).values('date', 'catSum', 'mrc')

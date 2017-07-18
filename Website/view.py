@@ -1202,8 +1202,7 @@ def app_addOrUpdateAppInfo(request, data):
 
 #APP interface 4
 @csrf_exempt
-@AppLoginCheck()
-def app_addTrackInfoTable(request, data):
+def app_addTrackInfoTable(request):
     if request.method == 'POST':
         # data = request.POST
         myFile = request.FILES["myfile"]
@@ -1212,6 +1211,8 @@ def app_addTrackInfoTable(request, data):
         message = {'result': '-1'}
         if insert.addTrackInfo(P_id, date, myFile):
             message['result'] = '0'
+        if P_id =="":
+            message['result'] = '-1'
         return HttpResponse(json.dumps(message))
 
 
