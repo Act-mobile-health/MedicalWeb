@@ -1211,10 +1211,12 @@ def app_addTrackInfoTable(request):
         P_id = request.GET.get('P_id')
         date = request.GET.get('date')
         message = {'result': '-1'}
+        print P_id,"##########################################################"
+        if P_id =="" or P_id =="null":
+            message['result'] = '-1'
+            return HttpResponse(json.dumps(message))
         if insert.addTrackInfo(P_id, date, myFile):
             message['result'] = '0'
-        if P_id =="":
-            message['result'] = '-1'
         return HttpResponse(json.dumps(message))
 
 

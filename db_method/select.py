@@ -1207,6 +1207,8 @@ def getTrackInfo(data):
                         trace_all.append(temp)
                     temp = []
         print average, trace_all
+        if trace_all==[]:
+            average = [116.344776, 39.981916]
         return trace_all, [average[0],average[1]]
      except Exception, e:
         tools.exceptionRecord('select.py', 'getTrackInfo', e)

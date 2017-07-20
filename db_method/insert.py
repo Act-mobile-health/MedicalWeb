@@ -385,8 +385,14 @@ def addTrackInfo(P_id, date, doc):
             d = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         else:
             d = datetime.datetime.strptime('1970-01-01', "%Y-%m-%d").date()
-        newObj = TrackInfo(P_id = P_id, date = d, doc = doc)
-        newObj.save()
+
+        if TrackInfo.objects.filter(P_id = P_id, date=d).exists():
+            temp = TrackInfo.objects.get(P_id = P_id, date =d)
+            temp.doc = doc
+            temp.save()
+        else:
+            newObj = TrackInfo(P_id = P_id, date = d, doc = doc)
+            newObj.save()
         # id = newObj.id
         return True
     except Exception, e:
