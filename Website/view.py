@@ -1289,7 +1289,7 @@ def appUpdate(request):
                 else:
                     break
 
-    the_file_name = './media/appUpdate/Android/temp.apk'
+    the_file_name = './media/appUpdate/Android/ibreathcare.apk'
     response = StreamingHttpResponse(file_iterator(the_file_name))
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
