@@ -318,9 +318,10 @@
                                 <tr>
                                     <th style="text-align:center;width:15%;">患者编号</th>
                                     <th style="text-align:center;width:12%;">患者姓名</th>
-                                    <th style="text-align:center;width:15%;">提交时间</th>
+                                    <!--<th style="text-align:center;width:15%;">提交时间</th>-->
                                     <th style="text-align:center;;width:15%;">留言时间</th>
                                     <th style="text-align:center;;width:30%;">留言内容</th>
+                                    <!--<th style="text-align:center;width:10%">操作</th>-->
                                     <th style="text-align:center;width:10%">状态</th>
                                 </tr>
                                 </thead>
@@ -427,11 +428,33 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button type="button" id = "experimentGroupbt" class="btn btn-primary" data-dismiss="modal">保存</button>
+						<button type="button" id="experimentGroupbt" class="btn btn-primary" data-dismiss="modal">保存</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
 		</div>
+
+		<!--<a class="btn btn-primary" data-toggle="modal" href="#MessageReply">Trigger modal</a>-->
+		<div class="modal fade" id="MessageReplyDetails">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">请输入回复信息</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" method="post"  role="form" id="MessageReply">
+							<textarea class="myinput" style="width:500px;height:150px;text-align:left;margin-left:25px" name="message"></textarea>
+						</form>
+						<!--<input type="textarea"/>-->
+					</div>
+					<div class="modal-footer">
+						<!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+						<button type="button" id="replybt" class="btn btn-primary" data-dismiss="modal">发送</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 		<!-- start: JavaScript-->
 
 		<!-- Vendor JS-->

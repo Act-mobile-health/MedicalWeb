@@ -51,7 +51,7 @@ $(document).ready(function () {
 //                        "<td>"+item.telephone+"</td>"+
                         "<td style='background:"+colorInfo(time, 0)+"'>"+temp+"</td>"+
                         "<td style='color:"+colorInfo(time, 0)+"'>"+colorInfo(time, 1)+"</td>"+
-                        "<td>"+"56%"+"</td>"+
+                        "<td>"+ item.percent + "%" +"</td>"+
                         "<td><a href=\"/patientDetails/?P_id="+item.P_id+"\" style='color:black;'><u>查看详情</u></a></td>"+
                     "</tr>");
                 });

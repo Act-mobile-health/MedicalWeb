@@ -148,10 +148,27 @@ def updateRelationInfo(R_id,data):
         tools.exceptionRecord('update.py','updateRelationInfo',e)
         return False
 
-#修改门诊信息
-def updateOutPatientServiceInfo(id,data):
-    try:
 
+def updateAppInfoByDoc(S_id, type):# this func will throw error when obj is empty which is ok
+    try:
+        print S_id, type
+        obj = AppInfo.objects.get(S_id = int(S_id), type = type)
+        # print obj,"obj"
+        if obj:
+            obj.sign = "0"
+            print "i am inside"
+            obj.save()
+        return True
+    except Exception, e:
+        tools.exceptionRecord('update.py','updateAppInfoByDoc',e)
+        return False
+#修改门诊信息
+def updateOutPatientServiceInfo(id,data_input):
+    try:
+        attrList = []
+        for attr in OutPatientServiceInfo._meta.get_fields():
+            attrList.append(attr.name)
+        data = tools.existCheck(attrList, data_input)
         obj = OutPatientServiceInfo.objects.get(id = id)
         obj.P_id = data['P_id']
         if data['date'] != '':
@@ -159,7 +176,7 @@ def updateOutPatientServiceInfo(id,data):
         obj.place = data['place']
         obj.isStable = data['isStable']
         obj.isSymptom = data['isSymptom']
-        obj.symptom = tools.forCheckbox(data,'symptom')
+        obj.symptom = tools.forCheckbox(data,'symptom', 1)
         obj.physicalExam = data['physicalExam']
         obj.breathErr = data['breathErr']
         obj.acuteExac = data['acuteExac']
@@ -172,6 +189,8 @@ def updateOutPatientServiceInfo(id,data):
         obj.treatMethod = data['treatMethod']
         obj.medicine = data['medicine']
         obj.save()
+        if obj.acuteExac != "":
+            updateAppInfoByDoc(id, "0")
 
         return True
     except Exception, e:
@@ -180,15 +199,18 @@ def updateOutPatientServiceInfo(id,data):
 
 
 #修改急诊信息
-def updateEmergCallInfo(id,data):
+def updateEmergCallInfo(id,data_input):
     try:
-
+        attrList = []
+        for attr in EmergCallInfo._meta.get_fields():
+            attrList.append(attr.name)
+        data = tools.existCheck(attrList, data_input)
         obj = EmergCallInfo.objects.get(id = id)
         # obj.P_id = data['P_id']
         if data['date'] != '':
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.place = data['place']
-        obj.symptom = tools.forCheckbox(data,'symptom')
+        obj.symptom = tools.forCheckbox(data,'symptom', 1)
         obj.acuteExac = data['acuteExac']
         obj.disease = data['disease']
         obj.byxCheck = data['byxCheck']
@@ -204,21 +226,27 @@ def updateEmergCallInfo(id,data):
         obj.airRelate = data['airRelate']
         obj.medicine = data['medicine']
         obj.save()
+        if obj.acuteExac != "":
+            updateAppInfoByDoc(id, "1")
         return True
     except Exception, e:
         tools.exceptionRecord('update.py','updateEmergCallInfo',e)
         return False
 
 #修改住院信息
-def updateInHospitalInfo(id,data):
+def updateInHospitalInfo(id,data_input):
     try:
+        attrList = []
+        for attr in InHospitalInfo._meta.get_fields():
+            attrList.append(attr.name)
+        data = tools.existCheck(attrList, data_input)
         obj = InHospitalInfo.objects.get(id = id)
         obj.P_id = data['P_id']
         if data['date'] != '':
             obj.date = datetime.datetime.strptime(data['date'], "%Y-%m-%d").date()
         obj.place = data['place']
         obj.commonIcu = data['commonIcu']
-        obj.symptom = tools.forCheckbox(data,'symptom')
+        obj.symptom = tools.forCheckbox(data,'symptom', 1)
         obj.acuteExac = data['acuteExac']
         obj.disease = data['disease']
         obj.byxCheck = data['byxCheck']
@@ -233,6 +261,8 @@ def updateInHospitalInfo(id,data):
         obj.medicine = data['medicine']
         obj.docAdvice = data['docAdvice']
         obj.save()
+        if obj.acuteExac != "":
+            updateAppInfoByDoc(id, "2")
         return True
     except Exception, e:
         tools.exceptionRecord('update.py','updateInHospitalInfo',e)
@@ -668,16 +698,15 @@ def updateCardiogram(data):
         tools.exceptionRecord('update.py','updateCardiogram',e)
         return False
 
-def updateMessage(data):
+def replyMessage(data):
     try:
         if(data['type'] == "0"):
             obj = MessageText.objects.get(id = int(data['id']))
         else:
-
             obj = MessageAudio.objects.get(id = int(data['id']))
         obj.sign = "0"
         obj.save()
         return True
     except Exception, e:
-        tools.exceptionRecord('update.py','updateMessage',e)
+        tools.exceptionRecord('update.py','replyMessage',e)
         return False

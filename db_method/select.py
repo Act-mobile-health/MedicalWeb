@@ -8,6 +8,7 @@ from operator import attrgetter
 from itertools import chain
 from django.db.models import Q
 import json
+from django.utils.timezone import now, timedelta
 
 
 # 用户名/邮箱/手机号 重复性检验
@@ -219,6 +220,7 @@ def getPatientsBasicInfo():
             message['o_time'] = time.o_time
             message['e_time'] = time.e_time
             message['h_time'] = time.h_time
+            message['percent'] = str(checkForInfoCompPercent(message['P_id']))
             list.append(message)
     except Exception, e:
         tools.exceptionRecord('select.py','getPatientsBasicInfo',e)
@@ -769,15 +771,16 @@ def getOneDetailedAccessoryExamination(AE_id):
 # get the message of a patient for the last 2 weeks
 # type = 1 is CAT and MRC sum, type = 2 is explosure
 def getMsg2Weeks(P_id, type):
-    from django.utils.timezone import now, timedelta
     end = now().date()
+    num = 3
     # end = datetime.datetime.strptime('2017-05-16', "%Y-%m-%d").date()
-    start = end - timedelta(weeks=2)
+    start = end - timedelta(weeks=num)
     temp = {}
     message =[]
     message.append(temp)
-    for i in xrange(15):
+    for i in xrange(num*7 + 1):
         temp[str(i+1)] = str(start + timedelta(days=i))[5:10].replace("-","")
+    print temp, len(temp)
     try:
         if type == 1:
             values = CATandMRC.objects.filter(date__gte=start, P_id=P_id).values('date', 'catSum', 'mrc')
@@ -1004,8 +1007,8 @@ def getOEHAll(P_id, para):
         newAdded = AppInfo.objects.filter(P_id = P_id, sign = "1").values("S_id", "type")
         temp = list(newAdded)
         # print q
-        q = sorted(q, key=lambda q:q['date'])
-        # print q
+        q = sorted(q, key=lambda q:q['date'], reverse=True) # descending
+        print q
         for a in q:
             a['date'] = str(a['date'])
             a['date_upload'] = str(a['date_upload'])
@@ -1021,6 +1024,7 @@ def getMR(P_id):
      try:
         values = MedicineChange.objects.filter(P_id=P_id).values("MC_id","date","ch","id")
         temp = list(values)
+        temp = sorted(temp, key=lambda temp:temp['date'], reverse=True)
         print  temp
         new = []
         # print type(temp)
@@ -1032,7 +1036,7 @@ def getMR(P_id):
                 mr = MedicineRecord.objects.filter(MC_id=v['MC_id']).values("sign","doc")
                 v['info'] = list(mr)
                 new.append(v)
-        # print new
+        print new
 
         return new
      except Exception, e:
@@ -1171,6 +1175,7 @@ def getTrackInfo(data):
             return [],[116.344776, 39.981916]
         s = open(r"media/"+temp[0]['doc'],'r+')
         a = s.readline()
+        print a
         aa = json.loads(a)
         trace_all = []
         temp = []
@@ -1202,7 +1207,9 @@ def getTrackInfo(data):
                         trace_all.append(temp)
                     temp = []
         print average, trace_all
-        return trace_all, average
+        if trace_all==[]:
+            average = [116.344776, 39.981916]
+        return trace_all, [average[0],average[1]]
      except Exception, e:
         tools.exceptionRecord('select.py', 'getTrackInfo', e)
 
@@ -1259,3 +1266,16 @@ def checkMedicineRecordExist(id, sign):
         tools.exceptionRecord('select.py', 'checkRecordExistForApp', e)
         return False
 
+
+def checkForInfoCompPercent(P_id):
+    try:
+        end = now().date()
+        start = end - timedelta(days=30)
+        cat = CATandMRC.objects.filter(date__gte=start, P_id=P_id).values()
+        medicineRegular = MedicineRegular.objects.filter(date__gte=start, P_id=P_id).values()
+        sum = len(cat) + len(medicineRegular)
+        percent = sum/60.0 * 100
+        return float('%.2f' % percent)
+    except Exception, e:
+        tools.exceptionRecord('select.py', 'checkForInfoCompPercent', e)
+        return 0

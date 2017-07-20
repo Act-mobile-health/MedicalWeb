@@ -5,9 +5,14 @@ from django.core.mail import send_mail
 
 
 
-def forCheckbox(data, attr):
-    temp = dict(data.iterlists())
+def forCheckbox(data, attr, sign=0):
+    # print data,type(data)
+    if sign == 1:
+        temp = data
+    else:
+        temp = dict(data.iterlists()) # for list of the checkbox
     json_data = temp[attr]
+    # print json_data
     tempstr = ''
     for item in json_data:
         tempstr = tempstr + str(item)
@@ -68,10 +73,6 @@ def toString(message):
             if type(i) != str:
                 message[i] = str(message[i])
     return message
-
-
-
-
 
 def getFields():
     keys=[]
@@ -207,3 +208,18 @@ def WordToPinyin(data):
         result = 'aoTiZhongXin'
     return result
 
+
+def existCheck(names, data):
+    data_out = {}
+    temp = dict(data.iterlists()) # for list of the checkbox
+    # print temp,type(temp),"aaaa",temp['symptom']
+    for a in names:
+        if a not in temp:
+            data_out[a] = u""
+        else:
+            print temp[a], a
+            if(len(temp[a])>1):
+                data_out[a] = temp[a]
+            else:
+                data_out[a] = temp[a][0]
+    return data_out

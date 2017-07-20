@@ -65,6 +65,23 @@
         <link rel="stylesheet" href="/static/css/map.css">
 		<!--<link href="/static/css/styles.css" media="all" rel="stylesheet">-->
 
+<!--a, a:visited, a:hover {  }-->
+<!--#container_medicine a.pics:active span { display:block; position:absolute; left:9px; top:192px; z-index:5; height:500px; }-->
+<!--#container_medicine a.pics:focus { border:1px solid #fc0; outline:0; }-->
+<!--#container_medicine a.pics:focus span { display:block; position:absolute; left:9px; top:192px; z-index:5; outline:0; }-->
+<!--#container_medicine span.info { clear:left; display:block; text-align:center; line-height:20px; margin:0; padding:200px 0 0 0; width:600px; text-align:center; color:#eee; z-index:1; }-->
+<!--#container_medicine span.info a { color:#000; }-->
+<!--#container_medicine span.info a:hover { text-decoration:none; }-->
+<style type="text/css">
+#container_medicine { position:relative; max-width:1200px; min-height:800px; margin:10px auto; font-family:verdana, arial, sans-serif; font-size:12px; }
+#container_medicine a.pics { float:left; margin:7px 7px; display:inline; color:#000; text-decoration:none; border:1px solid #000; width:75px; height:75px; cursor:default; }
+#container_medicine a.pics img.thumb { display:block; border:0; }
+#container_medicine a.pics span { display:none; border:0; width:580px; border:1px solid #fff; text-align:center; }
+#container_medicine a.pics span img { margin:10px auto; border:1px solid #000; }
+#container_medicine a.pics:hover { white-space:normal; border:1px solid #fff; }
+#container_medicine a.pics:hover span { display:block; position:absolute; left:320px; top:10px; z-index:10; max-height:500px; max-width:900px;}
+#container_medicine a.pics:active { border:1px solid #fc0; }
+</style>
 	</head>
 
 	<body>
@@ -813,6 +830,23 @@
 										<div id="bar-3" style="height: 400px;margin:0 auto"></div>
 									</div>
 								</div>
+								<!--<div class="panel col-xs-12">-->
+									<!--<div class="panel-heading bk-bg-primary">-->
+										<!--<h6><i class="fa fa-tags red "></i>换药记录</h6>-->
+										<!--<div class="panel-actions" style="display:block;">-->
+											<!--<a onclick="updown($(this))"><i class="fa fa-chevron-up"></i></a>-->
+										<!--</div>-->
+									<!--</div>-->
+									<!--<div class="panel-body">-->
+										<!--<div class="row table-responsive" style="margin:0 auto;max-width:900px">-->
+											<!--<table class="table table-bordered table-hover table-entire" id="medicineChange">-->
+												<!--<caption class="mylabel"></caption>-->
+												<!--<thead></thead>-->
+												<!--<tbody></tbody>-->
+											<!--</table>-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
 								<div class="panel col-xs-12">
 									<div class="panel-heading bk-bg-primary">
 										<h6><i class="fa fa-tags red "></i>换药记录</h6>
@@ -821,12 +855,34 @@
 										</div>
 									</div>
 									<div class="panel-body">
-										<div class="row table-responsive" style="margin:0 auto;max-width:900px">
-											<table class="table table-bordered table-hover table-entire" id="medicineChange">
+										<div id="container_medicine">
+                                            <div class="row table-responsive col-md-3" style="margin:0 auto;max-width:280px;padding-left:0;padding-right:0">
+											<table class="table table-bordered"  id="medicineChange">
 												<caption class="mylabel"></caption>
-												<thead></thead>
-												<tbody></tbody>
+												<thead>
+                                                    <tr>
+                                                        <th class="table-small tlabel6" style="text-align:center;width:70px;color:black">日期</th>
+                                                        <th class="table-small tlabel6" style="text-align:center;width:50px;color:black">换药前</th>
+                                                        <th class="table-small tlabel6" style="text-align:center;width:75px;color:black">换药后</th>
+                                                    </tr>
+                                                </thead>
+												<tbody>
+                                                <tr>
+                                                    <td style="vertical-align:middle;">20170503
+
+                                                    </td>
+                                                    <td>
+                                                        <a class="pics" href="http://www.niutuku.com"><img class="thumb" src="/media/MR/IMG_20170523_214903.jpg" alt="Warm to Cold" width="75px" height="75px"/>
+											<span><img src="/media/MR/IMG_20170523_214903.jpg" width="800px" height="570px" alt="Warm to Cold" title="Warm to Cold" /><br />Warm to Cold</span> </a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="pics" href="http://www.niutuku.com"><img class="thumb" src="/media/MR/IMG_20170523_214903.jpg" alt="Warm to Cold" width="75px" height="75px"/>
+											<span><img src="/media/MR/IMG_20170523_214903.jpg" width="800px" height="570px" alt="Warm to Cold" title="Warm to Cold" /><br />Warm to Cold</span> </a>
+                                                    </td>
+                                                </tr></tbody>
 											</table>
+										</div>
+
 										</div>
 									</div>
 								</div>

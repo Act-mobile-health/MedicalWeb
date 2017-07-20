@@ -2,9 +2,9 @@
 import jpush
 from jpush import common
 
-P_id = "110000000091"
-MESSAGE = u"你好!!!"
-def a():
+# P_id = "110000000091"
+# MESSAGE = u"你好!!!"
+def reply(P_id, MESSAGE):
     TAG = P_id
     app_key = "8f1da9d68218066965ad2157"
     master_secret = "91d325746680fcd8c7154471"
@@ -12,7 +12,7 @@ def a():
     push = _jpush.create_push()
     # if you set the logging level to "DEBUG",it will show the debug logging.
     _jpush.set_logging("DEBUG")
-    push.audience = jpush.tag(TAG)
+    push.audience = jpush.alias(TAG)
     # push.audience = jpush.all_
     push.notification = jpush.notification(alert=MESSAGE)
     push.platform = jpush.all_

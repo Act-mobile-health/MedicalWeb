@@ -15,7 +15,7 @@ import datetime, random
 from django import forms
 import xlwt
 from django.utils.http import urlquote
-
+from db_method import push
 
 def AppLoginCheck():
     def deco(func):
@@ -1031,11 +1031,13 @@ def getMessage(request,data,D_id):
 @login_required
 @csrf_exempt
 @PermissionCheck(3)
-def updateMessage(request,data,D_id):
+def replyMessage(request,data,D_id):
+    print data
     message = {"result":"-1"}
-    if(update.updateMessage(data)):
+    if(update.replyMessage(data)):
         message = {"result":"0"}
     js = json.dumps(message)
+    push.reply(data['P_id'],data['message'])
     # print js,"$$$$$$$"
     return HttpResponse(js)
 
@@ -1054,7 +1056,8 @@ def getPatientAppInfoNum(request,data,D_id):
 @PermissionCheck(3)
 def getTrackInfo(request,data,D_id):
     message = {}
-    message['paths'], message['center'] = select.getTrackInfo(data)[0], select.getTrackInfo(data)[1]
+    temp = select.getTrackInfo(data)
+    message['paths'], message['center'] = temp[0], temp[1]
     js = json.dumps(message)
     return HttpResponse(js)
 
@@ -1088,6 +1091,7 @@ def deleteDiseaseType(request,data,D_id):
     js = json.dumps(message)
     print js
     return HttpResponse(js)
+
 
 
 ############### APP interfaces #################
@@ -1176,9 +1180,10 @@ def app_addMedicineRecordTable(request):
         # date = request.GET.get('date')
         message = {'result': '-1'}
         if select.checkMedicineRecordExist(MC_id, sign):
-            message['result'] = update.updateMedicineRecord(myFile, MC_id, sign)
+            message['result'] = str(update.updateMedicineRecord(myFile, MC_id, sign))
         else:
-            message['result'] = insert.addMedicineRecord(myFile, MC_id, sign)
+            message['result'] = str(insert.addMedicineRecord(myFile, MC_id, sign))
+        print message
         return HttpResponse(json.dumps(message))
 
 #APP interface 8
@@ -1199,14 +1204,17 @@ def app_addOrUpdateAppInfo(request, data):
 
 #APP interface 4
 @csrf_exempt
-@AppLoginCheck()
-def app_addTrackInfoTable(request, data):
+def app_addTrackInfoTable(request):
     if request.method == 'POST':
         # data = request.POST
         myFile = request.FILES["myfile"]
         P_id = request.GET.get('P_id')
         date = request.GET.get('date')
         message = {'result': '-1'}
+        print P_id,"##########################################################"
+        if P_id =="" or P_id =="null":
+            message['result'] = '-1'
+            return HttpResponse(json.dumps(message))
         if insert.addTrackInfo(P_id, date, myFile):
             message['result'] = '0'
         return HttpResponse(json.dumps(message))
@@ -1281,8 +1289,9 @@ def appUpdate(request):
                 else:
                     break
 
-    the_file_name = './media/appUpdate/Android/temp.apk'
+    the_file_name = './media/appUpdate/Android/ibreathcare.apk'
     response = StreamingHttpResponse(file_iterator(the_file_name))
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
     return response
+

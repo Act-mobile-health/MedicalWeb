@@ -153,7 +153,7 @@ urlpatterns = [
     url(r'^i95/',view.getAcuteExac),
     url(r'^i96/',view.getAppInfo),
     url(r'^i97/',view.getMessage),
-    url(r'^i98/',view.updateMessage),
+    url(r'^i98/',view.replyMessage),
     url(r'^i99/',view.getMC_calendar),
     url(r'^i102/',view.getAI_calendar),
 
@@ -165,6 +165,8 @@ urlpatterns = [
     url(r'^i106/',view.addDiseaseType),
     url(r'^i107/',view.getDiseaseType),
     url(r'^i108/',view.deleteDiseaseType),
+
+
 
 
     url(r'^i3000/',view.appVersion),
